@@ -57,8 +57,12 @@ public class SimpleGameController {
 		//int deathCounter = 0;
         
         while (true) {
+        	
         	view.draw(context, data);
+        	
         	PlantSelectionView.draw(context, data2);
+        	
+        	
         	ArrayList<Integer> deadPool = new ArrayList<>();
             
             Random rand = new Random();
@@ -133,20 +137,28 @@ public class SimpleGameController {
 						int sizeOfPlant = Plant.getSizeOfPlant();
 						
 						int xCentered = (int) (X+(squareSize/2)-(sizeOfPlant/2));
-						int yCentered = (int) (Y-(squareSize/2)+(sizeOfPlant/2));
+						int yCentered = (int) (Y+(squareSize/2)-(sizeOfPlant/2));
 						
 						if (ok != 0) {
 							
 							System.out.println(X+","+Y);
-//							System.out.println(ok);
 							if (ok == 1) {
+								data.plantOnBoard(view.lineFromY(y),view.columnFromX(x));
 								view.drawOnlyOneCell(context, data, xCentered, yCentered, "#90D322");
+								ok = 0;
+								
 							}
 							if (ok == 2) {
+								data.plantOnBoard(view.lineFromY(y),view.columnFromX(x));
 								view.drawOnlyOneCell(context, data, xCentered, yCentered, "#CB5050");
+								ok = 0;
+					
 							}
 							if (ok == 3) {
+								data.plantOnBoard(view.lineFromY(y),view.columnFromX(x));
 								view.drawOnlyOneCell(context, data, xCentered, yCentered, "#ECB428");
+								ok = 0;
+	
 							}
 
 						}

@@ -1,13 +1,16 @@
 package models;
 
 import java.awt.Color;
+import java.util.ArrayList;
 
 public class SimpleGameData{
 	private final Cell[][] matrix;
 	private Coordinates selected;
+	private final ArrayList<Coordinates> placedPlant = new ArrayList<Coordinates>();
 
 	public SimpleGameData(int nbLines, int nbColumns) {
 		matrix = new Cell[nbLines][nbColumns];
+		
 	}
 
 	/**
@@ -61,6 +64,15 @@ public class SimpleGameData{
 	public boolean hasASelectedCell() {
 		return selected != null;
 	}
+	
+	public boolean hasPlant(int i, int j) {
+		for(Coordinates c : placedPlant) {
+			if(c.getI()==i && c.getJ() == j) {
+				return true;
+			}
+		}
+		return false;
+	}
 
 	/**
 	 * Selects, as the first cell, the one identified by the specified coordinates.
@@ -96,5 +108,8 @@ public class SimpleGameData{
 	public void updateData() {
 		// update (attention traitement different si des cases sont
 		// selectionnées ou non...)
+	}
+	public void plantOnBoard(int i,int j){
+		placedPlant.add(new Coordinates(i, j));
 	}
 }

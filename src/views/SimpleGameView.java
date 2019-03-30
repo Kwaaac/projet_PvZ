@@ -9,10 +9,7 @@ import java.awt.geom.RectangularShape;
 import models.Coordinates;
 import models.MovingElement;
 import models.SimpleGameData;
-import plants.CherryBomb;
-import plants.Peashooter;
 import plants.Plant;
-import plants.WallNut;
 import zombies.ConeheadZombie;
 import zombies.FlagZombie;
 
@@ -100,7 +97,7 @@ public class SimpleGameView implements GameView {
 	public void draw(Graphics2D graphics, SimpleGameData data) {
 		// example
 		graphics.setColor(Color.GRAY);
-		graphics.fill(new Rectangle2D.Float(xOrigin, yOrigin, width, length));
+		graphics.fill(new Rectangle2D.Float(0, 100, squareSize, squareSize*3));
 
 		graphics.setColor(Color.WHITE.darker());
 		for (int i = 0; i <= data.getNbLines(); i++) {
@@ -115,34 +112,25 @@ public class SimpleGameView implements GameView {
 
 		Coordinates c = data.getSelected();
 		if (c != null) {
+			if(! data.hasPlant(c.getI(), c.getJ())) {
 			graphics.setColor(Color.BLACK);
 			graphics.fill(drawSelectedCell(c.getI(), c.getJ()));
+		 }
 		}
 
 		for (int i = 0; i < data.getNbLines(); i++) {
 			for (int j = 0; j < data.getNbColumns(); j++) {
+				if(! data.hasPlant(i, j)) {
 				graphics.setColor(Color.GREEN.darker());
 				graphics.fill(drawCell(i, j));
 				graphics.setColor(data.getCellColor(i, j));
+				}
 			}
 		}
 		
-		int sizeOfPlant = Plant.getSizeOfPlant();
-		graphics.setColor(Color.decode("#90D322"));
-		Peashooter p1 = new Peashooter((int)(squareSize/2)-sizeOfPlant/2,(int)(squareSize/2)+100-sizeOfPlant/2);
-		graphics.draw(p1.draw());
-		graphics.fill(p1.draw());
-		
-		graphics.setColor(Color.decode("#CB5050"));
-		CherryBomb p2 = new CherryBomb((int)(squareSize/2)-sizeOfPlant/2,(int)(squareSize/2)+100+squareSize-sizeOfPlant/2);
-		graphics.draw(p2.draw());
-		graphics.fill(p2.draw());
-		
-		graphics.setColor(Color.decode("#ECB428"));
-		WallNut p3 = new WallNut((int)(squareSize/2)-sizeOfPlant/2,(int)(squareSize/2)+100+squareSize*2-sizeOfPlant/2);
-		graphics.draw(p3.draw());
-		graphics.fill(p3.draw());
 	}
+	
+
 
 	/**
 	 * Draws only the cell specified by the given coordinates in the game board from
