@@ -15,7 +15,8 @@ import models.SimpleGameData;
 import plants.Plant;
 import zombies.NormalZombie;
 import zombies.Zombie;
-import views.SimpleGameView;
+import views.BordView;
+import views.SelectBordView;
 
 
 public class SimpleGameController {
@@ -40,14 +41,15 @@ public class SimpleGameController {
 		int yOrigin = 100;
 		int xOrigin = 450;
 		
-		SimpleGameView PlantSelectionView = SimpleGameView.initGameGraphics(0, yOrigin, 0, data2);
-		SimpleGameView view = SimpleGameView.initGameGraphics(xOrigin, yOrigin, 900, data);
-		int squareSize = SimpleGameView.getSquareSize();
+		SelectBordView PlantSelectionView = SelectBordView.initGameGraphics(0, yOrigin, 540, data2);
+		BordView view = BordView.initGameGraphics(xOrigin, yOrigin, 900, data);
+		int squareSize = BordView.getSquareSize();
 		
 		
 		view.draw(context, data);
 		PlantSelectionView.draw(context, data2);
-
+		
+		
 		Point2D.Float location;
 		ArrayList<Zombie> MyZombies = new ArrayList<>();
         
@@ -88,7 +90,7 @@ public class SimpleGameController {
                 view.moveAndDrawElement(context, data, b);
             }
 			
-			Event event = context.pollOrWaitEvent(20); // modifier pour avoir un affichage fluide
+			Event event = context.pollOrWaitEvent(50); // modifier pour avoir un affichage fluide
 			if (event == null) { // no event
 				continue;
 			}
@@ -129,8 +131,6 @@ public class SimpleGameController {
 				
 				if (xOrigin<=x && x<=xOrigin+squareSize*8) {
 					if (yOrigin<=y && y<=yOrigin+squareSize*5) {
-						
-						data.selectCell(view.lineFromY(y), view.columnFromX(x));
 						
 						float X = view.realCoordFromIndex(view.columnFromX(location.x), xOrigin);
 						float Y = view.realCoordFromIndex(view.lineFromY(location.y), yOrigin);
