@@ -5,9 +5,9 @@ import java.awt.geom.Ellipse2D;
 public class HorizontallyMovingElement implements MovingElement{
 	private int x;
 	private int y;
-	private final int speed;
+	private final double speed;
 
-	public HorizontallyMovingElement(int x, int y, int speed) {
+	public HorizontallyMovingElement(int x, int y, double speed) {
 		this.x = x;
 		this.y = y;
 		this.speed = speed;
@@ -15,6 +15,10 @@ public class HorizontallyMovingElement implements MovingElement{
 	
 	public int getX() {
 		return x;
+	}
+	
+	public int getY() {
+		return y;
 	}
 	
 	@Override

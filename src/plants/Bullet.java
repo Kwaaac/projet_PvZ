@@ -2,18 +2,18 @@ package plants;
 
 import java.awt.geom.Ellipse2D;
 
-import models.Entities;
-import models.MovingElement;
+import models.HorizontallyMovingElement;
 
-public abstract class Bullet extends Entities implements MovingElement{
+public class Bullet extends HorizontallyMovingElement {
 
-	private final String name = "bullet";
+	private final String name = "Bullet";
+
+	public Bullet(int x, int y, double speed) {
+		super(x, y, 2.7);
+	}
 	
-	
-	
-	public Bullet(int x, int y, int damage, int life) {
-		super(x, y, damage, 1);
-		// TODO Auto-generated constructor stub
+	public Bullet(int x, int y) {
+		super(x, y, 2.7);
 	}
 
 	@Override
@@ -25,5 +25,5 @@ public abstract class Bullet extends Entities implements MovingElement{
 	public String toString() {
 		return super.toString() + "--" + name; 
 	}
-	
+
 }

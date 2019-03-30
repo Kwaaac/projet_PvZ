@@ -2,7 +2,9 @@ package controlers;
 
 import java.awt.Color;
 import java.awt.geom.Point2D;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Random;
 
 import fr.umlv.zen5.Application;
@@ -10,8 +12,10 @@ import fr.umlv.zen5.ApplicationContext;
 import fr.umlv.zen5.Event;
 import fr.umlv.zen5.ScreenInfo;
 import fr.umlv.zen5.Event.Action;
+import models.HorizontallyMovingElement;
 import models.MovingElement;
 import models.SimpleGameData;
+import plants.Bullet;
 import plants.Plant;
 import zombies.NormalZombie;
 import zombies.Zombie;
@@ -52,41 +56,76 @@ public class SimpleGameController {
 		
 		Point2D.Float location;
 		ArrayList<Zombie> MyZombies = new ArrayList<>();
+		ArrayList<Plant> MyPlants = new ArrayList<>();
+		ArrayList<HorizontallyMovingElement> MyBullet = new ArrayList<>();
         
         int n1 = 25;
         int ZombieSize = Zombie.getSizeOfZombie();
         int ok = 0;
-		//int deathCounter = 0;
+//		int deathCounterZombie = 0;
+//		int deathCounterPlant = 0;
+//		int time = 0;
+        System.out.println(("Journal de bord\n-+-+-+-+-+-+-+-+-+-"));
         
         while (true) {
-        	
+//        	time++;
         	view.draw(context, data);
         	
         	PlantSelectionView.draw(context, data2);
         	
         	
-        	ArrayList<Integer> deadPool = new ArrayList<>();
+        	ArrayList<Integer> deadPoolZ = new ArrayList<>();
+        	ArrayList<Integer> deadPoolP = new ArrayList<>();
+        	ArrayList<Integer> deadPoolBullet = new ArrayList<>();
             
             Random rand = new Random();
             
             int n = rand.nextInt(50);
             
             if(n1 == n) {
-                MyZombies.add(new NormalZombie((int) width, yOrigin+RandomPosGenerator()*squareSize+(squareSize/2)-ZombieSize/2));            
+                MyZombies.add(new NormalZombie((int) width, yOrigin+RandomPosGenerator()*squareSize+(squareSize/2)-ZombieSize/2)); 
+                System.out.println("new zombie ("+new SimpleDateFormat("hh:mm:ss").format(new Date())+")\n");
             }
             
             for (Zombie b : MyZombies) {
                 if(b.getX() < xOrigin-squareSize/2){
-                    deadPool.add(MyZombies.indexOf(b));
+                    deadPoolZ.add(MyZombies.indexOf(b));
                 }
             }
             
-            for (int d : deadPool) {
+            for (Plant p : MyPlants) {
+                if(p.getX() < xOrigin-squareSize/2){
+                    deadPoolP.add(MyPlants.indexOf(p));
+                }
+            }
+            
+            for (HorizontallyMovingElement b : MyBullet) {
+                if(b.getX() < xOrigin-squareSize/2){
+                    deadPoolBullet.add(MyBullet.indexOf(b));
+                }
+            }
+            
+            for (int d : deadPoolZ) {
             	MyZombies.remove(d);
-            	//deathCounter+=1;
+//            	deathCounterZombie+=1;
+            	System.out.println("zombie killed ("+new SimpleDateFormat("hh:mm:ss").format(new Date())+")\n");
+            }
+            
+            for (int p : deadPoolP) {
+            	MyPlants.remove(p);
+//            	deathCounterPlant+=1;
+            	System.out.println("plant killed ("+new SimpleDateFormat("hh:mm:ss").format(new Date())+")\n");
+            }
+            
+            for (int d : deadPoolBullet) {
+            	MyBullet.remove(d);
             }
                 
             for (MovingElement b : MyZombies) {
+                view.moveAndDrawElement(context, data, b);
+            }
+            
+            for (MovingElement b : MyBullet) {
                 view.moveAndDrawElement(context, data, b);
             }
 			
@@ -141,24 +180,24 @@ public class SimpleGameController {
 						
 						if (ok != 0) {
 							
-							System.out.println(X+","+Y);
 							if (ok == 1) {
 								data.plantOnBoard(view.lineFromY(y),view.columnFromX(x));
 								view.drawOnlyOneCell(context, data, xCentered, yCentered, "#90D322");
+								MyBullet.add(new Bullet(xCentered+sizeOfPlant, yCentered+(sizeOfPlant/2)-10));
 								ok = 0;
-								
+								System.out.println("new plant ("+new SimpleDateFormat("hh:mm:ss").format(new Date())+")\n");
 							}
 							if (ok == 2) {
 								data.plantOnBoard(view.lineFromY(y),view.columnFromX(x));
 								view.drawOnlyOneCell(context, data, xCentered, yCentered, "#CB5050");
 								ok = 0;
-					
+								System.out.println("new plant ("+new SimpleDateFormat("hh:mm:ss").format(new Date())+")\n");
 							}
 							if (ok == 3) {
 								data.plantOnBoard(view.lineFromY(y),view.columnFromX(x));
 								view.drawOnlyOneCell(context, data, xCentered, yCentered, "#ECB428");
 								ok = 0;
-	
+								System.out.println("new plant ("+new SimpleDateFormat("hh:mm:ss").format(new Date())+")\n");
 							}
 
 						}
@@ -198,8 +237,8 @@ public class SimpleGameController {
 			}
 			
 			
-			
 		}
+        
         
 	}
 

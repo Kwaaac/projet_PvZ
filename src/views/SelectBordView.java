@@ -9,6 +9,10 @@ import java.awt.geom.RectangularShape;
 import models.Coordinates;
 import models.MovingElement;
 import models.SimpleGameData;
+import plants.CherryBomb;
+import plants.Peashooter;
+import plants.Plant;
+import plants.WallNut;
 
 public class SelectBordView extends SimpleGameView{
 	
@@ -72,6 +76,8 @@ public class SelectBordView extends SimpleGameView{
 		return super.drawSelectedCell(i, j);
 	}
 
+	
+	
 	/**
 	 * Draws the game board from its data, using an existing Graphics2D object.
 	 * 
@@ -84,7 +90,7 @@ public class SelectBordView extends SimpleGameView{
 	public void draw(Graphics2D graphics, SimpleGameData data) {
 		// example
 		graphics.setColor(Color.GRAY);
-		System.out.println("Select:" + super.getXOrigin() + " : " + super.getLength() + " ou alors: " + super.getLength()*3);
+//		System.out.println("Select:" + super.getXOrigin() + " : " + super.getLength() + " ou alors: " + super.getLength()*3);
 		graphics.fill(new Rectangle2D.Float(super.getXOrigin(), super.getYOrigin(), super.getWidth(), super.getLength()));
 		//graphics.fill(new Rectangle2D.Float(0, 100, super.getSquareSize(), super.getSquareSize()*3));
 
@@ -116,6 +122,24 @@ public class SelectBordView extends SimpleGameView{
 				}
 			}
 		}
+		
+		int sizeOfPlant = Plant.getSizeOfPlant();
+		int squareSize = super.getSquareSize();
+        graphics.setColor(Color.decode("#90D322"));
+        Peashooter p1 = new Peashooter((int)(squareSize/2)-sizeOfPlant/2,(int)(squareSize/2)+100-sizeOfPlant/2);
+        graphics.draw(p1.draw());
+        graphics.fill(p1.draw());
+        
+        graphics.setColor(Color.decode("#CB5050"));
+        CherryBomb p2 = new CherryBomb((int)(squareSize/2)-sizeOfPlant/2,(int)(squareSize/2)+100+squareSize-sizeOfPlant/2);
+        graphics.draw(p2.draw());
+        graphics.fill(p2.draw());
+        
+        
+        graphics.setColor(Color.decode("#ECB428"));
+        WallNut p3 = new WallNut((int)(squareSize/2)-sizeOfPlant/2,(int)(squareSize/2)+100+squareSize*2-sizeOfPlant/2);
+        graphics.draw(p3.draw());
+        graphics.fill(p3.draw());
 	}
 	
 

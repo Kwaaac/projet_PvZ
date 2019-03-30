@@ -70,6 +70,7 @@ public abstract class SimpleGameView implements GameView {
 	 * @throws IllegalArgumentException if the float coordinate doesn't fit in the
 	 *                                  game board.
 	 */
+	
 	public int columnFromX(float x) {
 		return indexFromReaCoord(x, xOrigin);
 	}

@@ -14,6 +14,11 @@ public abstract class Entities {
 			this.life = life;
 		}
 
+		public Entities(int x, int y, double speed) {
+			this.setX(x);
+			this.y = y;
+		}
+
 		public int getX() {
 			return x;
 		}

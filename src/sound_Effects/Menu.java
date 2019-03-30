@@ -1,4 +1,4 @@
-package Sound_Effects;
+package sound_Effects;
 
 public class Menu {
 

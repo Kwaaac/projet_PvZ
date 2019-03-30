@@ -21,8 +21,7 @@ public class BordView extends SimpleGameView{
 		return new BordView(xOrigin, yOrigin, length, data.getNbColumns() * squareSize, squareSize);
 	}
 	
-	protected int indexFromReaCoord(float coord, int origin) { // attention, il manque des test de validitÃ© des
-																// coordonnées!
+	protected int indexFromReaCoord(float coord, int origin) { // attention, il manque des test de validitÃ© des coordonnées!								
 		return super.indexFromReaCoord(coord, origin);
 	}
 	
@@ -81,7 +80,7 @@ public class BordView extends SimpleGameView{
 	@Override
 	public void draw(Graphics2D graphics, SimpleGameData data) {
 		// example
-		System.out.println("Bord:" + super.getXOrigin() + " : " + super.getWidth());
+//		System.out.println("Bord:" + super.getXOrigin() + " : " + super.getWidth());
 		graphics.setColor(Color.WHITE.darker());
 		for (int i = 0; i <= data.getNbLines(); i++) {
 			graphics.draw(
