@@ -1,6 +1,5 @@
 package Views;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
 
 import Models.MovingElement;
@@ -61,7 +60,7 @@ public interface GameView {
 	 * @param x        the float x-coordinate of the cell.
 	 * @param y        the float y-coordinate of the cell.
 	 */
-	public void drawOnlyOneCell(Graphics2D graphics, SimpleGameData data, int x, int y);
+	public void drawOnlyOneCell(Graphics2D graphics, SimpleGameData data, int x, int y, String s);
 
 	/**
 	 * Draws only the cell specified by the given coordinates in the game board from
@@ -73,8 +72,8 @@ public interface GameView {
 	 * @param y       the float y-coordinate of the cell.
 	 * @param yellow 
 	 */
-	public default void drawOnlyOneCell(ApplicationContext context, SimpleGameData data, int x, int y, Color yellow) {
-		context.renderFrame(graphics -> drawOnlyOneCell(graphics, data, x, y));
+	public default void drawOnlyOneCell(ApplicationContext context, SimpleGameData data, int x, int y, String s) {
+		context.renderFrame(graphics -> drawOnlyOneCell(graphics, data, x, y, s));
 	}
 
 	/**

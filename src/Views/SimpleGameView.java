@@ -155,9 +155,9 @@ public class SimpleGameView implements GameView {
 	 * @param y        the float y-coordinate of the cell.
 	 */
 	@Override
-	public void drawOnlyOneCell(Graphics2D graphics, SimpleGameData data, int x, int y) {
+	public void drawOnlyOneCell(Graphics2D graphics, SimpleGameData data, int x, int y, String s) {
 		int sizeOfPlant = Plant.getSizeOfPlant();
-		graphics.setColor(Color.BLACK);
+		graphics.setColor(Color.decode(s));
 		graphics.fill(new Rectangle2D.Float(x, y, sizeOfPlant, sizeOfPlant));
 	}
 

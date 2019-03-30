@@ -1,14 +1,13 @@
 package Controlers;
 
 import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.MouseInfo;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.Random;
 
 import Models.MovingElement;
 import Models.SimpleGameData;
+import Models.Plants.Plant;
 import Models.Zombies.NormalZombie;
 import Models.Zombies.Zombie;
 import Views.SimpleGameView;
@@ -31,7 +30,6 @@ public class SimpleGameController {
 		// get the size of the screen
 		ScreenInfo screenInfo = context.getScreenInfo();
 		float width = screenInfo.getWidth();
-		float height = screenInfo.getHeight();
 		//System.out.println("size of the screen (" + width + " x " + height + ")");
 
 		SimpleGameData data = new SimpleGameData(5, 8);
@@ -56,11 +54,11 @@ public class SimpleGameController {
         int n1 = 25;
         int ZombieSize = Zombie.getSizeOfZombie();
         int ok = 0;
-        float C1X = 0;
-        float C1Y = 0;
 		//int deathCounter = 0;
+        
         while (true) {
         	view.draw(context, data);
+        	PlantSelectionView.draw(context, data2);
         	ArrayList<Integer> deadPool = new ArrayList<>();
             
             Random rand = new Random();
@@ -72,7 +70,7 @@ public class SimpleGameController {
             }
             
             for (Zombie b : MyZombies) {
-                if(b.getX() < 3*squareSize-squareSize/2){
+                if(b.getX() < xOrigin-squareSize/2){
                     deadPool.add(MyZombies.indexOf(b));
                 }
             }
@@ -99,56 +97,22 @@ public class SimpleGameController {
 			
 			
 			
-			if (action == Action.POINTER_DOWN) {
-				location = event.getLocation();
-				C1X = (int)location.x;
-				C1Y = (int)location.y;
-				StringBuilder str = new StringBuilder("Mon clic : (");
-				str.append(C1X);
-				str.append(", ");
-				str.append(C1Y);
-				str.append(")");
-				System.out.println(str.toString());
-			}
+//			if (action == Action.POINTER_DOWN) {
+//				location = event.getLocation();
+//				float x = location.x;
+//				float y = location.y;
+//				StringBuilder str = new StringBuilder("Mon clic : (");
+//				str.append(x);
+//				str.append(", ");
+//				str.append(y);
+//				str.append(")");
+//				System.out.println(str.toString());
+//			}
 
-			if (0<C1X && C1X<=squareSize && yOrigin<=C1Y && C1Y<=yOrigin+(squareSize*3)) {
-				if (yOrigin<=C1Y && C1Y<=yOrigin+squareSize) {
-					//System.out.println("plant 1");
-					ok = 1;
-				}
-				if (yOrigin+squareSize<=C1Y && C1Y<=yOrigin+squareSize*2) {
-					//System.out.println("plant 2");
-					ok = 2;
-				}
-				if (yOrigin+squareSize*2<=C1Y && C1Y<=yOrigin+squareSize*3) {
-					//System.out.println("plant 3");
-					ok = 3;
-				}
-			}
 			
 			
-			if (ok > 0 && action == Action.POINTER_DOWN) {
-				location = event.getLocation();
-				if (xOrigin<=C1X && C1X<=xOrigin+squareSize*8) {
-					if (yOrigin<=C1Y && C1Y<=yOrigin+squareSize*5) {
-						int x = view.columnFromX(location.x);
-						int y = view.lineFromY(location.y);
-						
-						if (ok == 1) {
-							float X = view.realCoordFromIndex(x, xOrigin);
-							float Y = view.realCoordFromIndex(y, yOrigin);
-							view.drawOnlyOneCell(context, data, (int) X, (int) Y);
-						}
-						if (ok == 2) {
-							System.out.println("2");
-						}
-						if (ok == 3) {
-							System.out.println("3");
-						}
-										
-					}
-				}
-			}
+			
+			
 			
 			if (action != Action.POINTER_DOWN) {
 				continue;
@@ -156,9 +120,36 @@ public class SimpleGameController {
 
 			if (!data.hasASelectedCell()) { // no cell is selected
 				location = event.getLocation();
-				if (xOrigin<=location.x && location.x<=xOrigin+squareSize*8) {
-					if (yOrigin<=location.y && location.y<=yOrigin+squareSize*5) {
-						data.selectCell(view.lineFromY(location.y), view.columnFromX(location.x));
+				float x = location.x;
+				float y = location.y;
+				
+				if (xOrigin<=x && x<=xOrigin+squareSize*8) {
+					if (yOrigin<=y && y<=yOrigin+squareSize*5) {
+						
+						data.selectCell(view.lineFromY(y), view.columnFromX(x));
+						
+						float X = view.realCoordFromIndex(view.columnFromX(location.x), xOrigin);
+						float Y = view.realCoordFromIndex(view.lineFromY(location.y), yOrigin);
+						int sizeOfPlant = Plant.getSizeOfPlant();
+						
+						int xCentered = (int) (X+(squareSize/2)-(sizeOfPlant/2));
+						int yCentered = (int) (Y-(squareSize/2)+(sizeOfPlant/2));
+						
+						if (ok != 0) {
+							
+							System.out.println(X+","+Y);
+//							System.out.println(ok);
+							if (ok == 1) {
+								view.drawOnlyOneCell(context, data, xCentered, yCentered, "#90D322");
+							}
+							if (ok == 2) {
+								view.drawOnlyOneCell(context, data, xCentered, yCentered, "#CB5050");
+							}
+							if (ok == 3) {
+								view.drawOnlyOneCell(context, data, xCentered, yCentered, "#ECB428");
+							}
+
+						}
 					}
 				}
 			} else {
@@ -167,9 +158,27 @@ public class SimpleGameController {
 			
 			if (!data2.hasASelectedCell()) { // no cell is selected
 				location = event.getLocation();
-				if (0<=location.x && location.x<=squareSize) {
-					if (yOrigin<=location.y && location.y<=yOrigin+squareSize*3) {
-						data2.selectCell(PlantSelectionView.lineFromY(location.y), PlantSelectionView.columnFromX(location.x));
+				float x = location.x;
+				float y = location.y;
+				
+				if (0<=x && x<=squareSize) {
+					if (yOrigin<=y && y<=yOrigin+squareSize*3) {
+						
+						data2.selectCell(PlantSelectionView.lineFromY(y), PlantSelectionView.columnFromX(x));
+
+						if (yOrigin<=y && y<=yOrigin+squareSize) {
+							//System.out.println("plant 1");
+							ok = 1;
+						}
+						if (yOrigin+squareSize<=y && y<=yOrigin+squareSize*2) {
+							//System.out.println("plant 2");
+							ok = 2;
+						}
+						if (yOrigin+squareSize*2<=y && y<=yOrigin+squareSize*3) {
+							//System.out.println("plant 3");
+							ok = 3;
+						}
+						
 					}
 				}
 			} else {
@@ -177,7 +186,7 @@ public class SimpleGameController {
 			}
 			
 			
-			PlantSelectionView.draw(context, data2);
+			
 		}
         
 	}

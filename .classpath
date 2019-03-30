@@ -6,6 +6,6 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="/projetPvZ/zen5.jar"/>
+	<classpathentry kind="lib" path="C:/Users/PC/Desktop/école/Jacques/Etude/Java/Project/projet_PvZ/zen5.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
