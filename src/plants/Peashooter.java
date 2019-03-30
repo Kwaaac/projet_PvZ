@@ -1,4 +1,4 @@
-package Models.Plants;
+package plants;
 
 import java.awt.geom.Rectangle2D;
 

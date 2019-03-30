@@ -1,21 +1,21 @@
-package Controlers;
+package controlers;
 
 import java.awt.Color;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.Random;
 
-import Models.MovingElement;
-import Models.SimpleGameData;
-import Models.Plants.Plant;
-import Models.Zombies.NormalZombie;
-import Models.Zombies.Zombie;
-import Views.SimpleGameView;
 import fr.umlv.zen5.Application;
 import fr.umlv.zen5.ApplicationContext;
 import fr.umlv.zen5.Event;
 import fr.umlv.zen5.ScreenInfo;
 import fr.umlv.zen5.Event.Action;
+import models.MovingElement;
+import models.SimpleGameData;
+import plants.Plant;
+import zombies.NormalZombie;
+import zombies.Zombie;
+import views.SimpleGameView;
 
 
 public class SimpleGameController {

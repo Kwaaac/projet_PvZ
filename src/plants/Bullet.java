@@ -1,9 +1,9 @@
-package Models.Plants;
+package plants;
 
 import java.awt.geom.Ellipse2D;
 
-import Models.Entities;
-import Models.MovingElement;
+import models.Entities;
+import models.MovingElement;
 
 public abstract class Bullet extends Entities implements MovingElement{
 

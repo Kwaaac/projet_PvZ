@@ -1,4 +1,4 @@
-package Models;
+package models;
 
 import java.awt.geom.Ellipse2D;
 

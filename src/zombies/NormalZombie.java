@@ -1,4 +1,4 @@
-package Models.Zombies;
+package zombies;
 
 import java.awt.geom.Ellipse2D;
 

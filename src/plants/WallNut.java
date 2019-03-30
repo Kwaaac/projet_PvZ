@@ -1,13 +1,13 @@
-package Models.Plants;
+package plants;
 
 import java.awt.geom.Rectangle2D;
 
-public class CherryBomb extends Plant{
-
-	private final String name = "CheeryBomb";
+public class WallNut extends Plant{
+	private final String name = "WallNut";
 	
-	public CherryBomb(int x, int y) {
-		super(x, y, 1800, 0);
+	
+	public WallNut(int x, int y) {
+		super(x, y, 0, 3600);
 		// TODO Auto-generated constructor stub
 	}
 	

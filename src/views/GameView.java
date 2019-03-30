@@ -1,10 +1,10 @@
-package Views;
+package views;
 
 import java.awt.Graphics2D;
 
-import Models.MovingElement;
-import Models.SimpleGameData;
 import fr.umlv.zen5.ApplicationContext;
+import models.MovingElement;
+import models.SimpleGameData;
 
 /**
  * The GameView class is in charge of the graphical view of a clicky game.

@@ -1,8 +1,8 @@
-package Models.Plants;
+package plants;
 
 import java.awt.geom.Rectangle2D;
 
-import Models.Entities;
+import models.Entities;
 
 public abstract class Plant extends Entities{
 	private final String type = "Plant"; 

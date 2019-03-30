@@ -1,4 +1,4 @@
-package Views;
+package views;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -6,15 +6,15 @@ import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.RectangularShape;
 
-import Models.Coordinates;
-import Models.MovingElement;
-import Models.SimpleGameData;
-import Models.Plants.CherryBomb;
-import Models.Plants.Peashooter;
-import Models.Plants.Plant;
-import Models.Plants.WallNut;
-import Models.Zombies.ConeheadZombie;
-import Models.Zombies.FlagZombie;
+import models.Coordinates;
+import models.MovingElement;
+import models.SimpleGameData;
+import plants.CherryBomb;
+import plants.Peashooter;
+import plants.Plant;
+import plants.WallNut;
+import zombies.ConeheadZombie;
+import zombies.FlagZombie;
 
 public class SimpleGameView implements GameView {
 	private final int xOrigin;

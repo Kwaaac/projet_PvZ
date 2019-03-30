@@ -1,7 +1,7 @@
-package Models.Zombies;
+package zombies;
 
-import Models.Entities;
-import Models.MovingElement;
+import models.Entities;
+import models.MovingElement;
 
 public abstract class Zombie extends Entities implements MovingElement{
 	private final String type = "Zombie";
