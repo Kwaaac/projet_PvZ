@@ -19,9 +19,11 @@ import models.MovingElement;
 import models.SimpleGameData;
 
 import plants.Bullet;
+import plants.CherryBomb;
+import plants.Peashooter;
 import plants.Plant;
 import plants.Projectile;
-
+import plants.WallNut;
 import zombies.NormalZombie;
 import zombies.Zombie;
 import views.BordView;
@@ -67,6 +69,7 @@ public class SimpleGameController {
         
         int n1 = 25;
         int ZombieSize = Zombie.getSizeOfZombie();
+        int BulletSize = Bullet.getSizeOfProjectile();
         int ok = 0;
 //		int deathCounterZombie = 0;
 //		int deathCounterPlant = 0;
@@ -103,7 +106,7 @@ public class SimpleGameController {
 				for(Projectile b : MyBullet) {
 					i++;
 					System.out.println("zombie "+j+":"+z.getX()+" "+"bullet "+i+":"+b.getX());
-					if(z.getX() == b.getX()) { // il faut ajouter aux getX le rayon des zombie et des bullet pour detecter la collision entre l'extremiter des ellipse
+					if(z.getX()-ZombieSize/2 == b.getX()) { // il faut ajouter aux getX le rayon des zombie et des bullet pour detecter la collision entre l'extremiter des ellipse
 						System.out.println("conflit start:\n\tzombie damage"+z.getDamage()+"zombie life "+z.getLife()+"\n\tbullet damage"+b.getDamage()+" bullet life"+b.getLife());
 						b.conflict(z);
 						System.out.println("conflit end:\n\tzombie damage"+z.getDamage()+"zombie life "+z.getLife()+"\n\tbullet damage"+b.getDamage()+" bullet life"+b.getLife());
@@ -235,6 +238,7 @@ public class SimpleGameController {
 							if (ok == 1) {
 								data.plantOnBoard(view.lineFromY(y),view.columnFromX(x));
 								view.drawPeashooter(context, data, xCentered, yCentered, "#90D322");
+								MyPlants.add(new Peashooter(xCentered,yCentered));
 								MyBullet.add(new Bullet(xCentered+sizeOfPlant, yCentered+(sizeOfPlant/2)-10));
 								ok = 0;
 								System.out.println("new plant ("+new SimpleDateFormat("hh:mm:ss").format(new Date())+")\n");
@@ -242,12 +246,14 @@ public class SimpleGameController {
 							if (ok == 2) {
 								data.plantOnBoard(view.lineFromY(y),view.columnFromX(x));
 								view.drawCherryBomb(context, data, xCentered, yCentered, "#CB5050");
+								MyPlants.add(new CherryBomb(xCentered,yCentered));
 								ok = 0;
 								System.out.println("new plant ("+new SimpleDateFormat("hh:mm:ss").format(new Date())+")\n");
 							}
 							if (ok == 3) {
 								data.plantOnBoard(view.lineFromY(y),view.columnFromX(x));
 								view.drawWallNut(context, data, xCentered, yCentered, "#ECB428");
+								MyPlants.add(new WallNut(xCentered,yCentered));
 								ok = 0;
 								System.out.println("new plant ("+new SimpleDateFormat("hh:mm:ss").format(new Date())+")\n");
 							}
