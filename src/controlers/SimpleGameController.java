@@ -3,6 +3,8 @@ package controlers;
 import java.awt.Color;
 import java.awt.geom.Point2D;
 import java.text.SimpleDateFormat;
+import java.time.Duration;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Random;
@@ -47,10 +49,12 @@ public class SimpleGameController {
 		SimpleGameData data = new SimpleGameData(5, 8);
 		SimpleGameData data2 = new SimpleGameData(3, 1);
 		
+		
 		data.setRandomMatrix();
 		data2.setRandomMatrix();
 		int yOrigin = 100;
 		int xOrigin = 450;
+		
 		
 		SelectBordView PlantSelectionView = SelectBordView.initGameGraphics(0, yOrigin, 540, data2);
 		BordView view = BordView.initGameGraphics(xOrigin, yOrigin, 900, data);
@@ -67,6 +71,7 @@ public class SimpleGameController {
 		ArrayList<Plant> MyPlants = new ArrayList<>();
 		ArrayList<Projectile> MyBullet = new ArrayList<>();
         
+		
         int n1 = 25;
         int ZombieSize = Zombie.getSizeOfZombie();
         int BulletSize = Bullet.getSizeOfProjectile();
@@ -75,12 +80,13 @@ public class SimpleGameController {
         int cpt = 0;
 //		int deathCounterZombie = 0;
 //		int deathCounterPlant = 0;
-		int time = 0;
+        Instant time = Instant.now();
+        int timeS=0;
         System.out.println(("Journal de bord\n-+-+-+-+-+-+-+-+-+-"));
         
         while (true) {
         	cpt++;
-        	time++;
+        	timeS++;
         	view.draw(context, data);
         	
         	PlantSelectionView.draw(context, data2);
@@ -102,16 +108,24 @@ public class SimpleGameController {
          
 /*---------------------------- je gère les conflits --------------------------*/
 			int j=0;
+			
 			for(Zombie z : MyZombies) {
 				j ++;
 				int i = 0;
 				for(Projectile b : MyBullet) {
 					i++;
-//					System.out.println("zombie "+j+":"+z.getX()+" "+"bullet "+i+":"+b.getX());
-					if(view.columnFromX(z.getX()-ZombieSize) == view.columnFromX(b.getX()) && view.lineFromY(z.getY()) == view.lineFromY(b.getY())) { // il faut ajouter aux getX le rayon des zombie et des bullet pour detecter la collision entre l'extremiter des ellipse
-						System.out.println("conflit start:\n\tzombie damage"+z.getDamage()+"zombie life "+z.getLife()+"\n\tbullet damage"+b.getDamage()+" bullet life"+b.getLife());
+					
+					float X = view.realCoordFromIndex(view.columnFromX(z.getX()), xOrigin);
+					float X2 = view.realCoordFromIndex(view.columnFromX(b.getX()), xOrigin);
+					int xCentered = (int) (X+(squareSize/2)-(ZombieSize/2));
+					int xCentered2 = (int) (X2+(squareSize/2)-(ZombieSize/2));
+					
+					if(xCentered == xCentered2) {
+						if (view.lineFromY(z.getY()) == view.lineFromY(b.getY())) { // il faut ajouter aux getX le rayon des zombie et des bullet pour detecter la collision entre l'extremiter des ellipse
+//						System.out.println("conflit start:\n\tzombie damage"+z.getDamage()+"zombie life "+z.getLife()+"\n\tbullet damage"+b.getDamage()+" bullet life"+b.getLife());
 						b.conflict(z);
-						System.out.println("conflit end:\n\tzombie damage"+z.getDamage()+"zombie life "+z.getLife()+"\n\tbullet damage"+b.getDamage()+" bullet life"+b.getLife());
+//						System.out.println("conflit end:\n\tzombie damage"+z.getDamage()+"zombie life "+z.getLife()+"\n\tbullet damage"+b.getDamage()+" bullet life"+b.getLife());
+						}
 					}
 				}
 //				for(Plant p : MyPlants) {    // a completer quand on aura des plante dans le plateau
@@ -126,18 +140,18 @@ public class SimpleGameController {
 			        
 			
 			for (Zombie b : MyZombies) {
-                if(b.getX() < xOrigin-squareSize/2 || b.getLife() <= 0){
-                	System.out.println(b+"meurt");
+                if(b.getX() < xOrigin-squareSize/2 || b.getLife() <= 0) {
+//                	System.out.println(b+"meurt");
                     deadPoolZ.add(MyZombies.indexOf(b));
-                    System.out.println(deadPoolZ);
+//                    System.out.println(deadPoolZ);
                 }
             }
             
             for (Projectile b : MyBullet) {
                 if(b.getX() > xOrigin+squareSize*8 || b.getLife() <= 0){
-                	System.out.println(b+"meurt");
+//                	System.out.println(b+"meurt");
                     deadPoolBullet.add(MyBullet.indexOf(b));
-                    System.out.println(deadPoolBullet);
+//                    System.out.println(deadPoolBullet);
                 }
             }
 
@@ -176,10 +190,10 @@ public class SimpleGameController {
 /*----------------------------Shooting in continue----------------------------*/
             for (Plant p : MyPlants) {
             	if (p.toString().equals("Type: Plant--Peashooter")) {
-            		System.out.println(p.getSpeedShooting());
-            		if (time == p.getSpeedShooting()) {
+            		System.out.println(timeS);
+            		if (timeS == 100) {
             			MyBullet.add(new Bullet(p.getX()+sizeOfPlant, p.getY()+(sizeOfPlant/2)-10));
-            			time = 0;
+            			timeS = 0;
             		}
             	}
             }
@@ -195,6 +209,14 @@ public class SimpleGameController {
 
 			Action action = event.getAction();
 			if (action == Action.KEY_PRESSED || action == Action.KEY_RELEASED) {
+				Duration timeEnd = Duration.between(time,Instant.now());
+				
+				int h = 0, m = 0, s = 0;
+				h=(int) (timeEnd.getSeconds() / 3600);
+				m=(int) ((timeEnd.getSeconds() % 3600) / 60);
+				s=(int) (((timeEnd.getSeconds() % 3600) % 60));
+				
+				System.out.println("-+-+-+-+-+-+-+-+-+-\nLa partie à durée : "+h+" heure(s) "+m+" minute(s) "+s+" seconde(s)");
 				context.exit(0);
 				return;
 			}
@@ -305,5 +327,6 @@ public class SimpleGameController {
 		// pour changer de jeu, remplacer stupidGame par le nom de la mï¿½thode de jeu
 		// (elle doit avoir extaement la mieme en-tï¿½te).
 		Application.run(Color.LIGHT_GRAY, SimpleGameController::simpleGame); // attention, utilisation d'une lambda.
+		
 	}
 }
