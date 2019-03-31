@@ -87,6 +87,7 @@ public class SimpleGameController {
         while (true) {
         	cpt++;
         	timeS++;
+        	
         	view.draw(context, data);
         	
         	PlantSelectionView.draw(context, data2);
@@ -190,10 +191,12 @@ public class SimpleGameController {
 /*----------------------------Shooting in continue----------------------------*/
             for (Plant p : MyPlants) {
             	if (p.toString().equals("Type: Plant--Peashooter")) {
-            		System.out.println(timeS);
-            		if (timeS == 100) {
+//            		System.out.println(timeS);
+            		
+            		p.setSpeedShooting(timeS);
+            		if (p.readyToshot(timeS)) {
             			MyBullet.add(new Bullet(p.getX()+sizeOfPlant, p.getY()+(sizeOfPlant/2)-10));
-            			timeS = 0;
+            			p.setSpeedShooting(0);
             		}
             	}
             }
