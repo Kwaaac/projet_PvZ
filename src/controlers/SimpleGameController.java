@@ -82,6 +82,7 @@ public class SimpleGameController {
 //		int deathCounterPlant = 0;
         Instant time = Instant.now();
         int timeS=0;
+        StringBuilder str = new StringBuilder("Journal de bord\n-+-+-+-+-+-+-+-+-+-");
         System.out.println(("Journal de bord\n-+-+-+-+-+-+-+-+-+-"));
         
         while (true) {
@@ -192,9 +193,9 @@ public class SimpleGameController {
             for (Plant p : MyPlants) {
             	if (p.toString().equals("Type: Plant--Peashooter")) {
 //            		System.out.println(timeS);
-            		
-            		p.setSpeedShooting(timeS);
-            		if (p.readyToshot(timeS)) {
+            		int help = p.getSpeedShooting();
+            		p.setSpeedShooting(help+=1);
+            		if (p.readyToshot()) {
             			MyBullet.add(new Bullet(p.getX()+sizeOfPlant, p.getY()+(sizeOfPlant/2)-10));
             			p.setSpeedShooting(0);
             		}
@@ -267,6 +268,7 @@ public class SimpleGameController {
 								data.plantOnBoard(view.lineFromY(y),view.columnFromX(x));
 								view.drawPeashooter(context, data, xCentered, yCentered, "#90D322");
 								MyPlants.add(new Peashooter(xCentered,yCentered));
+								
 								ok = 0;
 								System.out.println("new plant ("+new SimpleDateFormat("hh:mm:ss").format(new Date())+")\n");
 							}
