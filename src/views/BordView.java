@@ -1,5 +1,6 @@
 package views;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Line2D;
@@ -83,6 +84,7 @@ public class BordView extends SimpleGameView{
 //		System.out.println("Bord:" + super.getXOrigin() + " : " + super.getWidth());
 		graphics.setColor(Color.WHITE.darker());
 		for (int i = 0; i <= data.getNbLines(); i++) {
+			graphics.setStroke(new BasicStroke(4));
 			graphics.draw(
 					new Line2D.Float(super.getXOrigin(), super.getYOrigin() + i * super.getSquareSize(), super.getXOrigin() + super.getWidth(), super.getYOrigin() + i * super.getSquareSize()));
 		}
