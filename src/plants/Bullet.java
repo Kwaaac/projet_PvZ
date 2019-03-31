@@ -8,7 +8,7 @@ public class Bullet extends Projectile {
 	private final String name = "Bullet";
 	
 	public Bullet(int x, int y) {
-		super(x, y, 1 , 1 , 2.7);
+		super(x, y, 900 , 1 , 2.7);
 	}
 
 	@Override

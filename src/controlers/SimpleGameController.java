@@ -94,7 +94,6 @@ public class SimpleGameController {
             
             if(n1 == n) {
                 MyZombies.add(new NormalZombie((int) width, yOrigin+RandomPosGenerator()*squareSize+(squareSize/2)-ZombieSize/2));
-                MyEntities.add(new NormalZombie((int) width, yOrigin+RandomPosGenerator()*squareSize+(squareSize/2)-ZombieSize/2));
                 System.out.println("new zombie ("+new SimpleDateFormat("hh:mm:ss").format(new Date())+")\n");
             }
  
@@ -122,35 +121,21 @@ public class SimpleGameController {
 /*----------------------------------------------------------------------------*/ 
 			
 /*--------------- je place les element mort dans les dead pool ---------------*/
-			
-			for(Entities e : MyEntities) { 
-				if(e.getLife() <=0) {
-					if(e instanceof Zombie) {
-						deadPoolZ.add(MyZombies.indexOf(e));
-					}else if(e instanceof Plant){
-						deadPoolP.add(MyPlants.indexOf(e));
-					}else if(e instanceof Projectile){
-						deadPoolBullet.add(MyBullet.indexOf(e));
-					}
-				}
-			}
-			
+			        
 			
 			for (Zombie b : MyZombies) {
-                if(b.getX() < xOrigin-squareSize/2){
+                if(b.getX() < xOrigin-squareSize/2 || b.getLife() <= 0){
+                	System.out.println(b+"meurt");
                     deadPoolZ.add(MyZombies.indexOf(b));
-                }
-            }
-            
-            for (Plant p : MyPlants) {
-                if(p.getX() < xOrigin-squareSize/2){
-                    deadPoolP.add(MyPlants.indexOf(p));
+                    System.out.println(deadPoolZ);
                 }
             }
             
             for (Projectile b : MyBullet) {
-                if(b.getX() < xOrigin-squareSize/2){
+                if(b.getX() > xOrigin+squareSize*8 || b.getLife() <= 0){
+                	System.out.println(b+"meurt");
                     deadPoolBullet.add(MyBullet.indexOf(b));
+                    System.out.println(deadPoolBullet);
                 }
             }
 
@@ -181,6 +166,10 @@ public class SimpleGameController {
                 view.moveAndDrawElement(context, data, b);
             }
             
+            for (MovingElement b : MyBullet) {
+                view.moveAndDrawElement(context, data, b);
+            }
+            
             
 /*----------------------------Shooting in continue----------------------------*/
             for (Plant p : MyPlants) {
@@ -195,9 +184,7 @@ public class SimpleGameController {
 /*----------------------------------------------------------------------------*/
             
             
-            for (MovingElement b : MyBullet) {
-                view.moveAndDrawElement(context, data, b);
-            }
+
 			
 			Event event = context.pollOrWaitEvent(20); // modifier pour avoir un affichage fluide
 			if (event == null) { // no event
