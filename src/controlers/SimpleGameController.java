@@ -26,6 +26,8 @@ import plants.Peashooter;
 import plants.Plant;
 import plants.Projectile;
 import plants.WallNut;
+import zombies.ConeheadZombie;
+import zombies.FlagZombie;
 import zombies.NormalZombie;
 import zombies.Zombie;
 import views.BordView;
@@ -72,24 +74,22 @@ public class SimpleGameController {
 		ArrayList<Projectile> MyBullet = new ArrayList<>();
         
 		
-        int n1 = 25;
+        int spawnRate = 1;
         int ZombieSize = Zombie.getSizeOfZombie();
         int BulletSize = Bullet.getSizeOfProjectile();
         int sizeOfPlant = Plant.getSizeOfPlant();
         int ok = 0;
-        int cpt = 0;
 //		int deathCounterZombie = 0;
 //		int deathCounterPlant = 0;
         Instant time = Instant.now();
-        int timeS=0;
-        StringBuilder str = new StringBuilder("Journal de bord\n-+-+-+-+-+-+-+-+-+-");
+
+        StringBuilder str = new StringBuilder("Journal de bord\n-+-+-+-+-+-+-+-+-+-\n");
+        int day = 0;
+        
         
         while (true) {
-        	cpt++;
-        	timeS++;
         	
         	view.draw(context, data);
-        	
         	PlantSelectionView.draw(context, data2);
         	
         	
@@ -97,16 +97,27 @@ public class SimpleGameController {
         	ArrayList<Integer> deadPoolP = new ArrayList<>();
         	ArrayList<Integer> deadPoolBullet = new ArrayList<>();
             
+        	
+        	if (day == 0) {
+        		MyZombies.add(new FlagZombie((int) width, yOrigin+RandomPosGenerator()*squareSize+(squareSize/2)-ZombieSize/2));
+                str.append("new FlagZombie ("+new SimpleDateFormat("hh:mm:ss").format(new Date())+")\n");
+                day+=1;
+        	}
+        	
+        	
             Random rand = new Random();
-            
-            int n = rand.nextInt(30);
-            
-            if(n1 == n) {
+            int n = rand.nextInt(1000);
+            int n2 = rand.nextInt(2000);
+            if(spawnRate == n) {
                 MyZombies.add(new NormalZombie((int) width, yOrigin+RandomPosGenerator()*squareSize+(squareSize/2)-ZombieSize/2));
-                str.append("new zombie ("+new SimpleDateFormat("hh:mm:ss").format(new Date())+")\n");
+                str.append("new NormalZombie ("+new SimpleDateFormat("hh:mm:ss").format(new Date())+")\n");
+            }
+            if(spawnRate == n2) {
+                MyZombies.add(new ConeheadZombie((int) width, yOrigin+RandomPosGenerator()*squareSize+(squareSize/2)-ZombieSize/2));
+                str.append("new ConeheadZombie ("+new SimpleDateFormat("hh:mm:ss").format(new Date())+")\n");
             }
  
-         
+            
 /*---------------------------- je gère les conflits --------------------------*/
 			int j=0;
 			
@@ -135,8 +146,7 @@ public class SimpleGameController {
 //					}
 //				}
 			}
-/*----------------------------------------------------------------------------*/ 
-			
+/*----------------------------------------------------------------------------*/ 		
 /*--------------- je place les element mort dans les dead pool ---------------*/
 			        
 			
@@ -156,7 +166,23 @@ public class SimpleGameController {
                 }
             }
 
-            
+/*----------------------------------------------------------------------------*/           
+/*------------------------------- WIN / LOOSE --------------------------------*/
+            for (Zombie b : MyZombies) {
+                if(b.getX() < xOrigin-squareSize/2) {
+                	Duration timeEnd = Duration.between(time,Instant.now());
+    				
+    				int h = 0, m = 0, s = 0;
+    				h=(int) (timeEnd.getSeconds() / 3600);
+    				m=(int) ((timeEnd.getSeconds() % 3600) / 60);
+    				s=(int) (((timeEnd.getSeconds() % 3600) % 60));
+    				
+    				str.append("-+-+-+-+-+-+-+-+-+-\nVous avez perdu...\nLa partie à durée : "+h+" heure(s) "+m+" minute(s) "+s+" seconde(s)");
+    				System.out.println(str.toString());
+    				context.exit(0);
+    				return;
+                }
+            }
 /*----------------------------------------------------------------------------*/           
 /*-------------------- je détruit tout les elements morts --------------------*/           
             
@@ -180,7 +206,15 @@ public class SimpleGameController {
             
                 
             for (MovingElement b : MyZombies) {
-                view.moveAndDrawElement(context, data, b);
+            	if (b instanceof NormalZombie) {
+            		view.moveAndDrawElement(context, data, b);
+            	}
+            	if (b instanceof ConeheadZombie) {
+            		view.moveAndDrawElement(context, data, b);
+            	}
+            	if (b instanceof FlagZombie) {
+            		view.moveAndDrawElement(context, data, b);
+            	}
             }
             
             for (MovingElement b : MyBullet) {
@@ -190,7 +224,7 @@ public class SimpleGameController {
             
 /*----------------------------Shooting in continue----------------------------*/
             for (Plant p : MyPlants) {
-            	if (p.toString().equals("Type: Plant--Peashooter")) {
+            	if (p instanceof Peashooter) {
 //            		str.append(timeS);
             		int help = p.getSpeedShooting();
             		p.setSpeedShooting(help+=1);
@@ -322,7 +356,10 @@ public class SimpleGameController {
 			} else {
 				data2.unselect();
 			}
-		
+			
+			
+			
+			
 		}
 	}
 

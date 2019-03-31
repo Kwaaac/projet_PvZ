@@ -11,6 +11,7 @@ import plants.Plant;
 import plants.Projectile;
 import zombies.ConeheadZombie;
 import zombies.FlagZombie;
+import zombies.NormalZombie;
 
 public abstract class SimpleGameView implements GameView {
 	private final int xOrigin;
@@ -149,18 +150,21 @@ public abstract class SimpleGameView implements GameView {
 		graphics.fill(moving.draw());
 		moving.move();
 		if (moving instanceof FlagZombie) {
-			graphics.setColor(Color.RED);
+			graphics.setColor(Color.WHITE);
 			graphics.fill(moving.draw());
 		}
 		if (moving instanceof ConeheadZombie) {
 			graphics.setColor(Color.RED.darker());
 			graphics.fill(moving.draw());
 		}
+		if (moving instanceof NormalZombie) {
+			graphics.setColor(Color.BLACK);
+			graphics.fill(moving.draw());
+		}
 		if (moving instanceof Projectile) {
 			graphics.setColor(Color.BLUE);
 			graphics.fill(moving.draw());
 		}
-		graphics.setColor(Color.BLACK);
-		graphics.fill(moving.draw());
+
 	}
 }

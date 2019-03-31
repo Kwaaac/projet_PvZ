@@ -6,7 +6,7 @@ public class ConeheadZombie extends Zombie {
 
 	private final String name = "Conehead Zombie";
 
-	public ConeheadZombie(int x, int y, int damage, int life, int speed) {
+	public ConeheadZombie(int x, int y) {
 		super(x, y, 100, 560, -2.7);
 	}
 

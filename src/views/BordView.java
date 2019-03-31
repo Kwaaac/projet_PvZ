@@ -80,7 +80,7 @@ public class BordView extends SimpleGameView{
 	
 	@Override
 	public void draw(Graphics2D graphics, SimpleGameData data) {
-		// example
+//		example
 //		System.out.println("Bord:" + super.getXOrigin() + " : " + super.getWidth());
 		graphics.setColor(Color.WHITE.darker());
 		for (int i = 0; i <= data.getNbLines(); i++) {

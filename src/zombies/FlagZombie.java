@@ -6,8 +6,8 @@ public class FlagZombie extends Zombie{
 
 	private final String name = "Flag Zombie";
 	
-	public FlagZombie(int x, int y, int damage, int life, int speed) {
-		super(x, y, 100, 200, -2);
+	public FlagZombie(int x, int y) {
+		super(x, y, 100, 200, -3.7);
 	}
 	
 	@Override
