@@ -44,7 +44,7 @@ public class SimpleGameController {
 		// get the size of the screen
 		ScreenInfo screenInfo = context.getScreenInfo();
 		float width = screenInfo.getWidth();
-		//System.out.println("size of the screen (" + width + " x " + height + ")");
+		//str.append("size of the screen (" + width + " x " + height + ")");
 
 		SimpleGameData data = new SimpleGameData(5, 8);
 		SimpleGameData data2 = new SimpleGameData(3, 1);
@@ -83,7 +83,6 @@ public class SimpleGameController {
         Instant time = Instant.now();
         int timeS=0;
         StringBuilder str = new StringBuilder("Journal de bord\n-+-+-+-+-+-+-+-+-+-");
-        System.out.println(("Journal de bord\n-+-+-+-+-+-+-+-+-+-"));
         
         while (true) {
         	cpt++;
@@ -104,7 +103,7 @@ public class SimpleGameController {
             
             if(n1 == n) {
                 MyZombies.add(new NormalZombie((int) width, yOrigin+RandomPosGenerator()*squareSize+(squareSize/2)-ZombieSize/2));
-                System.out.println("new zombie ("+new SimpleDateFormat("hh:mm:ss").format(new Date())+")\n");
+                str.append("new zombie ("+new SimpleDateFormat("hh:mm:ss").format(new Date())+")\n");
             }
  
          
@@ -124,9 +123,9 @@ public class SimpleGameController {
 					
 					if(xCentered == xCentered2) {
 						if (view.lineFromY(z.getY()) == view.lineFromY(b.getY())) { // il faut ajouter aux getX le rayon des zombie et des bullet pour detecter la collision entre l'extremiter des ellipse
-//						System.out.println("conflit start:\n\tzombie damage"+z.getDamage()+"zombie life "+z.getLife()+"\n\tbullet damage"+b.getDamage()+" bullet life"+b.getLife());
+//						str.append("conflit start:\n\tzombie damage"+z.getDamage()+"zombie life "+z.getLife()+"\n\tbullet damage"+b.getDamage()+" bullet life"+b.getLife());
 						b.conflict(z);
-//						System.out.println("conflit end:\n\tzombie damage"+z.getDamage()+"zombie life "+z.getLife()+"\n\tbullet damage"+b.getDamage()+" bullet life"+b.getLife());
+//						str.append("conflit end:\n\tzombie damage"+z.getDamage()+"zombie life "+z.getLife()+"\n\tbullet damage"+b.getDamage()+" bullet life"+b.getLife());
 						}
 					}
 				}
@@ -143,17 +142,17 @@ public class SimpleGameController {
 			
 			for (Zombie b : MyZombies) {
                 if(b.getX() < xOrigin-squareSize/2 || b.getLife() <= 0) {
-//                	System.out.println(b+"meurt");
+//                	str.append(b+"meurt");
                     deadPoolZ.add(MyZombies.indexOf(b));
-//                    System.out.println(deadPoolZ);
+//                    str.append(deadPoolZ);
                 }
             }
             
             for (Projectile b : MyBullet) {
                 if(b.getX() > xOrigin+squareSize*8 || b.getLife() <= 0){
-//                	System.out.println(b+"meurt");
+//                	str.append(b+"meurt");
                     deadPoolBullet.add(MyBullet.indexOf(b));
-//                    System.out.println(deadPoolBullet);
+//                    str.append(deadPoolBullet);
                 }
             }
 
@@ -164,13 +163,13 @@ public class SimpleGameController {
             for (int d : deadPoolZ) {
             	MyZombies.remove(d);
 //            	deathCounterZombie+=1;
-            	System.out.println("zombie killed ("+new SimpleDateFormat("hh:mm:ss").format(new Date())+")\n");
+            	str.append("zombie killed ("+new SimpleDateFormat("hh:mm:ss").format(new Date())+")\n");
             }
             
             for (int p : deadPoolP) {
             	MyPlants.remove(p);
 //            	deathCounterPlant+=1;
-            	System.out.println("plant killed ("+new SimpleDateFormat("hh:mm:ss").format(new Date())+")\n");
+            	str.append("plant killed ("+new SimpleDateFormat("hh:mm:ss").format(new Date())+")\n");
             }
             
             for (int d : deadPoolBullet) {
@@ -192,7 +191,7 @@ public class SimpleGameController {
 /*----------------------------Shooting in continue----------------------------*/
             for (Plant p : MyPlants) {
             	if (p.toString().equals("Type: Plant--Peashooter")) {
-//            		System.out.println(timeS);
+//            		str.append(timeS);
             		int help = p.getSpeedShooting();
             		p.setSpeedShooting(help+=1);
             		if (p.readyToshot()) {
@@ -220,7 +219,8 @@ public class SimpleGameController {
 				m=(int) ((timeEnd.getSeconds() % 3600) / 60);
 				s=(int) (((timeEnd.getSeconds() % 3600) % 60));
 				
-				System.out.println("-+-+-+-+-+-+-+-+-+-\nLa partie à durée : "+h+" heure(s) "+m+" minute(s) "+s+" seconde(s)");
+				str.append("-+-+-+-+-+-+-+-+-+-\nLa partie à durée : "+h+" heure(s) "+m+" minute(s) "+s+" seconde(s)");
+				System.out.println(str.toString());
 				context.exit(0);
 				return;
 			}
@@ -236,7 +236,7 @@ public class SimpleGameController {
 //				str.append(", ");
 //				str.append(y);
 //				str.append(")");
-//				System.out.println(str.toString());
+//				str.append(str.toString());
 //			}
 
 			
@@ -268,23 +268,23 @@ public class SimpleGameController {
 								data.plantOnBoard(view.lineFromY(y),view.columnFromX(x));
 								view.drawPeashooter(context, data, xCentered, yCentered, "#90D322");
 								MyPlants.add(new Peashooter(xCentered,yCentered));
-								
+								MyBullet.add(new Bullet(xCentered+sizeOfPlant, yCentered+(sizeOfPlant/4)+10));
 								ok = 0;
-								System.out.println("new plant ("+new SimpleDateFormat("hh:mm:ss").format(new Date())+")\n");
+								str.append("new plant ("+new SimpleDateFormat("hh:mm:ss").format(new Date())+")\n");
 							}
 							if (ok == 2) {
 								data.plantOnBoard(view.lineFromY(y),view.columnFromX(x));
 								view.drawCherryBomb(context, data, xCentered, yCentered, "#CB5050");
 								MyPlants.add(new CherryBomb(xCentered,yCentered));
 								ok = 0;
-								System.out.println("new plant ("+new SimpleDateFormat("hh:mm:ss").format(new Date())+")\n");
+								str.append("new plant ("+new SimpleDateFormat("hh:mm:ss").format(new Date())+")\n");
 							}
 							if (ok == 3) {
 								data.plantOnBoard(view.lineFromY(y),view.columnFromX(x));
 								view.drawWallNut(context, data, xCentered, yCentered, "#ECB428");
 								MyPlants.add(new WallNut(xCentered,yCentered));
 								ok = 0;
-								System.out.println("new plant ("+new SimpleDateFormat("hh:mm:ss").format(new Date())+")\n");
+								str.append("new plant ("+new SimpleDateFormat("hh:mm:ss").format(new Date())+")\n");
 							}
 
 						}
@@ -305,15 +305,15 @@ public class SimpleGameController {
 						data2.selectCell(PlantSelectionView.lineFromY(y), PlantSelectionView.columnFromX(x));
 
 						if (yOrigin<=y && y<=yOrigin+squareSize) {
-							//System.out.println("plant 1");
+							//str.append("plant 1");
 							ok = 1;
 						}
 						if (yOrigin+squareSize<=y && y<=yOrigin+squareSize*2) {
-							//System.out.println("plant 2");
+							//str.append("plant 2");
 							ok = 2;
 						}
 						if (yOrigin+squareSize*2<=y && y<=yOrigin+squareSize*3) {
-							//System.out.println("plant 3");
+							//str.append("plant 3");
 							ok = 3;
 						}
 						
@@ -324,8 +324,6 @@ public class SimpleGameController {
 			}
 		
 		}
-        
-        
 	}
 
 	public static void main(String[] args) {
