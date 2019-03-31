@@ -8,6 +8,7 @@ import java.awt.geom.RectangularShape;
 import models.MovingElement;
 import models.SimpleGameData;
 import plants.Plant;
+import plants.Projectile;
 import zombies.ConeheadZombie;
 import zombies.FlagZombie;
 
@@ -153,6 +154,10 @@ public abstract class SimpleGameView implements GameView {
 		}
 		if (moving instanceof ConeheadZombie) {
 			graphics.setColor(Color.RED.darker());
+			graphics.fill(moving.draw());
+		}
+		if (moving instanceof Projectile) {
+			graphics.setColor(Color.BLUE);
 			graphics.fill(moving.draw());
 		}
 		graphics.setColor(Color.BLACK);

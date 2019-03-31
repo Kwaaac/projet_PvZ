@@ -7,6 +7,7 @@ import models.Entities;
 public abstract class Plant extends Entities{
 	private final String type = "Plant"; 
 	private final static int sizeOfPlant = 75;
+	private static int speedshoot = 200;
 	
 	public Plant(int x, int y, int damage, int life) {
 		super(x, y, damage, life);
@@ -17,12 +18,15 @@ public abstract class Plant extends Entities{
 	}
 
 	public Rectangle2D.Float draw() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 	
 	public static int getSizeOfPlant() {
 		return sizeOfPlant;
+	}
+
+	public int getSpeedShooting() {
+		return speedshoot;
 	}
 
 }

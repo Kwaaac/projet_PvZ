@@ -70,14 +70,15 @@ public class SimpleGameController {
         int n1 = 25;
         int ZombieSize = Zombie.getSizeOfZombie();
         int BulletSize = Bullet.getSizeOfProjectile();
+        int sizeOfPlant = Plant.getSizeOfPlant();
         int ok = 0;
 //		int deathCounterZombie = 0;
 //		int deathCounterPlant = 0;
-//		int time = 0;
+		int time = 0;
         System.out.println(("Journal de bord\n-+-+-+-+-+-+-+-+-+-"));
         
         while (true) {
-//        	time++;
+        	time++;
         	view.draw(context, data);
         	
         	PlantSelectionView.draw(context, data2);
@@ -105,7 +106,7 @@ public class SimpleGameController {
 				int i = 0;
 				for(Projectile b : MyBullet) {
 					i++;
-					System.out.println("zombie "+j+":"+z.getX()+" "+"bullet "+i+":"+b.getX());
+//					System.out.println("zombie "+j+":"+z.getX()+" "+"bullet "+i+":"+b.getX());
 					if(z.getX()-ZombieSize/2 == b.getX()) { // il faut ajouter aux getX le rayon des zombie et des bullet pour detecter la collision entre l'extremiter des ellipse
 						System.out.println("conflit start:\n\tzombie damage"+z.getDamage()+"zombie life "+z.getLife()+"\n\tbullet damage"+b.getDamage()+" bullet life"+b.getLife());
 						b.conflict(z);
@@ -180,6 +181,20 @@ public class SimpleGameController {
                 view.moveAndDrawElement(context, data, b);
             }
             
+            
+/*----------------------------Shooting in continue----------------------------*/
+            for (Plant p : MyPlants) {
+            	if (p.toString().equals("Type: Plant--Peashooter")) {
+            		System.out.println(p.getSpeedShooting());
+            		if (time == p.getSpeedShooting()) {
+            			MyBullet.add(new Bullet(p.getX()+sizeOfPlant, p.getY()+(sizeOfPlant/2)-10));
+            			time = 0;
+            		}
+            	}
+            }
+/*----------------------------------------------------------------------------*/
+            
+            
             for (MovingElement b : MyBullet) {
                 view.moveAndDrawElement(context, data, b);
             }
@@ -228,7 +243,6 @@ public class SimpleGameController {
 						
 						float X = view.realCoordFromIndex(view.columnFromX(location.x), xOrigin);
 						float Y = view.realCoordFromIndex(view.lineFromY(location.y), yOrigin);
-						int sizeOfPlant = Plant.getSizeOfPlant();
 						
 						int xCentered = (int) (X+(squareSize/2)-(sizeOfPlant/2));
 						int yCentered = (int) (Y+(squareSize/2)-(sizeOfPlant/2));
@@ -239,7 +253,6 @@ public class SimpleGameController {
 								data.plantOnBoard(view.lineFromY(y),view.columnFromX(x));
 								view.drawPeashooter(context, data, xCentered, yCentered, "#90D322");
 								MyPlants.add(new Peashooter(xCentered,yCentered));
-								MyBullet.add(new Bullet(xCentered+sizeOfPlant, yCentered+(sizeOfPlant/2)-10));
 								ok = 0;
 								System.out.println("new plant ("+new SimpleDateFormat("hh:mm:ss").format(new Date())+")\n");
 							}

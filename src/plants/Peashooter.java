@@ -5,7 +5,6 @@ import java.awt.geom.Rectangle2D;
 public class Peashooter extends Plant{
 	private final String name = "Peashooter";
 	
-	
 	public Peashooter(int x, int y) {
 		super(x, y, 20, 300);
 	}
