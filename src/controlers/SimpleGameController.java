@@ -6,17 +6,24 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Random;
+import java.util.TreeSet;
 
 import fr.umlv.zen5.Application;
 import fr.umlv.zen5.ApplicationContext;
 import fr.umlv.zen5.Event;
 import fr.umlv.zen5.ScreenInfo;
 import fr.umlv.zen5.Event.Action;
+
+import models.Entities;
 import models.HorizontallyMovingElement;
 import models.MovingElement;
 import models.SimpleGameData;
+
+import plants.Peashooter;
 import plants.Bullet;
 import plants.Plant;
+import plants.Projectile;
+
 import zombies.NormalZombie;
 import zombies.Zombie;
 import views.BordView;
@@ -55,9 +62,10 @@ public class SimpleGameController {
 		
 		
 		Point2D.Float location;
+		ArrayList<Entities> MyEntities = new ArrayList<>();
 		ArrayList<Zombie> MyZombies = new ArrayList<>();
 		ArrayList<Plant> MyPlants = new ArrayList<>();
-		ArrayList<HorizontallyMovingElement> MyBullet = new ArrayList<>();
+		ArrayList<Projectile> MyBullet = new ArrayList<>();
         
         int n1 = 25;
         int ZombieSize = Zombie.getSizeOfZombie();
@@ -80,14 +88,53 @@ public class SimpleGameController {
             
             Random rand = new Random();
             
-            int n = rand.nextInt(50);
+            int n = rand.nextInt(30);
             
             if(n1 == n) {
-                MyZombies.add(new NormalZombie((int) width, yOrigin+RandomPosGenerator()*squareSize+(squareSize/2)-ZombieSize/2)); 
+                MyZombies.add(new NormalZombie((int) width, yOrigin+RandomPosGenerator()*squareSize+(squareSize/2)-ZombieSize/2));
+                MyEntities.add(new NormalZombie((int) width, yOrigin+RandomPosGenerator()*squareSize+(squareSize/2)-ZombieSize/2));
                 System.out.println("new zombie ("+new SimpleDateFormat("hh:mm:ss").format(new Date())+")\n");
             }
-            
-            for (Zombie b : MyZombies) {
+ 
+         
+/*---------------------------- je gère les conflits --------------------------*/
+			int j=0;
+			for(Zombie z : MyZombies) {
+				j ++;
+				int i = 0;
+				for(Projectile b : MyBullet) {
+					i++;
+					System.out.println("zombie "+j+":"+z.getX()+" "+"bullet "+i+":"+b.getX());
+					if(z.getX() == b.getX()) { // il faut ajouter aux getX le rayon des zombie et des bullet pour detecter la collision entre l'extremiter des ellipse
+						System.out.println("conflit start:\n\tzombie damage"+z.getDamage()+"zombie life "+z.getLife()+"\n\tbullet damage"+b.getDamage()+" bullet life"+b.getLife());
+						b.conflict(z);
+						System.out.println("conflit end:\n\tzombie damage"+z.getDamage()+"zombie life "+z.getLife()+"\n\tbullet damage"+b.getDamage()+" bullet life"+b.getLife());
+					}
+				}
+//				for(Plant p : MyPlants) {    // a completer quand on aura des plante dans le plateau
+//					if() {
+//						
+//					}
+//				}
+			}
+/*----------------------------------------------------------------------------*/ 
+			
+/*--------------- je place les element mort dans les dead pool ---------------*/
+			
+			for(Entities e : MyEntities) { 
+				if(e.getLife() <=0) {
+					if(e instanceof Zombie) {
+						deadPoolZ.add(MyZombies.indexOf(e));
+					}else if(e instanceof Plant){
+						deadPoolP.add(MyPlants.indexOf(e));
+					}else if(e instanceof Projectile){
+						deadPoolBullet.add(MyBullet.indexOf(e));
+					}
+				}
+			}
+			
+			
+			for (Zombie b : MyZombies) {
                 if(b.getX() < xOrigin-squareSize/2){
                     deadPoolZ.add(MyZombies.indexOf(b));
                 }
@@ -99,11 +146,15 @@ public class SimpleGameController {
                 }
             }
             
-            for (HorizontallyMovingElement b : MyBullet) {
+            for (Projectile b : MyBullet) {
                 if(b.getX() < xOrigin-squareSize/2){
                     deadPoolBullet.add(MyBullet.indexOf(b));
                 }
             }
+
+            
+/*----------------------------------------------------------------------------*/           
+/*-------------------- je détruit tout les elements morts --------------------*/           
             
             for (int d : deadPoolZ) {
             	MyZombies.remove(d);
@@ -120,6 +171,9 @@ public class SimpleGameController {
             for (int d : deadPoolBullet) {
             	MyBullet.remove(d);
             }
+
+/*----------------------------------------------------------------------------*/
+            
                 
             for (MovingElement b : MyZombies) {
                 view.moveAndDrawElement(context, data, b);
@@ -129,7 +183,7 @@ public class SimpleGameController {
                 view.moveAndDrawElement(context, data, b);
             }
 			
-			Event event = context.pollOrWaitEvent(50); // modifier pour avoir un affichage fluide
+			Event event = context.pollOrWaitEvent(20); // modifier pour avoir un affichage fluide
 			if (event == null) { // no event
 				continue;
 			}
@@ -183,6 +237,8 @@ public class SimpleGameController {
 							if (ok == 1) {
 								data.plantOnBoard(view.lineFromY(y),view.columnFromX(x));
 								view.drawOnlyOneCell(context, data, xCentered, yCentered, "#90D322");
+//								Peashooter p = new Peashooter(xCentered,yCentered); // je viens de voir qu'on créait juste des carrée et pas des plante du coup on a que des zombies et des carrée sur le plateau
+//								p.draw(); // marche pas a voir demain
 								MyBullet.add(new Bullet(xCentered+sizeOfPlant, yCentered+(sizeOfPlant/2)-10));
 								ok = 0;
 								System.out.println("new plant ("+new SimpleDateFormat("hh:mm:ss").format(new Date())+")\n");
@@ -235,8 +291,7 @@ public class SimpleGameController {
 			} else {
 				data2.unselect();
 			}
-			
-			
+		
 		}
         
         

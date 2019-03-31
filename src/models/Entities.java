@@ -50,4 +50,9 @@ public abstract class Entities {
 		public void setLife(int life) {
 			this.life = life;
 		}
+		
+		public void conflict(Entities e) {
+			life -= e.getDamage();
+			e.life -= damage;
+		}
 }
