@@ -241,13 +241,13 @@ public class SimpleGameController {
 							}
 							if (ok == 2) {
 								data.plantOnBoard(view.lineFromY(y),view.columnFromX(x));
-								view.drawOnlyOneCell(context, data, xCentered, yCentered, "#CB5050");
+								view.drawCherryBomb(context, data, xCentered, yCentered, "#CB5050");
 								ok = 0;
 								System.out.println("new plant ("+new SimpleDateFormat("hh:mm:ss").format(new Date())+")\n");
 							}
 							if (ok == 3) {
 								data.plantOnBoard(view.lineFromY(y),view.columnFromX(x));
-								view.drawOnlyOneCell(context, data, xCentered, yCentered, "#ECB428");
+								view.drawWallNut(context, data, xCentered, yCentered, "#ECB428");
 								ok = 0;
 								System.out.println("new plant ("+new SimpleDateFormat("hh:mm:ss").format(new Date())+")\n");
 							}
