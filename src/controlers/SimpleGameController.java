@@ -15,11 +15,9 @@ import fr.umlv.zen5.ScreenInfo;
 import fr.umlv.zen5.Event.Action;
 
 import models.Entities;
-import models.HorizontallyMovingElement;
 import models.MovingElement;
 import models.SimpleGameData;
 
-import plants.Peashooter;
 import plants.Bullet;
 import plants.Plant;
 import plants.Projectile;
@@ -236,9 +234,7 @@ public class SimpleGameController {
 							
 							if (ok == 1) {
 								data.plantOnBoard(view.lineFromY(y),view.columnFromX(x));
-								view.drawOnlyOneCell(context, data, xCentered, yCentered, "#90D322");
-//								Peashooter p = new Peashooter(xCentered,yCentered); // je viens de voir qu'on créait juste des carrée et pas des plante du coup on a que des zombies et des carrée sur le plateau
-//								p.draw(); // marche pas a voir demain
+								view.drawPeashooter(context, data, xCentered, yCentered, "#90D322");
 								MyBullet.add(new Bullet(xCentered+sizeOfPlant, yCentered+(sizeOfPlant/2)-10));
 								ok = 0;
 								System.out.println("new plant ("+new SimpleDateFormat("hh:mm:ss").format(new Date())+")\n");

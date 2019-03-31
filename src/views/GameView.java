@@ -98,4 +98,25 @@ public interface GameView {
 	public default void moveAndDrawElement(ApplicationContext context, SimpleGameData data, MovingElement moving) {
 		context.renderFrame(graphics -> moveAndDrawElement(graphics, data, moving));
 	}
+
+	
+	
+	void drawPeashooter(Graphics2D graphics, SimpleGameData data, int x, int y, String s);
+	
+	public default void drawPeashooter(ApplicationContext context, SimpleGameData data, int x, int y, String s) {
+		context.renderFrame(graphics -> drawOnlyOneCell(graphics, data, x, y, s));
+	}
+	
+	void drawCherryBomb(Graphics2D graphics, SimpleGameData data, int x, int y, String s);
+	
+	public default void drawCherryBomb(ApplicationContext context, SimpleGameData data, int x, int y, String s) {
+		context.renderFrame(graphics -> drawOnlyOneCell(graphics, data, x, y, s));
+	}
+	
+	void drawWallNut(Graphics2D graphics, SimpleGameData data, int x, int y, String s);
+	
+	public default void drawWallNut(ApplicationContext context, SimpleGameData data, int x, int y, String s) {
+		context.renderFrame(graphics -> drawOnlyOneCell(graphics, data, x, y, s));
+	}
+	
 }

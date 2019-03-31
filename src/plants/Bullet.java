@@ -2,7 +2,6 @@ package plants;
 
 import java.awt.geom.Ellipse2D;
 
-import models.HorizontallyMovingElement;
 
 public class Bullet extends Projectile {
 

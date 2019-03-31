@@ -111,6 +111,27 @@ public abstract class SimpleGameView implements GameView {
 		graphics.setColor(Color.decode(s));
 		graphics.fill(new Rectangle2D.Float(x, y, sizeOfPlant, sizeOfPlant));
 	}
+	
+	@Override
+	public void drawPeashooter(Graphics2D graphics, SimpleGameData data, int x, int y, String s) {
+		int sizeOfPlant = Plant.getSizeOfPlant();
+		graphics.setColor(Color.decode(s));
+		graphics.fill(new Rectangle2D.Float(x, y, sizeOfPlant, sizeOfPlant));
+	}
+	
+	@Override
+	public void drawCherryBomb(Graphics2D graphics, SimpleGameData data, int x, int y, String s) {
+		int sizeOfPlant = Plant.getSizeOfPlant();
+		graphics.setColor(Color.decode(s));
+		graphics.fill(new Rectangle2D.Float(x, y, sizeOfPlant, sizeOfPlant));
+	}
+	
+	@Override
+	public void drawWallNut(Graphics2D graphics, SimpleGameData data, int x, int y, String s) {
+		int sizeOfPlant = Plant.getSizeOfPlant();
+		graphics.setColor(Color.decode(s));
+		graphics.fill(new Rectangle2D.Float(x, y, sizeOfPlant, sizeOfPlant));
+	}
 
 	/**
 	 * Draws only the cell specified by the given coordinates in the game board from

@@ -172,4 +172,26 @@ public class SelectBordView extends SimpleGameView{
 		super.moveAndDrawElement(graphics, data, moving);
 	}
 
+	
+	@Override
+	public void drawPeashooter(Graphics2D graphics, SimpleGameData data, int x, int y, String s) {
+		int sizeOfPlant = Plant.getSizeOfPlant();
+		graphics.setColor(Color.decode(s));
+		graphics.fill(new Rectangle2D.Float(x, y, sizeOfPlant, sizeOfPlant));
+	}
+	
+	@Override
+	public void drawCherryBomb(Graphics2D graphics, SimpleGameData data, int x, int y, String s) {
+		int sizeOfPlant = Plant.getSizeOfPlant();
+		graphics.setColor(Color.decode(s));
+		graphics.fill(new Rectangle2D.Float(x, y, sizeOfPlant, sizeOfPlant));
+	}
+	
+	@Override
+	public void drawWallNut(Graphics2D graphics, SimpleGameData data, int x, int y, String s) {
+		int sizeOfPlant = Plant.getSizeOfPlant();
+		graphics.setColor(Color.decode(s));
+		graphics.fill(new Rectangle2D.Float(x, y, sizeOfPlant, sizeOfPlant));
+	}
+	
 }
