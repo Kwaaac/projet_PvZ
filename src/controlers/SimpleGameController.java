@@ -72,12 +72,14 @@ public class SimpleGameController {
         int BulletSize = Bullet.getSizeOfProjectile();
         int sizeOfPlant = Plant.getSizeOfPlant();
         int ok = 0;
+        int cpt = 0;
 //		int deathCounterZombie = 0;
 //		int deathCounterPlant = 0;
 		int time = 0;
         System.out.println(("Journal de bord\n-+-+-+-+-+-+-+-+-+-"));
         
         while (true) {
+        	cpt++;
         	time++;
         	view.draw(context, data);
         	
@@ -106,7 +108,7 @@ public class SimpleGameController {
 				for(Projectile b : MyBullet) {
 					i++;
 //					System.out.println("zombie "+j+":"+z.getX()+" "+"bullet "+i+":"+b.getX());
-					if(z.getX()-ZombieSize/2 == b.getX()) { // il faut ajouter aux getX le rayon des zombie et des bullet pour detecter la collision entre l'extremiter des ellipse
+					if(view.columnFromX(z.getX()-ZombieSize) == view.columnFromX(b.getX()) && view.lineFromY(z.getY()) == view.lineFromY(b.getY())) { // il faut ajouter aux getX le rayon des zombie et des bullet pour detecter la collision entre l'extremiter des ellipse
 						System.out.println("conflit start:\n\tzombie damage"+z.getDamage()+"zombie life "+z.getLife()+"\n\tbullet damage"+b.getDamage()+" bullet life"+b.getLife());
 						b.conflict(z);
 						System.out.println("conflit end:\n\tzombie damage"+z.getDamage()+"zombie life "+z.getLife()+"\n\tbullet damage"+b.getDamage()+" bullet life"+b.getLife());
