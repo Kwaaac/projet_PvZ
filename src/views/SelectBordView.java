@@ -90,9 +90,10 @@ public class SelectBordView extends SimpleGameView{
 	public void draw(Graphics2D graphics, SimpleGameData data) {
 		// example
 		graphics.setColor(Color.GRAY);
-//		System.out.println("Select:" + super.getXOrigin() + " : " + super.getLength() + " ou alors: " + super.getLength()*3);
 		graphics.fill(new Rectangle2D.Float(super.getXOrigin(), super.getYOrigin(), super.getWidth(), super.getLength()));
-		//graphics.fill(new Rectangle2D.Float(0, 100, super.getSquareSize(), super.getSquareSize()*3));
+		
+		graphics.setColor(Color.GRAY.brighter());
+		graphics.fill(new Rectangle2D.Float(1890,98, super.getWidth(), 904));
 
 		graphics.setColor(Color.WHITE.darker());
 		for (int i = 0; i <= data.getNbLines(); i++) {
