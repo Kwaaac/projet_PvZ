@@ -65,14 +65,6 @@ public class SimpleGameData{
 		return selected != null;
 	}
 	
-	public boolean hasPlant(int i, int j) {
-		for(Coordinates c : placedPlant) {
-			if(c.getI()==i && c.getJ() == j) {
-				return true;
-			}
-		}
-		return false;
-	}
 
 	/**
 	 * Selects, as the first cell, the one identified by the specified coordinates.
@@ -112,4 +104,19 @@ public class SimpleGameData{
 	public void plantOnBoard(int i,int j){
 		placedPlant.add(new Coordinates(i, j));
 	}
+	
+	public void plantOutBord(int i, int j) {
+		placedPlant.remove(new Coordinates(i, j));
+	}
+	
+	public boolean hasPlant(int i, int j) {
+		for(Coordinates c : placedPlant) {
+			if(c.getI()==i && c.getJ() == j) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	
 }

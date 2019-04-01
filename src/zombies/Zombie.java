@@ -9,6 +9,9 @@ public abstract class Zombie extends Entities implements MovingElement {
 	private final static int sizeOfZombie = 75;
 	private boolean moving = true;
 	private double[] speedState = { 0.0, -2.0, -1.0 }; // [0] -> Stop; [1] -> Normal Speed; [2] -> Slow Speed
+	
+	private final int speedshoot = 100;
+	private int timerA = 0;
 
 	public Zombie(int x, int y, int damage, int life, double speed) {
 		super(x, y, damage, life);
@@ -46,5 +49,21 @@ public abstract class Zombie extends Entities implements MovingElement {
 	public void Go() {
 		speed = speedState[1];
 		moving = true;
+	}
+	
+	public int getSpeedShooting() {
+		return timerA;
+	}
+	
+	public void incAS() {
+		this.timerA += 5;
+	}
+	
+	public void resetAS() {
+		this.timerA = 0;
+	}
+
+	public boolean readyToshot() {
+		return timerA % speedshoot == 0;
 	}
 }

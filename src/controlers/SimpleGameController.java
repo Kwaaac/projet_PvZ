@@ -122,6 +122,8 @@ public class SimpleGameController {
 			int j=0;
             for(Zombie z : MyZombies) {
             	z.Go();
+        		z.incAS();
+            	
 				j++;
 				float Zx1 =  z.getX(); //centre zombie
 				float Zx2 =  Zx1 - (ZombieSize/3)-2; //bordure gauche zombie
@@ -149,17 +151,22 @@ public class SimpleGameController {
 					
 					float Px1 =  p.getX(); //centre bullet
 					float Px2 =  Px1 + (sizeOfPlant/3)+2 ; //bordure droite bullet
-					
-					if(Px1 < Zx2 && Zx2 <= Px2) {					
-						str.append("conflit start:\n\tzombie damage"+z.getDamage()+"zombie life "+z.getLife()+"\n\tplant damage"+p.getDamage()+" plant life"+p.getLife()+"\n");           
-						p.conflict(z);
-						z.Stop();
-						if(p.getX() > xOrigin+squareSize*8 || p.getLife() <= 0){
-		                	str.append(p+"meurt\n");
-		                    deadPoolP.add(MyPlants.indexOf(p));
-		                    str.append(deadPoolP+"\n");
-		                }
-						str.append("conflit end:\n\tzombie damage"+z.getDamage()+"zombie life "+z.getLife()+"\n\tplant damage"+p.getDamage()+" plant life"+p.getLife()+"\n");
+					if(view.lineFromY(z.getY()) == view.lineFromY(p.getY())) {
+						if(Px1 < Zx2 && Zx2 <= Px2) {
+							z.Stop();
+							if(z.readyToshot()) {
+								str.append("conflit start:\n\tzombie damage"+z.getDamage()+"zombie life "+z.getLife()+"\n\tplant damage"+p.getDamage()+" plant life"+p.getLife()+"\n");           
+								p.conflict(z);
+								if(p.getLife() <= 0){
+				                	str.append(p+"meurt\n");
+				                    deadPoolP.add(MyPlants.indexOf(p));
+				                    data.plantOutBord(view.lineFromY(p.getY()),view.columnFromX(p.getX())); 
+				                    str.append(deadPoolP+"\n");
+				                }
+								str.append("conflit end:\n\tzombie damage"+z.getDamage()+"zombie life "+z.getLife()+"\n\tplant damage"+p.getDamage()+" plant life"+p.getLife()+"\n");
+							}
+							
+						}
 					}
 				}
 				if(z.getX() < xOrigin-squareSize/2 || z.getLife() <= 0) {
@@ -234,11 +241,10 @@ public class SimpleGameController {
             for (Plant p : MyPlants) {
             	if (p instanceof Peashooter) {
 //            		str.append(timeS);
-            		int help = p.getSpeedShooting();
-            		p.setSpeedShooting(help+=1);
+            		p.incAS();
             		if (p.readyToshot()) {
             			MyBullet.add(new Bullet(p.getX()+sizeOfPlant, p.getY()+(sizeOfPlant/2)-10));
-            			p.setSpeedShooting(0);
+            			p.resetAS();
             		}
             	}
             }

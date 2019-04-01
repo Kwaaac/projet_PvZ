@@ -8,7 +8,7 @@ public abstract class Plant extends Entities{
 	private final String type = "Plant"; 
 	private final static int sizeOfPlant = 75;
 	private final int speedshoot = 200;
-	private int test = 0;
+	private int timerA = 0;
 	
 	public Plant(int x, int y, int damage, int life) {
 		super(x, y, damage, life);
@@ -27,15 +27,19 @@ public abstract class Plant extends Entities{
 	}
 
 	public int getSpeedShooting() {
-		return test;
+		return timerA;
 	}
 	
-	public void setSpeedShooting(int s) {
-		this.test = s;
+	public void incAS() {
+		this.timerA += 1;
+	}
+	
+	public void resetAS() {
+		this.timerA = 0;
 	}
 
 	public boolean readyToshot() {
-		return test==speedshoot;
+		return timerA % speedshoot == 0;
 	}
 	
 }

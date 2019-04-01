@@ -7,8 +7,7 @@ public class WallNut extends Plant{
 	
 	
 	public WallNut(int x, int y) {
-		super(x, y, 0, 3600);
-		// TODO Auto-generated constructor stub
+		super(x, y, 0, 1000);
 	}
 	
 	@Override
