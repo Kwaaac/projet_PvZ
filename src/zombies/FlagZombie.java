@@ -5,9 +5,10 @@ import java.awt.geom.Ellipse2D;
 public class FlagZombie extends Zombie{
 
 	private final String name = "Flag Zombie";
+	private static double[] speedState = {0.0, -2.9, -1.9};
 	
 	public FlagZombie(int x, int y) {
-		super(x, y, 100, 200, -3.7);
+		super(x, y, 100, 200, speedState[1]);
 	}
 	
 	@Override

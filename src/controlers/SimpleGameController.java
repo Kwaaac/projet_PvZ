@@ -121,18 +121,20 @@ public class SimpleGameController {
 /*---------------------------- je g�re les conflits --------------------------*/			
 			int j=0;
             for(Zombie z : MyZombies) {
+            	z.Go();
 				j++;
 				float Zx1 =  z.getX(); //centre zombie
 				float Zx2 =  Zx1 - (ZombieSize/3)-2; //bordure gauche zombie
 				int i=0;
 				for(Projectile b : MyBullet) {
-				i++;
+					i++;
 					float Bx1 =  b.getX(); //centre bullet
 					float Bx2 =  Bx1 + (BulletSize/3)+2 ; //bordure droite bullet
 					
 					if(view.lineFromY(z.getY()) == view.lineFromY(b.getY())) {
 						if (Bx1 < Zx2 && Zx2 <= Bx2) { // il faut ajouter aux getX le rayon des zombie et des bullet pour detecter la collision entre l'extremiter des ellipse
 							str.append("conflit start:\n\tzombie damage"+z.getDamage()+"zombie life "+z.getLife()+"\n\tbullet damage"+b.getDamage()+" bullet life"+b.getLife()+"\n");
+							
 							b.conflict(z);
 							if(b.getX() > xOrigin+squareSize*8 || b.getLife() <= 0){
 			                	str.append(b+"meurt\n");
@@ -151,6 +153,7 @@ public class SimpleGameController {
 					if(Px1 < Zx2 && Zx2 <= Px2) {					
 						str.append("conflit start:\n\tzombie damage"+z.getDamage()+"zombie life "+z.getLife()+"\n\tplant damage"+p.getDamage()+" plant life"+p.getLife()+"\n");           
 						p.conflict(z);
+						z.Stop();
 						if(p.getX() > xOrigin+squareSize*8 || p.getLife() <= 0){
 		                	str.append(p+"meurt\n");
 		                    deadPoolP.add(MyPlants.indexOf(p));
