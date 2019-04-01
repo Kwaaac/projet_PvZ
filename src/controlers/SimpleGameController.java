@@ -118,53 +118,64 @@ public class SimpleGameController {
             }
  
             
-/*---------------------------- je gère les conflits --------------------------*/
+/*---------------------------- je gï¿½re les conflits --------------------------*/			
 			int j=0;
-			
-			for(Zombie z : MyZombies) {
-				j ++;
-				int i = 0;
+            for(Zombie z : MyZombies) {
+				j++;
+				float Zx1 =  z.getX(); //centre zombie
+				float Zx2 =  Zx1 - (ZombieSize/3)-2; //bordure gauche zombie
+				int i=0;
 				for(Projectile b : MyBullet) {
-					i++;
+				i++;
+					float Bx1 =  b.getX(); //centre bullet
+					float Bx2 =  Bx1 + (BulletSize/3)+2 ; //bordure droite bullet
 					
-					float X = view.realCoordFromIndex(view.columnFromX(z.getX()), xOrigin);
-					float X2 = view.realCoordFromIndex(view.columnFromX(b.getX()), xOrigin);
-					int xCentered = (int) (X+(squareSize/2)-(ZombieSize/2));
-					int xCentered2 = (int) (X2+(squareSize/2)-(ZombieSize/2));
-					
-					if(xCentered == xCentered2) {
-						if (view.lineFromY(z.getY()) == view.lineFromY(b.getY())) { // il faut ajouter aux getX le rayon des zombie et des bullet pour detecter la collision entre l'extremiter des ellipse
-//						str.append("conflit start:\n\tzombie damage"+z.getDamage()+"zombie life "+z.getLife()+"\n\tbullet damage"+b.getDamage()+" bullet life"+b.getLife());
-						b.conflict(z);
-//						str.append("conflit end:\n\tzombie damage"+z.getDamage()+"zombie life "+z.getLife()+"\n\tbullet damage"+b.getDamage()+" bullet life"+b.getLife());
+					if(view.lineFromY(z.getY()) == view.lineFromY(b.getY())) {
+						if (Bx1 < Zx2 && Zx2 <= Bx2) { // il faut ajouter aux getX le rayon des zombie et des bullet pour detecter la collision entre l'extremiter des ellipse
+							str.append("conflit start:\n\tzombie damage"+z.getDamage()+"zombie life "+z.getLife()+"\n\tbullet damage"+b.getDamage()+" bullet life"+b.getLife()+"\n");
+							b.conflict(z);
+							if(b.getX() > xOrigin+squareSize*8 || b.getLife() <= 0){
+			                	str.append(b+"meurt\n");
+			                    deadPoolBullet.add(MyBullet.indexOf(b));
+			                    str.append(deadPoolBullet);
+			                }
+							str.append("conflit end:\n\tzombie damage"+z.getDamage()+"zombie life "+z.getLife()+"\n\tbullet damage"+b.getDamage()+" bullet life"+b.getLife()+"\n");
 						}
 					}
 				}
-//				for(Plant p : MyPlants) {    // a completer quand on aura des plante dans le plateau
-//					if() {
-//						
-//					}
-//				}
+				for(Plant p : MyPlants) {    // a completer quand on aura des plante dans le plateau
+					
+					float Px1 =  p.getX(); //centre bullet
+					float Px2 =  Px1 + (sizeOfPlant/3)+2 ; //bordure droite bullet
+					
+					if(Px1 < Zx2 && Zx2 <= Px2) {					
+						str.append("conflit start:\n\tzombie damage"+z.getDamage()+"zombie life "+z.getLife()+"\n\tplant damage"+p.getDamage()+" plant life"+p.getLife()+"\n");           
+						p.conflict(z);
+						if(p.getX() > xOrigin+squareSize*8 || p.getLife() <= 0){
+		                	str.append(p+"meurt\n");
+		                    deadPoolP.add(MyPlants.indexOf(p));
+		                    str.append(deadPoolP+"\n");
+		                }
+						str.append("conflit end:\n\tzombie damage"+z.getDamage()+"zombie life "+z.getLife()+"\n\tplant damage"+p.getDamage()+" plant life"+p.getLife()+"\n");
+					}
+				}
+				if(z.getX() < xOrigin-squareSize/2 || z.getLife() <= 0) {
+                	str.append(z+"meurt\\n");
+                    deadPoolZ.add(MyZombies.indexOf(z));
+                    str.append(deadPoolZ);
+                }
 			}
 /*----------------------------------------------------------------------------*/ 		
 /*--------------- je place les element mort dans les dead pool ---------------*/
-			        
-			
-			for (Zombie b : MyZombies) {
-                if(b.getX() < xOrigin-squareSize/2 || b.getLife() <= 0) {
-//                	str.append(b+"meurt");
-                    deadPoolZ.add(MyZombies.indexOf(b));
-//                    str.append(deadPoolZ);
+            
+            for (Projectile b : MyBullet) {
+            	if(b.getX() > xOrigin+squareSize*8){
+                	str.append(b+"meurt\n");
+                    deadPoolBullet.add(MyBullet.indexOf(b));
+                    str.append(deadPoolBullet);
                 }
             }
             
-            for (Projectile b : MyBullet) {
-                if(b.getX() > xOrigin+squareSize*8 || b.getLife() <= 0){
-//                	str.append(b+"meurt");
-                    deadPoolBullet.add(MyBullet.indexOf(b));
-//                    str.append(deadPoolBullet);
-                }
-            }
 
 /*----------------------------------------------------------------------------*/           
 /*------------------------------- WIN / LOOSE --------------------------------*/
@@ -177,14 +188,14 @@ public class SimpleGameController {
     				m=(int) ((timeEnd.getSeconds() % 3600) / 60);
     				s=(int) (((timeEnd.getSeconds() % 3600) % 60));
     				
-    				str.append("-+-+-+-+-+-+-+-+-+-\nVous avez perdu...\nLa partie à durée : "+h+" heure(s) "+m+" minute(s) "+s+" seconde(s)");
+    				str.append("-+-+-+-+-+-+-+-+-+-\nVous avez perdu...\nLa partie ï¿½ durï¿½e : "+h+" heure(s) "+m+" minute(s) "+s+" seconde(s)");
     				System.out.println(str.toString());
     				context.exit(0);
     				return;
                 }
             }
 /*----------------------------------------------------------------------------*/           
-/*-------------------- je détruit tout les elements morts --------------------*/           
+/*-------------------- je dï¿½truit tout les elements morts --------------------*/           
             
             for (int d : deadPoolZ) {
             	MyZombies.remove(d);
@@ -205,19 +216,13 @@ public class SimpleGameController {
 /*----------------------------------------------------------------------------*/
             
                 
-            for (MovingElement b : MyZombies) {
-            	if (b instanceof NormalZombie) {
-            		view.moveAndDrawElement(context, data, b);
-            	}
-            	if (b instanceof ConeheadZombie) {
-            		view.moveAndDrawElement(context, data, b);
-            	}
-            	if (b instanceof FlagZombie) {
+            for (Zombie b : MyZombies) {
+            	if (b.getMove()) {
             		view.moveAndDrawElement(context, data, b);
             	}
             }
             
-            for (MovingElement b : MyBullet) {
+            for (Projectile b : MyBullet) {
                 view.moveAndDrawElement(context, data, b);
             }
             
@@ -253,7 +258,7 @@ public class SimpleGameController {
 				m=(int) ((timeEnd.getSeconds() % 3600) / 60);
 				s=(int) (((timeEnd.getSeconds() % 3600) % 60));
 				
-				str.append("-+-+-+-+-+-+-+-+-+-\nLa partie à durée : "+h+" heure(s) "+m+" minute(s) "+s+" seconde(s)");
+				str.append("-+-+-+-+-+-+-+-+-+-\nLa partie ï¿½ durï¿½e : "+h+" heure(s) "+m+" minute(s) "+s+" seconde(s)");
 				System.out.println(str.toString());
 				context.exit(0);
 				return;

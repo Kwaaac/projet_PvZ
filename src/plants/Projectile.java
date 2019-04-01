@@ -6,7 +6,7 @@ import models.MovingElement;
 public abstract class Projectile extends Entities implements MovingElement{
 	private final String type = "Projectile";
 	private final double speed;
-	private final static int sizeOfProjectile = 150;
+	private final static int sizeOfProjectile = 25;
 	
 	public Projectile(int x, int y, int damage, int life, double speed) {
 		super(x, y, damage, life);

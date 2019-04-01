@@ -13,7 +13,7 @@ public class Bullet extends Projectile {
 
 	@Override
 	public Ellipse2D.Float draw(){
-		return new Ellipse2D.Float(getX(), getY(), 20, 20);
+		return new Ellipse2D.Float(getX(), getY(), super.getSizeOfProjectile(), super.getSizeOfProjectile());
 	}
 	
 	@Override
