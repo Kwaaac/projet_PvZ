@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.util.ArrayList;
 
 public class SimpleGameData{
+	private final static int score = 1;
 	private final Cell[][] matrix;
 	private Coordinates selected;
 	private final ArrayList<Coordinates> placedPlant = new ArrayList<Coordinates>();
@@ -118,5 +119,8 @@ public class SimpleGameData{
 		return false;
 	}
 	
+	public static boolean win(int x) {
+		return x==score;
+	}
 	
 }

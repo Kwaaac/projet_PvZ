@@ -79,7 +79,7 @@ public class SimpleGameController {
         int BulletSize = Bullet.getSizeOfProjectile();
         int sizeOfPlant = Plant.getSizeOfPlant();
         int ok = 0;
-//		int deathCounterZombie = 0;
+		int deathCounterZombie = 0;
 //		int deathCounterPlant = 0;
         Instant time = Instant.now();
 
@@ -198,7 +198,7 @@ public class SimpleGameController {
     				m=(int) ((timeEnd.getSeconds() % 3600) / 60);
     				s=(int) (((timeEnd.getSeconds() % 3600) % 60));
     				
-    				str.append("-+-+-+-+-+-+-+-+-+-\nVous avez perdu...\nLa partie � dur�e : "+h+" heure(s) "+m+" minute(s) "+s+" seconde(s)");
+    				str.append("-+-+-+-+-+-+-+-+-+-\nVous avez perdu...\nLa partie a duree : "+h+" heure(s) "+m+" minute(s) "+s+" seconde(s)");
     				System.out.println(str.toString());
     				context.exit(0);
     				return;
@@ -209,7 +209,7 @@ public class SimpleGameController {
             
             for (int d : deadPoolZ) {
             	MyZombies.remove(d);
-//            	deathCounterZombie+=1;
+            	deathCounterZombie+=1;
             	str.append("zombie killed ("+new SimpleDateFormat("hh:mm:ss").format(new Date())+")\n");
             }
             
@@ -267,7 +267,7 @@ public class SimpleGameController {
 				m=(int) ((timeEnd.getSeconds() % 3600) / 60);
 				s=(int) (((timeEnd.getSeconds() % 3600) % 60));
 				
-				str.append("-+-+-+-+-+-+-+-+-+-\nLa partie � dur�e : "+h+" heure(s) "+m+" minute(s) "+s+" seconde(s)");
+				str.append("-+-+-+-+-+-+-+-+-+-\nLa partie a duree : "+h+" heure(s) "+m+" minute(s) "+s+" seconde(s)");
 				System.out.println(str.toString());
 				context.exit(0);
 				return;
@@ -371,8 +371,19 @@ public class SimpleGameController {
 				data2.unselect();
 			}
 			
-			
-			
+			if(SimpleGameData.win(deathCounterZombie)) {
+            	Duration timeEnd = Duration.between(time,Instant.now());
+				
+				int h = 0, m = 0, s = 0;
+				h=(int) (timeEnd.getSeconds() / 3600);
+				m=(int) ((timeEnd.getSeconds() % 3600) / 60);
+				s=(int) (((timeEnd.getSeconds() % 3600) % 60));
+				
+				str.append("-+-+-+-+-+-+-+-+-+-\nVous avez GAGNEE !!!\nLa partie a duree : "+h+" heure(s) "+m+" minute(s) "+s+" seconde(s)");
+				System.out.println(str.toString());
+				context.exit(0);
+				return;
+            }
 			
 		}
 	}
