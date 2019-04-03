@@ -2,6 +2,7 @@ package zombies;
 
 import models.Entities;
 import models.MovingElement;
+import plants.Plant;
 
 public abstract class Zombie extends Entities implements MovingElement {
 	private final String type = "Zombie";
@@ -66,4 +67,6 @@ public abstract class Zombie extends Entities implements MovingElement {
 	public boolean readyToshot() {
 		return timerA % speedshoot == 0;
 	}
+	
+	public void conflictAll(Plant p) {}
 }

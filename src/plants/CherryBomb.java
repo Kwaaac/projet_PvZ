@@ -2,6 +2,8 @@ package plants;
 
 import java.awt.geom.Rectangle2D;
 
+import zombies.Zombie;
+
 public class CherryBomb extends Plant{
 
 	private final String name = "CheeryBomb";
@@ -20,5 +22,7 @@ public class CherryBomb extends Plant{
 	public Rectangle2D.Float draw(){
 		return new Rectangle2D.Float(getX(), getY(), getSizeOfPlant(), getSizeOfPlant());
 	}
+	
+	public void conflictAll(Zombie... z) {}
 	
 }
