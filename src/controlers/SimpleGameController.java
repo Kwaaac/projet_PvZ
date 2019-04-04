@@ -259,7 +259,8 @@ public class SimpleGameController {
 			}
 
 			KeyboardKey KB = event.getKey();
-			String mdp = KB.toString();
+			String mdp = null;
+			if(KB != null) { mdp = KB.toString(); }
 			Action action = event.getAction();
 			
 			if ((action == Action.KEY_PRESSED || action == Action.KEY_RELEASED) && mdp == "SPACE") {
