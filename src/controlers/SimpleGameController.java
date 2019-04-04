@@ -15,7 +15,7 @@ import fr.umlv.zen5.ApplicationContext;
 import fr.umlv.zen5.Event;
 import fr.umlv.zen5.ScreenInfo;
 import fr.umlv.zen5.Event.Action;
-
+import fr.umlv.zen5.KeyboardKey;
 import models.Entities;
 import models.MovingElement;
 import models.SimpleGameData;
@@ -258,8 +258,11 @@ public class SimpleGameController {
 				continue;
 			}
 
+			KeyboardKey KB = event.getKey();
+			String mdp = KB.toString();
 			Action action = event.getAction();
-			if (action == Action.KEY_PRESSED || action == Action.KEY_RELEASED) {
+			
+			if ((action == Action.KEY_PRESSED || action == Action.KEY_RELEASED) && mdp == "SPACE") {
 				Duration timeEnd = Duration.between(time,Instant.now());
 				
 				int h = 0, m = 0, s = 0;
