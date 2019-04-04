@@ -274,21 +274,50 @@ public class SimpleGameController {
 			if(KB != null) { mdp = KB.toString(); }
 			Action action = event.getAction();
 			
-			if ((action == Action.KEY_PRESSED || action == Action.KEY_RELEASED) && mdp == "A") {
-				Duration timeEnd = Duration.between(time,Instant.now());
+			if (action == Action.KEY_PRESSED || action == Action.KEY_RELEASED) {
 				
-				int h = 0, m = 0, s = 0;
-				h=(int) (timeEnd.getSeconds() / 3600);
-				m=(int) ((timeEnd.getSeconds() % 3600) / 60);
-				s=(int) (((timeEnd.getSeconds() % 3600) % 60));
+				if (mdp == "SPACE") {
+					Duration timeEnd = Duration.between(time,Instant.now());
+					
+					int h = 0, m = 0, s = 0;
+					h=(int) (timeEnd.getSeconds() / 3600);
+					m=(int) ((timeEnd.getSeconds() % 3600) / 60);
+					s=(int) (((timeEnd.getSeconds() % 3600) % 60));
+					
+					str.append("-+-+-+-+-+-+-+-+-+-\nLa partie a duree : "+h+" heure(s) "+m+" minute(s) "+s+" seconde(s)");
+					System.out.println(str.toString());
+					context.exit(0);
+					return;
+				}
 				
-				str.append("-+-+-+-+-+-+-+-+-+-\nLa partie a duree : "+h+" heure(s) "+m+" minute(s) "+s+" seconde(s)");
-				System.out.println(str.toString());
-				context.exit(0);
-				return;
+				if (mdp == "Y") { debug=1; } //debug ON
+				if (mdp == "N") { debug=0; } //debug OFF
 			}
 			
-			
+			if (debug == 1) {
+	            int truc = rand.nextInt(100); //timer
+	            int spawnRate2 = 1; //timer
+	            int xRandomPosition = rand.nextInt(7); //random position x dans matrice
+	            int yRandomPosition = rand.nextInt(4); //random position y dans matrice
+	            int randomPlantType = rand.nextInt(2); //random type plant
+	            
+	            if(spawnRate2 == truc) {
+	            	if (randomPlantType == 0) {
+	            		view.drawPeashooter(context, data, possibility.get(xRandomPosition)[0], possibility.get(yRandomPosition)[1], "#90D322");
+						MyPlants.add(new Peashooter(possibility.get(xRandomPosition)[0], possibility.get(yRandomPosition)[1]));
+						MyBullet.add(new Bullet(possibility.get(xRandomPosition)[0]+sizeOfPlant, possibility.get(yRandomPosition)[1]+(sizeOfPlant/4)+10));
+	            	}
+	            	if (randomPlantType == 1) {
+	            		view.drawCherryBomb(context, data, possibility.get(xRandomPosition)[0], possibility.get(yRandomPosition)[1], "#CB5050");
+						MyPlants.add(new CherryBomb(possibility.get(xRandomPosition)[0], possibility.get(yRandomPosition)[1]));
+	            	}
+	            	if (randomPlantType == 2) {
+	            		view.drawWallNut(context, data, possibility.get(xRandomPosition)[0], possibility.get(yRandomPosition)[1], "#ECB428");
+						MyPlants.add(new WallNut(possibility.get(xRandomPosition)[0], possibility.get(yRandomPosition)[1]));
+	            	}
+	            	
+	            }
+			}
 			
 //			if (action == Action.POINTER_DOWN) {
 //				location = event.getLocation();
@@ -311,7 +340,7 @@ public class SimpleGameController {
 				continue;
 			}
 
-			if (!data.hasASelectedCell() || debug == 1) { // no cell is selected
+			if (!data.hasASelectedCell()) { // no cell is selected
 				
 				location = event.getLocation();
 				float x = location.x;
@@ -353,29 +382,8 @@ public class SimpleGameController {
 
 						}
 					}
-				} else {
-		            int truc = rand.nextInt(1000);
-		            int xRandomPosition = rand.nextInt(7);
-		            int yRandomPosition = rand.nextInt(4);
-		            int randomPlantType = rand.nextInt(2);
-		            int spawnRate2 = 1;
-		            if(spawnRate2 == truc) {
-		            	if (randomPlantType == 0) {
-		            		view.drawPeashooter(context, data, possibility.get(xRandomPosition)[0], possibility.get(yRandomPosition)[1], "#90D322");
-							MyPlants.add(new Peashooter(possibility.get(xRandomPosition)[0], possibility.get(yRandomPosition)[1]));
-							MyBullet.add(new Bullet(possibility.get(xRandomPosition)[0]+sizeOfPlant, possibility.get(yRandomPosition)[1]+(sizeOfPlant/4)+10));
-		            	}
-		            	if (randomPlantType == 1) {
-		            		view.drawCherryBomb(context, data, possibility.get(xRandomPosition)[0], possibility.get(yRandomPosition)[1], "#CB5050");
-							MyPlants.add(new CherryBomb(possibility.get(xRandomPosition)[0], possibility.get(yRandomPosition)[1]));
-		            	}
-		            	if (randomPlantType == 2) {
-		            		view.drawWallNut(context, data, possibility.get(xRandomPosition)[0], possibility.get(yRandomPosition)[1], "#ECB428");
-							MyPlants.add(new WallNut(possibility.get(xRandomPosition)[0], possibility.get(yRandomPosition)[1]));
-		            	}
-		            	
-		            }
-				}
+				} 
+				
 			} else {
 				data.unselect();
 			}
@@ -423,10 +431,7 @@ public class SimpleGameController {
 				return;
             }
 			
-			if ((action == Action.KEY_PRESSED || action == Action.KEY_RELEASED) && mdp == "SPACE") {
-				if (debug == 0) {debug+=1;}
-				else {debug-=1;}
-			}
+
 			
 		}
 	}
