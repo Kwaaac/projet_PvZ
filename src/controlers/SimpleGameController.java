@@ -7,6 +7,7 @@ import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Random;
 import java.util.TreeSet;
 
@@ -72,7 +73,9 @@ public class SimpleGameController {
 		ArrayList<Zombie> MyZombies = new ArrayList<>();
 		ArrayList<Plant> MyPlants = new ArrayList<>();
 		ArrayList<Projectile> MyBullet = new ArrayList<>();
-        
+		HashMap<int[],int[]> possibility = new HashMap<int[], int[]>();
+
+		
 		
         int spawnRate = 1;
         int ZombieSize = Zombie.getSizeOfZombie();
@@ -85,10 +88,18 @@ public class SimpleGameController {
 
         StringBuilder str = new StringBuilder("Journal de bord\n-+-+-+-+-+-+-+-+-+-\n");
         int day = 0;
+        int debug = 0;
         
+        for(int x = 0; x != 5; x++) {
+			for(int y = 0; y != 8; y++) {
+				int xCentered = (int) (x+(squareSize/2)-(sizeOfPlant/2));
+				int yCentered = (int) (y+(squareSize/2)-(sizeOfPlant/2));
+				possibility.put(new int[] {x,y},new int[] {xCentered,yCentered});
+			}
+		}
         
         while (true) {
-        	
+        	System.out.println(debug);
         	view.draw(context, data);
         	PlantSelectionView.draw(context, data2);
         	
@@ -170,9 +181,9 @@ public class SimpleGameController {
 					}
 				}
 				if(z.getX() < xOrigin-squareSize/2 || z.getLife() <= 0) {
-                	str.append(z+"meurt\\n");
+                	str.append(z+"meurt\n");
                     deadPoolZ.add(MyZombies.indexOf(z));
-                    str.append(deadPoolZ);
+                    str.append(deadPoolZ+"\n");
                 }
 			}
 /*----------------------------------------------------------------------------*/ 		
@@ -182,7 +193,7 @@ public class SimpleGameController {
             	if(b.getX() > xOrigin+squareSize*8){
                 	str.append(b+"meurt\n");
                     deadPoolBullet.add(MyBullet.indexOf(b));
-                    str.append(deadPoolBullet);
+                    str.append(deadPoolBullet+"\n");
                 }
             }
             
@@ -263,7 +274,7 @@ public class SimpleGameController {
 			if(KB != null) { mdp = KB.toString(); }
 			Action action = event.getAction();
 			
-			if ((action == Action.KEY_PRESSED || action == Action.KEY_RELEASED) && mdp == "SPACE") {
+			if ((action == Action.KEY_PRESSED || action == Action.KEY_RELEASED) && mdp == "A") {
 				Duration timeEnd = Duration.between(time,Instant.now());
 				
 				int h = 0, m = 0, s = 0;
@@ -300,7 +311,8 @@ public class SimpleGameController {
 				continue;
 			}
 
-			if (!data.hasASelectedCell()) { // no cell is selected
+			if (!data.hasASelectedCell() || debug == 1) { // no cell is selected
+				
 				location = event.getLocation();
 				float x = location.x;
 				float y = location.y;
@@ -341,6 +353,28 @@ public class SimpleGameController {
 
 						}
 					}
+				} else {
+		            int truc = rand.nextInt(1000);
+		            int xRandomPosition = rand.nextInt(7);
+		            int yRandomPosition = rand.nextInt(4);
+		            int randomPlantType = rand.nextInt(2);
+		            int spawnRate2 = 1;
+		            if(spawnRate2 == truc) {
+		            	if (randomPlantType == 0) {
+		            		view.drawPeashooter(context, data, possibility.get(xRandomPosition)[0], possibility.get(yRandomPosition)[1], "#90D322");
+							MyPlants.add(new Peashooter(possibility.get(xRandomPosition)[0], possibility.get(yRandomPosition)[1]));
+							MyBullet.add(new Bullet(possibility.get(xRandomPosition)[0]+sizeOfPlant, possibility.get(yRandomPosition)[1]+(sizeOfPlant/4)+10));
+		            	}
+		            	if (randomPlantType == 1) {
+		            		view.drawCherryBomb(context, data, possibility.get(xRandomPosition)[0], possibility.get(yRandomPosition)[1], "#CB5050");
+							MyPlants.add(new CherryBomb(possibility.get(xRandomPosition)[0], possibility.get(yRandomPosition)[1]));
+		            	}
+		            	if (randomPlantType == 2) {
+		            		view.drawWallNut(context, data, possibility.get(xRandomPosition)[0], possibility.get(yRandomPosition)[1], "#ECB428");
+							MyPlants.add(new WallNut(possibility.get(xRandomPosition)[0], possibility.get(yRandomPosition)[1]));
+		            	}
+		            	
+		            }
 				}
 			} else {
 				data.unselect();
@@ -388,6 +422,11 @@ public class SimpleGameController {
 				context.exit(0);
 				return;
             }
+			
+			if ((action == Action.KEY_PRESSED || action == Action.KEY_RELEASED) && mdp == "SPACE") {
+				if (debug == 0) {debug+=1;}
+				else {debug-=1;}
+			}
 			
 		}
 	}
