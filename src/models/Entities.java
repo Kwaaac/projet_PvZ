@@ -82,7 +82,7 @@ public abstract class Entities {
 	 * @param e is the entitie we want to compare the edge's positions
 	 * @return if this as touch e
 	 */
-	private boolean hit(Entities e) {
+	public boolean hit(Entities e) {
 
 		if (this instanceof Zombie) { // on gere une premiere possiblit� --> une entit� zombie touche une plante ou un
 										// projectile

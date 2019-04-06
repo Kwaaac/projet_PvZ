@@ -69,7 +69,8 @@ public class SimpleGameController {
 		ArrayList<Zombie> MyZombies = new ArrayList<>();
 		ArrayList<Plant> MyPlants = new ArrayList<>();
 		ArrayList<Projectile> MyBullet = new ArrayList<>();
-		HashMap<int[], int[]> possibility = new HashMap<int[], int[]>();
+		HashMap<Integer, Integer> possibilityX = new HashMap<Integer, Integer>(); //Test Mod tkt
+		HashMap<Integer, Integer> possibilityY = new HashMap<Integer, Integer>(); //Test Mod tkt
 
 		int spawnRate = 1;
 		int ZombieSize = Zombie.getSizeOfZombie();
@@ -84,16 +85,19 @@ public class SimpleGameController {
 		int day = 0;
 		int debug = 0;
 
-		for (int x = 0; x != 5; x++) {
-			for (int y = 0; y != 8; y++) {
-				int xCentered = (int) (x + (squareSize / 2) - (sizeOfPlant / 2));
-				int yCentered = (int) (y + (squareSize / 2) - (sizeOfPlant / 2));
-				possibility.put(new int[] { x, y }, new int[] { xCentered, yCentered });
+		for (int x = 0; x < 5; x++) {
+			for (int y = 0; y < 8; y++) {
+				float X = view.realCoordFromIndex(x,xOrigin);
+				float Y = view.realCoordFromIndex(y,yOrigin);
+				int xCentered = (int) (X + (squareSize / 2) - (sizeOfPlant / 2));
+				int yCentered = (int) (Y + (squareSize / 2) - (sizeOfPlant / 2));
+				possibilityX.put(x,xCentered);
+				possibilityY.put(y,yCentered);
+				System.out.println("("+x+","+y+") : "+xCentered+", "+yCentered);
 			}
 		}
 
 		while (true) {
-			System.out.println(debug);
 			view.draw(context, data);
 			PlantSelectionView.draw(context, data2);
 
@@ -254,6 +258,9 @@ public class SimpleGameController {
 						p.resetAS();
 					}
 				}
+				if (p instanceof CherryBomb) {
+					
+				}
 			}
 			/*----------------------------------------------------------------------------*/
 
@@ -279,7 +286,7 @@ public class SimpleGameController {
 					m = (int) ((timeEnd.getSeconds() % 3600) / 60);
 					s = (int) (((timeEnd.getSeconds() % 3600) % 60));
 
-					str.append("-+-+-+-+-+-+-+-+-+-\nLa partie a duree : " + h + " heure(s) " + m + " minute(s) " + s
+					str.append("-+-+-+-+-+-+-+-+-+-\nVous avez quitte la partie !\nLa partie a duree : " + h + " heure(s) " + m + " minute(s) " + s
 							+ " seconde(s)");
 					System.out.println(str.toString());
 					context.exit(0);
@@ -293,34 +300,47 @@ public class SimpleGameController {
 					debug = 0;
 				} // debug OFF
 			}
-
+			
 			if (debug == 1) {
 				int truc = rand.nextInt(100); // timer
 				int spawnRate2 = 1; // timer
-				int xRandomPosition = rand.nextInt(7); // random position x dans matrice
-				int yRandomPosition = rand.nextInt(4); // random position y dans matrice
-				int randomPlantType = rand.nextInt(2); // random type plant
-
+				int xRandomPosition = rand.nextInt(8); // random position x dans matrice
+				int yRandomPosition = rand.nextInt(5); // random position y dans matrice
+				int randomPlantType = rand.nextInt(3); // random type plant
+//				System.out.println(possibilityX.get(xRandomPosition)+","+possibilityY.get(yRandomPosition)+", "+randomPlantType);
 				if (spawnRate2 == truc) {
 					if (randomPlantType == 0) {
-						view.drawPeashooter(context, data, possibility.get(xRandomPosition)[0],
-								possibility.get(yRandomPosition)[1], "#90D322");
-						MyPlants.add(new Peashooter(possibility.get(xRandomPosition)[0],
-								possibility.get(yRandomPosition)[1]));
-						MyBullet.add(new Bullet(possibility.get(xRandomPosition)[0] + sizeOfPlant,
-								possibility.get(yRandomPosition)[1] + (sizeOfPlant / 4) + 10));
+						data.plantOnBoard(yRandomPosition,  xRandomPosition);
+						
+						view.drawPeashooter(context, data, possibilityX.get(xRandomPosition),possibilityY.get(yRandomPosition), "#90D322");
+						
+						MyPlants.add(new Peashooter(possibilityX.get(xRandomPosition),possibilityY.get(yRandomPosition)));
+						
+						MyBullet.add(new Bullet(possibilityX.get(xRandomPosition) + sizeOfPlant,possibilityY.get(yRandomPosition) + (sizeOfPlant / 4) + 10));
+						
+						str.append("new plant (" + new SimpleDateFormat("hh:mm:ss").format(new Date()) + ")\n");
 					}
+					
+					
 					if (randomPlantType == 1) {
-						view.drawCherryBomb(context, data, possibility.get(xRandomPosition)[0],
-								possibility.get(yRandomPosition)[1], "#CB5050");
-						MyPlants.add(new CherryBomb(possibility.get(xRandomPosition)[0],
-								possibility.get(yRandomPosition)[1]));
+						data.plantOnBoard(yRandomPosition,  xRandomPosition);
+						
+						view.drawCherryBomb(context, data, possibilityX.get(xRandomPosition),possibilityY.get(yRandomPosition), "#CB5050");
+						
+						MyPlants.add(new CherryBomb(possibilityX.get(xRandomPosition),possibilityY.get(yRandomPosition)));
+						
+						str.append("new plant (" + new SimpleDateFormat("hh:mm:ss").format(new Date()) + ")\n");
 					}
+					
+					
 					if (randomPlantType == 2) {
-						view.drawWallNut(context, data, possibility.get(xRandomPosition)[0],
-								possibility.get(yRandomPosition)[1], "#ECB428");
-						MyPlants.add(
-								new WallNut(possibility.get(xRandomPosition)[0], possibility.get(yRandomPosition)[1]));
+						data.plantOnBoard(yRandomPosition,  xRandomPosition);
+						
+						view.drawWallNut(context, data, possibilityX.get(xRandomPosition),possibilityY.get(yRandomPosition), "#ECB428");
+						
+						MyPlants.add(new WallNut(possibilityX.get(xRandomPosition), possibilityY.get(yRandomPosition)));
+						
+						str.append("new plant (" + new SimpleDateFormat("hh:mm:ss").format(new Date()) + ")\n");
 					}
 
 				}

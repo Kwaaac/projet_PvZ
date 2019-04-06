@@ -136,11 +136,11 @@ public class SelectBordView extends SimpleGameView{
         graphics.draw(p2.draw());
         graphics.fill(p2.draw());
         
-        
         graphics.setColor(Color.decode("#ECB428"));
         WallNut p3 = new WallNut((int)(squareSize/2)-sizeOfPlant/2,(int)(squareSize/2)+100+squareSize*2-sizeOfPlant/2);
         graphics.draw(p3.draw());
         graphics.fill(p3.draw());
+        
 	}
 	
 
