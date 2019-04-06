@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 public class SimpleGameData{
 	private final static int score = 1;
+	private static int WL = 0; //pour le end menu tkt mgl :v)
 	private final Cell[][] matrix;
 	private Coordinates selected;
 	private final ArrayList<Coordinates> placedPlant = new ArrayList<Coordinates>();
@@ -121,6 +122,14 @@ public class SimpleGameData{
 	
 	public static boolean win(int x) {
 		return x==score;
+	}
+	
+	public static void setWL(int x) {
+		WL = x;
+	}
+	
+	public static int getWL() {
+		return WL;
 	}
 	
 }

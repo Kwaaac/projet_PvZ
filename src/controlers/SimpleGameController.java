@@ -37,17 +37,15 @@ import views.SelectBordView;
 
 public class SimpleGameController {
 
-	public static int RandomPosGenerator() {
+	public static int RandomPosGenerator(int x) {
 		Random random = new Random();
-		int randomPosition = 2;
-		return randomPosition;
+		int pos = random.nextInt(x);
+		return pos;
 	}
 
 	static void simpleGame(ApplicationContext context) {
-		// get the size of the screen
 		ScreenInfo screenInfo = context.getScreenInfo();
 		float width = screenInfo.getWidth();
-		// str.append("size of the screen (" + width + " x " + height + ")");
 
 		SimpleGameData data = new SimpleGameData(5, 8);
 		SimpleGameData data2 = new SimpleGameData(3, 1);
@@ -106,22 +104,22 @@ public class SimpleGameController {
 
 			if (day == 0) {
 				MyZombies.add(new FlagZombie((int) width,
-						yOrigin + RandomPosGenerator() * squareSize + (squareSize / 2) - ZombieSize / 2));
+						yOrigin + RandomPosGenerator(5) * squareSize + (squareSize / 2) - ZombieSize / 2));
 				str.append("new FlagZombie (" + new SimpleDateFormat("hh:mm:ss").format(new Date()) + ")\n");
 				day += 1;
 			}
 
 			Random rand = new Random();
-			int n = rand.nextInt(1000);
-			int n2 = rand.nextInt(2000);
+			int n = RandomPosGenerator(1000);
+			int n2 = RandomPosGenerator(2000);
 			if (spawnRate == n) {
 				MyZombies.add(new NormalZombie((int) width,
-						yOrigin + RandomPosGenerator() * squareSize + (squareSize / 2) - ZombieSize / 2));
+						yOrigin + RandomPosGenerator(4) * squareSize + (squareSize / 2) - ZombieSize / 2));
 				str.append("new NormalZombie (" + new SimpleDateFormat("hh:mm:ss").format(new Date()) + ")\n");
 			}
 			if (spawnRate == n2) {
 				MyZombies.add(new ConeheadZombie((int) width,
-						yOrigin + RandomPosGenerator() * squareSize + (squareSize / 2) - ZombieSize / 2));
+						yOrigin + RandomPosGenerator(4) * squareSize + (squareSize / 2) - ZombieSize / 2));
 				str.append("new ConeheadZombie (" + new SimpleDateFormat("hh:mm:ss").format(new Date()) + ")\n");
 			}
 
@@ -195,6 +193,7 @@ public class SimpleGameController {
 					str.append("-+-+-+-+-+-+-+-+-+-\nVous avez perdu...\nLa partie a duree : " + h + " heure(s) " + m
 							+ " minute(s) " + s + " seconde(s)");
 					System.out.println(str.toString());
+					SimpleGameData.setWL(0);
 					context.exit(0);
 					return;
 				}
@@ -287,6 +286,7 @@ public class SimpleGameController {
 					str.append("-+-+-+-+-+-+-+-+-+-\nVous avez quitte la partie !\nLa partie a duree : " + h + " heure(s) " + m + " minute(s) " + s
 							+ " seconde(s)");
 					System.out.println(str.toString());
+					SimpleGameData.setWL(0);
 					context.exit(0);
 					return;
 				}
@@ -300,11 +300,11 @@ public class SimpleGameController {
 			}
 			
 			if (debug == 1) {
-				int truc = rand.nextInt(2); // timer
+				int truc = RandomPosGenerator(2); // timer
 				int spawnRate2 = 1; // timer
-				int xRandomPosition = rand.nextInt(8); // random position x dans matrice
-				int yRandomPosition = rand.nextInt(5); // random position y dans matrice
-				int randomPlantType = rand.nextInt(3); // random type plant
+				int xRandomPosition = RandomPosGenerator(8); // random position x dans matrice
+				int yRandomPosition = RandomPosGenerator(5); // random position y dans matrice
+				int randomPlantType = RandomPosGenerator(3); // random type plant
 				
 				if (spawnRate2 == truc) {
 					
@@ -449,17 +449,58 @@ public class SimpleGameController {
 				str.append("-+-+-+-+-+-+-+-+-+-\nVous avez GAGNEE !!!\nLa partie a duree : " + h + " heure(s) " + m
 						+ " minute(s) " + s + " seconde(s)");
 				System.out.println(str.toString());
+				SimpleGameData.setWL(1);
 				context.exit(0);
 				return;
 			}
-
+			
 		}
 	}
+	
+//	static void endGame(ApplicationContext context) {
+//
+//		ScreenInfo screenInfo = context.getScreenInfo();
+//		float width = screenInfo.getWidth();
+//		float height = screenInfo.getHeight();
+//
+//		SimpleGameData data = new SimpleGameData(1, 1);
+//
+//		data.setRandomMatrix();
+//		int yOrigin = (int) (height/2.5);
+//		int xOrigin = (int) (width/2.5);
+//
+//		BordView view = BordView.initGameGraphics(xOrigin, yOrigin, 400, data);
+//
+//
+//
+//		int WL = SimpleGameData.getWL();
+//		
+//		while (true) {
+//			view.draw(context, data);
+//			Event event = context.pollOrWaitEvent(20);
+//			if (event == null) {
+//				continue;
+//			}
+//			Action action = event.getAction();
+//			
+//			
+//			if (WL == 0) {
+//				view.drawString(context, data, "LOOSE", (int)width/2, (int)height/2, Color.WHITE);
+//			}
+//			else {
+//				view.drawString(context, data, "WIN", (int)width/2, (int)height/2, Color.WHITE);
+//			}
+//			
+//			if (action == Action.KEY_PRESSED || action == Action.KEY_RELEASED) {
+//				context.exit(0);
+//				return;
+//			}
+//		}
+//		
+//	}
 
 	public static void main(String[] args) {
-		// pour changer de jeu, remplacer stupidGame par le nom de la m�thode de jeu
-		// (elle doit avoir extaement la mieme en-t�te).
 		Application.run(Color.LIGHT_GRAY, SimpleGameController::simpleGame); // attention, utilisation d'une lambda.
-
+//		Application.run(Color.BLACK, SimpleGameController::endGame); // attention, utilisation d'une lambda.
 	}
 }
