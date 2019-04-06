@@ -93,7 +93,6 @@ public class SimpleGameController {
 				int yCentered = (int) (Y + (squareSize / 2) - (sizeOfPlant / 2));
 				possibilityX.put(x,xCentered);
 				possibilityY.put(y,yCentered);
-				System.out.println("("+x+","+y+") : "+xCentered+", "+yCentered);
 			}
 		}
 
@@ -220,7 +219,6 @@ public class SimpleGameController {
 					System.out.println("deadPoolP" + deadPoolP);
 					if (MyPlants.contains(MyPlants.get(p))) {
 						MyPlants.remove(p);
-//            	deathCounterPlant+=1;
 						str.append("plant killed (" + new SimpleDateFormat("hh:mm:ss").format(new Date()) + ")\n");
 					}
 				}
@@ -302,13 +300,14 @@ public class SimpleGameController {
 			}
 			
 			if (debug == 1) {
-				int truc = rand.nextInt(100); // timer
+				int truc = rand.nextInt(2); // timer
 				int spawnRate2 = 1; // timer
 				int xRandomPosition = rand.nextInt(8); // random position x dans matrice
 				int yRandomPosition = rand.nextInt(5); // random position y dans matrice
 				int randomPlantType = rand.nextInt(3); // random type plant
-//				System.out.println(possibilityX.get(xRandomPosition)+","+possibilityY.get(yRandomPosition)+", "+randomPlantType);
+				
 				if (spawnRate2 == truc) {
+					
 					if (randomPlantType == 0) {
 						data.plantOnBoard(yRandomPosition,  xRandomPosition);
 						
