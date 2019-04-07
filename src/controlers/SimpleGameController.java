@@ -194,7 +194,7 @@ public class SimpleGameController {
 				}
 			}
 			/*----------------------------------------------------------------------------*/
-			/*-------------------- je dï¿½truit tout les elements morts --------------------*/
+			/*-------------------- je détruit tout les elements morts --------------------*/
 			if (!(deadPoolZ.empty())) {
 				deadPoolZ.reverseSort();
 				for (int d : deadPoolZ.getDeadPool()) {
@@ -260,7 +260,6 @@ public class SimpleGameController {
 				if(data.spawnRandomPlant(possibilityX, possibilityY, MyPlants, view, context)) {
 					str.append("new plant (" + new SimpleDateFormat("hh:mm:ss").format(new Date()) + ")\n");
 				}
-				
 			}
 			
 			
