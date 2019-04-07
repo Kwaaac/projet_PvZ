@@ -1,7 +1,20 @@
 package models;
 
 import java.awt.Color;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Random;
+
+import fr.umlv.zen5.ApplicationContext;
+import plants.Bullet;
+import plants.CherryBomb;
+import plants.Peashooter;
+import plants.Plant;
+import plants.Projectile;
+import plants.WallNut;
+import views.BordView;
 
 public class SimpleGameData{
 	private final static int score = 1;
@@ -13,6 +26,17 @@ public class SimpleGameData{
 	public SimpleGameData(int nbLines, int nbColumns) {
 		matrix = new Cell[nbLines][nbColumns];
 		
+	}
+	
+	
+	/**
+	 * Genere une position aléatoire pour les lignes du plateau
+	 * @return Ligne du plateau 
+	 */
+	public int RandomPosGenerator(int x) {
+		Random random = new Random();
+		int pos = random.nextInt(x);
+		return pos;
 	}
 
 	/**
@@ -130,6 +154,61 @@ public class SimpleGameData{
 	
 	public static int getWL() {
 		return WL;
+	}
+	
+	public boolean spawnRandomPlant(HashMap<Integer, Integer> possibilityX, HashMap<Integer, Integer> possibilityY, 
+									ArrayList<Plant> MyPlants, 
+									BordView view, ApplicationContext context) {
+		
+		boolean result = false;
+		
+		int truc = this.RandomPosGenerator(20); // timer
+		int spawnRate2 = 1; // timer
+		int xRandomPosition = this.RandomPosGenerator(8); // random position x dans matrice
+		int yRandomPosition = this.RandomPosGenerator(5); // random position y dans matrice
+		int randomPlantType = this.RandomPosGenerator(3); // random type plant
+		
+		if (spawnRate2 == truc) {
+			
+			if (randomPlantType == 0) {
+				
+				this.plantOnBoard(yRandomPosition,  xRandomPosition);
+				
+				
+				view.drawPeashooter(context, this, possibilityX.get(xRandomPosition), possibilityY.get(yRandomPosition), "#90D322");
+				
+				MyPlants.add(new Peashooter(possibilityX.get(xRandomPosition),possibilityY.get(yRandomPosition)));
+				
+				result = true;
+			}
+			
+			
+			if (randomPlantType == 1) {
+				this.plantOnBoard(yRandomPosition,  xRandomPosition);
+				
+				
+				view.drawCherryBomb(context, this, possibilityX.get(xRandomPosition), possibilityY.get(yRandomPosition), "#CB5050");
+				
+				MyPlants.add(new CherryBomb(possibilityX.get(xRandomPosition),possibilityY.get(yRandomPosition)));
+				
+				result = true;
+			}
+			
+			
+			if (randomPlantType == 2) {
+				this.plantOnBoard(yRandomPosition,  xRandomPosition);
+				
+
+				view.drawWallNut(context, this,  possibilityX.get(xRandomPosition), possibilityY.get(yRandomPosition), "#ECB428");
+				
+				MyPlants.add(new WallNut(possibilityX.get(xRandomPosition), possibilityY.get(yRandomPosition)));
+				
+				result = true;
+			}
+
+		}
+		
+		return result;
 	}
 	
 }

@@ -9,7 +9,7 @@ public abstract class Plant extends Entities{
 	private final String type = "Plant"; 
 	private final static int sizeOfPlant = 75;
 	private final int speedshoot = 200;
-	private int timerA = 0;
+	private int timerA = 199;
 	
 	public Plant(int x, int y, int damage, int life) {
 		super(x, y, damage, life);

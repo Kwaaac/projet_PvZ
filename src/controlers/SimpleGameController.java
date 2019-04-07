@@ -8,7 +8,6 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Random;
 
 import fr.umlv.zen5.Application;
 import fr.umlv.zen5.ApplicationContext;
@@ -36,13 +35,7 @@ import views.BordView;
 import views.SelectBordView;
 
 public class SimpleGameController {
-
-	public static int RandomPosGenerator(int x) {
-		Random random = new Random();
-		int pos = random.nextInt(x);
-		return pos;
-	}
-
+	
 	static void simpleGame(ApplicationContext context) {
 		ScreenInfo screenInfo = context.getScreenInfo();
 		float width = screenInfo.getWidth();
@@ -83,14 +76,17 @@ public class SimpleGameController {
 		int day = 0;
 		int debug = 0;
 
-		for (int x = 0; x < 5; x++) {
-			for (int y = 0; y < 8; y++) {
+		for (int x = 0; x < 8; x++) {
+			for (int y = 0; y < 5; y++) {
+				
 				float X = view.realCoordFromIndex(x,xOrigin);
 				float Y = view.realCoordFromIndex(y,yOrigin);
 				int xCentered = (int) (X + (squareSize / 2) - (sizeOfPlant / 2));
 				int yCentered = (int) (Y + (squareSize / 2) - (sizeOfPlant / 2));
+				
 				possibilityX.put(x,xCentered);
 				possibilityY.put(y,yCentered);
+				
 			}
 		}
 
@@ -104,22 +100,21 @@ public class SimpleGameController {
 
 			if (day == 0) {
 				MyZombies.add(new FlagZombie((int) width,
-						yOrigin + RandomPosGenerator(5) * squareSize + (squareSize / 2) - ZombieSize / 2));
+						yOrigin + data.RandomPosGenerator(5) * squareSize + (squareSize / 2) - ZombieSize / 2));
 				str.append("new FlagZombie (" + new SimpleDateFormat("hh:mm:ss").format(new Date()) + ")\n");
 				day += 1;
 			}
 
-			Random rand = new Random();
-			int n = RandomPosGenerator(1000);
-			int n2 = RandomPosGenerator(2000);
+			int n = data.RandomPosGenerator(1000);
+			int n2 = data.RandomPosGenerator(2000);
 			if (spawnRate == n) {
 				MyZombies.add(new NormalZombie((int) width,
-						yOrigin + RandomPosGenerator(4) * squareSize + (squareSize / 2) - ZombieSize / 2));
+						yOrigin + data.RandomPosGenerator(4) * squareSize + (squareSize / 2) - ZombieSize / 2));
 				str.append("new NormalZombie (" + new SimpleDateFormat("hh:mm:ss").format(new Date()) + ")\n");
 			}
 			if (spawnRate == n2) {
 				MyZombies.add(new ConeheadZombie((int) width,
-						yOrigin + RandomPosGenerator(4) * squareSize + (squareSize / 2) - ZombieSize / 2));
+						yOrigin + data.RandomPosGenerator(4) * squareSize + (squareSize / 2) - ZombieSize / 2));
 				str.append("new ConeheadZombie (" + new SimpleDateFormat("hh:mm:ss").format(new Date()) + ")\n");
 			}
 
@@ -248,7 +243,7 @@ public class SimpleGameController {
 			/*----------------------------Shooting in continue----------------------------*/
 			for (Plant p : MyPlants) {
 				if (p instanceof Peashooter) {
-//            		str.append(timeS);
+					// str.append(timeS);
 					p.incAS();
 					if (p.readyToshot()) {
 						MyBullet.add(new Bullet(p.getX() + sizeOfPlant, p.getY() + (sizeOfPlant / 2) - 10));
@@ -261,6 +256,14 @@ public class SimpleGameController {
 			}
 			/*----------------------------------------------------------------------------*/
 
+			if (debug == 1) {
+				if(data.spawnRandomPlant(possibilityX, possibilityY, MyPlants, view, context)) {
+					str.append("new plant (" + new SimpleDateFormat("hh:mm:ss").format(new Date()) + ")\n");
+				}
+				
+			}
+			
+			
 			Event event = context.pollOrWaitEvent(20); // modifier pour avoir un affichage fluide
 			if (event == null) { // no event
 				continue;
@@ -299,51 +302,7 @@ public class SimpleGameController {
 				} // debug OFF
 			}
 			
-			if (debug == 1) {
-				int truc = RandomPosGenerator(2); // timer
-				int spawnRate2 = 1; // timer
-				int xRandomPosition = RandomPosGenerator(8); // random position x dans matrice
-				int yRandomPosition = RandomPosGenerator(5); // random position y dans matrice
-				int randomPlantType = RandomPosGenerator(3); // random type plant
-				
-				if (spawnRate2 == truc) {
-					
-					if (randomPlantType == 0) {
-						data.plantOnBoard(yRandomPosition,  xRandomPosition);
-						
-						view.drawPeashooter(context, data, possibilityX.get(xRandomPosition),possibilityY.get(yRandomPosition), "#90D322");
-						
-						MyPlants.add(new Peashooter(possibilityX.get(xRandomPosition),possibilityY.get(yRandomPosition)));
-						
-						MyBullet.add(new Bullet(possibilityX.get(xRandomPosition) + sizeOfPlant,possibilityY.get(yRandomPosition) + (sizeOfPlant / 4) + 10));
-						
-						str.append("new plant (" + new SimpleDateFormat("hh:mm:ss").format(new Date()) + ")\n");
-					}
-					
-					
-					if (randomPlantType == 1) {
-						data.plantOnBoard(yRandomPosition,  xRandomPosition);
-						
-						view.drawCherryBomb(context, data, possibilityX.get(xRandomPosition),possibilityY.get(yRandomPosition), "#CB5050");
-						
-						MyPlants.add(new CherryBomb(possibilityX.get(xRandomPosition),possibilityY.get(yRandomPosition)));
-						
-						str.append("new plant (" + new SimpleDateFormat("hh:mm:ss").format(new Date()) + ")\n");
-					}
-					
-					
-					if (randomPlantType == 2) {
-						data.plantOnBoard(yRandomPosition,  xRandomPosition);
-						
-						view.drawWallNut(context, data, possibilityX.get(xRandomPosition),possibilityY.get(yRandomPosition), "#ECB428");
-						
-						MyPlants.add(new WallNut(possibilityX.get(xRandomPosition), possibilityY.get(yRandomPosition)));
-						
-						str.append("new plant (" + new SimpleDateFormat("hh:mm:ss").format(new Date()) + ")\n");
-					}
 
-				}
-			}
 
 //			if (action == Action.POINTER_DOWN) {
 //				location = event.getLocation();
@@ -375,14 +334,19 @@ public class SimpleGameController {
 
 						int xCentered = (int) (X + (squareSize / 2) - (sizeOfPlant / 2));
 						int yCentered = (int) (Y + (squareSize / 2) - (sizeOfPlant / 2));
-
+						
 						if (ok != 0) {
-
+							System.out.println(possibilityX);
+							System.out.println(possibilityY);
+							
+							System.out.println(xCentered + " -///- " + yCentered);
+							
+							System.out.println();
+							
 							if (ok == 1) {
 								data.plantOnBoard(view.lineFromY(y), view.columnFromX(x));
 								view.drawPeashooter(context, data, xCentered, yCentered, "#90D322");
 								MyPlants.add(new Peashooter(xCentered, yCentered));
-								MyBullet.add(new Bullet(xCentered + sizeOfPlant, yCentered + (sizeOfPlant / 4) + 10));
 								ok = 0;
 								str.append("new plant (" + new SimpleDateFormat("hh:mm:ss").format(new Date()) + ")\n");
 							}
