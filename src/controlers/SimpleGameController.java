@@ -35,7 +35,7 @@ import views.BordView;
 import views.SelectBordView;
 
 public class SimpleGameController {
-	
+
 	static void simpleGame(ApplicationContext context) {
 		ScreenInfo screenInfo = context.getScreenInfo();
 		float width = screenInfo.getWidth();
@@ -60,8 +60,8 @@ public class SimpleGameController {
 		ArrayList<Zombie> MyZombies = new ArrayList<>();
 		ArrayList<Plant> MyPlants = new ArrayList<>();
 		ArrayList<Projectile> MyBullet = new ArrayList<>();
-		HashMap<Integer, Integer> possibilityX = new HashMap<Integer, Integer>(); //Test Mod tkt
-		HashMap<Integer, Integer> possibilityY = new HashMap<Integer, Integer>(); //Test Mod tkt
+		HashMap<Integer, Integer> possibilityX = new HashMap<Integer, Integer>(); // Test Mod tkt
+		HashMap<Integer, Integer> possibilityY = new HashMap<Integer, Integer>(); // Test Mod tkt
 
 		int spawnRate = 1;
 		int ZombieSize = Zombie.getSizeOfZombie();
@@ -78,15 +78,15 @@ public class SimpleGameController {
 
 		for (int x = 0; x < 8; x++) {
 			for (int y = 0; y < 5; y++) {
-				
-				float X = view.realCoordFromIndex(x,xOrigin);
-				float Y = view.realCoordFromIndex(y,yOrigin);
+
+				float X = view.realCoordFromIndex(x, xOrigin);
+				float Y = view.realCoordFromIndex(y, yOrigin);
 				int xCentered = (int) (X + (squareSize / 2) - (sizeOfPlant / 2));
 				int yCentered = (int) (Y + (squareSize / 2) - (sizeOfPlant / 2));
-				
-				possibilityX.put(x,xCentered);
-				possibilityY.put(y,yCentered);
-				
+
+				possibilityX.put(x, xCentered);
+				possibilityY.put(y, yCentered);
+
 			}
 		}
 
@@ -145,17 +145,18 @@ public class SimpleGameController {
 							str.append("conflit start:\n\tzombie damage" + z.getDamage() + "zombie life " + z.getLife()
 									+ "\n\tplant damage" + p.getDamage() + " plant life" + p.getLife() + "\n");
 							p.conflict(z);
-							if (p.getLife() <= 0) {
-								str.append(p + "meurt\n");
-								deadPoolP.add(MyPlants.indexOf(p));
-								data.plantOutBord(view.lineFromY(p.getY()), view.columnFromX(p.getX()));
-								str.append(deadPoolP + "\n");
-							}
-							str.append("conflit end:\n\tzombie damage" + z.getDamage() + "zombie life " + z.getLife()
-									+ "\n\tplant damage" + p.getDamage() + " plant life" + p.getLife() + "\n");
 						}
 
 					}
+					if (p.getLife() <= 0) {
+						str.append(p + "meurt\n");
+						deadPoolP.add(MyPlants.indexOf(p));
+						data.plantOutBord(view.lineFromY(p.getY()), view.columnFromX(p.getX()));
+						str.append(deadPoolP + "\n");
+					}
+					str.append("conflit end:\n\tzombie damage" + z.getDamage() + "zombie life " + z.getLife()
+							+ "\n\tplant damage" + p.getDamage() + " plant life" + p.getLife() + "\n");
+
 				}
 				if (z.getX() < xOrigin - squareSize / 2 || z.getLife() <= 0) {
 					str.append(z + "meurt\n");
@@ -206,7 +207,7 @@ public class SimpleGameController {
 					}
 				}
 			}
-			
+
 			if (!(deadPoolP.empty())) {
 				deadPoolP.reverseSort();
 				for (int p : deadPoolP.getDeadPool()) {
@@ -217,7 +218,7 @@ public class SimpleGameController {
 					}
 				}
 			}
-			
+
 			if (!(deadPoolBullet.empty())) {
 				deadPoolBullet.reverseSort();
 				for (int d : deadPoolBullet.getDeadPool()) {
@@ -241,28 +242,41 @@ public class SimpleGameController {
 			}
 
 			/*----------------------------Shooting in continue----------------------------*/
-			for (Plant p : MyPlants) {
+			for (Plant p : MyPlants) {	
 				if (p instanceof Peashooter) {
-					// str.append(timeS);
 					p.incAS();
+					// str.append(timeS);
 					if (p.readyToshot()) {
 						MyBullet.add(new Bullet(p.getX() + sizeOfPlant, p.getY() + (sizeOfPlant / 2) - 10));
 						p.resetAS();
 					}
 				}
 				if (p instanceof CherryBomb) {
-					
+						((CherryBomb) p).explosion(view, MyZombies);
 				}
 			}
 			/*----------------------------------------------------------------------------*/
 
 			if (debug == 1) {
-				if(data.spawnRandomPlant(possibilityX, possibilityY, MyPlants, view, context)) {
+				if (data.spawnRandomPlant(possibilityX, possibilityY, MyPlants, view, context)) {
 					str.append("new plant (" + new SimpleDateFormat("hh:mm:ss").format(new Date()) + ")\n");
 				}
 			}
-			
-			
+			if (SimpleGameData.win(deathCounterZombie)) {
+				Duration timeEnd = Duration.between(time, Instant.now());
+
+				int h = 0, m = 0, s = 0;
+				h = (int) (timeEnd.getSeconds() / 3600);
+				m = (int) ((timeEnd.getSeconds() % 3600) / 60);
+				s = (int) (((timeEnd.getSeconds() % 3600) % 60));
+
+				str.append("-+-+-+-+-+-+-+-+-+-\nVous avez GAGNEE !!!\nLa partie a duree : " + h + " heure(s) " + m
+						+ " minute(s) " + s + " seconde(s)");
+				System.out.println(str.toString());
+				SimpleGameData.setWL(1);
+				context.exit(0);
+				return;
+			}
 			Event event = context.pollOrWaitEvent(20); // modifier pour avoir un affichage fluide
 			if (event == null) { // no event
 				continue;
@@ -285,8 +299,8 @@ public class SimpleGameController {
 					m = (int) ((timeEnd.getSeconds() % 3600) / 60);
 					s = (int) (((timeEnd.getSeconds() % 3600) % 60));
 
-					str.append("-+-+-+-+-+-+-+-+-+-\nVous avez quitte la partie !\nLa partie a duree : " + h + " heure(s) " + m + " minute(s) " + s
-							+ " seconde(s)");
+					str.append("-+-+-+-+-+-+-+-+-+-\nVous avez quitte la partie !\nLa partie a duree : " + h
+							+ " heure(s) " + m + " minute(s) " + s + " seconde(s)");
 					System.out.println(str.toString());
 					SimpleGameData.setWL(0);
 					context.exit(0);
@@ -300,8 +314,6 @@ public class SimpleGameController {
 					debug = 0;
 				} // debug OFF
 			}
-			
-
 
 //			if (action == Action.POINTER_DOWN) {
 //				location = event.getLocation();
@@ -333,15 +345,15 @@ public class SimpleGameController {
 
 						int xCentered = (int) (X + (squareSize / 2) - (sizeOfPlant / 2));
 						int yCentered = (int) (Y + (squareSize / 2) - (sizeOfPlant / 2));
-						
+
 						if (ok != 0) {
 							System.out.println(possibilityX);
 							System.out.println(possibilityY);
-							
+
 							System.out.println(xCentered + " -///- " + yCentered);
-							
+
 							System.out.println();
-							
+
 							if (ok == 1) {
 								data.plantOnBoard(view.lineFromY(y), view.columnFromX(x));
 								view.drawPeashooter(context, data, xCentered, yCentered, "#90D322");
@@ -401,25 +413,9 @@ public class SimpleGameController {
 				data2.unselect();
 			}
 
-			if (SimpleGameData.win(deathCounterZombie)) {
-				Duration timeEnd = Duration.between(time, Instant.now());
-
-				int h = 0, m = 0, s = 0;
-				h = (int) (timeEnd.getSeconds() / 3600);
-				m = (int) ((timeEnd.getSeconds() % 3600) / 60);
-				s = (int) (((timeEnd.getSeconds() % 3600) % 60));
-
-				str.append("-+-+-+-+-+-+-+-+-+-\nVous avez GAGNEE !!!\nLa partie a duree : " + h + " heure(s) " + m
-						+ " minute(s) " + s + " seconde(s)");
-				System.out.println(str.toString());
-				SimpleGameData.setWL(1);
-				context.exit(0);
-				return;
-			}
-			
 		}
 	}
-	
+
 //	static void endGame(ApplicationContext context) {
 //
 //		ScreenInfo screenInfo = context.getScreenInfo();

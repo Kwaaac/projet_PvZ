@@ -3,7 +3,7 @@ package plants;
 import java.awt.geom.Rectangle2D;
 
 import models.Entities;
-import zombies.Zombie;
+
 
 public abstract class Plant extends Entities{
 	private final String type = "Plant"; 
@@ -43,6 +43,5 @@ public abstract class Plant extends Entities{
 		return timerA % speedshoot == 0;
 	}
 	
-	public void conflictAll(Zombie z) {}
 	
 }

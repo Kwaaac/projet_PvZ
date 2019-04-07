@@ -13,7 +13,7 @@ import plants.WallNut;
 import views.BordView;
 
 public class SimpleGameData {
-	private final static int score = 1;
+	private final static int score = 5;
 	private static int WL = 0; // pour le end menu tkt mgl :v)
 	private final Cell[][] matrix;
 	private Coordinates selected;
