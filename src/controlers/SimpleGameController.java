@@ -98,15 +98,15 @@ public class SimpleGameController {
 			DeadPool deadPoolP = new DeadPool();
 			DeadPool deadPoolBullet = new DeadPool();
 
-			if (day == 0) {
+			int n = data.RandomPosGenerator(300);
+			int n2 = data.RandomPosGenerator(600);
+			
+			if (day == 0 || spawnRate == n2) {
 				MyZombies.add(new FlagZombie((int) width,
 						yOrigin + data.RandomPosGenerator(5) * squareSize + (squareSize / 2) - ZombieSize / 2));
 				str.append("new FlagZombie (" + new SimpleDateFormat("hh:mm:ss").format(new Date()) + ")\n");
 				day += 1;
 			}
-
-			int n = data.RandomPosGenerator(1000);
-			int n2 = data.RandomPosGenerator(2000);
 			if (spawnRate == n) {
 				MyZombies.add(new NormalZombie((int) width,
 						yOrigin + data.RandomPosGenerator(4) * squareSize + (squareSize / 2) - ZombieSize / 2));
