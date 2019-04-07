@@ -140,10 +140,8 @@ public class SimpleGameData {
 	}
 
 	public boolean hasPlant(int i, int j) {
-		for (Coordinates c : placedPlant) {
-			if (c.getI() == i && c.getJ() == j) {
-				return true;
-			}
+		if(placedPlant.contains(new Coordinates(i, j))) {	
+			return true;		
 		}
 		return false;
 	}
