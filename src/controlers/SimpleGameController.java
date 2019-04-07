@@ -17,6 +17,7 @@ import fr.umlv.zen5.Event.Action;
 import fr.umlv.zen5.KeyboardKey;
 
 import models.SimpleGameData;
+import models.Coordinates;
 import models.DeadPool;
 
 import plants.Bullet;
@@ -346,7 +347,7 @@ public class SimpleGameController {
 						int xCentered = (int) (X + (squareSize / 2) - (sizeOfPlant / 2));
 						int yCentered = (int) (Y + (squareSize / 2) - (sizeOfPlant / 2));
 
-						if (ok != 0) {
+						if (ok != 0 && !(data.hasPlant(view.lineFromY(y), view.columnFromX(x)))) {
 							System.out.println(possibilityX);
 							System.out.println(possibilityY);
 
