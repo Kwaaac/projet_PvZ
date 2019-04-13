@@ -34,6 +34,10 @@ public class Coordinates {
 	public int getJ() {
 		return j;
 	}
+	
+	public boolean checkHitBox(Coordinates c) {
+			return this.i <= c.i && c.i <= this.j && this.j <= c.j;
+	}
 
 	@Override
 	public String toString() {

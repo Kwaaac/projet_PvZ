@@ -1,6 +1,8 @@
 package plants;
 
+import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
+import java.awt.geom.Rectangle2D.Float;
 
 public class Peashooter extends Plant{
 	private final String name = "Peashooter";
@@ -16,9 +18,7 @@ public class Peashooter extends Plant{
 	}
 
 	
-	@Override
 	public Rectangle2D.Float draw(){
-		return new Rectangle2D.Float(getX(), getY(), getSizeOfPlant(), getSizeOfPlant());
+		return new Rectangle2D.Float(super.x, super.y, getSizeOfPlant(), getSizeOfPlant());
 	}
-	
 }

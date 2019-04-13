@@ -18,7 +18,7 @@ import fr.umlv.zen5.KeyboardKey;
 
 import models.SimpleGameData;
 import models.DeadPool;
-
+import models.IEntite;
 import plants.Bullet;
 import plants.CherryBomb;
 import plants.Peashooter;
@@ -56,7 +56,6 @@ public class SimpleGameController {
 		PlantSelectionView.draw(context, data2);
 
 		Point2D.Float location;
-		new ArrayList<>();
 		ArrayList<Zombie> MyZombies = new ArrayList<>();
 		ArrayList<Plant> MyPlants = new ArrayList<>();
 		ArrayList<Projectile> MyBullet = new ArrayList<>();
@@ -73,6 +72,7 @@ public class SimpleGameController {
 		Instant time = Instant.now();
 
 		StringBuilder str = new StringBuilder("Journal de bord\n-+-+-+-+-+-+-+-+-+-\n");
+		
 		int day = 0;
 		int debug = 0;
 
@@ -122,63 +122,42 @@ public class SimpleGameController {
 				z.go();
 				z.incAS();
 				for (Projectile b : MyBullet) {
-					if (z.hit(b)) { // il faut ajouter aux getX le rayon des zombie et des bullet pour detecter la
-									// collision entre l'extremiter des ellipse
-						str.append("conflit start:\n\tzombie damage" + z.getDamage() + "zombie life " + z.getLife()
-								+ "\n\tbullet damage" + b.getDamage() + " bullet life" + b.getLife() + "\n");
-
+					if (z.hit(b)) {
+						
 						b.conflict(z);
-						if (b.getX() > xOrigin + squareSize * 8 || b.getLife() <= 0) {
+						if (b.isOutside(xOrigin, squareSize, 8) || b.isDead()) { // Changer le 8 en nbr de case
 							str.append(b + "meurt\n");
 							deadPoolBullet.add(MyBullet.indexOf(b));
 							str.append(deadPoolBullet);
 						}
-						str.append("conflit end:\n\tzombie damage" + z.getDamage() + "zombie life " + z.getLife()
-								+ "\n\tbullet damage" + b.getDamage() + " bullet life" + b.getLife() + "\n");
 					}
 				}
-				for (Plant p : MyPlants) { // a completer quand on aura des plante dans le plateau
+				for (Plant p : MyPlants) {
 
 					if (z.hit(p)) {
 						z.stop();
 						if (z.readyToshot()) {
-							str.append("conflit start:\n\tzombie damage" + z.getDamage() + "zombie life " + z.getLife()
-									+ "\n\tplant damage" + p.getDamage() + " plant life" + p.getLife() + "\n");
 							p.conflict(z);
 						}
 
 					}
-					if (p.getLife() <= 0) {
+					if (p.isDead()) {
 						str.append(p + "meurt\n");
 						deadPoolP.add(MyPlants.indexOf(p));
 						data.plantOutBord(view.lineFromY(p.getY()), view.columnFromX(p.getX()));
-						str.append(deadPoolP + "\n");
 					}
-					str.append("conflit end:\n\tzombie damage" + z.getDamage() + "zombie life " + z.getLife()
-							+ "\n\tplant damage" + p.getDamage() + " plant life" + p.getLife() + "\n");
 
 				}
-				if (z.getX() < xOrigin - squareSize / 2 || z.getLife() <= 0) {
-					str.append(z + "meurt\n");
+				if (z.getX() < xOrigin - squareSize / 2 || z.isDead()) {
+					str.append(z + " meurt\n");
 					deadPoolZ.add(MyZombies.indexOf(z));
-					str.append(deadPoolZ + "\n");
-				}
-			}
-			/*----------------------------------------------------------------------------*/
-			/*--------------- je place les element mort dans les dead pool ---------------*/
-
-			for (Projectile b : MyBullet) {
-				if (b.getX() > xOrigin + squareSize * 8) {
-					str.append(b + "meurt\n");
-					deadPoolBullet.add(MyBullet.indexOf(b));
-					str.append(deadPoolBullet + "\n");
 				}
 			}
 
 			/*----------------------------------------------------------------------------*/
 			/*------------------------------- WIN / LOOSE --------------------------------*/
-			for (Zombie b : MyZombies) {
-				if (b.getX() < xOrigin - squareSize / 2) {
+			for (Zombie z : MyZombies) {
+				if (z.isEatingBrain(xOrigin, squareSize)) {
 					Duration timeEnd = Duration.between(time, Instant.now());
 
 					int h = 0, m = 0, s = 0;
@@ -188,7 +167,7 @@ public class SimpleGameController {
 
 					str.append("-+-+-+-+-+-+-+-+-+-\nVous avez perdu...\nLa partie a duree : " + h + " heure(s) " + m
 							+ " minute(s) " + s + " seconde(s)");
-					System.out.println(str.toString());
+					// System.out.println(str.toString());
 					SimpleGameData.setWL(0);
 					context.exit(0);
 					return;
@@ -293,7 +272,7 @@ public class SimpleGameController {
 
 				if (mdp == "SPACE") {
 					Duration timeEnd = Duration.between(time, Instant.now());
-
+					
 					int h = 0, m = 0, s = 0;
 					h = (int) (timeEnd.getSeconds() / 3600);
 					m = (int) ((timeEnd.getSeconds() % 3600) / 60);
@@ -332,7 +311,6 @@ public class SimpleGameController {
 			}
 
 			if (!data.hasASelectedCell()) { // no cell is selected
-
 				location = event.getLocation();
 				float x = location.x;
 				float y = location.y;
@@ -347,12 +325,6 @@ public class SimpleGameController {
 						int yCentered = (int) (Y + (squareSize / 2) - (sizeOfPlant / 2));
 
 						if (ok != 0 && !(data.hasPlant(view.lineFromY(y), view.columnFromX(x)))) {
-							System.out.println(possibilityX);
-							System.out.println(possibilityY);
-
-							System.out.println(xCentered + " -///- " + yCentered);
-
-							System.out.println();
 
 							if (ok == 1) {
 								data.plantOnBoard(view.lineFromY(y), view.columnFromX(x));

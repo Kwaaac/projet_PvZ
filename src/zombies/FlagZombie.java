@@ -11,7 +11,7 @@ public class FlagZombie extends Zombie{
 	
 	@Override
 	public Ellipse2D.Float draw(){
-		return new Ellipse2D.Float(getX(), getY(), getSizeOfZombie(), getSizeOfZombie());
+		return new Ellipse2D.Float(super.x, super.y, getSizeOfZombie(), getSizeOfZombie());
 	}
 	
 	@Override

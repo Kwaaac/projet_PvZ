@@ -47,7 +47,7 @@ public abstract class SimpleGameView implements GameView {
 		return squareSize;
 	}
 	
-	protected int indexFromReaCoord(float coord, int origin) { // attention, il manque des test de validité des
+	public int indexFromReaCoord(float coord, int origin) { // attention, il manque des test de validité des
 																// coordonnées!
 		return (int) ((coord - origin) / squareSize);
 	}

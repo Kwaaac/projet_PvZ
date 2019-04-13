@@ -1,7 +1,9 @@
 package models;
 
 import java.awt.Color;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Random;
 
@@ -14,7 +16,7 @@ import views.BordView;
 
 public class SimpleGameData {
 	private final static int score = 5;
-	private static int WL = 0; // pour le end menu tkt mgl :v)
+	private static int WL = 0;
 	private final Cell[][] matrix;
 	private Coordinates selected;
 	private final ArrayList<Coordinates> placedPlant = new ArrayList<Coordinates>();
@@ -25,7 +27,7 @@ public class SimpleGameData {
 	}
 
 	/**
-	 * Genere une position aléatoire pour les lignes du plateau
+	 * Genere une position alï¿½atoire pour les lignes du plateau
 	 * 
 	 * @return Ligne du plateau
 	 */
@@ -168,11 +170,13 @@ public class SimpleGameData {
 		int xRandomPosition = this.RandomPosGenerator(8); // random position x dans matrice
 		int yRandomPosition = this.RandomPosGenerator(5); // random position y dans matrice
 		int randomPlantType = this.RandomPosGenerator(3); // random type plant
-
-		if (spawnRate2 == target) {
-
-			if (randomPlantType == 0) {
-
+		
+		if (spawnRate2 == target && !(this.hasPlant(view.lineFromY(yRandomPosition), view.columnFromX(xRandomPosition)))) {
+			
+			switch(randomPlantType) {
+			
+			case 0:
+				
 				this.plantOnBoard(yRandomPosition, xRandomPosition);
 
 				view.drawPeashooter(context, this, possibilityX.get(xRandomPosition), possibilityY.get(yRandomPosition),
@@ -181,9 +185,10 @@ public class SimpleGameData {
 				MyPlants.add(new Peashooter(possibilityX.get(xRandomPosition), possibilityY.get(yRandomPosition)));
 
 				result = true;
-			}
-
-			if (randomPlantType == 1) {
+				break;
+				
+			case 1:
+				
 				this.plantOnBoard(yRandomPosition, xRandomPosition);
 
 				view.drawCherryBomb(context, this, possibilityX.get(xRandomPosition), possibilityY.get(yRandomPosition),
@@ -192,9 +197,10 @@ public class SimpleGameData {
 				MyPlants.add(new CherryBomb(possibilityX.get(xRandomPosition), possibilityY.get(yRandomPosition)));
 
 				result = true;
-			}
-
-			if (randomPlantType == 2) {
+				break;
+				
+			case 2:
+				
 				this.plantOnBoard(yRandomPosition, xRandomPosition);
 
 				view.drawWallNut(context, this, possibilityX.get(xRandomPosition), possibilityY.get(yRandomPosition),
@@ -203,6 +209,8 @@ public class SimpleGameData {
 				MyPlants.add(new WallNut(possibilityX.get(xRandomPosition), possibilityY.get(yRandomPosition)));
 
 				result = true;
+				break;
+				
 			}
 
 		}

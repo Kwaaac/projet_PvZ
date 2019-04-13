@@ -6,7 +6,7 @@ import plants.Plant;
 import plants.Projectile;
 import zombies.Zombie;
 
-public abstract class Entities implements IEntite{
+public abstract class Entities implements IEntite {
 
 	protected int x;
 	protected int y;
@@ -14,21 +14,25 @@ public abstract class Entities implements IEntite{
 	protected int life;
 
 	public Entities(int x, int y, int damage, int life) {
-		this.setX(x);
+		this.x = x;
 		this.y = y;
 		this.damage = damage;
 		this.life = life;
 	}
 
 	public Entities(int x, int y, double speed) {
-		this.setX(x);
+		this.x = x;
 		this.y = y;
+	}
+	
+	public int lineY() {
+		return (int) ((y - 100) / 180);
 	}
 
 	public int getX() {
 		return x;
 	}
-
+	
 	public int getY() {
 		return y;
 	}
@@ -37,20 +41,27 @@ public abstract class Entities implements IEntite{
 		return damage;
 	}
 
-	public int getLife() {
-		return life;
-	}
-
 	public void setX(int x) {
 		this.x = x;
 	}
 
-	public void setY(int y) {
-		this.y = y;
-	}
-
 	public void setLife(int life) {
 		this.life = life;
+	}
+
+	public boolean isDead() {
+		if (life <= 0) {
+			return true;
+		}
+		return false;
+	}
+	
+	public void takeDmg(int x) {
+		this.life = life - x;
+	}
+	
+	public boolean sameLine(Entities e) {
+			return this.lineY() == e.lineY();
 	}
 
 	/**
@@ -71,6 +82,10 @@ public abstract class Entities implements IEntite{
 			DPb.add(Lb.indexOf((Projectile) this));
 		}
 	}
+	
+	public boolean intersect(Entities e) {
+		return this.lineY() == e.lineY() && (e.hitBox().checkHitBox(this.hitBox()));
+	}
 
 	/**
 	 * check if the object hit the entity
@@ -80,13 +95,13 @@ public abstract class Entities implements IEntite{
 	 */
 	public boolean hit(Entities e) {
 
-		if (this instanceof Zombie) { // on gere une premiere possiblit� --> une entit� zombie touche une plante
+		if (this instanceof Zombie) { // on gere une premiere possiblité --> une entité zombie touche une plante
 										// ou un
 										// projectile
 			Zombie z = (Zombie) this;
 			if (e instanceof Projectile) {
 
-				if (z.draw().getBounds2D().intersects(((Projectile) e).draw().getBounds2D())) {
+				if (z.lineY() == e.lineY() && (e.hitBox().checkHitBox(z.hitBox()))) {
 					return true;
 				}
 
@@ -119,23 +134,20 @@ public abstract class Entities implements IEntite{
 	public void conflict(ArrayList<Entities> entities) {
 		if (entities.size() < 0) {
 			for (Entities e : entities) {
-				life -= e.getDamage();
-				e.life -= damage;
+				this.conflict(e);
 			}
 		}
 	}
-	
+
 	public void conflict(Entities e) {
-				life -= e.getDamage();
-				e.life -= damage;
+		this.takeDmg(e.damage);
+		e.takeDmg(damage);
 	}
 
-
 	/**
-	 * cette m�thode a pour but de r�partir les d�gats aux diff�rentes
-	 * entit�es du jeu, une fois les d�gat correctement attribuer et la vie des
-	 * entit�es mise a jour elle aide par la suite a les redistribuer dans les
-	 * diff�rente deadpools
+	 * cette m�thode a pour but de r�partir les d�gats aux diff�rentes entit�es du
+	 * jeu, une fois les d�gat correctement attribuer et la vie des entit�es mise a
+	 * jour elle aide par la suite a les redistribuer dans les diff�rente deadpools
 	 * 
 	 * @param view     vue sur la quelle ce joue le conflict (si on en met plusieur
 	 *                 je saurai la faire marcher sur plusieur vues)
@@ -144,9 +156,9 @@ public abstract class Entities implements IEntite{
 	 *                 e).draw().getBounds2D())){ return true; }r Zombies
 	 * @param DPp      deadPool for Plant
 	 * @param DPb      deadPool for Projectile
-	 * @param entities suite d'entit�es qui subiront les d�gats de l'entit�e
-	 *                 objet utilisant la m�thode et qui attaqueront cette meme
-	 *                 entit�es tous ensemble
+	 * @param entities suite d'entit�es qui subiront les d�gats de l'entit�e objet
+	 *                 utilisant la m�thode et qui attaqueront cette meme entit�es
+	 *                 tous ensemble
 	 */
 	public void conflict(ArrayList<Zombie> Lz, ArrayList<Plant> Lp, ArrayList<Projectile> Lb, DeadPool DPz,
 			DeadPool DPp, DeadPool DPb, ArrayList<Entities> entities) {
@@ -155,14 +167,14 @@ public abstract class Entities implements IEntite{
 
 				life -= e.getDamage();
 				e.life -= damage;
-				if (e.getLife() <= 0) {
+				if (e.isDead()) {
 					e.addInDP(Lz, Lp, Lb, DPz, DPp, DPb);
-				} else if (this.getLife() <= 0) { 
-												  /* si ils sont plusieur a le taper et que sa vie tombe a zero avant
-												   * que les attaquant ne sois mort on empeche des echange de
-												   * dégats(on en a besoin pour pas qu'une plante morte soit capable
-												   * de tué après sa mort)
-												   */
+				} else if (this.isDead()) {
+					/*
+					 * si ils sont plusieur a le taper et que sa vie tombe a zero avant que les
+					 * attaquant ne sois mort on empeche des echange de dégats(on en a besoin pour
+					 * pas qu'une plante morte soit capable de tué après sa mort)
+					 */
 					break;
 				}
 			}
@@ -171,5 +183,4 @@ public abstract class Entities implements IEntite{
 		this.addInDP(Lz, Lp, Lb, DPz, DPp, DPb);
 
 	}
-
 }

@@ -1,12 +1,15 @@
 package plants;
 
+import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 
+import models.Coordinates;
 import models.Entities;
+import models.IEntite;
 import models.LivingEntities;
 
 
-public abstract class Plant extends Entities implements LivingEntities{
+public abstract class Plant extends Entities{
 	private final String type = "Plant"; 
 	private final static int sizeOfPlant = 75;
 	private final int speedshoot;
@@ -20,7 +23,7 @@ public abstract class Plant extends Entities implements LivingEntities{
 	public String toString() {
 		return "Type: " + type;
 	}
-
+	
 	public Rectangle2D.Float draw() {
 		return null;
 	}
@@ -49,4 +52,11 @@ public abstract class Plant extends Entities implements LivingEntities{
 		this.timerA = x;
 	}
 	
+	@Override
+	public void go() {
+	}
+	
+	public Coordinates hitBox() {
+		return new Coordinates(x - sizeOfPlant/2, x + sizeOfPlant/2);
+	}
 }

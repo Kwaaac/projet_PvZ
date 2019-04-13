@@ -20,7 +20,7 @@ public class Mine extends Plant{
 	
 	@Override
 	public Rectangle2D.Float draw(){
-		return new Rectangle2D.Float(getX(), getY(), getSizeOfPlant(), getSizeOfPlant());
+		return new Rectangle2D.Float(super.x, super.y, getSizeOfPlant(), getSizeOfPlant());
 	}
 	
 	public void conflictAll(Zombie... z) {}

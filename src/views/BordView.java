@@ -22,7 +22,7 @@ public class BordView extends SimpleGameView{
 		return new BordView(xOrigin, yOrigin, length, data.getNbColumns() * squareSize, squareSize);
 	}
 	
-	protected int indexFromReaCoord(float coord, int origin) { // attention, il manque des test de validité des coordonn�es!								
+	public int indexFromReaCoord(float coord, int origin) { // attention, il manque des test de validité des coordonn�es!								
 		return super.indexFromReaCoord(coord, origin);
 	}
 	

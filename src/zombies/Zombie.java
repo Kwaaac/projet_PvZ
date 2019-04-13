@@ -1,5 +1,6 @@
 package zombies;
 
+import models.Coordinates;
 import models.Entities;
 import models.LivingEntities;
 import models.MovingElement;
@@ -58,4 +59,12 @@ public abstract class Zombie extends Entities implements MovingElement, LivingEn
 	}
 	
 	public void conflictAll(Plant p) {}
+	
+	public Coordinates hitBox() {
+		return new Coordinates(x, x + sizeOfZombie);
+	}
+	
+	public boolean isEatingBrain(int xOrigin, int squareSize) {
+		return x < xOrigin - squareSize / 2;
+	}
 }

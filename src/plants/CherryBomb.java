@@ -51,7 +51,7 @@ public class CherryBomb extends Plant {
 	public void explosion(BordView view, ArrayList<Zombie> zombiePlateau) {
 		if(this.readyToshot()) {
 			for (Zombie z : this.detect(view, zombiePlateau)) {
-				z.setLife(z.getLife() - 1800);
+				z.takeDmg(1800);
 			}
 			this.life = 0;
 			System.out.println("boom");
@@ -66,7 +66,7 @@ public class CherryBomb extends Plant {
 
 	@Override
 	public Rectangle2D.Float draw() {
-		return new Rectangle2D.Float(getX(), getY(), getSizeOfPlant(), getSizeOfPlant());
+		return new Rectangle2D.Float(super.x, super.y, getSizeOfPlant(), getSizeOfPlant());
 	}
 
 }

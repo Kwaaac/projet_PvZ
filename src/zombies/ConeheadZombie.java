@@ -2,6 +2,8 @@ package zombies;
 
 import java.awt.geom.Ellipse2D;
 
+import plants.Projectile;
+
 public class ConeheadZombie extends Zombie {
 
 	private final String name = "Conehead Zombie";
@@ -12,12 +14,11 @@ public class ConeheadZombie extends Zombie {
 
 	@Override
 	public Ellipse2D.Float draw(){
-		return new Ellipse2D.Float(getX(), getY(), getSizeOfZombie(), getSizeOfZombie());
+		return new Ellipse2D.Float(super.x, super.y, getSizeOfZombie(), getSizeOfZombie());
 	}
 	
 	@Override
 	public String toString() {
 		return super.toString() + "--" + name; 
 	}
-
 }
