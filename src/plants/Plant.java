@@ -6,10 +6,11 @@ import java.awt.geom.Rectangle2D;
 import models.Coordinates;
 import models.Entities;
 import models.IEntite;
+import models.IPlant;
 import models.LivingEntities;
 
 
-public abstract class Plant extends Entities{
+public abstract class Plant extends Entities implements IPlant{
 	private final String type = "Plant"; 
 	private final static int sizeOfPlant = 75;
 	private final int speedshoot;
@@ -41,7 +42,11 @@ public abstract class Plant extends Entities{
 	}
 	
 	public void resetAS() {
-		this.timerA = 0;
+		this.timerA = 1;
+	}
+	
+	public int getTimer() {
+		return timerA;
 	}
 
 	public boolean readyToshot() {
@@ -57,6 +62,6 @@ public abstract class Plant extends Entities{
 	}
 	
 	public Coordinates hitBox() {
-		return new Coordinates(x - sizeOfPlant/2, x + sizeOfPlant/2);
+		return new Coordinates(x, x + sizeOfPlant);
 	}
 }

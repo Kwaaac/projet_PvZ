@@ -100,7 +100,7 @@ public abstract class Entities implements IEntite {
 										// projectile
 			Zombie z = (Zombie) this;
 			if (e instanceof Projectile) {
-
+				
 				if (z.lineY() == e.lineY() && (e.hitBox().checkHitBox(z.hitBox()))) {
 					return true;
 				}

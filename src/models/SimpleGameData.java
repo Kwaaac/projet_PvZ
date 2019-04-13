@@ -11,8 +11,10 @@ import fr.umlv.zen5.ApplicationContext;
 import plants.CherryBomb;
 import plants.Peashooter;
 import plants.Plant;
+import plants.Projectile;
 import plants.WallNut;
 import views.BordView;
+import zombies.Zombie;
 
 public class SimpleGameData {
 	private final static int score = 5;
@@ -142,8 +144,8 @@ public class SimpleGameData {
 	}
 
 	public boolean hasPlant(int i, int j) {
-		if(placedPlant.contains(new Coordinates(i, j))) {	
-			return true;		
+		if (placedPlant.contains(new Coordinates(i, j))) {
+			return true;
 		}
 		return false;
 	}
@@ -161,7 +163,7 @@ public class SimpleGameData {
 	}
 
 	public boolean spawnRandomPlant(HashMap<Integer, Integer> possibilityX, HashMap<Integer, Integer> possibilityY,
-			ArrayList<Plant> MyPlants, BordView view, ApplicationContext context) {
+			ArrayList<IPlant> MyPlants, BordView view, ApplicationContext context) {
 
 		boolean result = false;
 
@@ -170,13 +172,14 @@ public class SimpleGameData {
 		int xRandomPosition = this.RandomPosGenerator(8); // random position x dans matrice
 		int yRandomPosition = this.RandomPosGenerator(5); // random position y dans matrice
 		int randomPlantType = this.RandomPosGenerator(3); // random type plant
-		
-		if (spawnRate2 == target && !(this.hasPlant(view.lineFromY(yRandomPosition), view.columnFromX(xRandomPosition)))) {
-			
-			switch(randomPlantType) {
-			
+
+		if (spawnRate2 == target
+				&& !(this.hasPlant(view.lineFromY(yRandomPosition), view.columnFromX(xRandomPosition)))) {
+
+			switch (randomPlantType) {
+
 			case 0:
-				
+
 				this.plantOnBoard(yRandomPosition, xRandomPosition);
 
 				view.drawPeashooter(context, this, possibilityX.get(xRandomPosition), possibilityY.get(yRandomPosition),
@@ -186,9 +189,9 @@ public class SimpleGameData {
 
 				result = true;
 				break;
-				
+
 			case 1:
-				
+
 				this.plantOnBoard(yRandomPosition, xRandomPosition);
 
 				view.drawCherryBomb(context, this, possibilityX.get(xRandomPosition), possibilityY.get(yRandomPosition),
@@ -198,9 +201,9 @@ public class SimpleGameData {
 
 				result = true;
 				break;
-				
+
 			case 2:
-				
+
 				this.plantOnBoard(yRandomPosition, xRandomPosition);
 
 				view.drawWallNut(context, this, possibilityX.get(xRandomPosition), possibilityY.get(yRandomPosition),
@@ -210,12 +213,21 @@ public class SimpleGameData {
 
 				result = true;
 				break;
-				
+
 			}
 
 		}
 
 		return result;
+	}
+
+	public void actionning(ArrayList<IPlant> MyPlants, ArrayList<Projectile> MyBullet, BordView view,
+			ArrayList<Zombie> MyZombies) {
+
+		for (IPlant p : MyPlants) {
+			p.action(MyBullet, view, MyZombies);
+		}
+
 	}
 
 }

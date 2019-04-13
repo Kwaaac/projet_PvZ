@@ -6,12 +6,6 @@ import java.awt.geom.Ellipse2D.Float;
 import plants.Projectile;
 
 public interface IEntite {
-	
-	public void incAS();
-	
-	public void resetAS();
-
-	public boolean readyToshot();
 
 	public void go();
 	

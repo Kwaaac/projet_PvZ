@@ -11,7 +11,7 @@ public class Bullet extends Projectile {
 	private final String name = "Bullet";
 	
 	public Bullet(int x, int y) {
-		super(x, y, 900 , 1 , 2.7);
+		super(x, y, 900 , 1 , 4.7);
 	}
 
 	@Override
@@ -23,20 +23,9 @@ public class Bullet extends Projectile {
 	public String toString() {
 		return super.toString() + "--" + name; 
 	}
-
-	@Override
-	public void incAS() {}
-
-	@Override
-	public void resetAS() {}
 	
 	@Override
 	public void go() {
-	}
-
-	@Override
-	public boolean readyToshot() {
-		return true;
 	}
 
 }

@@ -1,6 +1,10 @@
 package plants;
 
 import java.awt.geom.Rectangle2D;
+import java.util.ArrayList;
+
+import views.BordView;
+import zombies.Zombie;
 
 public class WallNut extends Plant{
 	private final String name = "WallNut";
@@ -25,6 +29,10 @@ public class WallNut extends Plant{
 	@Override
 	public Rectangle2D.Float draw(){
 		return new Rectangle2D.Float(super.x, super.y, getSizeOfPlant(), getSizeOfPlant());
+	}
+	
+	@Override
+	public void action(ArrayList<Projectile> MyBullet, BordView view, ArrayList<Zombie> MyZombies) {
 	}
 	
 }

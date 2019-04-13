@@ -18,7 +18,10 @@ import fr.umlv.zen5.KeyboardKey;
 
 import models.SimpleGameData;
 import models.DeadPool;
+import models.Entities;
 import models.IEntite;
+import models.IPlant;
+import models.LivingEntities;
 import plants.Bullet;
 import plants.CherryBomb;
 import plants.Peashooter;
@@ -57,7 +60,7 @@ public class SimpleGameController {
 
 		Point2D.Float location;
 		ArrayList<Zombie> MyZombies = new ArrayList<>();
-		ArrayList<Plant> MyPlants = new ArrayList<>();
+		ArrayList<IPlant> MyPlants = new ArrayList<>();
 		ArrayList<Projectile> MyBullet = new ArrayList<>();
 		HashMap<Integer, Integer> possibilityX = new HashMap<Integer, Integer>(); // Test Mod tkt
 		HashMap<Integer, Integer> possibilityY = new HashMap<Integer, Integer>(); // Test Mod tkt
@@ -117,7 +120,7 @@ public class SimpleGameController {
 						yOrigin + data.RandomPosGenerator(4) * squareSize + (squareSize / 2) - ZombieSize / 2));
 				str.append("new ConeheadZombie (" + new SimpleDateFormat("hh:mm:ss").format(new Date()) + ")\n");
 			}
-
+			
 			for (Zombie z : MyZombies) {
 				z.go();
 				z.incAS();
@@ -132,12 +135,12 @@ public class SimpleGameController {
 						}
 					}
 				}
-				for (Plant p : MyPlants) {
+				for (IPlant p : MyPlants) {
 
-					if (z.hit(p)) {
+					if (z.hit((Entities) p)) {
 						z.stop();
 						if (z.readyToshot()) {
-							p.conflict(z);
+							((Entities) p).conflict(z);
 						}
 
 					}
@@ -221,19 +224,9 @@ public class SimpleGameController {
 			}
 
 			/*----------------------------Shooting in continue----------------------------*/
-			for (Plant p : MyPlants) {	
-				if (p instanceof Peashooter) {
-					p.incAS();
-					// str.append(timeS);
-					if (p.readyToshot()) {
-						MyBullet.add(new Bullet(p.getX() + sizeOfPlant, p.getY() + (sizeOfPlant / 2) - 10));
-						p.resetAS();
-					}
-				}
-				if (p instanceof CherryBomb) {
-						((CherryBomb) p).explosion(view, MyZombies);
-				}
-			}
+			
+			data.actionning(MyPlants, MyBullet, view, MyZombies);
+			
 			/*----------------------------------------------------------------------------*/
 
 			if (debug == 1) {

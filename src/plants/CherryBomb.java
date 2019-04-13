@@ -69,4 +69,11 @@ public class CherryBomb extends Plant {
 		return new Rectangle2D.Float(super.x, super.y, getSizeOfPlant(), getSizeOfPlant());
 	}
 
+	@Override
+	public void action(ArrayList<Projectile> MyBullet, BordView view, ArrayList<Zombie> MyZombies) {
+		this.incAS();
+		
+		this.explosion(view, MyZombies);
+	}
+
 }
