@@ -9,7 +9,7 @@ public class Mine extends Plant{
 	private final String name = "CheeryBomb";
 	
 	public Mine(int x, int y) {
-		super(x, y, 1800, 0);
+		super(x, y, 1800, 0, 999999);
 		// TODO Auto-generated constructor stub
 	}
 	

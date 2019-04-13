@@ -2,13 +2,11 @@ package models;
 
 import java.util.ArrayList;
 
-import plants.Bullet;
 import plants.Plant;
 import plants.Projectile;
-import views.BordView;
 import zombies.Zombie;
 
-public abstract class Entities {
+public abstract class Entities implements IEntite{
 
 	protected int x;
 	protected int y;
@@ -51,10 +49,6 @@ public abstract class Entities {
 		this.y = y;
 	}
 
-	public void setDamage(int damage) {
-		this.damage = damage;
-	}
-
 	public void setLife(int life) {
 		this.life = life;
 	}
@@ -65,6 +59,7 @@ public abstract class Entities {
 	 * @param DPz deadPool for Zombies
 	 * @param DPp deadPool for Plant
 	 * @param DPb deadPool for Projectile
+	 * 
 	 */
 	private void addInDP(ArrayList<Zombie> Lz, ArrayList<Plant> Lp, ArrayList<Projectile> Lb, DeadPool DPz,
 			DeadPool DPp, DeadPool DPb) {
@@ -78,9 +73,9 @@ public abstract class Entities {
 	}
 
 	/**
-	 * check if the object hit the e entitie
+	 * check if the object hit the entity
 	 * 
-	 * @param e is the entitie we want to compare the edge's positions
+	 * @param e is the entity we want to compare the edge's positions
 	 * @return if this as touch e
 	 */
 	public boolean hit(Entities e) {
@@ -162,10 +157,12 @@ public abstract class Entities {
 				e.life -= damage;
 				if (e.getLife() <= 0) {
 					e.addInDP(Lz, Lp, Lb, DPz, DPp, DPb);
-				} else if (this.getLife() <= 0) { // si ils sont plusieur a le taper et que sa vie tombe a zero avant
-													// que les attaquant ne sois mort on empeche des echange de
-													// dégats(on en a besoin pour pas qu'une plante morte soit capable
-													// de tué après sa mort)
+				} else if (this.getLife() <= 0) { 
+												  /* si ils sont plusieur a le taper et que sa vie tombe a zero avant
+												   * que les attaquant ne sois mort on empeche des echange de
+												   * dégats(on en a besoin pour pas qu'une plante morte soit capable
+												   * de tué après sa mort)
+												   */
 					break;
 				}
 			}

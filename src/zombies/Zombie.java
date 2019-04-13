@@ -1,22 +1,22 @@
 package zombies;
 
 import models.Entities;
+import models.LivingEntities;
 import models.MovingElement;
 import plants.Plant;
 
-public abstract class Zombie extends Entities implements MovingElement {
+public abstract class Zombie extends Entities implements MovingElement, LivingEntities {
 	private final String type = "Zombie";
 	private double speed;
 	private final static int sizeOfZombie = 75;
-	private boolean moving = true;
-	private double[] speedState = { 0.0, -2.0, -1.0 }; // [0] -> Stop; [1] -> Normal Speed; [2] -> Slow Speed
 	
-	private final int speedshoot = 100;
-	private int timerA = 0;
+	private int speedshoot;
+	private int timerA = -1;
 
 	public Zombie(int x, int y, int damage, int life, double speed) {
 		super(x, y, damage, life);
-		this.speed = speedState[1];
+		this.speed = -1.7;
+		this.speedshoot = (int) (speed * -75);
 	}
 
 	@Override
@@ -29,35 +29,24 @@ public abstract class Zombie extends Entities implements MovingElement {
 		return "Type: " + type;
 	}
 
+	public boolean getSpeed() {
+		return speed != 0;
+	}
+	
 	public static int getSizeOfZombie() {
 		return sizeOfZombie;
 	}
-
-	public boolean getMove() {
-		return moving;
+	
+	public void stop() {
+		this.speed = 0;
 	}
 	
-	public void Stop() {
-		this.speed = speedState[0];
-		moving = false;
-	}
-	
-	public void Slowed() {
-		speed = speedState[2];
-		moving = true;
-	}
-	
-	public void Go() {
-		speed = speedState[1];
-		moving = true;
-	}
-	
-	public int getSpeedShooting() {
-		return timerA;
+	public void go() {
+		speed = -1.7;
 	}
 	
 	public void incAS() {
-		this.timerA += 5;
+		this.timerA += 1;
 	}
 	
 	public void resetAS() {

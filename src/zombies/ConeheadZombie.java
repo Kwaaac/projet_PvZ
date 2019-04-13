@@ -5,9 +5,9 @@ import java.awt.geom.Ellipse2D;
 public class ConeheadZombie extends Zombie {
 
 	private final String name = "Conehead Zombie";
-	private static double[] speedState = {0.0, -2.7, -1.7};
+	
 	public ConeheadZombie(int x, int y) {
-		super(x, y, 100, 560, speedState[1]);
+		super(x, y, 100, 560, -1.7);
 	}
 
 	@Override

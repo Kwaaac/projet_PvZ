@@ -3,16 +3,18 @@ package plants;
 import java.awt.geom.Rectangle2D;
 
 import models.Entities;
+import models.LivingEntities;
 
 
-public abstract class Plant extends Entities{
+public abstract class Plant extends Entities implements LivingEntities{
 	private final String type = "Plant"; 
 	private final static int sizeOfPlant = 75;
-	private final int speedshoot = 200;
-	private int timerA = 199;
+	private final int speedshoot;
+	private int timerA = -1;
 	
-	public Plant(int x, int y, int damage, int life) {
+	public Plant(int x, int y, int damage, int life, int speedshoot) {
 		super(x, y, damage, life);
+		this.speedshoot = speedshoot;
 	}
 	
 	public String toString() {
@@ -43,5 +45,8 @@ public abstract class Plant extends Entities{
 		return timerA % speedshoot == 0;
 	}
 	
+	public void setTimerA(int x) {
+		this.timerA = x;
+	}
 	
 }

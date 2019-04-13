@@ -9,13 +9,11 @@ import zombies.Zombie;
 
 public class CherryBomb extends Plant {
 
-	private final String name = "CheeryBomb";
-	private final double secondToLive = 1.2;
-	private final int speedshoot = 50;
-	private int timerA = 1;
+	private final String name = "CheeryBomb"; 
 
 	public CherryBomb(int x, int y) {
-		super(x, y, 0, 1);
+		super(x, y, 0, 1, 50);
+		setTimerA(1);
 	}
 
 	private ArrayList<Coordinates> zone(BordView view) {
@@ -49,15 +47,6 @@ public class CherryBomb extends Plant {
 		}
 		return Lz;
 	}
-	
-	public void incASc() {
-		this.timerA += 1;
-		System.out.println(timerA);
-	}
-	
-	public boolean readyToshot() {
-		return timerA % speedshoot == 0;
-	}
 
 	public void explosion(BordView view, ArrayList<Zombie> zombiePlateau) {
 		if(this.readyToshot()) {
@@ -67,7 +56,7 @@ public class CherryBomb extends Plant {
 			this.life = 0;
 			System.out.println("boom");
 		}
-		this.incASc();
+		this.incAS();
 	}
 
 	@Override

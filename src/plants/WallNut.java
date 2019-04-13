@@ -7,8 +7,15 @@ public class WallNut extends Plant{
 	
 	
 	public WallNut(int x, int y) {
-		super(x, y, 0, 1000);
+		super(x, y, 0, 1000, 0);
 	}
+	
+	
+	@Override
+	public boolean readyToshot() {
+		return false;
+	}
+	
 	
 	@Override
 	public String toString() {

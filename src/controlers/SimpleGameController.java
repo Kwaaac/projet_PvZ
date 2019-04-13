@@ -17,7 +17,6 @@ import fr.umlv.zen5.Event.Action;
 import fr.umlv.zen5.KeyboardKey;
 
 import models.SimpleGameData;
-import models.Coordinates;
 import models.DeadPool;
 
 import plants.Bullet;
@@ -120,7 +119,7 @@ public class SimpleGameController {
 			}
 
 			for (Zombie z : MyZombies) {
-				z.Go();
+				z.go();
 				z.incAS();
 				for (Projectile b : MyBullet) {
 					if (z.hit(b)) { // il faut ajouter aux getX le rayon des zombie et des bullet pour detecter la
@@ -141,7 +140,7 @@ public class SimpleGameController {
 				for (Plant p : MyPlants) { // a completer quand on aura des plante dans le plateau
 
 					if (z.hit(p)) {
-						z.Stop();
+						z.stop();
 						if (z.readyToshot()) {
 							str.append("conflit start:\n\tzombie damage" + z.getDamage() + "zombie life " + z.getLife()
 									+ "\n\tplant damage" + p.getDamage() + " plant life" + p.getLife() + "\n");
@@ -196,7 +195,7 @@ public class SimpleGameController {
 				}
 			}
 			/*----------------------------------------------------------------------------*/
-			/*-------------------- je détruit tout les elements morts --------------------*/
+			/*-------------------- je dï¿½truit tout les elements morts --------------------*/
 			if (!(deadPoolZ.empty())) {
 				deadPoolZ.reverseSort();
 				for (int d : deadPoolZ.getDeadPool()) {
@@ -232,9 +231,9 @@ public class SimpleGameController {
 
 			/*----------------------------------------------------------------------------*/
 
-			for (Zombie b : MyZombies) {
-				if (b.getMove()) {
-					view.moveAndDrawElement(context, data, b);
+			for (Zombie z : MyZombies) {
+				if (z.getSpeed()) {
+					view.moveAndDrawElement(context, data, z);
 				}
 			}
 
