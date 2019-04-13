@@ -50,10 +50,7 @@ public abstract class Entities implements IEntite {
 	}
 
 	public boolean isDead() {
-		if (life <= 0) {
-			return true;
-		}
-		return false;
+			return life <= 0;
 	}
 	
 	public void takeDmg(int x) {

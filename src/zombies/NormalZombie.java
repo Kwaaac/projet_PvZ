@@ -19,5 +19,6 @@ public class NormalZombie extends Zombie{
 	public String toString() {
 		return super.toString() + "--" + name; 
 	}
+
 	
 }

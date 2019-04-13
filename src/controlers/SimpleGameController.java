@@ -19,9 +19,7 @@ import fr.umlv.zen5.KeyboardKey;
 import models.SimpleGameData;
 import models.DeadPool;
 import models.Entities;
-import models.IEntite;
 import models.IPlant;
-import models.LivingEntities;
 import plants.Bullet;
 import plants.CherryBomb;
 import plants.Peashooter;
@@ -96,7 +94,7 @@ public class SimpleGameController {
 		while (true) {
 			view.draw(context, data);
 			PlantSelectionView.draw(context, data2);
-
+			
 			DeadPool deadPoolZ = new DeadPool();
 			DeadPool deadPoolP = new DeadPool();
 			DeadPool deadPoolBullet = new DeadPool();
@@ -151,7 +149,7 @@ public class SimpleGameController {
 					}
 
 				}
-				if (z.getX() < xOrigin - squareSize / 2 || z.isDead()) {
+				if (z.isEatingBrain(xOrigin, squareSize) || z.isDead()) {
 					str.append(z + " meurt\n");
 					deadPoolZ.add(MyZombies.indexOf(z));
 				}
@@ -212,7 +210,7 @@ public class SimpleGameController {
 			}
 
 			/*----------------------------------------------------------------------------*/
-
+			
 			for (Zombie z : MyZombies) {
 				if (z.getSpeed()) {
 					view.moveAndDrawElement(context, data, z);
