@@ -49,7 +49,7 @@ public class CherryBomb extends Plant {
 	}
 
 	public void explosion(BordView view, ArrayList<Zombie> zombiePlateau) {
-		if(this.readyToshot()) {
+		if(this.readyToshot(zombiePlateau)) {
 			for (Zombie z : this.detect(view, zombiePlateau)) {
 				z.takeDmg(1800);
 			}

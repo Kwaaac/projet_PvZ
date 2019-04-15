@@ -26,11 +26,10 @@ public class Peashooter extends Plant{
 	}
 
 
-	@Override
 	public void action(ArrayList<Projectile> MyBullet, BordView view, ArrayList<Zombie> MyZombies) {
 		this.incAS();
 		
-		if(this.readyToshot()) {
+		if(this.readyToshot(MyZombies)) {
 			MyBullet.add(new Bullet(super.getX() + super.getSizeOfPlant(), super.getY() + (super.getSizeOfPlant() / 2) - 10));
 			
 			this.resetAS();

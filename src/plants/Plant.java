@@ -1,10 +1,12 @@
 package plants;
 
 import java.awt.geom.Rectangle2D;
+import java.util.ArrayList;
 
 import models.Coordinates;
 import models.Entities;
 import models.IPlant;
+import zombies.Zombie;
 
 
 public abstract class Plant extends Entities implements IPlant{
@@ -45,9 +47,15 @@ public abstract class Plant extends Entities implements IPlant{
 	public int getTimer() {
 		return timerA;
 	}
-
-	public boolean readyToshot() {
-		return timerA % speedshoot == 0;
+	
+	@Override
+	public boolean readyToshot(ArrayList<Zombie> MZ) {
+		for(Zombie z : MZ) {
+			if(this.sameLine(z)) {
+				return timerA % speedshoot == 0;
+			}
+		}
+		return false;
 	}
 	
 	public void setTimerA(int x) {

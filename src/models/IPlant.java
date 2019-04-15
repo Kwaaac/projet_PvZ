@@ -6,18 +6,19 @@ import plants.Projectile;
 import views.BordView;
 import zombies.Zombie;
 
-public interface IPlant {
-	public void incAS();
+ public interface IPlant {
 	
-	public void resetAS();
+	void incAS();
+	
+	void resetAS();
 
-	public boolean readyToshot();
+	boolean isDead();
 
-	public boolean isDead();
+	int getY();
 
-	public int getY();
-
-	public int getX();
+	int getX();
 	
 	void action(ArrayList<Projectile> MyBullet, BordView view, ArrayList<Zombie> MyZombies);
+	
+	boolean readyToshot(ArrayList<Zombie> MZ);
 }
