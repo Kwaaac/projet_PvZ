@@ -36,8 +36,11 @@ public abstract class Plant extends Entities implements IPlant{
 		return timerA;
 	}
 	
+	@Override
 	public void incAS() {
-		this.timerA += 1;
+		if(timerA != speedshoot) {
+            this.timerA += 1;
+        }
 	}
 	
 	public void resetAS() {
@@ -57,6 +60,12 @@ public abstract class Plant extends Entities implements IPlant{
 		}
 		return false;
 	}
+	
+	public boolean readyToshot() {
+		return timerA % speedshoot == 0;
+	}
+	
+	
 	
 	public void setTimerA(int x) {
 		this.timerA = x;
