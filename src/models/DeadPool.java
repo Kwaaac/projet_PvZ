@@ -4,17 +4,17 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class DeadPool {
-	private ArrayList<Integer> DeadPool;
+	private ArrayList<IEntite> DeadPool;
 
 	public DeadPool() {
-		this.DeadPool = new ArrayList<Integer>();
+		this.DeadPool = new ArrayList<IEntite>();
 	}
 
-	public ArrayList<Integer> getDeadPool() {
+	public ArrayList<IEntite> getDeadPool() {
 		return DeadPool;
 	}
 
-	public void add(int i) {
+	public void add(IEntite i) {
 		if (!(DeadPool.contains(i))) {
 			DeadPool.add(i);
 		}
@@ -26,17 +26,16 @@ public class DeadPool {
 		}
 		return false;
 	}
-
-	public void reverseSort() {
-		Collections.sort(DeadPool);
-		Collections.reverse(DeadPool);
+	
+	public void addInDP(IEntite entites) {
+		this.add(entites);
 	}
 
 	@Override
 	public String toString() {
 		StringBuilder bs = new StringBuilder();
 		bs.append(" dead pool contient :\n\t");
-		for (int i : DeadPool) {
+		for (IEntite i : DeadPool) {
 			bs.append(i).append(", ");
 		}
 		return bs.toString();

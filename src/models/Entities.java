@@ -61,27 +61,13 @@ public abstract class Entities implements IEntite {
 			return this.lineY() == e.lineY();
 	}
 
-	/**
-	 * put an entitie in is respective deadPool
-	 * 
-	 * @param DPz deadPool for Zombies
-	 * @param DPp deadPool for Plant
-	 * @param DPb deadPool for Projectile
-	 * 
-	 */
-	private void addInDP(ArrayList<Zombie> Lz, ArrayList<Plant> Lp, ArrayList<Projectile> Lb, DeadPool DPz,
-			DeadPool DPp, DeadPool DPb) {
-		if (this instanceof Zombie) {
-			DPz.add(Lz.indexOf((Zombie) this));
-		} else if (this instanceof Plant) {
-			DPp.add(Lp.indexOf((Plant) this));
-		} else if (this instanceof Projectile) {
-			DPb.add(Lb.indexOf((Projectile) this));
-		}
-	}
-	
 	public boolean intersect(IEntite e) {
 		return this.lineY() == ((Entities) e).lineY() && (e.hitBox().checkHitBox(this.hitBox()));
+	}
+	
+	public void mortalKombat(Entities e) {
+		this.takeDmg(e.damage);
+		e.takeDmg(damage);
 	}
 
 	/**
@@ -130,15 +116,13 @@ public abstract class Entities implements IEntite {
 	 *                 utilisant la m�thode et qui attaqueront cette meme entit�es
 	 *                 tous ensemble
 	 */
-	public void conflict(ArrayList<Zombie> Lz, ArrayList<Plant> Lp, ArrayList<Projectile> Lb, DeadPool DPz,
-			DeadPool DPp, DeadPool DPb, ArrayList<Entities> entities) {
-		for (Entities e : entities) {
+	public void conflict(DeadPool DPe,ArrayList<Entities> Le) {
+		for (Entities e : Le) {
 			if (this.hit(e)) {
 
-				life -= e.getDamage();
-				e.life -= damage;
+				this.mortalKombat(e);
 				if (e.isDead()) {
-					e.addInDP(Lz, Lp, Lb, DPz, DPp, DPb);
+					DPe.addInDP(e);
 				} else if (this.isDead()) {
 					/*
 					 * si ils sont plusieur a le taper et que sa vie tombe a zero avant que les
@@ -150,7 +134,7 @@ public abstract class Entities implements IEntite {
 			}
 
 		}
-		this.addInDP(Lz, Lp, Lb, DPz, DPp, DPb);
+		DPe.addInDP(this);
 
 	}
 }
