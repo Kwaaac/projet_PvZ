@@ -80,8 +80,8 @@ public abstract class Entities implements IEntite {
 		}
 	}
 	
-	public boolean intersect(Entities e) {
-		return this.lineY() == e.lineY() && (e.hitBox().checkHitBox(this.hitBox()));
+	public boolean intersect(IEntite e) {
+		return this.lineY() == ((Entities) e).lineY() && (e.hitBox().checkHitBox(this.hitBox()));
 	}
 
 	/**
@@ -90,36 +90,9 @@ public abstract class Entities implements IEntite {
 	 * @param e is the entity we want to compare the edge's positions
 	 * @return if this as touch e
 	 */
-	public boolean hit(Entities e) {
-
-		if (this instanceof Zombie) { // on gere une premiere possiblité --> une entité zombie touche une plante
-										// ou un
-										// projectile
-			Zombie z = (Zombie) this;
-			if (e instanceof Projectile) {
-				
-				if (z.lineY() == e.lineY() && (e.hitBox().checkHitBox(z.hitBox()))) {
-					return true;
-				}
-
-			} else if (e instanceof Plant) {
-				if (z.draw().getBounds2D().intersects(((Plant) e).draw().getBounds2D())) {
-					return true;
-				}
-			}
-		} else if (this instanceof Plant && e instanceof Zombie) { // on gere une seconde possiblit� --> une entit�
-																	// plante touche un zombie
-			Plant p = (Plant) this;
-			if (p.draw().getBounds2D().intersects(((Zombie) e).draw().getBounds2D())) {
-				return true;
-			}
-		} else if (this instanceof Projectile && e instanceof Zombie) {
-			Projectile p = (Projectile) this;
-			if (p.draw().getBounds2D().intersects(((Zombie) e).draw().getBounds2D())) {
-				return true;
-			}
-		}
-		return false;
+	@Override
+	public boolean hit(IEntite e) {
+		return this.intersect(e);
 	}
 
 	/**

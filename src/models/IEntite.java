@@ -12,4 +12,6 @@ public interface IEntite {
 	public Coordinates hitBox();
 	
 	public void takeDmg(int x);
+	
+	boolean hit(IEntite e);
 }

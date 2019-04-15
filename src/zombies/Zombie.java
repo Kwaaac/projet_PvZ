@@ -20,6 +20,8 @@ public abstract class Zombie extends Entities implements MovingElement, LivingEn
 		this.speedshoot = (int) (speed * -75);
 	}
 
+	
+	
 	@Override
 	public void move() {
 		setX((int) (getX() + speed));

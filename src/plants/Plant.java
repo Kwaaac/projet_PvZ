@@ -1,13 +1,10 @@
 package plants;
 
-import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 
 import models.Coordinates;
 import models.Entities;
-import models.IEntite;
 import models.IPlant;
-import models.LivingEntities;
 
 
 public abstract class Plant extends Entities implements IPlant{

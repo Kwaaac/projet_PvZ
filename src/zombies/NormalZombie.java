@@ -2,6 +2,8 @@ package zombies;
 
 import java.awt.geom.Ellipse2D;
 
+import models.IEntite;
+
 public class NormalZombie extends Zombie{
 
 	private final String name = "Normal Zombie";
@@ -19,6 +21,7 @@ public class NormalZombie extends Zombie{
 	public String toString() {
 		return super.toString() + "--" + name; 
 	}
+
 
 	
 }
