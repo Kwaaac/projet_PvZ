@@ -2,6 +2,9 @@ package models;
 
 import java.util.Objects;
 
+import plants.Plant;
+import views.BordView;
+
 /**
  * The Coordinates class defines a couple of integers.
  */
@@ -56,5 +59,19 @@ public class Coordinates {
 	@Override
 	public int hashCode() {
 		return Objects.hash(i, j);
+	}
+	
+	public static int CenteredX(float x) {
+		int squareSize = BordView.getSquareSize();
+		int sizeOfPlant = Plant.getSizeOfPlant();
+		int xCentered = (int)(x + (squareSize / 2) - (sizeOfPlant / 2));
+		return xCentered;
+	}
+	
+	public static int CenteredY(float y) {
+		int squareSize = BordView.getSquareSize();
+		int sizeOfPlant = Plant.getSizeOfPlant();
+		int yCentered = (int)(y + (squareSize / 2) - (sizeOfPlant / 2));
+		return yCentered;
 	}
 }

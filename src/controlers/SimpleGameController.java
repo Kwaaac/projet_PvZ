@@ -17,6 +17,7 @@ import fr.umlv.zen5.Event.Action;
 import fr.umlv.zen5.KeyboardKey;
 
 import models.SimpleGameData;
+import models.Coordinates;
 import models.DeadPool;
 import models.Entities;
 import models.IEntite;
@@ -81,13 +82,8 @@ public class SimpleGameController {
 		for (int x = 0; x < 8; x++) {
 			for (int y = 0; y < 5; y++) {
 
-				float X = view.realCoordFromIndex(x, xOrigin);
-				float Y = view.realCoordFromIndex(y, yOrigin);
-				int xCentered = (int) (X + (squareSize / 2) - (sizeOfPlant / 2));
-				int yCentered = (int) (Y + (squareSize / 2) - (sizeOfPlant / 2));
-
-				possibilityX.put(x, xCentered);
-				possibilityY.put(y, yCentered);
+				possibilityX.put(x, Coordinates.CenteredX(view.realCoordFromIndex(x, xOrigin)));
+				possibilityY.put(y, Coordinates.CenteredY(view.realCoordFromIndex(y, yOrigin)));
 
 			}
 		}
@@ -262,11 +258,8 @@ public class SimpleGameController {
 				if (xOrigin <= x && x <= xOrigin + squareSize * 8) {
 					if (yOrigin <= y && y <= yOrigin + squareSize * 5) {
 
-						float X = view.realCoordFromIndex(view.columnFromX(location.x), xOrigin);
-						float Y = view.realCoordFromIndex(view.lineFromY(location.y), yOrigin);
-
-						int xCentered = (int) (X + (squareSize / 2) - (sizeOfPlant / 2));
-						int yCentered = (int) (Y + (squareSize / 2) - (sizeOfPlant / 2));
+						int xCentered = Coordinates.CenteredX(view.realCoordFromIndex(view.columnFromX(location.x), xOrigin));
+						int yCentered = Coordinates.CenteredY(view.realCoordFromIndex(view.lineFromY(location.y), xOrigin));
 
 						if (ok != 0 && !(data.hasPlant(view.lineFromY(y), view.columnFromX(x)))) {
 
