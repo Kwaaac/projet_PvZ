@@ -52,8 +52,8 @@ public abstract class Plant extends Entities implements IPlant{
 	}
 	
 	@Override
-	public boolean readyToshot(ArrayList<Zombie> MZ) {
-		for(Zombie z : MZ) {
+	public boolean readyToshot(ArrayList<Entities> myZombies) {
+		for(Entities z : myZombies) {
 			if(this.sameLine(z)) {
 				return timerA % speedshoot == 0;
 			}
@@ -69,10 +69,6 @@ public abstract class Plant extends Entities implements IPlant{
 	
 	public void setTimerA(int x) {
 		this.timerA = x;
-	}
-	
-	@Override
-	public void go() {
 	}
 	
 	public Coordinates hitBox() {

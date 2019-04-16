@@ -163,7 +163,7 @@ public class SimpleGameData {
 	}
 
 	public boolean spawnRandomPlant(HashMap<Integer, Integer> possibilityX, HashMap<Integer, Integer> possibilityY,
-			ArrayList<IPlant> MyPlants, BordView view, ApplicationContext context) {
+			ArrayList<Entities> myPlants, BordView view, ApplicationContext context) {
 
 		boolean result = false;
 
@@ -185,7 +185,7 @@ public class SimpleGameData {
 				view.drawPeashooter(context, this, possibilityX.get(xRandomPosition), possibilityY.get(yRandomPosition),
 						"#90D322");
 
-				MyPlants.add(new Peashooter(possibilityX.get(xRandomPosition), possibilityY.get(yRandomPosition)));
+				myPlants.add(new Peashooter(possibilityX.get(xRandomPosition), possibilityY.get(yRandomPosition)));
 
 				result = true;
 				break;
@@ -197,7 +197,7 @@ public class SimpleGameData {
 				view.drawCherryBomb(context, this, possibilityX.get(xRandomPosition), possibilityY.get(yRandomPosition),
 						"#CB5050");
 
-				MyPlants.add(new CherryBomb(possibilityX.get(xRandomPosition), possibilityY.get(yRandomPosition)));
+				myPlants.add(new CherryBomb(possibilityX.get(xRandomPosition), possibilityY.get(yRandomPosition)));
 
 				result = true;
 				break;
@@ -209,7 +209,7 @@ public class SimpleGameData {
 				view.drawWallNut(context, this, possibilityX.get(xRandomPosition), possibilityY.get(yRandomPosition),
 						"#ECB428");
 
-				MyPlants.add(new WallNut(possibilityX.get(xRandomPosition), possibilityY.get(yRandomPosition)));
+				myPlants.add(new WallNut(possibilityX.get(xRandomPosition), possibilityY.get(yRandomPosition)));
 
 				result = true;
 				break;
@@ -221,11 +221,11 @@ public class SimpleGameData {
 		return result;
 	}
 
-	public void actionning(ArrayList<IPlant> MyPlants, ArrayList<Projectile> MyBullet, BordView view,
-			ArrayList<Zombie> MyZombies) {
+	public void actionning(ArrayList<Entities> MyPlants, ArrayList<Entities> MyBullet, BordView view,
+			ArrayList<Entities> MyZombies) {
 
-		for (IPlant p : MyPlants) {
-			p.action(MyBullet, view, MyZombies);
+		for (Entities p : MyPlants) {
+			 ((IPlant) p).action(MyBullet, view, MyZombies);
 		}
 
 	}

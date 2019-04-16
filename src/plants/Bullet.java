@@ -23,9 +23,11 @@ public class Bullet extends Projectile {
 	public String toString() {
 		return super.toString() + "--" + name; 
 	}
-	
+
 	@Override
-	public void go() {
-	}
+	public void incAS() {}
+
+	@Override
+	public void resetAS() {}
 
 }

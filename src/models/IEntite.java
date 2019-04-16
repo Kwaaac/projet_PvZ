@@ -1,8 +1,10 @@
 package models;
 
+import java.util.ArrayList;
+
 public interface IEntite {
 
-	public void go();
+	
 	
 	public Coordinates hitBox();
 	
@@ -10,5 +12,12 @@ public interface IEntite {
 	
 	boolean hit(IEntite e);
 	
+	void incAS();
+	
+	void resetAS();
+
+	boolean isDead();
+	
+	void conflict(DeadPool DPe,ArrayList<Entities> Le);
 	
 }

@@ -3,6 +3,7 @@ package plants;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
+import models.Entities;
 import views.BordView;
 import zombies.Zombie;
 
@@ -24,7 +25,7 @@ public class WallNut extends Plant {
 	}
 
 	@Override
-	public void action(ArrayList<Projectile> MyBullet, BordView view, ArrayList<Zombie> MyZombies) {
+	public void action(ArrayList<Entities> myBullet, BordView view, ArrayList<Entities> myZombies) {
 	}
 
 }

@@ -24,7 +24,7 @@ public abstract class Entities implements IEntite {
 		this.x = x;
 		this.y = y;
 	}
-	
+
 	public int lineY() {
 		return (int) ((y - 100) / 180);
 	}
@@ -32,7 +32,7 @@ public abstract class Entities implements IEntite {
 	public int getX() {
 		return x;
 	}
-	
+
 	public int getY() {
 		return y;
 	}
@@ -50,21 +50,25 @@ public abstract class Entities implements IEntite {
 	}
 
 	public boolean isDead() {
-			return life <= 0;
+		if (life <= 0) {
+			return true;
+		}
+
+		return false;
 	}
-	
+
 	public void takeDmg(int x) {
 		this.life = life - x;
 	}
-	
+
 	public boolean sameLine(Entities e) {
-			return this.lineY() == e.lineY();
+		return this.lineY() == e.lineY();
 	}
 
 	public boolean intersect(IEntite e) {
 		return this.lineY() == ((Entities) e).lineY() && (e.hitBox().checkHitBox(this.hitBox()));
 	}
-	
+
 	public void mortalKombat(Entities e) {
 		this.takeDmg(e.damage);
 		e.takeDmg(damage);
@@ -88,22 +92,18 @@ public abstract class Entities implements IEntite {
 	 *          méthode et qui attaquera cette meme entitées par la suite
 	 */
 	public void conflict(ArrayList<Entities> entities) {
-		if (entities.size() < 0) {
+		if (!entities.isEmpty()) {
 			for (Entities e : entities) {
-				this.conflict(e);
+				this.mortalKombat(e);
 			}
 		}
 	}
 
-	public void conflict(Entities e) {
-		this.takeDmg(e.damage);
-		e.takeDmg(damage);
-	}
-
 	/**
-	 * cette m�thode a pour but de r�partir les d�gats aux diff�rentes entit�es du
-	 * jeu, une fois les d�gat correctement attribuer et la vie des entit�es mise a
-	 * jour elle aide par la suite a les redistribuer dans les diff�rente deadpools
+	 * cette m�thode a pour but de r�partir les d�gats aux diff�rentes
+	 * entit�es du jeu, une fois les d�gat correctement attribuer et la vie des
+	 * entit�es mise a jour elle aide par la suite a les redistribuer dans les
+	 * diff�rente deadpools
 	 * 
 	 * @param view     vue sur la quelle ce joue le conflict (si on en met plusieur
 	 *                 je saurai la faire marcher sur plusieur vues)
@@ -112,11 +112,11 @@ public abstract class Entities implements IEntite {
 	 *                 e).draw().getBounds2D())){ return true; }r Zombies
 	 * @param DPp      deadPool for Plant
 	 * @param DPb      deadPool for Projectile
-	 * @param entities suite d'entit�es qui subiront les d�gats de l'entit�e objet
-	 *                 utilisant la m�thode et qui attaqueront cette meme entit�es
-	 *                 tous ensemble
+	 * @param entities suite d'entit�es qui subiront les d�gats de l'entit�e
+	 *                 objet utilisant la m�thode et qui attaqueront cette meme
+	 *                 entit�es tous ensemble
 	 */
-	public void conflict(DeadPool DPe,ArrayList<Entities> Le) {
+	public void conflict(DeadPool DPe, ArrayList<Entities> Le) {
 		for (Entities e : Le) {
 			if (this.hit(e)) {
 
@@ -129,12 +129,12 @@ public abstract class Entities implements IEntite {
 					 * attaquant ne sois mort on empeche des echange de dégats(on en a besoin pour
 					 * pas qu'une plante morte soit capable de tué après sa mort)
 					 */
+					
+					DPe.addInDP(this);
 					break;
 				}
 			}
 
 		}
-		DPe.addInDP(this);
-
 	}
 }

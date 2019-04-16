@@ -19,6 +19,7 @@ import fr.umlv.zen5.KeyboardKey;
 import models.SimpleGameData;
 import models.DeadPool;
 import models.Entities;
+import models.IEntite;
 import models.IPlant;
 import plants.Bullet;
 import plants.CherryBomb;
@@ -57,9 +58,9 @@ public class SimpleGameController {
 		PlantSelectionView.draw(context, data2);
 
 		Point2D.Float location;
-		ArrayList<Zombie> MyZombies = new ArrayList<>();
-		ArrayList<IPlant> MyPlants = new ArrayList<>();
-		ArrayList<Projectile> MyBullet = new ArrayList<>();
+		ArrayList<Entities> MyZombies = new ArrayList<>();
+		ArrayList<Entities> MyPlants = new ArrayList<>();
+		ArrayList<Entities> MyBullet = new ArrayList<>();
 		HashMap<Integer, Integer> possibilityX = new HashMap<Integer, Integer>(); // Test Mod tkt
 		HashMap<Integer, Integer> possibilityY = new HashMap<Integer, Integer>(); // Test Mod tkt
 
@@ -76,6 +77,7 @@ public class SimpleGameController {
 		
 		int day = 0;
 		int debug = 0;
+		boolean loose = false;
 
 		for (int x = 0; x < 8; x++) {
 			for (int y = 0; y < 5; y++) {
@@ -95,9 +97,7 @@ public class SimpleGameController {
 			view.draw(context, data);
 			PlantSelectionView.draw(context, data2);
 			
-			DeadPool deadPoolZ = new DeadPool();
-			DeadPool deadPoolP = new DeadPool();
-			DeadPool deadPoolBullet = new DeadPool();
+			DeadPool deadPoolE = new DeadPool();
 
 			int n = data.RandomPosGenerator(300);
 			int n2 = data.RandomPosGenerator(600);
@@ -119,46 +119,36 @@ public class SimpleGameController {
 				str.append("new ConeheadZombie (" + new SimpleDateFormat("hh:mm:ss").format(new Date()) + ")\n");
 			}
 			
-			for (Zombie z : MyZombies) {
-				z.go();
-				z.incAS();
-				for (Projectile b : MyBullet) {
-					if (z.hit(b)) {
-						
-						b.conflict(z);
-						if (b.isOutside(xOrigin, squareSize, 8) || b.isDead()) { // Changer le 8 en nbr de case
-							str.append(b + "meurt\n");
-							deadPoolBullet.add(MyBullet.indexOf(b));
-							str.append(deadPoolBullet);
-						}
-					}
-				}
-				for (IPlant p : MyPlants) {
+			for (Entities z : MyZombies) {
+				z.incAS();		
+				z.conflict(deadPoolE, MyBullet);
+				
+				for (Entities p : MyPlants) {
 
-					if (z.hit((Entities) p)) {
-						z.stop();
-						if (z.readyToshot()) {
-							((Entities) p).conflict(z);
+					if (z.hit(p)) {
+						if (((Zombie) z).readyToshot()) {
+							(p).mortalKombat(z);
 						}
 
 					}
 					if (p.isDead()) {
 						str.append(p + "meurt\n");
-						deadPoolP.add(MyPlants.indexOf(p));
+						deadPoolE.add(p);
 						data.plantOutBord(view.lineFromY(p.getY()), view.columnFromX(p.getX()));
 					}
 
 				}
-				if (z.isEatingBrain(xOrigin, squareSize) || z.isDead()) {
+
+				if (((Zombie) z).isEatingBrain(xOrigin, squareSize) || z.isDead()) {
+					deadPoolE.add(z);
 					str.append(z + " meurt\n");
-					deadPoolZ.add(MyZombies.indexOf(z));
 				}
 			}
 
 			/*----------------------------------------------------------------------------*/
 			/*------------------------------- WIN / LOOSE --------------------------------*/
-			for (Zombie z : MyZombies) {
-				if (z.isEatingBrain(xOrigin, squareSize)) {
+			for (Entities z : MyZombies) {
+				if (((Zombie) z).isEatingBrain(xOrigin, squareSize)) {
 					Duration timeEnd = Duration.between(time, Instant.now());
 
 					int h = 0, m = 0, s = 0;
@@ -176,49 +166,25 @@ public class SimpleGameController {
 			}
 			/*----------------------------------------------------------------------------*/
 			/*-------------------- je d�truit tout les elements morts --------------------*/
-			if (!(deadPoolZ.empty())) {
-				deadPoolZ.reverseSort();
-				for (int d : deadPoolZ.getDeadPool()) {
-					System.out.println("deadPoolZ" + deadPoolZ);
-					if (MyZombies.contains(MyZombies.get(d))) {
-						MyZombies.remove(d);
-						deathCounterZombie += 1;
-						str.append("zombie killed (" + new SimpleDateFormat("hh:mm:ss").format(new Date()) + ")\n");
-					}
-				}
-			}
-
-			if (!(deadPoolP.empty())) {
-				deadPoolP.reverseSort();
-				for (int p : deadPoolP.getDeadPool()) {
-					System.out.println("deadPoolP" + deadPoolP);
-					if (MyPlants.contains(MyPlants.get(p))) {
-						MyPlants.remove(p);
-						str.append("plant killed (" + new SimpleDateFormat("hh:mm:ss").format(new Date()) + ")\n");
-					}
-				}
-			}
-
-			if (!(deadPoolBullet.empty())) {
-				deadPoolBullet.reverseSort();
-				for (int d : deadPoolBullet.getDeadPool()) {
-					System.out.println("deadPoolBullet" + deadPoolBullet);
-					if (MyBullet.contains(MyBullet.get(d))) {
-						MyBullet.remove(d);
-					}
-				}
+			
+			if (!(deadPoolE.empty())) {
+				deadPoolE.clearEntity(MyBullet);
+				deadPoolE.clearEntity(MyZombies);
+				System.out.println(deadPoolE);
+				deadPoolE.clearEntity(MyPlants);
+				deadPoolE.clear();
 			}
 
 			/*----------------------------------------------------------------------------*/
 			
-			for (Zombie z : MyZombies) {
-				if (z.getSpeed()) {
-					view.moveAndDrawElement(context, data, z);
+			for (Entities z : MyZombies) {
+				if (((Zombie) z).getSpeed()) {
+					view.moveAndDrawElement(context, data, (Zombie) z);
 				}
 			}
 
-			for (Projectile b : MyBullet) {
-				view.moveAndDrawElement(context, data, b);
+			for (Entities b : MyBullet) {
+				view.moveAndDrawElement(context, data, (Bullet) b);
 			}
 
 			/*----------------------------Shooting in continue----------------------------*/

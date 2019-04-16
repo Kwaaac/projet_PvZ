@@ -4,6 +4,7 @@ import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
 import models.Coordinates;
+import models.Entities;
 import views.BordView;
 import zombies.Zombie;
 
@@ -32,10 +33,10 @@ public class CherryBomb extends Plant {
 		return zone;
 	}
 
-	private ArrayList<Zombie> detect(BordView view, ArrayList<Zombie> zombiePlateau) {
+	private ArrayList<Entities> detect(BordView view, ArrayList<Entities> myZombies) {
 		ArrayList<Coordinates> cherry = this.zone(view);
-		ArrayList<Zombie> Lz = new ArrayList<>();
-		for (Zombie z : zombiePlateau) {
+		ArrayList<Entities> Lz = new ArrayList<>();
+		for (Entities z : myZombies) {
 			int caseXZombie = view.columnFromX(z.getX());
 			int caseYzombie = view.lineFromY(z.getY());
 			Coordinates zombie = new Coordinates(caseXZombie, caseYzombie);
@@ -48,9 +49,9 @@ public class CherryBomb extends Plant {
 		return Lz;
 	}
 
-	public void explosion(BordView view, ArrayList<Zombie> zombiePlateau) {
+	public void explosion(BordView view, ArrayList<Entities> myZombies) {
 		if(this.readyToshot()) {
-			for (Zombie z : this.detect(view, zombiePlateau)) {
+			for (Entities z : this.detect(view, myZombies)) {
 				z.takeDmg(1800);
 			}
 			this.life = 0;
@@ -69,7 +70,7 @@ public class CherryBomb extends Plant {
 	}
 
 	@Override
-	public void action(ArrayList<Projectile> MyBullet, BordView view, ArrayList<Zombie> MyZombies) {
+	public void action(ArrayList<Entities> myBullet, BordView view, ArrayList<Entities> MyZombies) {
 		this.incAS();
 		
 		this.explosion(view, MyZombies);

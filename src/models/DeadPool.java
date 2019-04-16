@@ -1,27 +1,26 @@
 package models;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 public class DeadPool {
-	private ArrayList<IEntite> DeadPool;
+	private ArrayList<IEntite> deadPool;
 
 	public DeadPool() {
-		this.DeadPool = new ArrayList<IEntite>();
+		this.deadPool = new ArrayList<IEntite>();
 	}
 
 	public ArrayList<IEntite> getDeadPool() {
-		return DeadPool;
+		return deadPool;
 	}
 
 	public void add(IEntite i) {
-		if (!(DeadPool.contains(i))) {
-			DeadPool.add(i);
+		if (!(deadPool.contains(i))) {
+			deadPool.add(i);
 		}
 	}
 
 	public boolean empty() {
-		if (DeadPool.size() <= 0) {
+		if (deadPool.size() <= 0) {
 			return true;
 		}
 		return false;
@@ -35,10 +34,20 @@ public class DeadPool {
 	public String toString() {
 		StringBuilder bs = new StringBuilder();
 		bs.append(" dead pool contient :\n\t");
-		for (IEntite i : DeadPool) {
+		for (IEntite i : deadPool) {
 			bs.append(i).append(", ");
 		}
 		return bs.toString();
+	}
+	
+	public void clearEntity(ArrayList<Entities> Le) {
+		for(IEntite DPe: deadPool) {
+			Le.remove(DPe);
+		}
+	}
+	
+	public void clear() {
+		deadPool.clear();
 	}
 
 }
