@@ -14,9 +14,9 @@ import zombies.Zombie;
 
 	boolean isDead();
 
-	int getY();
+	float getY();
 
-	int getX();
+	float getX();
 	
 	void action(ArrayList<Projectile> myBullet, BordView view, ArrayList<Zombie> myZombies);
 	

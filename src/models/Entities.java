@@ -1,39 +1,34 @@
 package models;
 
 import java.util.ArrayList;
-
-import plants.Plant;
 import plants.Projectile;
-import zombies.Zombie;
+import views.BordView;
 
 public abstract class Entities implements IEntite {
 
-	protected int x;
-	protected int y;
+	protected float x;
+	protected float y;
+	protected Coordinates caseXY;
 	protected int damage;
 	protected int life;
 
-	public Entities(int x, int y, int damage, int life) {
+	public Entities(float x, float y, int damage, int life) {
 		this.x = x;
 		this.y = y;
+		this.caseXY = new Coordinates(BordView.caseYFromY(y), BordView.caseXFromX(x));
 		this.damage = damage;
 		this.life = life;
-	}
-
-	public Entities(int x, int y, double speed) {
-		this.x = x;
-		this.y = y;
 	}
 
 	public int lineY() {
 		return (int) ((y - 100) / 180);
 	}
 
-	public int getX() {
+	public float getX() {
 		return x;
 	}
 
-	public int getY() {
+	public float getY() {
 		return y;
 	}
 
@@ -41,7 +36,7 @@ public abstract class Entities implements IEntite {
 		return damage;
 	}
 
-	public void setX(int x) {
+	public void setX(float x) {
 		this.x = x;
 	}
 
@@ -125,12 +120,13 @@ public abstract class Entities implements IEntite {
 				this.mortalKombat(e);
 				if (e.isDead()) {
 					DPe.addInDP(e);
-				} else if (this.isDead()) {
-					/*
-					 * si ils sont plusieur a le taper et que sa vie tombe a zero avant que les
-					 * attaquant ne sois mort on empeche des echange de dégats(on en a besoin pour
-					 * pas qu'une plante morte soit capable de tué après sa mort)
-					 */
+				} 
+				/*
+				 * si ils sont plusieur a le taper et que sa vie tombe a zero avant que les
+				 * attaquant ne sois mort on empeche des echange de dégats(on en a besoin pour
+				 * pas qu'une plante morte soit capable de tué après sa mort)
+				 */
+				else if (this.isDead()) {
 					
 					DPe.addInDP(this);
 					break;

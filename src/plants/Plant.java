@@ -72,6 +72,14 @@ public abstract class Plant extends Entities implements IPlant{
 	}
 	
 	public Coordinates hitBox() {
-		return new Coordinates(x, x + sizeOfPlant);
+		return new Coordinates((int) x, (int) x + sizeOfPlant);
+	}
+	
+	public Plant plantFromCoord(Coordinates case2) {
+		if(case2.equals(caseXY)) {
+			return this;
+		}
+		
+		return null;
 	}
 }

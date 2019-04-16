@@ -6,7 +6,7 @@ public class FlagZombie extends Zombie{
 	private final String name = "Flag Zombie";
 	
 	public FlagZombie(int x, int y) {
-		super(x, y, 100, 200, -2.9);
+		super(x, y, 100, 200, -0.75);
 	}
 	
 	@Override
@@ -19,4 +19,7 @@ public class FlagZombie extends Zombie{
 		return super.toString() + "--" + name; 
 	}
 	
+	public void go() {
+		super.setSpeed((float) -0.75);
+	}
 }

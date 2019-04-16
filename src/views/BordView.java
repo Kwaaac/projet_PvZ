@@ -34,8 +34,12 @@ public class BordView extends SimpleGameView{
 	 * @throws IllegalArgumentException if the float coordinate doesn't fit in the
 	 *                                  game board.
 	 */
-	public int lineFromY(float y) {
-		return super.lineFromY(y);
+	public static int caseYFromY(float y) {
+		return (int) ((y - 100) / getSquareSize());
+	}
+	
+	public static int caseXFromX(float x) {
+		return (int) ((x - 450) / getSquareSize());
 	}
 
 	/**

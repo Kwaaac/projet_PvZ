@@ -229,5 +229,18 @@ public class SimpleGameData {
 		}
 
 	}
+	
+	public void leMove(ApplicationContext context, BordView view, ArrayList<Zombie> myZombies, ArrayList<Projectile> myBullet) {
+		
+		for (Zombie z : myZombies) {
+			if (z.getSpeed()) {
+				view.moveAndDrawElement(context, this, z);
+			}
+		}
+
+		for (Projectile b : myBullet) {
+			view.moveAndDrawElement(context, this, b);
+		}
+	}
 
 }

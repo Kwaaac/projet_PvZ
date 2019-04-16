@@ -9,7 +9,7 @@ public abstract class Projectile extends Entities implements MovingElement{
 	private final double speed;
 	private static final int sizeOfProjectile = 25;
 	
-	public Projectile(int x, int y, int damage, int life, double speed) {
+	public Projectile(float x, float y, int damage, int life, double speed) {
 		super(x, y, damage, life);
 		this.speed = speed;
 	}
@@ -29,7 +29,7 @@ public abstract class Projectile extends Entities implements MovingElement{
 	}
 	
 	public Coordinates hitBox() {
-		return new Coordinates(x, x + sizeOfProjectile);
+		return new Coordinates((int) x, (int) x + sizeOfProjectile);
 	}
 	
 	public boolean isOutside(int xOrigin, int sqrSize, int nbrSqr) {

@@ -2,14 +2,12 @@ package zombies;
 
 import java.awt.geom.Ellipse2D;
 
-import models.IEntite;
-
 public class NormalZombie extends Zombie{
 
 	private final String name = "Normal Zombie";
 	
 	public NormalZombie(int x, int y) {
-		super(x, y, 100, 200, -2.7);
+		super(x, y, 100, 200, -0.73);
 	}
 	
 	@Override
@@ -22,6 +20,7 @@ public class NormalZombie extends Zombie{
 		return super.toString() + "--" + name; 
 	}
 
-
-	
+	public void go() {
+		super.setSpeed((float) -0.73);
+	}
 }

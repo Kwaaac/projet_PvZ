@@ -10,7 +10,7 @@ public abstract class Zombie extends Entities implements MovingElement, LivingEn
 	private final String type = "Zombie";
 	private double speed;
 	private final static int sizeOfZombie = 75;
-	
+
 	private int speedshoot;
 	private int timerA = -1;
 
@@ -20,11 +20,9 @@ public abstract class Zombie extends Entities implements MovingElement, LivingEn
 		this.speedshoot = (int) (speed * -75);
 	}
 
-	
-	
 	@Override
 	public void move() {
-		setX((int) (getX() + speed));
+		setX((float) (getX() + speed));
 	}
 
 	@Override
@@ -35,23 +33,27 @@ public abstract class Zombie extends Entities implements MovingElement, LivingEn
 	public boolean getSpeed() {
 		return speed != 0;
 	}
-	
+
+	public void setSpeed( float x ) {
+		speed = x;
+	}
+
 	public static int getSizeOfZombie() {
 		return sizeOfZombie;
 	}
-	
+
 	public void stop() {
 		this.speed = 0;
 	}
-	
+
 	public void go() {
 		speed = -1.7;
 	}
-	
+
 	public void incAS() {
 		this.timerA += 1;
 	}
-	
+
 	public void resetAS() {
 		this.timerA = 0;
 	}
@@ -59,13 +61,14 @@ public abstract class Zombie extends Entities implements MovingElement, LivingEn
 	public boolean readyToshot() {
 		return timerA % speedshoot == 0;
 	}
-	
-	public void conflictAll(Plant p) {}
-	
-	public Coordinates hitBox() {
-		return new Coordinates(x, x + sizeOfZombie);
+
+	public void conflictAll(Plant p) {
 	}
-	
+
+	public Coordinates hitBox() {
+		return new Coordinates((int) x, (int) x + sizeOfZombie);
+	}
+
 	public boolean isEatingBrain(int xOrigin, int squareSize) {
 		return x < xOrigin - squareSize / 2;
 	}
