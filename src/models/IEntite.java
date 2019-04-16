@@ -2,6 +2,8 @@ package models;
 
 import java.util.ArrayList;
 
+import plants.Projectile;
+
 public interface IEntite {
 
 	
@@ -18,6 +20,7 @@ public interface IEntite {
 
 	boolean isDead();
 	
-	void conflict(DeadPool DPe,ArrayList<Entities> Le);
-	
+	void conflict(DeadPool DPe,ArrayList<Projectile> Le);
+
+	public int getDamage();
 }

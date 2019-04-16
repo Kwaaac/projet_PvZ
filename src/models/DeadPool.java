@@ -2,6 +2,10 @@ package models;
 
 import java.util.ArrayList;
 
+import plants.Plant;
+import plants.Projectile;
+import zombies.Zombie;
+
 public class DeadPool {
 	private ArrayList<IEntite> deadPool;
 
@@ -40,13 +44,16 @@ public class DeadPool {
 		return bs.toString();
 	}
 	
-	public void clearEntity(ArrayList<Entities> Le) {
+	public void clearEntity(ArrayList<?> Le) {
 		for(IEntite DPe: deadPool) {
 			Le.remove(DPe);
 		}
 	}
 	
-	public void clear() {
+	public void deletingEverything(ArrayList<Zombie> MyZombies, ArrayList<Plant> MyPlants, ArrayList<Projectile> MyBullet) {
+		this.clearEntity(MyBullet);
+		this.clearEntity(MyZombies);
+		this.clearEntity(MyPlants);
 		deadPool.clear();
 	}
 

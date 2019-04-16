@@ -52,7 +52,7 @@ public abstract class Plant extends Entities implements IPlant{
 	}
 	
 	@Override
-	public boolean readyToshot(ArrayList<Entities> myZombies) {
+	public boolean readyToshot(ArrayList<Zombie> myZombies) {
 		for(Entities z : myZombies) {
 			if(this.sameLine(z)) {
 				return timerA % speedshoot == 0;

@@ -163,7 +163,7 @@ public class SimpleGameData {
 	}
 
 	public boolean spawnRandomPlant(HashMap<Integer, Integer> possibilityX, HashMap<Integer, Integer> possibilityY,
-			ArrayList<Entities> myPlants, BordView view, ApplicationContext context) {
+			ArrayList<Plant> myPlants, BordView view, ApplicationContext context) {
 
 		boolean result = false;
 
@@ -221,11 +221,11 @@ public class SimpleGameData {
 		return result;
 	}
 
-	public void actionning(ArrayList<Entities> MyPlants, ArrayList<Entities> MyBullet, BordView view,
-			ArrayList<Entities> MyZombies) {
+	public void actionning(ArrayList<Plant> myPlants, ArrayList<Projectile> myBullet, BordView view,
+			ArrayList<Zombie> myZombies) {
 
-		for (Entities p : MyPlants) {
-			 ((IPlant) p).action(MyBullet, view, MyZombies);
+		for (IPlant p : myPlants) {
+			 p.action(myBullet, view, myZombies);
 		}
 
 	}

@@ -29,7 +29,7 @@ public class Mine extends Plant{
 	public void conflictAll(Zombie... z) {}
 
 	@Override
-	public void action(ArrayList<Entities> myBullet, BordView view, ArrayList<Entities> MyZombies) {
+	public void action(ArrayList<Projectile> myBullet, BordView view, ArrayList<Zombie> myZombies) {
 
 	}
 

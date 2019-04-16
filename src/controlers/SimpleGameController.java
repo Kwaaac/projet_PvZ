@@ -58,9 +58,9 @@ public class SimpleGameController {
 		PlantSelectionView.draw(context, data2);
 
 		Point2D.Float location;
-		ArrayList<Entities> MyZombies = new ArrayList<>();
-		ArrayList<Entities> MyPlants = new ArrayList<>();
-		ArrayList<Entities> MyBullet = new ArrayList<>();
+		ArrayList<Zombie> MyZombies = new ArrayList<>();
+		ArrayList<Plant> MyPlants = new ArrayList<>();
+		ArrayList<Projectile> MyBullet = new ArrayList<>();
 		HashMap<Integer, Integer> possibilityX = new HashMap<Integer, Integer>(); // Test Mod tkt
 		HashMap<Integer, Integer> possibilityY = new HashMap<Integer, Integer>(); // Test Mod tkt
 
@@ -167,13 +167,7 @@ public class SimpleGameController {
 			/*----------------------------------------------------------------------------*/
 			/*-------------------- je d�truit tout les elements morts --------------------*/
 			
-			if (!(deadPoolE.empty())) {
-				deadPoolE.clearEntity(MyBullet);
-				deadPoolE.clearEntity(MyZombies);
-				System.out.println(deadPoolE);
-				deadPoolE.clearEntity(MyPlants);
-				deadPoolE.clear();
-			}
+			deadPoolE.deletingEverything(MyZombies, MyPlants, MyBullet);
 
 			/*----------------------------------------------------------------------------*/
 			

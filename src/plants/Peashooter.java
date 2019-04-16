@@ -27,7 +27,7 @@ public class Peashooter extends Plant{
 	}
 
 	@Override
-	public void action(ArrayList<Entities> myBullet, BordView view, ArrayList<Entities> myZombies) {
+	public void action(ArrayList<Projectile> myBullet, BordView view, ArrayList<Zombie> myZombies) {
 		this.incAS();
 		
 		if(this.readyToshot(myZombies)) {

@@ -33,7 +33,7 @@ public class CherryBomb extends Plant {
 		return zone;
 	}
 
-	private ArrayList<Entities> detect(BordView view, ArrayList<Entities> myZombies) {
+	private ArrayList<Entities> detect(BordView view, ArrayList<Zombie> myZombies) {
 		ArrayList<Coordinates> cherry = this.zone(view);
 		ArrayList<Entities> Lz = new ArrayList<>();
 		for (Entities z : myZombies) {
@@ -49,7 +49,7 @@ public class CherryBomb extends Plant {
 		return Lz;
 	}
 
-	public void explosion(BordView view, ArrayList<Entities> myZombies) {
+	public void explosion(BordView view, ArrayList<Zombie> myZombies) {
 		if(this.readyToshot()) {
 			for (Entities z : this.detect(view, myZombies)) {
 				z.takeDmg(1800);
@@ -70,10 +70,10 @@ public class CherryBomb extends Plant {
 	}
 
 	@Override
-	public void action(ArrayList<Entities> myBullet, BordView view, ArrayList<Entities> MyZombies) {
+	public void action(ArrayList<Projectile> myBullet, BordView view, ArrayList<Zombie> myZombies) {
 		this.incAS();
 		
-		this.explosion(view, MyZombies);
+		this.explosion(view, myZombies);
 	}
 
 }

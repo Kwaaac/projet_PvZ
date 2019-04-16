@@ -69,8 +69,8 @@ public abstract class Entities implements IEntite {
 		return this.lineY() == ((Entities) e).lineY() && (e.hitBox().checkHitBox(this.hitBox()));
 	}
 
-	public void mortalKombat(Entities e) {
-		this.takeDmg(e.damage);
+	public void mortalKombat(IEntite e) {
+		this.takeDmg(e.getDamage());
 		e.takeDmg(damage);
 	}
 
@@ -116,8 +116,10 @@ public abstract class Entities implements IEntite {
 	 *                 objet utilisant la m�thode et qui attaqueront cette meme
 	 *                 entit�es tous ensemble
 	 */
-	public void conflict(DeadPool DPe, ArrayList<Entities> Le) {
-		for (Entities e : Le) {
+	
+	@Override
+	public void conflict(DeadPool DPe, ArrayList<Projectile> Le) {
+		for (IEntite e : Le) {
 			if (this.hit(e)) {
 
 				this.mortalKombat(e);

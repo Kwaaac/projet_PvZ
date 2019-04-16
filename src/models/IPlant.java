@@ -18,7 +18,7 @@ import zombies.Zombie;
 
 	int getX();
 	
-	void action(ArrayList<Entities> myBullet, BordView view, ArrayList<Entities> myZombies);
+	void action(ArrayList<Projectile> myBullet, BordView view, ArrayList<Zombie> myZombies);
 	
-	boolean readyToshot(ArrayList<Entities> MZ);
+	boolean readyToshot(ArrayList<Zombie> MZ);
 }
