@@ -20,8 +20,6 @@ import models.SimpleGameData;
 import models.Coordinates;
 import models.DeadPool;
 import models.Entities;
-import models.IEntite;
-import models.IPlant;
 import plants.Bullet;
 import plants.CherryBomb;
 import plants.Peashooter;
@@ -114,28 +112,14 @@ public class SimpleGameController {
 				str.append("new ConeheadZombie (" + new SimpleDateFormat("hh:mm:ss").format(new Date()) + ")\n");
 			}
 			
+			
+
+			/*------------------------Gestion des conflits--------------------------------*/
 			for (Zombie z : myZombies) {
 				z.go();
 				z.incAS();		
-				z.conflict(deadPoolE, myBullet);
-				
-				for (Entities p : myPlants) {
-
-					if (z.hit(p)) {
-						z.stop();
-						if  (z.readyToshot()) {
-							(p).mortalKombat(z);
-						}
-
-					}
-					if (p.isDead()) {
-						str.append(p + "meurt\n");
-						deadPoolE.add(p);
-						data.plantOutBord(view.lineFromY(p.getY()), view.columnFromX(p.getX()));
-					}
-
-				}
-
+				z.conflictBvZ(deadPoolE, myBullet);
+				z.conflictPvZ(deadPoolE, myPlants, view, data, str);
 				if (z.isEatingBrain(xOrigin, squareSize) || z.isDead()) {
 					deadPoolE.add(z);
 					str.append(z + " meurt\n");
@@ -162,7 +146,7 @@ public class SimpleGameController {
 				}
 			}
 			/*----------------------------------------------------------------------------*/
-			/*-------------------- je dï¿½truit tout les elements morts --------------------*/
+			/*-------------------- je détruit tout les elements morts --------------------*/
 			
 			deadPoolE.deletingEverything(myZombies, myPlants, myBullet);
 

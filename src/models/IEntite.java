@@ -19,8 +19,7 @@ public interface IEntite {
 	void resetAS();
 
 	boolean isDead();
-	
-	void conflict(DeadPool DPe,ArrayList<Projectile> Le);
+
 
 	public int getDamage();
 }
