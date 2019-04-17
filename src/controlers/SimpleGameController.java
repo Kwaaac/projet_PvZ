@@ -115,16 +115,7 @@ public class SimpleGameController {
 			
 
 			/*------------------------Gestion des conflits--------------------------------*/
-			for (Zombie z : myZombies) {
-				z.go();
-				z.incAS();		
-				z.conflictBvZ(deadPoolE, myBullet);
-				z.conflictPvZ(deadPoolE, myPlants, view, data, str);
-				if (z.isEatingBrain(xOrigin, squareSize) || z.isDead()) {
-					deadPoolE.add(z);
-					str.append(z + " meurt\n");
-				}
-			}
+			Zombie.ZCheckConflict(myZombies,myBullet,myPlants,deadPoolE,view,data,str);
 
 			/*----------------------------------------------------------------------------*/
 			/*------------------------------- WIN / LOOSE --------------------------------*/
@@ -250,7 +241,7 @@ public class SimpleGameController {
 							if (ok == 1) {
 								data.plantOnBoard(view.lineFromY(y), view.columnFromX(x));
 								view.drawPeashooter(context, data, xCentered, yCentered, "#90D322");
-								myPlants.add(new Peashooter(xCentered, yCentered));
+								myPlants.add(new Peashooter(xCentered-2, yCentered));
 								ok = 0;
 								str.append("new plant (" + new SimpleDateFormat("hh:mm:ss").format(new Date()) + ")\n");
 							}

@@ -141,4 +141,17 @@ public abstract class Zombie extends Entities implements MovingElement, LivingEn
 
 		}
 	}
+	
+	public static void ZCheckConflict(ArrayList<Zombie> myZombies,ArrayList<Projectile> myBullet, ArrayList<Plant> myPlants  ,DeadPool deadPoolE,BordView view,SimpleGameData data, StringBuilder str) {
+		for (Zombie z : myZombies) {
+			z.go();
+			z.incAS();		
+			z.conflictBvZ(deadPoolE, myBullet);
+			z.conflictPvZ(deadPoolE, myPlants, view, data, str);
+			if (z.isEatingBrain(view.getXOrigin(), BordView.getSquareSize()) || z.isDead()) {
+				deadPoolE.add(z);
+				str.append(z + " meurt\n");
+			}
+		}
+	}
 }
