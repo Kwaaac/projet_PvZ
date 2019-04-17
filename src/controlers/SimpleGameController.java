@@ -234,7 +234,7 @@ public class SimpleGameController {
 					if (yOrigin <= y && y <= yOrigin + squareSize * 5) {
 
 						int xCentered = Coordinates.CenteredX(view.realCoordFromIndex(view.columnFromX(location.x), xOrigin));
-						int yCentered = Coordinates.CenteredY(view.realCoordFromIndex(view.lineFromY(location.y), xOrigin));
+						int yCentered = Coordinates.CenteredY(view.realCoordFromIndex(view.lineFromY(location.y), yOrigin));
 
 						if (ok != 0 && !(data.hasPlant(view.lineFromY(y), view.columnFromX(x)))) {
 
