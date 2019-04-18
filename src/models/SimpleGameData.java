@@ -2,6 +2,9 @@ package models;
 
 import java.awt.Color;
 import java.text.SimpleDateFormat;
+import java.time.Duration;
+import java.time.Instant;
+import java.time.temporal.Temporal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -242,5 +245,56 @@ public class SimpleGameData {
 			view.moveAndDrawElement(context, this, b);
 		}
 	}
-
+	
+	public static void timeEnd(ArrayList<Zombie> myZombies,Temporal time, StringBuilder str, ApplicationContext context, int deathCounterZombie, String mdp) {
+		int xOrigin = 450;
+		int squareSize = BordView.getSquareSize();
+		String choice = null, finalChoice = null;
+		int h = 0, m = 0, s = 0;
+		
+		
+		for (Entities z : myZombies) {
+			if (((Zombie) z).isEatingBrain(xOrigin, squareSize)) {
+				choice = "Stop";
+				finalChoice = "Win";
+			}
+		}
+		
+		if (SimpleGameData.win(deathCounterZombie)) {
+			choice = "Stop";
+			finalChoice = "Loose";
+		}
+		
+		if (mdp == "SPACE") {
+			choice = "Stop";
+			finalChoice = "Stop";
+		}
+		
+		switch (choice) {
+			case "Continue":
+				break;
+			case "Stop":
+				Duration timeEnd = Duration.between(time, Instant.now());
+				h = (int) (timeEnd.getSeconds() / 3600);
+				m = (int) ((timeEnd.getSeconds() % 3600) / 60);
+				s = (int) (((timeEnd.getSeconds() % 3600) % 60));
+				switch (finalChoice) {
+					case "Win":
+						str.append("-+-+-+-+-+-+-+-+-+-\nVous avez gagne!!!\nLa partie a duree : " + h + " heure(s) " + m
+								+ " minute(s) " + s + " seconde(s)");
+						break;
+					case "Loose":
+						str.append("-+-+-+-+-+-+-+-+-+-\nVous avez perdu...\nLa partie a duree : " + h + " heure(s) " + m
+								+ " minute(s) " + s + " seconde(s)");
+						break;
+					case "Stop":
+						str.append("-+-+-+-+-+-+-+-+-+-\nVous avez quitte la partie !\nLa partie a duree : " + h
+								+ " heure(s) " + m + " minute(s) " + s + " seconde(s)");
+						break;
+				}
+				System.out.println(str.toString());
+				SimpleGameData.setWL(0);
+				context.exit(0);
+		}
+	}
 }

@@ -5,6 +5,7 @@ import java.awt.geom.Point2D;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.time.Instant;
+import java.time.temporal.Temporal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -118,25 +119,7 @@ public class SimpleGameController {
 			Zombie.ZCheckConflict(myZombies,myBullet,myPlants,deadPoolE,view,data,str);
 
 			/*----------------------------------------------------------------------------*/
-			/*------------------------------- WIN / LOOSE --------------------------------*/
-			for (Entities z : myZombies) {
-				if (((Zombie) z).isEatingBrain(xOrigin, squareSize)) {
-					Duration timeEnd = Duration.between(time, Instant.now());
-
-					int h = 0, m = 0, s = 0;
-					h = (int) (timeEnd.getSeconds() / 3600);
-					m = (int) ((timeEnd.getSeconds() % 3600) / 60);
-					s = (int) (((timeEnd.getSeconds() % 3600) % 60));
-
-					str.append("-+-+-+-+-+-+-+-+-+-\nVous avez perdu...\nLa partie a duree : " + h + " heure(s) " + m
-							+ " minute(s) " + s + " seconde(s)");
-					// System.out.println(str.toString());
-					SimpleGameData.setWL(0);
-					context.exit(0);
-					return;
-				}
-			}
-			/*----------------------------------------------------------------------------*/
+			
 			/*-------------------- je détruit tout les elements morts --------------------*/
 			
 			deadPoolE.deletingEverything(myZombies, myPlants, myBullet);
@@ -156,21 +139,7 @@ public class SimpleGameController {
 					str.append("new plant (" + new SimpleDateFormat("hh:mm:ss").format(new Date()) + ")\n");
 				}
 			}
-			if (SimpleGameData.win(deathCounterZombie)) {
-				Duration timeEnd = Duration.between(time, Instant.now());
-
-				int h = 0, m = 0, s = 0;
-				h = (int) (timeEnd.getSeconds() / 3600);
-				m = (int) ((timeEnd.getSeconds() % 3600) / 60);
-				s = (int) (((timeEnd.getSeconds() % 3600) % 60));
-
-				str.append("-+-+-+-+-+-+-+-+-+-\nVous avez GAGNEE !!!\nLa partie a duree : " + h + " heure(s) " + m
-						+ " minute(s) " + s + " seconde(s)");
-				System.out.println(str.toString());
-				SimpleGameData.setWL(1);
-				context.exit(0);
-				return;
-			}
+			
 			Event event = context.pollOrWaitEvent(20); // modifier pour avoir un affichage fluide
 			if (event == null) { // no event
 				continue;
@@ -184,23 +153,6 @@ public class SimpleGameController {
 			Action action = event.getAction();
 
 			if (action == Action.KEY_PRESSED || action == Action.KEY_RELEASED) {
-
-				if (mdp == "SPACE") {
-					Duration timeEnd = Duration.between(time, Instant.now());
-					
-					int h = 0, m = 0, s = 0;
-					h = (int) (timeEnd.getSeconds() / 3600);
-					m = (int) ((timeEnd.getSeconds() % 3600) / 60);
-					s = (int) (((timeEnd.getSeconds() % 3600) % 60));
-
-					str.append("-+-+-+-+-+-+-+-+-+-\nVous avez quitte la partie !\nLa partie a duree : " + h
-							+ " heure(s) " + m + " minute(s) " + s + " seconde(s)");
-					System.out.println(str.toString());
-					SimpleGameData.setWL(0);
-					context.exit(0);
-					return;
-				}
-
 				if (mdp == "Y") {
 					debug = true;
 				} // debug ON
@@ -208,7 +160,13 @@ public class SimpleGameController {
 					debug = false;
 				} // debug OFF
 			}
+			
+			/*------------------------------- WIN / LOOSE --------------------------------*/
+			
+			SimpleGameData.timeEnd(myZombies, time, str, context, deathCounterZombie, mdp);
 
+			
+			/*----------------------------------------------------------------------------*/
 //			if (action == Action.POINTER_DOWN) {
 //				location = event.getLocation();
 //				float x = location.x;
