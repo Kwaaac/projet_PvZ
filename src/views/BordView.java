@@ -8,6 +8,7 @@ import java.awt.geom.RectangularShape;
 
 import models.MovingElement;
 import models.SimpleGameData;
+import plants.Plant;
 
 public class BordView extends SimpleGameView{
 	
@@ -69,9 +70,9 @@ public class BordView extends SimpleGameView{
 	protected RectangularShape drawCell(int i, int j) {
 		return super.drawCell(i, j);
 	}
-
-	protected RectangularShape drawSelectedCell(int i, int j) {
-		return super.drawSelectedCell(i, j);
+	
+	public Plant[] getSelectedPlants() {
+		return getSelectedPlants();
 	}
 
 	/**

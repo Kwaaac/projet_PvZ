@@ -1,15 +1,20 @@
 package plants;
 
+import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
-import models.Entities;
+import fr.umlv.zen5.ApplicationContext;
+import models.SimpleGameData;
 import views.BordView;
+import views.SelectBordView;
+import views.SimpleGameView;
 import zombies.Zombie;
 
 public class Mine extends Plant{
 
-	private final String name = "CheeryBomb";
+	private final String name = "Mine";
+	private final String color = "#CB5050";
 	
 	public Mine(int x, int y) {
 		super(x, y, 1800, 0, 999999);
@@ -33,6 +38,16 @@ public class Mine extends Plant{
 
 	}
 
-	
-	
+	@Override
+	public Plant createAndDrawNewPlant(SimpleGameView view, ApplicationContext context, SimpleGameData data, int x, int y) {
+		view.drawCherryBomb(context, data, x,  y, color);
+		
+		return new CherryBomb(x, y);
+		
+	}
+
+	@Override
+	public void draw(SelectBordView view, Graphics2D graphics, SimpleGameData data, int x, int y) {
+		view.drawCherryBomb(graphics, data, x,  y, color);
+	}
 }

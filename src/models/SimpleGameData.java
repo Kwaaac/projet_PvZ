@@ -1,12 +1,10 @@
 package models;
 
 import java.awt.Color;
-import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.temporal.Temporal;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Random;
 
@@ -17,6 +15,8 @@ import plants.Plant;
 import plants.Projectile;
 import plants.WallNut;
 import views.BordView;
+import views.SelectBordView;
+import views.SimpleGameView;
 import zombies.Zombie;
 
 public class SimpleGameData {
@@ -98,6 +98,19 @@ public class SimpleGameData {
 	 */
 	public boolean hasASelectedCell() {
 		return selected != null;
+	}
+
+	public boolean isCorrectLocation(SimpleGameView view, float x, float y) {
+
+		int xOrigin = view.getXOrigin();
+		int yOrigin = view.getYOrigin();
+		int squareSize = SimpleGameView.getSquareSize();
+
+		if (xOrigin <= x && x <= xOrigin + squareSize * this.getNbColumns()) {
+				return yOrigin <= y && y <= yOrigin + squareSize * this.getNbLines();
+		}
+
+		return false;
 	}
 
 	/**
@@ -228,13 +241,14 @@ public class SimpleGameData {
 			ArrayList<Zombie> myZombies) {
 
 		for (IPlant p : myPlants) {
-			 p.action(myBullet, view, myZombies);
+			p.action(myBullet, view, myZombies);
 		}
 
 	}
-	
-	public void leMove(ApplicationContext context, BordView view, ArrayList<Zombie> myZombies, ArrayList<Projectile> myBullet) {
-		
+
+	public void leMove(ApplicationContext context, BordView view, ArrayList<Zombie> myZombies,
+			ArrayList<Projectile> myBullet) {
+
 		for (Zombie z : myZombies) {
 			if (z.getSpeed()) {
 				view.moveAndDrawElement(context, this, z);
@@ -245,32 +259,33 @@ public class SimpleGameData {
 			view.moveAndDrawElement(context, this, b);
 		}
 	}
-	
-	public static void timeEnd(ArrayList<Zombie> myZombies,Temporal time, StringBuilder str, ApplicationContext context, int deathCounterZombie, String mdp) {
+
+	public static void timeEnd(ArrayList<Zombie> myZombies, Temporal time, StringBuilder str,
+			ApplicationContext context, int deathCounterZombie, String mdp) {
 		int xOrigin = 450;
 		int squareSize = BordView.getSquareSize();
 		String choice = null, finalChoice = null;
 		int h = 0, m = 0, s = 0;
-		
-		
-		for (Entities z : myZombies) {
-			if (((Zombie) z).isEatingBrain(xOrigin, squareSize)) {
+
+		for (Zombie z : myZombies) {
+			if (z.isEatingBrain(xOrigin, squareSize)) {
 				choice = "Stop";
-				finalChoice = "Win";
+				finalChoice = "Loose";
 			}
 		}
-		
+
 		if (SimpleGameData.win(deathCounterZombie)) {
 			choice = "Stop";
-			finalChoice = "Loose";
+			finalChoice = "Win";
 		}
-		
+
 		if (mdp == "SPACE") {
 			choice = "Stop";
 			finalChoice = "Stop";
 		}
-		
-		switch (choice) {
+
+		if (choice != null) {
+			switch (choice) {
 			case "Continue":
 				break;
 			case "Stop":
@@ -279,22 +294,49 @@ public class SimpleGameData {
 				m = (int) ((timeEnd.getSeconds() % 3600) / 60);
 				s = (int) (((timeEnd.getSeconds() % 3600) % 60));
 				switch (finalChoice) {
-					case "Win":
-						str.append("-+-+-+-+-+-+-+-+-+-\nVous avez gagne!!!\nLa partie a duree : " + h + " heure(s) " + m
-								+ " minute(s) " + s + " seconde(s)");
-						break;
-					case "Loose":
-						str.append("-+-+-+-+-+-+-+-+-+-\nVous avez perdu...\nLa partie a duree : " + h + " heure(s) " + m
-								+ " minute(s) " + s + " seconde(s)");
-						break;
-					case "Stop":
-						str.append("-+-+-+-+-+-+-+-+-+-\nVous avez quitte la partie !\nLa partie a duree : " + h
-								+ " heure(s) " + m + " minute(s) " + s + " seconde(s)");
-						break;
+				case "Win":
+					str.append("-+-+-+-+-+-+-+-+-+-\nVous avez gagne!!!\nLa partie a duree : " + h + " heure(s) " + m
+							+ " minute(s) " + s + " seconde(s)");
+					break;
+				case "Loose":
+					str.append("-+-+-+-+-+-+-+-+-+-\nVous avez perdu...\nLa partie a duree : " + h + " heure(s) " + m
+							+ " minute(s) " + s + " seconde(s)");
+					break;
+				case "Stop":
+					str.append("-+-+-+-+-+-+-+-+-+-\nVous avez quitte la partie !\nLa partie a duree : " + h
+							+ " heure(s) " + m + " minute(s) " + s + " seconde(s)");
+					break;
 				}
 				System.out.println(str.toString());
 				SimpleGameData.setWL(0);
 				context.exit(0);
+			}
+		}
+	}
+	
+	
+	public void planting(ApplicationContext context, SimpleGameData data, BordView view, SelectBordView pcView, ArrayList<Plant> myPlants, float x, float y) {
+		
+		if (this.isCorrectLocation(view, x, y) && data.hasASelectedCell()) {
+
+			this.selectCell(view.lineFromY(y), view.columnFromX(x));
+
+			Coordinates Scell = data.getSelected();
+			Coordinates cell = this.getSelected();
+
+			int p = Scell.getI();
+
+			int i = cell.getI();
+			int j = cell.getJ();
+
+			int x2 = Coordinates.CenteredX(view.realCoordFromIndex(j, view.getXOrigin()));
+			int y2 = Coordinates.CenteredY(view.realCoordFromIndex(i, view.getYOrigin()));
+
+			if (!this.hasPlant(i, j)) {
+				this.plantOnBoard(i, j);
+				myPlants.add(pcView.getSelectedPlants()[p].createAndDrawNewPlant(view, context, this, x2, y2));
+			}
+
 		}
 	}
 }

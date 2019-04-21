@@ -1,9 +1,6 @@
 package plants;
 
 import java.awt.geom.Ellipse2D;
-import java.awt.geom.Rectangle2D.Float;
-
-import models.Coordinates;
 
 
 public class Bullet extends Projectile {

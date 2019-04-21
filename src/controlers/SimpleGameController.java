@@ -1,11 +1,10 @@
 package controlers;
 
 import java.awt.Color;
+import java.awt.Graphics2D;
 import java.awt.geom.Point2D;
 import java.text.SimpleDateFormat;
-import java.time.Duration;
 import java.time.Instant;
-import java.time.temporal.Temporal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -20,7 +19,6 @@ import fr.umlv.zen5.KeyboardKey;
 import models.SimpleGameData;
 import models.Coordinates;
 import models.DeadPool;
-import models.Entities;
 import plants.Bullet;
 import plants.CherryBomb;
 import plants.Peashooter;
@@ -49,13 +47,17 @@ public class SimpleGameController {
 		data2.setRandomMatrix();
 		int yOrigin = 100;
 		int xOrigin = 450;
+		Plant[] selectedPlant = {new Peashooter(), new WallNut(), new CherryBomb(), }; // à remplacer par les choix de
+																						// plantes du
+																						// joueur quand on aura la
+																						// selection de plante
 
-		SelectBordView PlantSelectionView = SelectBordView.initGameGraphics(0, yOrigin, 540, data2);
+		SelectBordView plantSelectionView = SelectBordView.initGameGraphics(0, yOrigin, 540, data2, selectedPlant);
 		BordView view = BordView.initGameGraphics(xOrigin, yOrigin, 900, data);
 		int squareSize = BordView.getSquareSize();
 
 		view.draw(context, data);
-		PlantSelectionView.draw(context, data2);
+		plantSelectionView.draw(context, data2);
 
 		Point2D.Float location;
 		ArrayList<Zombie> myZombies = new ArrayList<>();
@@ -67,14 +69,13 @@ public class SimpleGameController {
 		int spawnRate = 1;
 		int ZombieSize = Zombie.getSizeOfZombie();
 		Bullet.getSizeOfProjectile();
-		int sizeOfPlant = Plant.getSizeOfPlant();
 		int ok = 0;
 		int deathCounterZombie = 0;
 //		int deathCounterPlant = 0;
 		Instant time = Instant.now();
 
 		StringBuilder str = new StringBuilder("Journal de bord\n-+-+-+-+-+-+-+-+-+-\n");
-		
+
 		int day = 0;
 		boolean debug = false;
 
@@ -89,13 +90,13 @@ public class SimpleGameController {
 
 		while (true) {
 			view.draw(context, data);
-			PlantSelectionView.draw(context, data2);
-			
+			plantSelectionView.draw(context, data2);
+
 			DeadPool deadPoolE = new DeadPool();
 
 			int n = data.RandomPosGenerator(300);
 			int n2 = data.RandomPosGenerator(600);
-			
+
 			if (day == 0 || spawnRate == n2) {
 				myZombies.add(new FlagZombie((int) width,
 						yOrigin + data.RandomPosGenerator(5) * squareSize + (squareSize / 2) - ZombieSize / 2));
@@ -112,26 +113,24 @@ public class SimpleGameController {
 						yOrigin + data.RandomPosGenerator(4) * squareSize + (squareSize / 2) - ZombieSize / 2));
 				str.append("new ConeheadZombie (" + new SimpleDateFormat("hh:mm:ss").format(new Date()) + ")\n");
 			}
-			
-			
 
 			/*------------------------Gestion des conflits--------------------------------*/
-			Zombie.ZCheckConflict(myZombies,myBullet,myPlants,deadPoolE,view,data,str);
+			Zombie.ZCheckConflict(myZombies, myBullet, myPlants, deadPoolE, view, data, str);
 
 			/*----------------------------------------------------------------------------*/
-			
+
 			/*-------------------- je détruit tout les elements morts --------------------*/
-			
+
 			deadPoolE.deletingEverything(myZombies, myPlants, myBullet);
 
 			/*----------------------------------------------------------------------------*/
-			
+
 			data.leMove(context, view, myZombies, myBullet);
 
 			/*----------------------------Shooting in continue----------------------------*/
-			
+
 			data.actionning(myPlants, myBullet, view, myZombies);
-			
+
 			/*----------------------------------------------------------------------------*/
 
 			if (debug == true) {
@@ -139,7 +138,7 @@ public class SimpleGameController {
 					str.append("new plant (" + new SimpleDateFormat("hh:mm:ss").format(new Date()) + ")\n");
 				}
 			}
-			
+
 			Event event = context.pollOrWaitEvent(20); // modifier pour avoir un affichage fluide
 			if (event == null) { // no event
 				continue;
@@ -160,12 +159,11 @@ public class SimpleGameController {
 					debug = false;
 				} // debug OFF
 			}
-			
+
 			/*------------------------------- WIN / LOOSE --------------------------------*/
-			
+
 			SimpleGameData.timeEnd(myZombies, time, str, context, deathCounterZombie, mdp);
 
-			
 			/*----------------------------------------------------------------------------*/
 //			if (action == Action.POINTER_DOWN) {
 //				location = event.getLocation();
@@ -183,79 +181,32 @@ public class SimpleGameController {
 				continue;
 			}
 
-			if (!data.hasASelectedCell()) { // no cell is selected
+			if (!data.hasASelectedCell()) {
 				location = event.getLocation();
 				float x = location.x;
 				float y = location.y;
 
-				if (xOrigin <= x && x <= xOrigin + squareSize * 8) {
-					if (yOrigin <= y && y <= yOrigin + squareSize * 5) {
-
-						int xCentered = Coordinates.CenteredX(view.realCoordFromIndex(view.columnFromX(location.x), xOrigin));
-						int yCentered = Coordinates.CenteredY(view.realCoordFromIndex(view.lineFromY(location.y), yOrigin));
-
-						if (ok != 0 && !(data.hasPlant(view.lineFromY(y), view.columnFromX(x)))) {
-
-							if (ok == 1) {
-								data.plantOnBoard(view.lineFromY(y), view.columnFromX(x));
-								view.drawPeashooter(context, data, xCentered, yCentered, "#90D322");
-								myPlants.add(new Peashooter(xCentered-2, yCentered));
-								ok = 0;
-								str.append("new plant (" + new SimpleDateFormat("hh:mm:ss").format(new Date()) + ")\n");
-							}
-							if (ok == 2) {
-								data.plantOnBoard(view.lineFromY(y), view.columnFromX(x));
-								view.drawCherryBomb(context, data, xCentered, yCentered, "#CB5050");
-								myPlants.add(new CherryBomb(xCentered, yCentered));
-								ok = 0;
-								str.append("new plant (" + new SimpleDateFormat("hh:mm:ss").format(new Date()) + ")\n");
-							}
-							if (ok == 3) {
-								data.plantOnBoard(view.lineFromY(y), view.columnFromX(x));
-								view.drawWallNut(context, data, xCentered, yCentered, "#ECB428");
-								myPlants.add(new WallNut(xCentered, yCentered));
-								ok = 0;
-								str.append("new plant (" + new SimpleDateFormat("hh:mm:ss").format(new Date()) + ")\n");
-							}
-
-						}
-					}
-				}
+				data.planting(context, data2, view, plantSelectionView, myPlants, x, y);
 
 			} else {
 				data.unselect();
 			}
 
-			if (!data2.hasASelectedCell()) { // no cell is selected
+			if (!data2.hasASelectedCell()) {
 				location = event.getLocation();
 				float x = location.x;
 				float y = location.y;
 
-				if (0 <= x && x <= squareSize) {
-					if (yOrigin <= y && y <= yOrigin + squareSize * 3) {
-
-						data2.selectCell(PlantSelectionView.lineFromY(y), PlantSelectionView.columnFromX(x));
-
-						if (yOrigin <= y && y <= yOrigin + squareSize) {
-							// str.append("plant 1");
-							ok = 1;
-						}
-						if (yOrigin + squareSize <= y && y <= yOrigin + squareSize * 2) {
-							// str.append("plant 2");
-							ok = 2;
-						}
-						if (yOrigin + squareSize * 2 <= y && y <= yOrigin + squareSize * 3) {
-							// str.append("plant 3");
-							ok = 3;
-						}
-
-					}
+				if (data2.isCorrectLocation(plantSelectionView, x, y)) {
+					data2.selectCell(plantSelectionView.lineFromY(y), plantSelectionView.columnFromX(x));
 				}
+
 			} else {
 				data2.unselect();
 			}
 
 		}
+
 	}
 
 //	static void endGame(ApplicationContext context) {

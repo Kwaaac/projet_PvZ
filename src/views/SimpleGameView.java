@@ -97,6 +97,8 @@ public abstract class SimpleGameView implements GameView {
 		return new Rectangle2D.Float(xFromI(j), yFromJ(i), squareSize, squareSize);
 	}
 
+	int sizeOfPlant = Plant.getSizeOfPlant();
+	
 	/**
 	 * Draws only the cell specified by the given coordinates in the game board from
 	 * its data, using an existing Graphics2D object.
@@ -109,29 +111,25 @@ public abstract class SimpleGameView implements GameView {
 	 */
 	@Override
 	public void drawOnlyOneCell(Graphics2D graphics, SimpleGameData data, int x, int y, String s) {
-		int sizeOfPlant = Plant.getSizeOfPlant();
 		graphics.setColor(Color.decode(s));
 		graphics.fill(new Rectangle2D.Float(x, y, sizeOfPlant, sizeOfPlant));
 	}
 	
 	@Override
 	public void drawPeashooter(Graphics2D graphics, SimpleGameData data, int x, int y, String s) {
-		int sizeOfPlant = Plant.getSizeOfPlant();
-		graphics.setColor(Color.decode(s));
+		graphics.setColor(Color.decode("#90D322"));
 		graphics.fill(new Rectangle2D.Float(x, y, sizeOfPlant, sizeOfPlant));
 	}
 	
 	@Override
 	public void drawCherryBomb(Graphics2D graphics, SimpleGameData data, int x, int y, String s) {
-		int sizeOfPlant = Plant.getSizeOfPlant();
-		graphics.setColor(Color.decode(s));
+		graphics.setColor(Color.decode("#CB5050"));
 		graphics.fill(new Rectangle2D.Float(x, y, sizeOfPlant, sizeOfPlant));
 	}
 	
 	@Override
 	public void drawWallNut(Graphics2D graphics, SimpleGameData data, int x, int y, String s) {
-		int sizeOfPlant = Plant.getSizeOfPlant();
-		graphics.setColor(Color.decode(s));
+		graphics.setColor(Color.decode("#ECB428"));
 		graphics.fill(new Rectangle2D.Float(x, y, sizeOfPlant, sizeOfPlant));
 	}
 
@@ -166,5 +164,8 @@ public abstract class SimpleGameView implements GameView {
 			graphics.fill(moving.draw());
 		}
 
+	}
+
+	public void drawSelectedPlant(Graphics2D context, SimpleGameData data, BordView view, int p) {
 	}
 }
