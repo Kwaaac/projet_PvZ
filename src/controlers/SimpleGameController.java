@@ -57,7 +57,6 @@ public class SimpleGameController {
 		view.draw(context, data);
 		plantSelectionView.draw(context, data2);
 
-		Point2D.Float location;
 		ArrayList<Zombie> myZombies = new ArrayList<>();
 		ArrayList<Projectile> myBullet = new ArrayList<>();
 		HashMap<Integer, Integer> possibilityX = new HashMap<Integer, Integer>(); // Test Mod tkt
@@ -176,29 +175,9 @@ public class SimpleGameController {
 				continue;
 			}
 
-			if (!data.hasASelectedCell()) {
-				location = event.getLocation();
-				float x = location.x;
-				float y = location.y;
-
-				data.planting(context, data2, view, plantSelectionView, x, y);
-
-			} else {
-				data.unselect();
-			}
-
-			if (!data2.hasASelectedCell()) {
-				location = event.getLocation();
-				float x = location.x;
-				float y = location.y;
-
-				if (data2.isCorrectLocation(plantSelectionView, x, y)) {
-					data2.selectCell(plantSelectionView.lineFromY(y), plantSelectionView.columnFromX(x));
-				}
-
-			} else {
-				data2.unselect();
-			}
+			/*-------Gestion de la selection de cellules et de la plante manuelle de plante-----------*/
+			
+			data.selectingCellAndPlanting(context, data2, view, plantSelectionView, event);
 
 		}
 

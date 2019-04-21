@@ -55,7 +55,6 @@ public class CherryBomb extends Plant {
 		ArrayList<Entities> Lz = new ArrayList<>();
 		for (Entities z : myZombies) {
 			Coordinates zombie = z.getCase();
-			System.out.println(zombie);
 			for (Coordinates c : cherry) {
 				if (zombie.equals(c)) {
 					Lz.add(z);

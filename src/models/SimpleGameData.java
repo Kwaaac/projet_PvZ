@@ -1,6 +1,7 @@
 package models;
 
 import java.awt.Color;
+import java.awt.geom.Point2D;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.temporal.Temporal;
@@ -9,6 +10,7 @@ import java.util.HashMap;
 import java.util.Random;
 
 import fr.umlv.zen5.ApplicationContext;
+import fr.umlv.zen5.Event;
 import models.plants.CherryBomb;
 import models.plants.Peashooter;
 import models.plants.Plant;
@@ -341,6 +343,32 @@ public class SimpleGameData {
 				myPlants.add(pcView.getSelectedPlants()[p].createAndDrawNewPlant(view, context, x2, y2));
 			}
 
+		}
+	}
+	
+	public void selectingCellAndPlanting(ApplicationContext context, SimpleGameData data, BordView view, SelectBordView plantSelectionView, Event event) {
+		if (!this.hasASelectedCell()) {
+			Point2D.Float location = event.getLocation();
+			float x = location.x;
+			float y = location.y;
+
+			this.planting(context, data, view, plantSelectionView, x, y);
+
+		} else {
+			this.unselect();
+		}
+
+		if (!data.hasASelectedCell()) {
+			Point2D.Float location = event.getLocation();
+			float x = location.x;
+			float y = location.y;
+
+			if (data.isCorrectLocation(plantSelectionView, x, y)) {
+				data.selectCell(plantSelectionView.lineFromY(y), plantSelectionView.columnFromX(x));
+			}
+
+		} else {
+			data.unselect();
 		}
 	}
 }
