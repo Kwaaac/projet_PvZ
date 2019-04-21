@@ -134,7 +134,7 @@ public class SimpleGameController {
 				}
 			}
 
-			Event event = context.pollOrWaitEvent(20); // modifier pour avoir un affichage fluide
+			Event event = context.pollOrWaitEvent(25); // modifier pour avoir un affichage fluide
 			if (event == null) { // no event
 				continue;
 			}

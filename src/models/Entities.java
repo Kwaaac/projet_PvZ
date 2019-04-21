@@ -1,6 +1,5 @@
 package models;
 
-import java.awt.Color;
 import java.util.ArrayList;
 
 import views.BordView;
@@ -16,9 +15,17 @@ public abstract class Entities implements IEntite {
 	public Entities(float x, float y, int damage, int life) {
 		this.x = x;
 		this.y = y;
-		this.caseXY = new Coordinates(BordView.caseYFromY(y), BordView.caseXFromX(x));
+		this.caseXY = new Coordinates(BordView.caseXFromX(x), BordView.caseYFromY(y));
 		this.damage = damage;
 		this.life = life;
+	}
+	
+	public void setCase(float x, float y) {
+		caseXY = new Coordinates(BordView.caseXFromX(x), BordView.caseYFromY(y));
+	}
+	
+	public Coordinates getCase() {
+		return caseXY;
 	}
 
 	public int lineY() {

@@ -27,6 +27,11 @@ public class CherryBomb extends Plant {
 		super(-10, -10, 0, 1, 1);
 	}
 	
+	@Override
+	public boolean readyToshot(ArrayList<Zombie> myZombies) {
+		return timerA % speedshoot == 0;
+	}
+	
 	int sizeOfPlant = super.getSizeOfPlant();
 	
 	private ArrayList<Coordinates> zone(BordView view) {
@@ -49,9 +54,8 @@ public class CherryBomb extends Plant {
 		ArrayList<Coordinates> cherry = this.zone(view);
 		ArrayList<Entities> Lz = new ArrayList<>();
 		for (Entities z : myZombies) {
-			int caseXZombie = view.columnFromX(z.getX());
-			int caseYzombie = view.lineFromY(z.getY());
-			Coordinates zombie = new Coordinates(caseXZombie, caseYzombie);
+			Coordinates zombie = z.getCase();
+			System.out.println(zombie);
 			for (Coordinates c : cherry) {
 				if (zombie.equals(c)) {
 					Lz.add(z);
@@ -68,6 +72,7 @@ public class CherryBomb extends Plant {
 			}
 			this.life = 0;
 		}
+		
 		this.incAS();
 	}
 

@@ -4,6 +4,7 @@ import java.awt.Graphics2D;
 import java.util.ArrayList;
 
 import fr.umlv.zen5.ApplicationContext;
+import models.Entities;
 import models.SimpleGameData;
 import models.projectiles.Bullet;
 import models.projectiles.Projectile;
@@ -32,6 +33,16 @@ public class Peashooter extends Plant{
 
 	int sizeOfPlant = super.getSizeOfPlant();
 	
+	
+	@Override
+	public boolean readyToshot(ArrayList<Zombie> myZombies) {
+		for(Entities z : myZombies) {
+			if(this.sameLine(z)) {
+				return timerA % speedshoot == 0;
+			}
+		}
+		return false;
+	}
 	
 	@Override
 	public Plant createAndDrawNewPlant(SimpleGameView view, ApplicationContext context, int x, int y) {	

@@ -256,6 +256,7 @@ public class SimpleGameData {
 
 		for (Zombie z : myZombies) {
 			view.moveAndDrawElement(context, this, z);
+			z.setCase(z.x, z.y);
 		}
 
 		for (Projectile b : myBullet) {

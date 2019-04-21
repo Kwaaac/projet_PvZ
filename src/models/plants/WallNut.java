@@ -5,6 +5,7 @@ import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
 import fr.umlv.zen5.ApplicationContext;
+import models.Entities;
 import models.SimpleGameData;
 import models.projectiles.Projectile;
 import models.zombies.Zombie;
@@ -36,7 +37,10 @@ public class WallNut extends Plant {
 		return super.toString() + "--" + name;
 	}
 
-	
+	@Override
+	public boolean readyToshot(ArrayList<Zombie> myZombies) {
+		return false;
+	}
 
 	@Override
 	public void action(ArrayList<Projectile> myBullet, BordView view, ArrayList<Zombie> myZombies) {

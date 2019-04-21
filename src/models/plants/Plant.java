@@ -12,8 +12,8 @@ import models.zombies.Zombie;
 public abstract class Plant extends Entities implements IPlant{
 	private final String type = "Plant"; 
 	private final static int sizeOfPlant = 75;
-	private final int speedshoot;
-	private int timerA = 0;
+	protected final int speedshoot;
+	protected int timerA = 0;
 	
 	public Plant(int x, int y, int damage, int life, int speedshoot) {
 		super(x, y, damage, life);
@@ -49,16 +49,6 @@ public abstract class Plant extends Entities implements IPlant{
 	
 	public int getTimer() {
 		return timerA;
-	}
-	
-	@Override
-	public boolean readyToshot(ArrayList<Zombie> myZombies) {
-		for(Entities z : myZombies) {
-			if(this.sameLine(z)) {
-				return timerA % speedshoot == 0;
-			}
-		}
-		return false;
 	}
 	
 	public boolean readyToshot() {
