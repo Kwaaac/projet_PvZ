@@ -22,10 +22,6 @@ public class Peashooter extends Plant{
 	public Peashooter() {
 		super(-10, -10, 0, 1, 1);
 	}
-
-	public String getColor() {
-		return color;
-	}
 	
 	@Override
 	public String toString() {

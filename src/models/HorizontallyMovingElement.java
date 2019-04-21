@@ -1,5 +1,6 @@
 package models;
 
+import java.awt.Color;
 import java.awt.geom.Ellipse2D;
 
 public class HorizontallyMovingElement implements MovingElement{
@@ -29,5 +30,10 @@ public class HorizontallyMovingElement implements MovingElement{
 	@Override
 	public Ellipse2D.Float draw(){
 		return new Ellipse2D.Float(x, y, 10, 10);
+	}
+
+	@Override
+	public Color getColor() {
+		return null;
 	}
 }

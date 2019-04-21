@@ -132,6 +132,13 @@ public abstract class SimpleGameView implements GameView {
 		graphics.setColor(Color.decode("#ECB428"));
 		graphics.fill(new Rectangle2D.Float(x, y, sizeOfPlant, sizeOfPlant));
 	}
+	
+	@Override
+	public void drawPotatoMine(Graphics2D graphics, SimpleGameData data, int x, int y, String s) {
+		graphics.setColor(Color.decode("#ECA405"));
+		graphics.fill(new Rectangle2D.Float(x + 10, y + 10, sizeOfPlant - 20, sizeOfPlant - 20));
+		
+	}
 
 	/**
 	 * Draws only the cell specified by the given coordinates in the game board from
@@ -146,24 +153,11 @@ public abstract class SimpleGameView implements GameView {
 	public void moveAndDrawElement(Graphics2D graphics, SimpleGameData data, MovingElement moving) {
 		graphics.setColor(graphics.getBackground());
 		graphics.fill(moving.draw());
+		
 		moving.move();
-		if (moving instanceof FlagZombie) {
-			graphics.setColor(Color.WHITE);
-			graphics.fill(moving.draw());
-		}
-		if (moving instanceof ConeheadZombie) {
-			graphics.setColor(Color.RED.darker());
-			graphics.fill(moving.draw());
-		}
-		if (moving instanceof NormalZombie) {
-			graphics.setColor(Color.BLACK);
-			graphics.fill(moving.draw());
-		}
-		if (moving instanceof Projectile) {
-			graphics.setColor(Color.BLUE);
-			graphics.fill(moving.draw());
-		}
-
+		
+		graphics.setColor(moving.getColor());
+		graphics.fill(moving.draw());
 	}
 
 	public void drawSelectedPlant(Graphics2D context, SimpleGameData data, BordView view, int p) {

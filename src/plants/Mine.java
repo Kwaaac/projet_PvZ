@@ -40,14 +40,14 @@ public class Mine extends Plant{
 
 	@Override
 	public Plant createAndDrawNewPlant(SimpleGameView view, ApplicationContext context, SimpleGameData data, int x, int y) {
-		view.drawCherryBomb(context, data, x,  y, color);
+		view.drawPotatoMine(context, data, x,  y, color);
 		
-		return new CherryBomb(x, y);
+		return new Mine(x, y);
 		
 	}
 
 	@Override
 	public void draw(SelectBordView view, Graphics2D graphics, SimpleGameData data, int x, int y) {
-		view.drawCherryBomb(graphics, data, x,  y, color);
+		view.drawPotatoMine(graphics, data, x,  y, color);
 	}
 }

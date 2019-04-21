@@ -95,7 +95,7 @@ public interface GameView {
 	 * @param data    the GameData containing the game data.
 	 * @param moving  the moving element.
 	 */
-	public default void moveAndDrawElement(ApplicationContext context, SimpleGameData data, MovingElement moving) {
+	public default void moveAndDrawElement(ApplicationContext context, SimpleGameData data, MovingElement moving ) {
 		context.renderFrame(graphics -> moveAndDrawElement(graphics, data, moving));
 	}
 
@@ -116,6 +116,12 @@ public interface GameView {
 	void drawWallNut(Graphics2D graphics, SimpleGameData data, int x, int y, String s);
 	
 	public default void drawWallNut(ApplicationContext context, SimpleGameData data, int x, int y, String s) {
+		context.renderFrame(graphics -> drawOnlyOneCell(graphics, data, x, y, s));
+	}
+	
+	void drawPotatoMine(Graphics2D graphics, SimpleGameData data, int x, int y, String s);
+	
+	public default void drawPotatoMine(ApplicationContext context, SimpleGameData data, int x, int y, String s) {
 		context.renderFrame(graphics -> drawOnlyOneCell(graphics, data, x, y, s));
 	}
 	

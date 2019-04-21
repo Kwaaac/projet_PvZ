@@ -2,8 +2,6 @@ package zombies;
 
 import java.util.ArrayList;
 
-import javax.swing.text.View;
-
 import models.Coordinates;
 import models.DeadPool;
 import models.Entities;

@@ -1,9 +1,8 @@
 package models;
 
+import java.awt.Color;
 import java.util.ArrayList;
 
-import plants.Plant;
-import plants.Projectile;
 import views.BordView;
 
 public abstract class Entities implements IEntite {

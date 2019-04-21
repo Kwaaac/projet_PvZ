@@ -1,13 +1,19 @@
 package zombies;
 
+import java.awt.Color;
 import java.awt.geom.Ellipse2D;
 
 public class ConeheadZombie extends Zombie {
 
 	private final String name = "Conehead Zombie";
-	
+	private final Color color = Color.RED.darker();
 	public ConeheadZombie(int x, int y) {
 		super(x, y, 100, 560, -0.7);
+	}
+
+	@Override
+	public Color getColor() {
+		return color;
 	}
 
 	@Override

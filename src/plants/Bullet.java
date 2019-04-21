@@ -1,14 +1,21 @@
 package plants;
 
+import java.awt.Color;
 import java.awt.geom.Ellipse2D;
 
 
 public class Bullet extends Projectile {
 
 	private final String name = "Bullet";
+	private final Color color = Color.BLUE;
 	
 	public Bullet(float x, float y) {
 		super(x, y, 45, 1 , 7.7);
+	}
+	
+	@Override
+	public Color getColor() {
+		return color;
 	}
 
 	@Override
@@ -26,5 +33,7 @@ public class Bullet extends Projectile {
 
 	@Override
 	public void resetAS() {}
+
+	
 
 }

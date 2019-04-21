@@ -1,7 +1,6 @@
 package controlers;
 
 import java.awt.Color;
-import java.awt.Graphics2D;
 import java.awt.geom.Point2D;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
@@ -12,27 +11,24 @@ import java.util.HashMap;
 import fr.umlv.zen5.Application;
 import fr.umlv.zen5.ApplicationContext;
 import fr.umlv.zen5.Event;
-import fr.umlv.zen5.ScreenInfo;
 import fr.umlv.zen5.Event.Action;
 import fr.umlv.zen5.KeyboardKey;
-
-import models.SimpleGameData;
+import fr.umlv.zen5.ScreenInfo;
 import models.Coordinates;
 import models.DeadPool;
+import models.SimpleGameData;
 import plants.Bullet;
 import plants.CherryBomb;
 import plants.Peashooter;
 import plants.Plant;
 import plants.Projectile;
 import plants.WallNut;
-
+import views.BordView;
+import views.SelectBordView;
 import zombies.ConeheadZombie;
 import zombies.FlagZombie;
 import zombies.NormalZombie;
 import zombies.Zombie;
-
-import views.BordView;
-import views.SelectBordView;
 
 public class SimpleGameController {
 
@@ -69,7 +65,6 @@ public class SimpleGameController {
 		int spawnRate = 1;
 		int ZombieSize = Zombie.getSizeOfZombie();
 		Bullet.getSizeOfProjectile();
-		int ok = 0;
 		int deathCounterZombie = 0;
 //		int deathCounterPlant = 0;
 		Instant time = Instant.now();

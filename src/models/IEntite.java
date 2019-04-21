@@ -1,9 +1,5 @@
 package models;
 
-import java.util.ArrayList;
-
-import plants.Projectile;
-
 public interface IEntite {
 
 	

@@ -1,9 +1,12 @@
 package models;
 
+import java.awt.Color;
 import java.awt.geom.Ellipse2D;
 
 public interface MovingElement {
-	public void move();
+	void move();
 
-	public Ellipse2D.Float draw();
+	Ellipse2D.Float draw();
+	
+	Color getColor();
 }
