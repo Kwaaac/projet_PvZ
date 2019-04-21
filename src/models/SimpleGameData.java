@@ -9,15 +9,15 @@ import java.util.HashMap;
 import java.util.Random;
 
 import fr.umlv.zen5.ApplicationContext;
-import plants.CherryBomb;
-import plants.Peashooter;
-import plants.Plant;
-import plants.Projectile;
-import plants.WallNut;
+import models.plants.CherryBomb;
+import models.plants.Peashooter;
+import models.plants.Plant;
+import models.plants.WallNut;
+import models.projectiles.Projectile;
+import models.zombies.Zombie;
 import views.BordView;
 import views.SelectBordView;
 import views.SimpleGameView;
-import zombies.Zombie;
 
 public class SimpleGameData {
 	private final static int score = 5;
@@ -25,10 +25,15 @@ public class SimpleGameData {
 	private final Cell[][] matrix;
 	private Coordinates selected;
 	private final ArrayList<Coordinates> placedPlant = new ArrayList<Coordinates>();
+	private final ArrayList<Plant> myPlants = new ArrayList<>();
 
 	public SimpleGameData(int nbLines, int nbColumns) {
 		matrix = new Cell[nbLines][nbColumns];
 
+	}
+	
+	public ArrayList<Plant> getMyPlants() {
+		return myPlants;
 	}
 
 	/**
@@ -179,7 +184,7 @@ public class SimpleGameData {
 	}
 
 	public boolean spawnRandomPlant(HashMap<Integer, Integer> possibilityX, HashMap<Integer, Integer> possibilityY,
-			ArrayList<Plant> myPlants, BordView view, ApplicationContext context) {
+			BordView view, ApplicationContext context) {
 
 		boolean result = false;
 
@@ -198,7 +203,7 @@ public class SimpleGameData {
 
 				this.plantOnBoard(yRandomPosition, xRandomPosition);
 
-				view.drawPeashooter(context, this, possibilityX.get(xRandomPosition), possibilityY.get(yRandomPosition),
+				view.drawPeashooter(context, possibilityX.get(xRandomPosition), possibilityY.get(yRandomPosition),
 						"#90D322");
 
 				myPlants.add(new Peashooter(possibilityX.get(xRandomPosition), possibilityY.get(yRandomPosition)));
@@ -210,7 +215,7 @@ public class SimpleGameData {
 
 				this.plantOnBoard(yRandomPosition, xRandomPosition);
 
-				view.drawCherryBomb(context, this, possibilityX.get(xRandomPosition), possibilityY.get(yRandomPosition),
+				view.drawCherryBomb(context, possibilityX.get(xRandomPosition), possibilityY.get(yRandomPosition),
 						"#CB5050");
 
 				myPlants.add(new CherryBomb(possibilityX.get(xRandomPosition), possibilityY.get(yRandomPosition)));
@@ -222,7 +227,7 @@ public class SimpleGameData {
 
 				this.plantOnBoard(yRandomPosition, xRandomPosition);
 
-				view.drawWallNut(context, this, possibilityX.get(xRandomPosition), possibilityY.get(yRandomPosition),
+				view.drawWallNut(context, possibilityX.get(xRandomPosition), possibilityY.get(yRandomPosition),
 						"#ECB428");
 
 				myPlants.add(new WallNut(possibilityX.get(xRandomPosition), possibilityY.get(yRandomPosition)));
@@ -237,7 +242,7 @@ public class SimpleGameData {
 		return result;
 	}
 
-	public void actionning(ArrayList<Plant> myPlants, ArrayList<Projectile> myBullet, BordView view,
+	public void actionning(ArrayList<Projectile> myBullet, BordView view,
 			ArrayList<Zombie> myZombies) {
 
 		for (IPlant p : myPlants) {
@@ -250,9 +255,7 @@ public class SimpleGameData {
 			ArrayList<Projectile> myBullet) {
 
 		for (Zombie z : myZombies) {
-			if (z.getSpeed()) {
-				view.moveAndDrawElement(context, this, z);
-			}
+			view.moveAndDrawElement(context, this, z);
 		}
 
 		for (Projectile b : myBullet) {
@@ -315,7 +318,7 @@ public class SimpleGameData {
 	}
 	
 	
-	public void planting(ApplicationContext context, SimpleGameData data, BordView view, SelectBordView pcView, ArrayList<Plant> myPlants, float x, float y) {
+	public void planting(ApplicationContext context, SimpleGameData data, BordView view, SelectBordView pcView, float x, float y) {
 		
 		if (this.isCorrectLocation(view, x, y) && data.hasASelectedCell()) {
 
@@ -334,7 +337,7 @@ public class SimpleGameData {
 
 			if (!this.hasPlant(i, j)) {
 				this.plantOnBoard(i, j);
-				myPlants.add(pcView.getSelectedPlants()[p].createAndDrawNewPlant(view, context, this, x2, y2));
+				myPlants.add(pcView.getSelectedPlants()[p].createAndDrawNewPlant(view, context, x2, y2));
 			}
 
 		}

@@ -60,7 +60,7 @@ public interface GameView {
 	 * @param x        the float x-coordinate of the cell.
 	 * @param y        the float y-coordinate of the cell.
 	 */
-	public void drawOnlyOneCell(Graphics2D graphics, SimpleGameData data, int x, int y, String s);
+	public void drawOnlyOneCell(Graphics2D graphics, int x, int y, String s);
 
 	/**
 	 * Draws only the cell specified by the given coordinates in the game board from
@@ -72,8 +72,8 @@ public interface GameView {
 	 * @param y       the float y-coordinate of the cell.
 	 * @param yellow 
 	 */
-	public default void drawOnlyOneCell(ApplicationContext context, SimpleGameData data, int x, int y, String s) {
-		context.renderFrame(graphics -> drawOnlyOneCell(graphics, data, x, y, s));
+	public default void drawOnlyOneCell(ApplicationContext context, int x, int y, String s) {
+		context.renderFrame(graphics -> drawOnlyOneCell(graphics, x, y, s));
 	}
 
 	/**
@@ -101,28 +101,28 @@ public interface GameView {
 
 	
 	
-	void drawPeashooter(Graphics2D graphics, SimpleGameData data, int x, int y, String s);
+	void drawPeashooter(Graphics2D graphics, int x, int y, String s);
 	
-	public default void drawPeashooter(ApplicationContext context, SimpleGameData data, int x, int y, String s) {
-		context.renderFrame(graphics -> drawOnlyOneCell(graphics, data, x, y, s));
+	public default void drawPeashooter(ApplicationContext context, int x, int y, String s) {
+		context.renderFrame(graphics -> drawOnlyOneCell(graphics, x, y, s));
 	}
 	
-	void drawCherryBomb(Graphics2D graphics, SimpleGameData data, int x, int y, String s);
+	void drawCherryBomb(Graphics2D graphics, int x, int y, String s);
 	
-	public default void drawCherryBomb(ApplicationContext context, SimpleGameData data, int x, int y, String s) {
-		context.renderFrame(graphics -> drawOnlyOneCell(graphics, data, x, y, s));
+	public default void drawCherryBomb(ApplicationContext context, int x, int y, String s) {
+		context.renderFrame(graphics -> drawOnlyOneCell(graphics, x, y, s));
 	}
 	
-	void drawWallNut(Graphics2D graphics, SimpleGameData data, int x, int y, String s);
+	void drawWallNut(Graphics2D graphics, int x, int y, String s);
 	
-	public default void drawWallNut(ApplicationContext context, SimpleGameData data, int x, int y, String s) {
-		context.renderFrame(graphics -> drawOnlyOneCell(graphics, data, x, y, s));
+	public default void drawWallNut(ApplicationContext context, int x, int y, String s) {
+		context.renderFrame(graphics -> drawOnlyOneCell(graphics, x, y, s));
 	}
 	
-	void drawPotatoMine(Graphics2D graphics, SimpleGameData data, int x, int y, String s);
+	void drawPotatoMine(Graphics2D graphics, int x, int y, String s);
 	
-	public default void drawPotatoMine(ApplicationContext context, SimpleGameData data, int x, int y, String s) {
-		context.renderFrame(graphics -> drawOnlyOneCell(graphics, data, x, y, s));
+	public default void drawPotatoMine(ApplicationContext context, int x, int y, String s) {
+		context.renderFrame(graphics -> drawOnlyOneCell(graphics, x, y, s));
 	}
 	
 }

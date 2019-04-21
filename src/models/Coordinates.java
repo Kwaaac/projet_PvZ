@@ -2,7 +2,7 @@ package models;
 
 import java.util.Objects;
 
-import plants.Plant;
+import models.plants.Plant;
 import views.BordView;
 
 /**

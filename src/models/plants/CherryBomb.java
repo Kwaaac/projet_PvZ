@@ -1,4 +1,4 @@
-package plants;
+package models.plants;
 
 import java.awt.Graphics2D;
 import java.util.ArrayList;
@@ -7,10 +7,11 @@ import fr.umlv.zen5.ApplicationContext;
 import models.Coordinates;
 import models.Entities;
 import models.SimpleGameData;
+import models.projectiles.Projectile;
+import models.zombies.Zombie;
 import views.BordView;
 import views.SelectBordView;
 import views.SimpleGameView;
-import zombies.Zombie;
 
 public class CherryBomb extends Plant {
 
@@ -83,16 +84,16 @@ public class CherryBomb extends Plant {
 	}
 
 	@Override
-	public Plant createAndDrawNewPlant(SimpleGameView view, ApplicationContext context, SimpleGameData data, int x, int y) {
-		view.drawCherryBomb(context, data, x,  y, color);
+	public Plant createAndDrawNewPlant(SimpleGameView view, ApplicationContext context, int x, int y) {
+		view.drawCherryBomb(context, x,  y, color);
 		
 		return new CherryBomb(x, y);
 		
 	}
 
 	@Override
-	public void draw(SelectBordView view, Graphics2D graphics, SimpleGameData data, int x, int y) {
-		view.drawCherryBomb(graphics, data, x,  y, color);
+	public void draw(SimpleGameView view, Graphics2D graphics, int x, int y) {
+		view.drawCherryBomb(graphics, x,  y, color);
 	}
 
 }

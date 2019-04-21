@@ -2,9 +2,9 @@ package models;
 
 import java.util.ArrayList;
 
-import plants.Plant;
-import plants.Projectile;
-import zombies.Zombie;
+import models.plants.Plant;
+import models.projectiles.Projectile;
+import models.zombies.Zombie;
 
 public class DeadPool {
 	private ArrayList<IEntite> deadPool;

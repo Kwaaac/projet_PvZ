@@ -1,4 +1,4 @@
-package plants;
+package models.projectiles;
 
 import java.awt.Color;
 import java.awt.geom.Ellipse2D;

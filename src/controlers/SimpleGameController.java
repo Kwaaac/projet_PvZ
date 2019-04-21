@@ -17,47 +17,48 @@ import fr.umlv.zen5.ScreenInfo;
 import models.Coordinates;
 import models.DeadPool;
 import models.SimpleGameData;
-import plants.Bullet;
-import plants.CherryBomb;
-import plants.Peashooter;
-import plants.Plant;
-import plants.Projectile;
-import plants.WallNut;
+import models.plants.CherryBomb;
+import models.plants.Peashooter;
+import models.plants.Plant;
+import models.plants.PotatoMine;
+import models.plants.WallNut;
+import models.projectiles.Bullet;
+import models.projectiles.Projectile;
+import models.zombies.ConeheadZombie;
+import models.zombies.FlagZombie;
+import models.zombies.NormalZombie;
+import models.zombies.Zombie;
 import views.BordView;
 import views.SelectBordView;
-import zombies.ConeheadZombie;
-import zombies.FlagZombie;
-import zombies.NormalZombie;
-import zombies.Zombie;
 
 public class SimpleGameController {
-
+	
 	static void simpleGame(ApplicationContext context) {
 		ScreenInfo screenInfo = context.getScreenInfo();
 		float width = screenInfo.getWidth();
+		Plant[] selectedPlant = {new Peashooter(), new WallNut(), new CherryBomb(), new PotatoMine()}; // à remplacer par les choix de
+																									// plantes du
+																									// joueur quand on aura la
+																									// selection de plante
 
 		SimpleGameData data = new SimpleGameData(5, 8);
-		SimpleGameData data2 = new SimpleGameData(3, 1);
+		SimpleGameData data2 = new SimpleGameData(selectedPlant.length, 1);
 
 		data.setRandomMatrix();
 		data2.setRandomMatrix();
 		int yOrigin = 100;
 		int xOrigin = 450;
-		Plant[] selectedPlant = {new Peashooter(), new WallNut(), new CherryBomb(), }; // à remplacer par les choix de
-																						// plantes du
-																						// joueur quand on aura la
-																						// selection de plante
 
-		SelectBordView plantSelectionView = SelectBordView.initGameGraphics(0, yOrigin, 540, data2, selectedPlant);
 		BordView view = BordView.initGameGraphics(xOrigin, yOrigin, 900, data);
 		int squareSize = BordView.getSquareSize();
+		SelectBordView plantSelectionView = SelectBordView.initGameGraphics(0, yOrigin, squareSize * selectedPlant.length, data2, selectedPlant);
+		
 
 		view.draw(context, data);
 		plantSelectionView.draw(context, data2);
 
 		Point2D.Float location;
 		ArrayList<Zombie> myZombies = new ArrayList<>();
-		ArrayList<Plant> myPlants = new ArrayList<>();
 		ArrayList<Projectile> myBullet = new ArrayList<>();
 		HashMap<Integer, Integer> possibilityX = new HashMap<Integer, Integer>(); // Test Mod tkt
 		HashMap<Integer, Integer> possibilityY = new HashMap<Integer, Integer>(); // Test Mod tkt
@@ -85,6 +86,9 @@ public class SimpleGameController {
 
 		while (true) {
 			view.draw(context, data);
+			/*-------------------------Déplacement Moving Elements-------------------------*/
+			
+			data.leMove(context, view, myZombies, myBullet);
 			plantSelectionView.draw(context, data2);
 
 			DeadPool deadPoolE = new DeadPool();
@@ -110,26 +114,22 @@ public class SimpleGameController {
 			}
 
 			/*------------------------Gestion des conflits--------------------------------*/
-			Zombie.ZCheckConflict(myZombies, myBullet, myPlants, deadPoolE, view, data, str);
+			Zombie.ZCheckConflict(myZombies, myBullet, data.getMyPlants(), deadPoolE, view, data, str);
 
 			/*----------------------------------------------------------------------------*/
 
 			/*-------------------- je détruit tout les elements morts --------------------*/
 
-			deadPoolE.deletingEverything(myZombies, myPlants, myBullet);
-
-			/*----------------------------------------------------------------------------*/
-
-			data.leMove(context, view, myZombies, myBullet);
+			deadPoolE.deletingEverything(myZombies, data.getMyPlants(), myBullet);
 
 			/*----------------------------Shooting in continue----------------------------*/
 
-			data.actionning(myPlants, myBullet, view, myZombies);
+			data.actionning(myBullet, view, myZombies);
 
 			/*----------------------------------------------------------------------------*/
 
 			if (debug == true) {
-				if (data.spawnRandomPlant(possibilityX, possibilityY, myPlants, view, context)) {
+				if (data.spawnRandomPlant(possibilityX, possibilityY, view, context)) {
 					str.append("new plant (" + new SimpleDateFormat("hh:mm:ss").format(new Date()) + ")\n");
 				}
 			}
@@ -181,7 +181,7 @@ public class SimpleGameController {
 				float x = location.x;
 				float y = location.y;
 
-				data.planting(context, data2, view, plantSelectionView, myPlants, x, y);
+				data.planting(context, data2, view, plantSelectionView, x, y);
 
 			} else {
 				data.unselect();

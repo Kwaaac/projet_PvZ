@@ -1,14 +1,16 @@
-package plants;
+package models.plants;
 
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 
 import fr.umlv.zen5.ApplicationContext;
 import models.SimpleGameData;
+import models.projectiles.Bullet;
+import models.projectiles.Projectile;
+import models.zombies.Zombie;
 import views.BordView;
 import views.SelectBordView;
 import views.SimpleGameView;
-import zombies.Zombie;
 
 public class Peashooter extends Plant{
 	private final String name = "Peashooter";
@@ -32,15 +34,15 @@ public class Peashooter extends Plant{
 	
 	
 	@Override
-	public Plant createAndDrawNewPlant(SimpleGameView view, ApplicationContext context, SimpleGameData data, int x, int y) {	
-		view.drawPeashooter(context, data, x,  y, color);
+	public Plant createAndDrawNewPlant(SimpleGameView view, ApplicationContext context, int x, int y) {	
+		view.drawPeashooter(context, x,  y, color);
 		
 		return new Peashooter(x, y);
 	}
 	
 	@Override
-	public void draw(SelectBordView view, Graphics2D graphics, SimpleGameData data, int x, int y) {
-		view.drawPeashooter(graphics, data, x, y, color);
+	public void draw(SimpleGameView view, Graphics2D graphics, int x, int y) {
+		view.drawPeashooter(graphics, x, y, color);
 	}
 
 	@Override

@@ -1,4 +1,4 @@
-package zombies;
+package models.zombies;
 
 import java.util.ArrayList;
 
@@ -6,14 +6,13 @@ import models.Coordinates;
 import models.DeadPool;
 import models.Entities;
 import models.IEntite;
-import models.LivingEntities;
 import models.MovingElement;
 import models.SimpleGameData;
-import plants.Plant;
-import plants.Projectile;
+import models.plants.Plant;
+import models.projectiles.Projectile;
 import views.BordView;
 
-public abstract class Zombie extends Entities implements MovingElement, LivingEntities {
+public abstract class Zombie extends Entities implements MovingElement {
 	private final String type = "Zombie";
 	private double speed;
 	private final static int sizeOfZombie = 75;

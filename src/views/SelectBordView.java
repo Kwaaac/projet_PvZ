@@ -5,15 +5,17 @@ import java.awt.Graphics2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.RectangularShape;
+import java.util.ArrayList;
 
+import controlers.SimpleGameController;
 import fr.umlv.zen5.ApplicationContext;
 import models.Coordinates;
 import models.MovingElement;
 import models.SimpleGameData;
-import plants.CherryBomb;
-import plants.Peashooter;
-import plants.Plant;
-import plants.WallNut;
+import models.plants.CherryBomb;
+import models.plants.Peashooter;
+import models.plants.Plant;
+import models.plants.WallNut;
 
 public class SelectBordView extends SimpleGameView {
 	private final Plant[] selectedPlants;
@@ -93,13 +95,10 @@ public class SelectBordView extends SimpleGameView {
 
 	@Override
 	public void draw(Graphics2D graphics, SimpleGameData data) {
-		// example
+		
 		graphics.setColor(Color.GRAY);
 		graphics.fill(
 				new Rectangle2D.Float(super.getXOrigin(), super.getYOrigin(), super.getWidth(), super.getLength()));
-
-		graphics.setColor(Color.GRAY.brighter());
-		graphics.fill(new Rectangle2D.Float(1890, 98, super.getWidth(), 904));
 
 		graphics.setColor(Color.WHITE.darker());
 		for (int i = 0; i <= data.getNbLines(); i++) {
@@ -122,11 +121,9 @@ public class SelectBordView extends SimpleGameView {
 
 		for (int i = 0; i < data.getNbLines(); i++) {
 			for (int j = 0; j < data.getNbColumns(); j++) {
-				if (!data.hasPlant(i, j)) {
-					graphics.setColor(Color.GREEN.darker());
-					graphics.fill(drawCell(i, j));
-					graphics.setColor(data.getCellColor(i, j));
-				}
+				graphics.setColor(Color.GREEN.darker());
+				graphics.fill(drawCell(i, j));
+				graphics.setColor(data.getCellColor(i, j));
 			}
 		}
 
@@ -135,7 +132,7 @@ public class SelectBordView extends SimpleGameView {
 		int i = 0;
 		
 		for(Plant p: selectedPlants) {
-			p.draw(this, graphics, data, (int) (squareSize / 2) - sizeOfPlant / 2, (int) (squareSize / 2) + 100 + squareSize * i - sizeOfPlant / 2);
+			p.draw(this, graphics, (int) (squareSize / 2) - sizeOfPlant / 2, (int) (squareSize / 2) + 100 + squareSize * i - sizeOfPlant / 2);
 			
 			i += 1;
 		}
@@ -152,8 +149,8 @@ public class SelectBordView extends SimpleGameView {
 	 * @param y        the float y-coordinate of the cell.
 	 */
 	@Override
-	public void drawOnlyOneCell(Graphics2D graphics, SimpleGameData data, int x, int y, String s) {
-		super.drawOnlyOneCell(graphics, data, x, y, s);
+	public void drawOnlyOneCell(Graphics2D graphics, int x, int y, String s) {
+		super.drawOnlyOneCell(graphics, x, y, s);
 	}
 
 	/**

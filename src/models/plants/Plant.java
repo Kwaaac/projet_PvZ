@@ -1,4 +1,4 @@
-package plants;
+package models.plants;
 
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import models.Coordinates;
 import models.Entities;
 import models.IPlant;
-import zombies.Zombie;
+import models.zombies.Zombie;
 
 
 public abstract class Plant extends Entities implements IPlant{

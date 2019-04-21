@@ -1,4 +1,4 @@
-package zombies;
+package models.zombies;
 
 import java.awt.Color;
 import java.awt.geom.Ellipse2D;

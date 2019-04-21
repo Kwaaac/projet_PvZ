@@ -1,4 +1,4 @@
-package plants;
+package models.projectiles;
 
 import models.Coordinates;
 import models.Entities;

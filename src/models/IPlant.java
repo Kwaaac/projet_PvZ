@@ -4,12 +4,12 @@ import java.awt.Graphics2D;
 import java.util.ArrayList;
 
 import fr.umlv.zen5.ApplicationContext;
-import plants.Plant;
-import plants.Projectile;
+import models.plants.Plant;
+import models.projectiles.Projectile;
+import models.zombies.Zombie;
 import views.BordView;
 import views.SelectBordView;
 import views.SimpleGameView;
-import zombies.Zombie;
 
  public interface IPlant {
 	
@@ -27,7 +27,7 @@ import zombies.Zombie;
 	
 	boolean readyToshot(ArrayList<Zombie> MZ);
 	
-	Plant createAndDrawNewPlant(SimpleGameView view, ApplicationContext context, SimpleGameData data, int x, int y);
+	Plant createAndDrawNewPlant(SimpleGameView view, ApplicationContext context, int x, int y);
 	
-	void draw(SelectBordView view, Graphics2D graphics, SimpleGameData data, int x, int y);
+	void draw(SimpleGameView view, Graphics2D graphics, int x, int y);
 }

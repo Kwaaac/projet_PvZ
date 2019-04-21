@@ -5,14 +5,13 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.RectangularShape;
+import java.util.ArrayList;
 
 import models.MovingElement;
 import models.SimpleGameData;
-import plants.Plant;
+import models.plants.Plant;
 
-public class BordView extends SimpleGameView{
-	
-	
+public class BordView extends SimpleGameView {
 
 	public BordView(int xOrigin, int yOrigin, int length, int width, int squareSize) {
 		super(xOrigin, yOrigin, length, width, squareSize);
@@ -22,11 +21,12 @@ public class BordView extends SimpleGameView{
 		int squareSize = (int) (length * 1.0 / data.getNbLines());
 		return new BordView(xOrigin, yOrigin, length, data.getNbColumns() * squareSize, squareSize);
 	}
-	
-	public int indexFromReaCoord(float coord, int origin) { // attention, il manque des test de validité des coordonn�es!								
+
+	public int indexFromReaCoord(float coord, int origin) { // attention, il manque des test de validité des
+															// coordonn�es!
 		return super.indexFromReaCoord(coord, origin);
 	}
-	
+
 	/**
 	 * Transforms a real y-coordinate into the index of the corresponding line.
 	 * 
@@ -38,7 +38,7 @@ public class BordView extends SimpleGameView{
 	public static int caseYFromY(float y) {
 		return (int) ((y - 100) / getSquareSize());
 	}
-	
+
 	public static int caseXFromX(float x) {
 		return (int) ((x - 450) / getSquareSize());
 	}
@@ -70,7 +70,7 @@ public class BordView extends SimpleGameView{
 	protected RectangularShape drawCell(int i, int j) {
 		return super.drawCell(i, j);
 	}
-	
+
 	public Plant[] getSelectedPlants() {
 		return getSelectedPlants();
 	}
@@ -82,34 +82,36 @@ public class BordView extends SimpleGameView{
 	 *                 {@code draw(ApplicationContext, GameData)}
 	 * @param data     the GameData containing the game data.
 	 */
-	
-	@Override
+
 	public void draw(Graphics2D graphics, SimpleGameData data) {
-//		example
-//		System.out.println("Bord:" + super.getXOrigin() + " : " + super.getWidth());
 		graphics.setColor(Color.WHITE.darker());
 		for (int i = 0; i <= data.getNbLines(); i++) {
 			graphics.setStroke(new BasicStroke(4));
-			graphics.draw(
-					new Line2D.Float(super.getXOrigin(), super.getYOrigin() + i * super.getSquareSize(), super.getXOrigin() + super.getWidth(), super.getYOrigin() + i * super.getSquareSize()));
+			graphics.draw(new Line2D.Float(super.getXOrigin(), super.getYOrigin() + i * super.getSquareSize(),
+					super.getXOrigin() + super.getWidth(), super.getYOrigin() + i * super.getSquareSize()));
 		}
 
 		for (int i = 0; i <= data.getNbColumns(); i++) {
-			graphics.draw(
-					new Line2D.Float(super.getXOrigin() + i * super.getSquareSize(), super.getYOrigin(), super.getXOrigin() + i * super.getSquareSize(), super.getYOrigin() + super.getLength()));
+			graphics.draw(new Line2D.Float(super.getXOrigin() + i * super.getSquareSize(), super.getYOrigin(),
+					super.getXOrigin() + i * super.getSquareSize(), super.getYOrigin() + super.getLength()));
 		}
 
 		for (int i = 0; i < data.getNbLines(); i++) {
 			for (int j = 0; j < data.getNbColumns(); j++) {
-				if(! data.hasPlant(i, j)) {
 				graphics.setColor(Color.GREEN.darker());
 				graphics.fill(drawCell(i, j));
 				graphics.setColor(data.getCellColor(i, j));
-				}
 			}
 		}
+		
+		ArrayList<Plant> myPlants = data.getMyPlants();
+
+		for (Plant p : myPlants) {
+			p.draw(this, graphics, (int) p.getX(), (int) p.getY());
+		}
+		
+		
 	}
-	
 
 	/**
 	 * Draws only the cell specified by the given coordinates in the game board from
@@ -122,8 +124,8 @@ public class BordView extends SimpleGameView{
 	 * @param y        the float y-coordinate of the cell.
 	 */
 	@Override
-	public void drawOnlyOneCell(Graphics2D graphics, SimpleGameData data, int x, int y, String s) {
-		super.drawOnlyOneCell(graphics, data, x, y, s);
+	public void drawOnlyOneCell(Graphics2D graphics, int x, int y, String s) {
+		super.drawOnlyOneCell(graphics, x, y, s);
 	}
 
 	/**
@@ -140,10 +142,4 @@ public class BordView extends SimpleGameView{
 		super.moveAndDrawElement(graphics, data, moving);
 	}
 
-
-	
-	
-
-	
-	
 }

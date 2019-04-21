@@ -2,16 +2,18 @@ package views;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.RectangularShape;
+import java.util.ArrayList;
 
 import models.MovingElement;
 import models.SimpleGameData;
-import plants.Plant;
-import plants.Projectile;
-import zombies.ConeheadZombie;
-import zombies.FlagZombie;
-import zombies.NormalZombie;
+import models.plants.Plant;
+import models.projectiles.Projectile;
+import models.zombies.ConeheadZombie;
+import models.zombies.FlagZombie;
+import models.zombies.NormalZombie;
 
 public abstract class SimpleGameView implements GameView {
 	private final int xOrigin;
@@ -27,18 +29,19 @@ public abstract class SimpleGameView implements GameView {
 		this.width = width;
 		SimpleGameView.squareSize = squareSize;
 	}
-	
-	public  int getXOrigin() {
+
+	public int getXOrigin() {
 		return xOrigin;
 	}
-	
-	public  int getYOrigin() {
+
+	public int getYOrigin() {
 		return yOrigin;
 	}
-	
+
 	public int getWidth() {
 		return width;
 	}
+
 	public int getLength() {
 		return length;
 	}
@@ -46,9 +49,9 @@ public abstract class SimpleGameView implements GameView {
 	public static int getSquareSize() {
 		return squareSize;
 	}
-	
+
 	public int indexFromReaCoord(float coord, int origin) { // attention, il manque des test de validité des
-																// coordonnées!
+															// coordonnées!
 		return (int) ((coord - origin) / squareSize);
 	}
 
@@ -72,7 +75,7 @@ public abstract class SimpleGameView implements GameView {
 	 * @throws IllegalArgumentException if the float coordinate doesn't fit in the
 	 *                                  game board.
 	 */
-	
+
 	public int columnFromX(float x) {
 		return indexFromReaCoord(x, xOrigin);
 	}
@@ -98,7 +101,7 @@ public abstract class SimpleGameView implements GameView {
 	}
 
 	int sizeOfPlant = Plant.getSizeOfPlant();
-	
+
 	/**
 	 * Draws only the cell specified by the given coordinates in the game board from
 	 * its data, using an existing Graphics2D object.
@@ -109,37 +112,43 @@ public abstract class SimpleGameView implements GameView {
 	 * @param x        the float x-coordinate of the cell.
 	 * @param y        the float y-coordinate of the cell.
 	 */
+	
+	
+	
 	@Override
-	public void drawOnlyOneCell(Graphics2D graphics, SimpleGameData data, int x, int y, String s) {
+	public void drawOnlyOneCell(Graphics2D graphics, int x, int y, String s) {
 		graphics.setColor(Color.decode(s));
 		graphics.fill(new Rectangle2D.Float(x, y, sizeOfPlant, sizeOfPlant));
 	}
+
+	/*
+	 * Drawings of plants
+	 */
 	
 	@Override
-	public void drawPeashooter(Graphics2D graphics, SimpleGameData data, int x, int y, String s) {
-		graphics.setColor(Color.decode("#90D322"));
+	public void drawPeashooter(Graphics2D graphics, int x, int y, String s) {
+		graphics.setColor(Color.decode(s));
 		graphics.fill(new Rectangle2D.Float(x, y, sizeOfPlant, sizeOfPlant));
-	}
-	
-	@Override
-	public void drawCherryBomb(Graphics2D graphics, SimpleGameData data, int x, int y, String s) {
-		graphics.setColor(Color.decode("#CB5050"));
-		graphics.fill(new Rectangle2D.Float(x, y, sizeOfPlant, sizeOfPlant));
-	}
-	
-	@Override
-	public void drawWallNut(Graphics2D graphics, SimpleGameData data, int x, int y, String s) {
-		graphics.setColor(Color.decode("#ECB428"));
-		graphics.fill(new Rectangle2D.Float(x, y, sizeOfPlant, sizeOfPlant));
-	}
-	
-	@Override
-	public void drawPotatoMine(Graphics2D graphics, SimpleGameData data, int x, int y, String s) {
-		graphics.setColor(Color.decode("#ECA405"));
-		graphics.fill(new Rectangle2D.Float(x + 10, y + 10, sizeOfPlant - 20, sizeOfPlant - 20));
-		
 	}
 
+	@Override
+	public void drawCherryBomb(Graphics2D graphics, int x, int y, String s) {
+		graphics.setColor(Color.decode(s));
+		graphics.fill(new Rectangle2D.Float(x, y, sizeOfPlant, sizeOfPlant));
+	}
+
+	@Override
+	public void drawWallNut(Graphics2D graphics, int x, int y, String s) {
+		graphics.setColor(Color.decode(s));
+		graphics.fill(new Rectangle2D.Float(x, y, sizeOfPlant, sizeOfPlant));
+	}
+
+	@Override
+	public void drawPotatoMine(Graphics2D graphics, int x, int y, String s) {
+		graphics.setColor(Color.decode(s));
+		graphics.fill(new Rectangle2D.Float(x + 10, y + 10, sizeOfPlant - 20, sizeOfPlant - 20));
+	}
+	
 	/**
 	 * Draws only the cell specified by the given coordinates in the game board from
 	 * its data, using an existing Graphics2D object.
@@ -155,7 +164,7 @@ public abstract class SimpleGameView implements GameView {
 		graphics.fill(moving.draw());
 		
 		moving.move();
-		
+
 		graphics.setColor(moving.getColor());
 		graphics.fill(moving.draw());
 	}
