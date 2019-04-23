@@ -33,20 +33,24 @@ public class SimpleGameData {
 		matrix = new Cell[nbLines][nbColumns];
 
 	}
-	
+
 	public ArrayList<Plant> getMyPlants() {
 		return myPlants;
 	}
 
 	/**
-	 * Genere une position alï¿½atoire pour les lignes du plateau
+	 * Genere un nombre aléatoire entre 0 et x
 	 * 
 	 * @return Ligne du plateau
 	 */
-	public int RandomPosGenerator(int x) {
+	public int RandomPosGenerator(int valeurMax) {
 		Random random = new Random();
-		int pos = random.nextInt(x);
-		return pos;
+		return random.nextInt(valeurMax);
+	}
+	
+	public int RandomPosGenerator(int valeurMin, int valeurMax) {
+		Random r = new Random();
+		return valeurMin + r.nextInt(valeurMax - valeurMin);
 	}
 
 	/**
@@ -107,14 +111,14 @@ public class SimpleGameData {
 		return selected != null;
 	}
 
-	public boolean isCorrectLocation(SimpleGameView view, float x, float y) {
+	private boolean isCorrectLocation(SimpleGameView view, float x, float y) {
 
 		int xOrigin = view.getXOrigin();
 		int yOrigin = view.getYOrigin();
 		int squareSize = SimpleGameView.getSquareSize();
 
 		if (xOrigin <= x && x <= xOrigin + squareSize * this.getNbColumns()) {
-				return yOrigin <= y && y <= yOrigin + squareSize * this.getNbLines();
+			return yOrigin <= y && y <= yOrigin + squareSize * this.getNbLines();
 		}
 
 		return false;
@@ -185,67 +189,7 @@ public class SimpleGameData {
 		return WL;
 	}
 
-	public boolean spawnRandomPlant(HashMap<Integer, Integer> possibilityX, HashMap<Integer, Integer> possibilityY,
-			BordView view, ApplicationContext context) {
-
-		boolean result = false;
-
-		int target = this.RandomPosGenerator(20); // timer
-		int spawnRate2 = 1; // timer
-		int xRandomPosition = this.RandomPosGenerator(8); // random position x dans matrice
-		int yRandomPosition = this.RandomPosGenerator(5); // random position y dans matrice
-		int randomPlantType = this.RandomPosGenerator(3); // random type plant
-
-		if (spawnRate2 == target
-				&& !(this.hasPlant(view.lineFromY(yRandomPosition), view.columnFromX(xRandomPosition)))) {
-
-			switch (randomPlantType) {
-
-			case 0:
-
-				this.plantOnBoard(yRandomPosition, xRandomPosition);
-
-				view.drawPeashooter(context, possibilityX.get(xRandomPosition), possibilityY.get(yRandomPosition),
-						"#90D322");
-
-				myPlants.add(new Peashooter(possibilityX.get(xRandomPosition), possibilityY.get(yRandomPosition)));
-
-				result = true;
-				break;
-
-			case 1:
-
-				this.plantOnBoard(yRandomPosition, xRandomPosition);
-
-				view.drawCherryBomb(context, possibilityX.get(xRandomPosition), possibilityY.get(yRandomPosition),
-						"#CB5050");
-
-				myPlants.add(new CherryBomb(possibilityX.get(xRandomPosition), possibilityY.get(yRandomPosition)));
-
-				result = true;
-				break;
-
-			case 2:
-
-				this.plantOnBoard(yRandomPosition, xRandomPosition);
-
-				view.drawWallNut(context, possibilityX.get(xRandomPosition), possibilityY.get(yRandomPosition),
-						"#ECB428");
-
-				myPlants.add(new WallNut(possibilityX.get(xRandomPosition), possibilityY.get(yRandomPosition)));
-
-				result = true;
-				break;
-
-			}
-
-		}
-
-		return result;
-	}
-
-	public void actionning(ArrayList<Projectile> myBullet, BordView view,
-			ArrayList<Zombie> myZombies) {
+	public void actionning(ArrayList<Projectile> myBullet, BordView view, ArrayList<Zombie> myZombies) {
 
 		for (IPlant p : myPlants) {
 			p.action(myBullet, view, myZombies);
@@ -253,7 +197,7 @@ public class SimpleGameData {
 
 	}
 
-	public void leMove(ApplicationContext context, BordView view, ArrayList<Zombie> myZombies,
+	public void movingZombiesAndBullets(ApplicationContext context, BordView view, ArrayList<Zombie> myZombies,
 			ArrayList<Projectile> myBullet) {
 
 		for (Zombie z : myZombies) {
@@ -319,15 +263,15 @@ public class SimpleGameData {
 			}
 		}
 	}
-	
-	
-	public void planting(ApplicationContext context, SimpleGameData data, BordView view, SelectBordView pcView, float x, float y) {
+
+	public void planting(ApplicationContext context, SimpleGameData dataSelect, BordView view, SelectBordView psView,
+			float x, float y) {
 		
-		if (this.isCorrectLocation(view, x, y) && data.hasASelectedCell()) {
+		if (this.isCorrectLocation(view, x, y) && dataSelect.hasASelectedCell()) {
 
 			this.selectCell(view.lineFromY(y), view.columnFromX(x));
 
-			Coordinates Scell = data.getSelected();
+			Coordinates Scell = dataSelect.getSelected();
 			Coordinates cell = this.getSelected();
 
 			int p = Scell.getI();
@@ -340,35 +284,58 @@ public class SimpleGameData {
 
 			if (!this.hasPlant(i, j)) {
 				this.plantOnBoard(i, j);
-				myPlants.add(pcView.getSelectedPlants()[p].createAndDrawNewPlant(view, context, x2, y2));
+				System.out.println("prout");
+				myPlants.add(psView.getSelectedPlants()[p].createAndDrawNewPlant(view, context, x2, y2));
 			}
 
 		}
 	}
-	
-	public void selectingCellAndPlanting(ApplicationContext context, SimpleGameData data, BordView view, SelectBordView plantSelectionView, Event event) {
-		if (!this.hasASelectedCell()) {
-			Point2D.Float location = event.getLocation();
-			float x = location.x;
-			float y = location.y;
 
-			this.planting(context, data, view, plantSelectionView, x, y);
+	public void selectingCellAndPlanting(ApplicationContext context, SimpleGameData dataSelect, BordView view,
+			SelectBordView plantSelectionView, float x, float y) {
+		if (!this.hasASelectedCell()) {
+			
+			this.planting(context, dataSelect, view, plantSelectionView, x, y);
 
 		} else {
 			this.unselect();
 		}
 
-		if (!data.hasASelectedCell()) {
-			Point2D.Float location = event.getLocation();
-			float x = location.x;
-			float y = location.y;
+		if (!dataSelect.hasASelectedCell()) {
 
-			if (data.isCorrectLocation(plantSelectionView, x, y)) {
-				data.selectCell(plantSelectionView.lineFromY(y), plantSelectionView.columnFromX(x));
+			if (dataSelect.isCorrectLocation(plantSelectionView, x, y)) {
+				dataSelect.selectCell(plantSelectionView.lineFromY(y), plantSelectionView.columnFromX(x));
 			}
 
 		} else {
-			data.unselect();
+			dataSelect.unselect();
 		}
+	}
+
+	public boolean spawnRandomPlant(ApplicationContext context, SimpleGameData dataSelect, BordView view,
+			SelectBordView plantSelectionView, Plant[] selectedPlant) {
+
+		boolean result = false;
+		
+		int target = this.RandomPosGenerator(20); // 1 chance sur x
+		int xRandomPosition = this.RandomPosGenerator(view.getXOrigin(), view.getLength()); // random position x dans matrice
+		int yRandomPosition = this.RandomPosGenerator(view.getYOrigin(), view.getWidth()); // random position y dans matrice
+		int randomPlantType = this.RandomPosGenerator(selectedPlant.length); // random type plant
+		
+		if (target == 1) {
+			
+			if (!dataSelect.hasASelectedCell()) {
+				dataSelect.selectCell(randomPlantType, 0);
+				
+			} else {
+				dataSelect.unselect();
+				dataSelect.selectCell(randomPlantType, 0);
+			}
+
+			this.selectingCellAndPlanting(context, dataSelect, view, plantSelectionView, xRandomPosition,
+					yRandomPosition);
+		}
+
+		return result;
 	}
 }

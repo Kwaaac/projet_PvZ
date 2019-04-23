@@ -41,21 +41,21 @@ public class SimpleGameController {
 																									// joueur quand on aura la
 																									// selection de plante
 
-		SimpleGameData data = new SimpleGameData(5, 8);
-		SimpleGameData data2 = new SimpleGameData(selectedPlant.length, 1);
+		SimpleGameData dataBord = new SimpleGameData(5, 8);
+		SimpleGameData dataSelect = new SimpleGameData(selectedPlant.length, 1);
 
-		data.setRandomMatrix();
-		data2.setRandomMatrix();
+		dataBord.setRandomMatrix();
+		dataSelect.setRandomMatrix();
 		int yOrigin = 100;
 		int xOrigin = 450;
 
-		BordView view = BordView.initGameGraphics(xOrigin, yOrigin, 900, data);
+		BordView view = BordView.initGameGraphics(xOrigin, yOrigin, 900, dataBord);
 		int squareSize = BordView.getSquareSize();
-		SelectBordView plantSelectionView = SelectBordView.initGameGraphics(0, yOrigin, squareSize * selectedPlant.length, data2, selectedPlant);
+		SelectBordView plantSelectionView = SelectBordView.initGameGraphics(0, yOrigin, squareSize * selectedPlant.length, dataSelect, selectedPlant);
 		
 
-		view.draw(context, data);
-		plantSelectionView.draw(context, data2);
+		view.draw(context, dataBord);
+		plantSelectionView.draw(context, dataSelect);
 
 		ArrayList<Zombie> myZombies = new ArrayList<>();
 		ArrayList<Projectile> myBullet = new ArrayList<>();
@@ -84,51 +84,49 @@ public class SimpleGameController {
 		}
 
 		while (true) {
-			view.draw(context, data);
-			/*-------------------------Déplacement Moving Elements-------------------------*/
-			
-			data.leMove(context, view, myZombies, myBullet);
-			plantSelectionView.draw(context, data2);
+			view.draw(context, dataBord);
+			dataBord.movingZombiesAndBullets(context, view, myZombies, myBullet);
+			plantSelectionView.draw(context, dataSelect);
 
 			DeadPool deadPoolE = new DeadPool();
 
-			int n = data.RandomPosGenerator(300);
-			int n2 = data.RandomPosGenerator(600);
+			int n = dataBord.RandomPosGenerator(300);
+			int n2 = dataBord.RandomPosGenerator(600);
 
 			if (day == 0 || spawnRate == n2) {
 				myZombies.add(new FlagZombie((int) width,
-						yOrigin + data.RandomPosGenerator(5) * squareSize + (squareSize / 2) - ZombieSize / 2));
+						yOrigin + dataBord.RandomPosGenerator(5) * squareSize + (squareSize / 2) - ZombieSize / 2));
 				str.append("new FlagZombie (" + new SimpleDateFormat("hh:mm:ss").format(new Date()) + ")\n");
 				day += 1;
 			}
 			if (spawnRate == n) {
 				myZombies.add(new NormalZombie((int) width,
-						yOrigin + data.RandomPosGenerator(4) * squareSize + (squareSize / 2) - ZombieSize / 2));
+						yOrigin + dataBord.RandomPosGenerator(4) * squareSize + (squareSize / 2) - ZombieSize / 2));
 				str.append("new NormalZombie (" + new SimpleDateFormat("hh:mm:ss").format(new Date()) + ")\n");
 			}
 			if (spawnRate == n2) {
 				myZombies.add(new ConeheadZombie((int) width,
-						yOrigin + data.RandomPosGenerator(4) * squareSize + (squareSize / 2) - ZombieSize / 2));
+						yOrigin + dataBord.RandomPosGenerator(4) * squareSize + (squareSize / 2) - ZombieSize / 2));
 				str.append("new ConeheadZombie (" + new SimpleDateFormat("hh:mm:ss").format(new Date()) + ")\n");
 			}
 
 			/*------------------------Gestion des conflits--------------------------------*/
-			Zombie.ZCheckConflict(myZombies, myBullet, data.getMyPlants(), deadPoolE, view, data, str);
+			Zombie.ZCheckConflict(myZombies, myBullet, dataBord.getMyPlants(), deadPoolE, view, dataBord, str);
 
 			/*----------------------------------------------------------------------------*/
 
 			/*-------------------- je détruit tout les elements morts --------------------*/
 
-			deadPoolE.deletingEverything(myZombies, data.getMyPlants(), myBullet);
+			deadPoolE.deletingEverything(myZombies, dataBord.getMyPlants(), myBullet);
 
 			/*----------------------------Shooting in continue----------------------------*/
 
-			data.actionning(myBullet, view, myZombies);
+			dataBord.actionning(myBullet, view, myZombies);
 
 			/*----------------------------------------------------------------------------*/
 
 			if (debug == true) {
-				if (data.spawnRandomPlant(possibilityX, possibilityY, view, context)) {
+				if (dataBord.spawnRandomPlant(context, dataSelect, view, plantSelectionView, selectedPlant)) {
 					str.append("new plant (" + new SimpleDateFormat("hh:mm:ss").format(new Date()) + ")\n");
 				}
 			}
@@ -174,10 +172,14 @@ public class SimpleGameController {
 			if (action != Action.POINTER_DOWN) {
 				continue;
 			}
+			
+			Point2D.Float location = event.getLocation();
+			float x = location.x;
+			float y = location.y;
 
 			/*-------Gestion de la selection de cellules et de la plante manuelle de plante-----------*/
 			
-			data.selectingCellAndPlanting(context, data2, view, plantSelectionView, event);
+			dataBord.selectingCellAndPlanting(context, dataSelect, view, plantSelectionView, x, y);
 
 		}
 
