@@ -39,7 +39,7 @@ public class Coordinates {
 	}
 	
 	public boolean checkHitBox(Coordinates c) {
-			return this.i <= c.i && c.i <= this.j && this.j <= c.j;
+			return (this.i <= c.i && c.i <= this.j && this.j <= c.j) || (this.i <= c.i && c.j <= this.j) || (c.i <= this.i && this.i <= c.j && c.j <= this.j);
 	}
 
 	@Override
