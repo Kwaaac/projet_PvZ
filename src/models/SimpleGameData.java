@@ -242,7 +242,7 @@ public class SimpleGameData {
 				Duration timeEnd = Duration.between(time, Instant.now());
 				h = (int) (timeEnd.getSeconds() / 3600);
 				m = (int) ((timeEnd.getSeconds() % 3600) / 60);
-				s = (int) (((timeEnd.getSeconds() % 3600) % 60));
+				s = (int) timeEnd.getSeconds();
 				switch (finalChoice) {
 				case "Win":
 					str.append("-+-+-+-+-+-+-+-+-+-\nVous avez gagne!!!\nLa partie a duree : " + h + " heure(s) " + m
@@ -284,7 +284,6 @@ public class SimpleGameData {
 
 			if (!this.hasPlant(i, j)) {
 				this.plantOnBoard(i, j);
-				System.out.println("prout");
 				myPlants.add(psView.getSelectedPlants()[p].createAndDrawNewPlant(view, context, x2, y2));
 			}
 

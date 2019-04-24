@@ -6,21 +6,20 @@ import java.util.ArrayList;
 import fr.umlv.zen5.ApplicationContext;
 import models.Coordinates;
 import models.Entities;
-import models.SimpleGameData;
 import models.projectiles.Projectile;
 import models.zombies.Zombie;
 import views.BordView;
-import views.SelectBordView;
 import views.SimpleGameView;
 
 public class CherryBomb extends Plant {
 
 	private final String name = "CheeryBomb";
 	private final String color = "#CB5050";
-
+	private long shootTime = System.currentTimeMillis();
+	
 	public CherryBomb(int x, int y) {
-		super(x, y, 0, 1, 50);
-		setTimerA(1);
+		super(x, y, 0, 1, 1200);
+		shootTime = System.currentTimeMillis();
 	}
 	
 	public CherryBomb() {
@@ -28,8 +27,11 @@ public class CherryBomb extends Plant {
 	}
 	
 	@Override
-	public boolean readyToshot(ArrayList<Zombie> myZombies) {
-		return timerA % speedshoot == 0;
+	public void incAS() {
+		
+		shootBar = System.currentTimeMillis() - shootTime;
+		
+		System.out.println(shootBar + "///" + shootBarMax);
 	}
 	
 	int sizeOfPlant = super.getSizeOfPlant();
@@ -64,17 +66,6 @@ public class CherryBomb extends Plant {
 		return Lz;
 	}
 
-	public void explosion(BordView view, ArrayList<Zombie> myZombies) {
-		if(this.readyToshot()) {
-			for (Entities z : this.detect(view, myZombies)) {
-				z.takeDmg(1800);
-			}
-			this.life = 0;
-		}
-		
-		this.incAS();
-	}
-
 	@Override
 	public String toString() {
 		return super.toString() + "--" + name;
@@ -82,9 +73,15 @@ public class CherryBomb extends Plant {
 	
 	@Override
 	public void action(ArrayList<Projectile> myBullet, BordView view, ArrayList<Zombie> myZombies) {
-		this.incAS();
 		
-		this.explosion(view, myZombies);
+		if(this.readyToshot(myZombies)) {
+			for (Entities z : this.detect(view, myZombies)) {
+				z.takeDmg(1800);
+			}
+			this.life = 0;
+		}
+		
+		this.incAS();
 	}
 
 	@Override

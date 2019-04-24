@@ -1,6 +1,8 @@
 package models.plants;
 
 import java.awt.geom.Rectangle2D;
+import java.time.Duration;
+import java.time.Instant;
 import java.util.ArrayList;
 
 import models.Coordinates;
@@ -12,12 +14,14 @@ import models.zombies.Zombie;
 public abstract class Plant extends Entities implements IPlant{
 	private final String type = "Plant"; 
 	private final static int sizeOfPlant = 75;
-	protected final int speedshoot;
-	protected int timerA = 0;
+	protected final int shootBarMax;
+	protected long shootBar;
+	protected Instant shootTime;
 	
-	public Plant(int x, int y, int damage, int life, int speedshoot) {
+	public Plant(int x, int y, int damage, int life, int shootBarMax) {
 		super(x, y, damage, life);
-		this.speedshoot = speedshoot;
+		this.shootBarMax = shootBarMax;
+		shootTime = Instant.now();
 	}
 	
 	public String toString() {
@@ -32,44 +36,36 @@ public abstract class Plant extends Entities implements IPlant{
 		return sizeOfPlant;
 	}
 
-	public int getSpeedShooting() {
-		return timerA;
+	public long getSpeedShooting() {
+		return shootBar;
 	}
 	
 	@Override
 	public void incAS() {
-		if(timerA != speedshoot) {
-            this.timerA += 1;
-        }
+		Duration betweenTimer = Duration.between(shootTime, Instant.now());
+		
+		shootBar = (int) betweenTimer.getSeconds();
 	}
 	
+	@Override
 	public void resetAS() {
-		this.timerA = 1;
+		this.shootTime = Instant.now();
 	}
 	
-	public int getTimer() {
-		return timerA;
+	public long getTimer() {
+		return shootBar;
 	}
 	
-	public boolean readyToshot() {
-		return timerA % speedshoot == 0;
+	@Override
+	public boolean readyToshot(ArrayList<Zombie> mz) {
+		return shootBar >= shootBarMax;
 	}
-	
-	
 	
 	public void setTimerA(int x) {
-		this.timerA = x;
+		this.shootBar = x;
 	}
 	
 	public Coordinates hitBox() {
 		return new Coordinates((int) x, (int) x + sizeOfPlant);
-	}
-	
-	public Plant plantFromCoord(Coordinates case2) {
-		if(case2.equals(caseXY)) {
-			return this;
-		}
-		
-		return null;
 	}
 }

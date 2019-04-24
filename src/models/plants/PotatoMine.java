@@ -41,17 +41,24 @@ public class PotatoMine extends Plant {
 			activate = true;
 		}
 	}
+	
+	@Override
+	public void incAS() {
+		if(shootBar != shootBarMax) {
+            this.shootBar += 1;
+        }
+	}
 
 	@Override
 	public boolean readyToshot(ArrayList<Zombie> myZombies) {
-		return timerA % speedshoot == 0;
+		return shootBar % shootBarMax == 0;
 	}
 
 	@Override
 	public void action(ArrayList<Projectile> myBullet, BordView view, ArrayList<Zombie> myZombies) {
 		this.incAS();
 
-		if (this.readyToshot()) {
+		if (this.readyToshot(myZombies)) {
 			activation();
 		}
 		

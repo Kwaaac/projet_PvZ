@@ -36,6 +36,13 @@ public class WallNut extends Plant {
 	public String toString() {
 		return super.toString() + "--" + name;
 	}
+	
+	@Override
+	public void incAS() {
+		if(shootBar != shootBarMax) {
+            this.shootBar += 1;
+        }
+	}
 
 	@Override
 	public boolean readyToshot(ArrayList<Zombie> myZombies) {

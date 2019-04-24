@@ -24,8 +24,8 @@ import views.SimpleGameView;
 	
 	void action(ArrayList<Projectile> myBullet, BordView view, ArrayList<Zombie> myZombies);
 	
-	boolean readyToshot(ArrayList<Zombie> MZ);
-	
+	boolean readyToshot(ArrayList<Zombie> mz);
+		
 	Plant createAndDrawNewPlant(SimpleGameView view, ApplicationContext context, int x, int y);
 	
 	void draw(SimpleGameView view, Graphics2D graphics, int x, int y);
