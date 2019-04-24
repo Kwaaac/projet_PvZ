@@ -93,22 +93,22 @@ public class SimpleGameController {
 			int n = dataBord.RandomPosGenerator(300);
 			int n2 = dataBord.RandomPosGenerator(600);
 
-			if (day == 0 || spawnRate == n2) {
+			if (day == 0 ) {
 				myZombies.add(new FlagZombie((int) width,
 						yOrigin + dataBord.RandomPosGenerator(5) * squareSize + (squareSize / 2) - ZombieSize / 2));
 				str.append("new FlagZombie (" + new SimpleDateFormat("hh:mm:ss").format(new Date()) + ")\n");
 				day += 1;
 			}
-			if (spawnRate == n) {
-				myZombies.add(new NormalZombie((int) width,
-						yOrigin + dataBord.RandomPosGenerator(4) * squareSize + (squareSize / 2) - ZombieSize / 2));
-				str.append("new NormalZombie (" + new SimpleDateFormat("hh:mm:ss").format(new Date()) + ")\n");
-			}
-			if (spawnRate == n2) {
-				myZombies.add(new ConeheadZombie((int) width,
-						yOrigin + dataBord.RandomPosGenerator(4) * squareSize + (squareSize / 2) - ZombieSize / 2));
-				str.append("new ConeheadZombie (" + new SimpleDateFormat("hh:mm:ss").format(new Date()) + ")\n");
-			}
+//			if (spawnRate == n) {
+//				myZombies.add(new NormalZombie((int) width,
+//						yOrigin + dataBord.RandomPosGenerator(4) * squareSize + (squareSize / 2) - ZombieSize / 2));
+//				str.append("new NormalZombie (" + new SimpleDateFormat("hh:mm:ss").format(new Date()) + ")\n");
+//			}
+//			if (spawnRate == n2) {
+//				myZombies.add(new ConeheadZombie((int) width,
+//						yOrigin + dataBord.RandomPosGenerator(4) * squareSize + (squareSize / 2) - ZombieSize / 2));
+//				str.append("new ConeheadZombie (" + new SimpleDateFormat("hh:mm:ss").format(new Date()) + ")\n");
+//			}
 
 			/*------------------------Gestion des conflits--------------------------------*/
 			Zombie.ZCheckConflict(myZombies, myBullet, dataBord.getMyPlants(), deadPoolE, view, dataBord, str);

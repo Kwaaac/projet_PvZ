@@ -17,13 +17,15 @@ public abstract class Zombie extends Entities implements MovingElement {
 	private double speed;
 	private final static int sizeOfZombie = 75;
 
-	private int speedshoot;
-	private int timerA = -1;
+	protected final int shootBarMax;
+	protected long shootBar;
+	protected long shootTime;
 
 	public Zombie(int x, int y, int damage, int life, double speed) {
 		super(x, y, damage, life);
 		this.speed = -1.7;
-		this.speedshoot = (int) (speed * -75);
+		this.shootBarMax = (int) (speed * -7500);
+		shootTime = System.currentTimeMillis();
 	}
 
 	@Override
@@ -57,15 +59,19 @@ public abstract class Zombie extends Entities implements MovingElement {
 	}
 
 	public void incAS() {
-		this.timerA += 1;
+		shootBar = System.currentTimeMillis() - shootTime;
+		
+		System.out.println(shootBar + "///" + shootBarMax);
 	}
 
 	public void resetAS() {
-		this.timerA = 0;
+		shootTime = System.currentTimeMillis();
+		
+		this.shootBar = 1 ;
 	}
 
 	public boolean readyToshot() {
-		return timerA % speedshoot == 0;
+		return shootBar >= shootBarMax;
 	}
 
 	public void conflictAll(Plant p) {
@@ -127,6 +133,8 @@ public abstract class Zombie extends Entities implements MovingElement {
 				this.stop();
 				if  (this.readyToshot()) {
 					(p).mortalKombat(this);
+					
+					this.resetAS();
 				}
 
 			}
