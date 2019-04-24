@@ -5,12 +5,9 @@ import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
 import fr.umlv.zen5.ApplicationContext;
-import models.Entities;
-import models.SimpleGameData;
 import models.projectiles.Projectile;
 import models.zombies.Zombie;
 import views.BordView;
-import views.SelectBordView;
 import views.SimpleGameView;
 
 public class WallNut extends Plant {
@@ -36,22 +33,9 @@ public class WallNut extends Plant {
 	public String toString() {
 		return super.toString() + "--" + name;
 	}
-	
-	@Override
-	public void incAS() {
-		if(shootBar != shootBarMax) {
-            this.shootBar += 1;
-        }
-	}
 
 	@Override
-	public boolean readyToshot(ArrayList<Zombie> myZombies) {
-		return false;
-	}
-
-	@Override
-	public void action(ArrayList<Projectile> myBullet, BordView view, ArrayList<Zombie> myZombies) {
-	}
+	public void action(ArrayList<Projectile> myBullet, BordView view, ArrayList<Zombie> myZombies) {}
 
 	@Override
 	public Plant createAndDrawNewPlant(SimpleGameView view, ApplicationContext context, int x, int y) {

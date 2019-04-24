@@ -15,23 +15,13 @@ public class CherryBomb extends Plant {
 
 	private final String name = "CheeryBomb";
 	private final String color = "#CB5050";
-	private long shootTime = System.currentTimeMillis();
 	
 	public CherryBomb(int x, int y) {
 		super(x, y, 0, 1, 1200);
-		shootTime = System.currentTimeMillis();
 	}
 	
 	public CherryBomb() {
 		super(-10, -10, 0, 1, 1);
-	}
-	
-	@Override
-	public void incAS() {
-		
-		shootBar = System.currentTimeMillis() - shootTime;
-		
-		System.out.println(shootBar + "///" + shootBarMax);
 	}
 	
 	int sizeOfPlant = super.getSizeOfPlant();

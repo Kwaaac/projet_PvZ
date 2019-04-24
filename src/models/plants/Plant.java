@@ -16,12 +16,12 @@ public abstract class Plant extends Entities implements IPlant{
 	private final static int sizeOfPlant = 75;
 	protected final int shootBarMax;
 	protected long shootBar;
-	protected Instant shootTime;
+	protected long shootTime;
 	
 	public Plant(int x, int y, int damage, int life, int shootBarMax) {
 		super(x, y, damage, life);
 		this.shootBarMax = shootBarMax;
-		shootTime = Instant.now();
+		shootTime = System.currentTimeMillis();
 	}
 	
 	public String toString() {
@@ -42,14 +42,14 @@ public abstract class Plant extends Entities implements IPlant{
 	
 	@Override
 	public void incAS() {
-		Duration betweenTimer = Duration.between(shootTime, Instant.now());
-		
-		shootBar = (int) betweenTimer.getSeconds();
+		shootBar = System.currentTimeMillis() - shootTime;
 	}
 	
 	@Override
 	public void resetAS() {
-		this.shootTime = Instant.now();
+		shootTime = System.currentTimeMillis();
+		
+		this.shootBar = 1 ;
 	}
 	
 	public long getTimer() {

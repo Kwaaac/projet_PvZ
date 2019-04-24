@@ -1,17 +1,14 @@
 package models.plants;
 
 import java.awt.Graphics2D;
-import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
 import fr.umlv.zen5.ApplicationContext;
 import models.Coordinates;
 import models.Entities;
-import models.SimpleGameData;
 import models.projectiles.Projectile;
 import models.zombies.Zombie;
 import views.BordView;
-import views.SelectBordView;
 import views.SimpleGameView;
 
 public class PotatoMine extends Plant {
@@ -22,8 +19,8 @@ public class PotatoMine extends Plant {
 	private boolean activate = false;
 
 	public PotatoMine(int x, int y) {
-		super(x, y, 0, 120, 80);
-		setTimerA(1);
+		super(x, y, 0, 120, 14_000);
+
 	}
 
 	public PotatoMine() {
@@ -41,35 +38,26 @@ public class PotatoMine extends Plant {
 			activate = true;
 		}
 	}
-	
-	@Override
-	public void incAS() {
-		if(shootBar != shootBarMax) {
-            this.shootBar += 1;
-        }
-	}
-
-	@Override
-	public boolean readyToshot(ArrayList<Zombie> myZombies) {
-		return shootBar % shootBarMax == 0;
-	}
 
 	@Override
 	public void action(ArrayList<Projectile> myBullet, BordView view, ArrayList<Zombie> myZombies) {
-		this.incAS();
-
 		if (this.readyToshot(myZombies)) {
 			activation();
 		}
-		
-		if (activate) {
-			ArrayList<Entities> Lz = this.detect(view, myZombies);
-			if (!Lz.isEmpty()) {
-				this.explosion(view, myZombies);
-			}
 
+		if (activate) {
+			ArrayList<Entities> lz = this.detect(view, myZombies);
+
+			if (!lz.isEmpty()) {
+				for (Entities z : lz) {
+					z.takeDmg(1800);
+				}
+
+				this.life = 0;
+			}
 		}
 
+		this.incAS();
 	}
 
 	private ArrayList<Entities> detect(BordView view, ArrayList<Zombie> myZombies) {
@@ -77,24 +65,18 @@ public class PotatoMine extends Plant {
 		ArrayList<Entities> Lz = new ArrayList<>();
 
 		for (Entities z : myZombies) {
-			Coordinates zombie = z.getCase();
+			if (this.sameLine(z)) {
+				
+				Coordinates zombie = z.getCase();
 
-			if (zombie.equals(PotatoMine)) {
-				Lz.add(z);
+				if (zombie.equals(PotatoMine)) {
+					Lz.add(z);
+					
+				}
 			}
 
 		}
 		return Lz;
-	}
-
-	private void explosion(BordView view, ArrayList<Zombie> myZombies) {
-
-		for (Entities z : this.detect(view, myZombies)) {
-			z.takeDmg(1800);
-		}
-
-		this.life = 0;
-
 	}
 
 	@Override

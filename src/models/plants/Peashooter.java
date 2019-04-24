@@ -1,8 +1,6 @@
 package models.plants;
 
 import java.awt.Graphics2D;
-import java.time.Duration;
-import java.time.Instant;
 import java.util.ArrayList;
 
 import fr.umlv.zen5.ApplicationContext;
@@ -16,12 +14,10 @@ import views.SimpleGameView;
 public class Peashooter extends Plant{
 	private final String name = "Peashooter";
 	private final String color = "#90D322";
-	private Instant shootTime;
 	
 	public Peashooter(int x, int y) {
-		super(x, y, 0, 300, 6);
-		shootTime = Instant.now();
-		shootBar = shootBarMax;
+		super(x, y, 0, 300, 5100);
+		shootBar = shootBarMax;			// La plante tire dès qu'elle est posée
 	}
 	
 	public Peashooter() {
@@ -36,28 +32,14 @@ public class Peashooter extends Plant{
 	int sizeOfPlant = super.getSizeOfPlant();
 	
 	@Override
-	public void incAS() {
-		Duration betweenTimer = Duration.between(shootTime, Instant.now());
-		
-		shootBar = (int) betweenTimer.getSeconds() + 1;
-		
-		System.out.println(shootBar + "///" + shootBarMax);
-	}
-	
-	@Override
 	public boolean readyToshot(ArrayList<Zombie> myZombies) {
 		for(Entities z : myZombies) {
 			if(this.sameLine(z)) {
-				return shootBar % shootBarMax == 0;
+				return shootBar >= shootBarMax;
 			}
 		}
 		
 		return false;
-	}
-	
-	@Override
-	public void resetAS() {
-		this.shootTime = Instant.now();
 	}
 	
 	@Override
