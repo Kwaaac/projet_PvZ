@@ -76,15 +76,38 @@ public class SimpleGameController {
 		boolean debug = false;
 
 		while (true) {
+			/*--------------------------------DRAWS--------------------------------*/
+			
 			view.draw(context, dataBord);
 			dataBord.movingZombiesAndBullets(context, view, myZombies, myBullet);
 			plantSelectionView.draw(context, dataSelect);
 
+			/*---------------------------INITIALISATION-----------------------------*/
+			
 			DeadPool deadPoolE = new DeadPool();
-
 			int n = dataBord.RandomPosGenerator(300);
 			int n2 = dataBord.RandomPosGenerator(600);
+			
+			/*------------------------------EVENTS----------------------------------*/
 
+			Event event = context.pollOrWaitEvent(25); // modifier pour avoir un affichage fluide
+			if (event == null) { // no event
+				continue;
+			}
+			
+			KeyboardKey KB = event.getKey();
+			String mdp = null;
+			if (KB != null) {
+				mdp = KB.toString();
+			}
+			
+			Action action = event.getAction();
+			Point2D.Float location = event.getLocation();
+			float x = location.x;
+			float y = location.y;
+
+			/*-------------------------------ZOMBIE SPAWNERS-----------------------------*/
+			
 			if (day == 0 || spawnRate == n2) {
 				myZombies.add(new FlagZombie((int) width,
 						yOrigin + dataBord.RandomPosGenerator(5) * squareSize + (squareSize / 2) - ZombieSize / 2));
@@ -102,39 +125,25 @@ public class SimpleGameController {
 				str.append("new ConeheadZombie (" + new SimpleDateFormat("hh:mm:ss").format(new Date()) + ")\n");
 			}
 
-			/*------------------------Gestion des conflits--------------------------------*/
+			/*------------------------------- CONFLICTS ----------------------------------*/
+			
 			Zombie.ZCheckConflict(myZombies, myBullet, dataBord.getMyPlants(), deadPoolE, view, dataBord, str);
-
-			/*----------------------------------------------------------------------------*/
-
-			/*-------------------- je détruit tout les elements morts --------------------*/
-
+			
+			/*-------------------------------- DEATHS ------------------------------------*/
+			
 			deadPoolE.deletingEverything(myZombies, dataBord.getMyPlants(), myBullet);
-
-			/*----------------------------Shooting in continue----------------------------*/
-
+			
+			/*--------------------------------SHOOTING------------------------------------*/
+			
 			dataBord.actionning(myBullet, view, myZombies);
-
-			/*----------------------------------------------------------------------------*/
-
+			
+			/*---------------------------------DEBUG--------------------------------------*/
+			
 			if (debug == true) {
 				if (dataBord.spawnRandomPlant(context, dataSelect, view, plantSelectionView, selectedPlant)) {
 					str.append("new plant (" + new SimpleDateFormat("hh:mm:ss").format(new Date()) + ")\n");
 				}
 			}
-
-			Event event = context.pollOrWaitEvent(25); // modifier pour avoir un affichage fluide
-			if (event == null) { // no event
-				continue;
-			}
-
-			KeyboardKey KB = event.getKey();
-			String mdp = null;
-			if (KB != null) {
-				mdp = KB.toString();
-			}
-			Action action = event.getAction();
-
 			if (action == Action.KEY_PRESSED || action == Action.KEY_RELEASED) {
 				if (mdp == "Y") {
 					debug = true;
@@ -148,30 +157,15 @@ public class SimpleGameController {
 
 			SimpleGameData.timeEnd(myZombies, time, str, context, deathCounterZombie, mdp);
 
-			/*----------------------------------------------------------------------------*/
-//			if (action == Action.POINTER_DOWN) {
-//				location = event.getLocation();
-//				float x = location.x;
-//				float y = location.y;
-//				StringBuilder str = new StringBuilder("Mon clic : (");
-//				str.append(x);
-//				str.append(", ");
-//				str.append(y);
-//				str.append(")");
-//				str.append(str.toString());
-//			}
-
+			/*---Gestion de la selection de cellules et de la plante manuelle de plante---*/
+			
+			dataBord.selectingCellAndPlanting(context, dataSelect, view, plantSelectionView, x, y);
+			
+			/*-----------------------------------ELSE-------------------------------------*/
+			
 			if (action != Action.POINTER_DOWN) {
 				continue;
 			}
-			
-			Point2D.Float location = event.getLocation();
-			float x = location.x;
-			float y = location.y;
-
-			/*-------Gestion de la selection de cellules et de la plante manuelle de plante-----------*/
-			
-			dataBord.selectingCellAndPlanting(context, dataSelect, view, plantSelectionView, x, y);
 
 		}
 
