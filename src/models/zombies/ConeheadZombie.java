@@ -24,7 +24,7 @@ public class ConeheadZombie extends Zombie {
 
 	@Override
 	public String toString() {
-		return super.toString() + "--" + name; 
+		return name;
 	}
 	
 	public Integer getProb(int difficulty) {

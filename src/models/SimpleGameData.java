@@ -6,6 +6,7 @@ import java.time.Duration;
 import java.time.Instant;
 import java.time.temporal.Temporal;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.Random;
 
@@ -28,12 +29,21 @@ public class SimpleGameData {
 	private Coordinates selected;
 	private final ArrayList<Coordinates> placedPlant = new ArrayList<Coordinates>();
 	private final ArrayList<Plant> myPlants = new ArrayList<>();
-	
+
+	private static long spawnTime;
+	private static long timeLimit;
+	private static long difficultyTime;
+
 	private static int difficulty = 1;
-	private final static Zombie[] zombieList = {new NormalZombie(), new FlagZombie(), new ConeheadZombie()};
+	private final static Zombie[] zombieList = { new NormalZombie(), new FlagZombie(), new ConeheadZombie() };
 
 	public SimpleGameData(int nbLines, int nbColumns) {
 		matrix = new Cell[nbLines][nbColumns];
+		
+		spawnTime = System.currentTimeMillis();
+		timeLimit = 10_000;
+		
+		difficultyTime = System.currentTimeMillis();
 	}
 
 	public ArrayList<Plant> getMyPlants() {
@@ -214,13 +224,12 @@ public class SimpleGameData {
 
 	public static void timeEnd(ArrayList<Zombie> myZombies, Temporal time, StringBuilder str,
 			ApplicationContext context, int deathCounterZombie, String mdp) {
-		
-		
+
 		int xOrigin = 450;
 		int squareSize = BordView.getSquareSize();
 		String choice = "Continue", finalChoice = null;
 		int h = 0, m = 0, s = 0;
-		
+
 		for (Zombie z : myZombies) {
 			if (z.isEatingBrain(xOrigin, squareSize)) {
 				choice = "Stop";
@@ -342,53 +351,62 @@ public class SimpleGameData {
 
 		return result;
 	}
-	
-	public void setDifficulty(int x) {
+
+	public static void updateDifficulty() {
+		if(System.currentTimeMillis() - difficultyTime >= 20_000) {
+			difficulty += 1;
+
+			difficultyTime =  System.currentTimeMillis();
+		}
 	}
-	
-//	private Zombie zombieChoice(Zombie[] liste) {
-//		
-//		
-//		
-//		return x;
-//	}
-	
-	public static void spawnRandomZombie(SimpleGameData dataBord, int squareSize, int ZombieSize, StringBuilder str, 
-			ArrayList<Zombie> myZombies, int yOrigin, float width, int spawnRate, BordView view, ApplicationContext context) {
+
+	public static void spawnRandomZombie(SimpleGameData dataBord, int squareSize, int ZombieSize, StringBuilder str,
+			ArrayList<Zombie> myZombies, int yOrigin, float width, int spawnRate, BordView view,
+			ApplicationContext context) {
 		
-		int x = (int) width;
-		int y = yOrigin + dataBord.RandomPosGenerator(5) * squareSize + (squareSize / 2) - (ZombieSize / 2);
-		ArrayList<Integer> probList = new ArrayList<Integer>();
 		
-		for(Zombie z: zombieList) {
+		
+		if (System.currentTimeMillis() - spawnTime >= timeLimit) {
+			System.out.println(timeLimit);
 			
-			if (z.canSpawn(difficulty)) {
-				probList.add(dataBord.RandomPosGenerator(z.getProb(difficulty)));
+			int x = (int) width;
+			int y = yOrigin + dataBord.RandomPosGenerator(5) * squareSize + (squareSize / 2) - (ZombieSize / 2);
+			ArrayList<Integer> probList = new ArrayList<Integer>();
+
+			for (Zombie z : zombieList) {
+
+				if (z.canSpawn(difficulty)) {
+					probList.add(dataBord.RandomPosGenerator(z.getProb(difficulty)));
+				}
 			}
+
+			int valeurSympa = probList.get(0), selecteur = 0;
+
+			for (int i = 0; i != probList.size(); i++) {
+				if (probList.get(i) < valeurSympa) {
+					valeurSympa = probList.get(i);
+					selecteur = i;
+				}
+			}
+
+			myZombies.add(zombieList[selecteur].createAndDrawNewZombie(view, context, x, y));
+			str.append("new " +   zombieList[selecteur]  + new SimpleDateFormat("hh:mm:ss").format(new Date()) + ")\n");
+			
+			if(timeLimit >= 3000) {
+				timeLimit -= 1000;
+				
+				spawnTime = System.currentTimeMillis();
+			} else {
+				spawnTime = System.currentTimeMillis();
+			}
+			
+			updateDifficulty();
+			
+			System.out.println(difficulty);
 		}
-		
-		int valeurSympa = probList.get(0), selecteur = 0;
-		
-		for(int i = 0; i!= probList.size(); i++) {
-			if(probList.get(i)<valeurSympa) {
-				valeurSympa=probList.get(i);
-				selecteur = i;
-		   }
-		}
-		
-		myZombies.add(zombieList[selecteur].createAndDrawNewZombie(view, context, x, y));
-		str.append("new FlagZombie (" + new SimpleDateFormat("hh:mm:ss").format(new Date()) + ")\n");
-		
 	}
-	
-	
+
+
+
+
 }
-
-
-
-
-
-
-
-
-
