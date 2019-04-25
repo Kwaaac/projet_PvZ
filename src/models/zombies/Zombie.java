@@ -167,4 +167,6 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie 
 	}
 
 	public abstract Integer getProb(int difficulty);
+	
+	
 }

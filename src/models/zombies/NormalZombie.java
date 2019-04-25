@@ -32,6 +32,10 @@ public class NormalZombie extends Zombie {
 		return (int) (((100/threat)*(difficulty))*0.55+0.10*threat);
 	}
 	
+	public boolean canSpawn(int difficulty) {
+		return threat<=difficulty;
+	}
+	
 	public void go() {
 		super.setSpeed((float) -0.73);
 	}

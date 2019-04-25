@@ -30,7 +30,7 @@ public class SimpleGameData {
 	private final ArrayList<Plant> myPlants = new ArrayList<>();
 	
 	private static int difficulty = 1;
-	private final static Zombie[] zombieList = {new ConeheadZombie(), new FlagZombie(), new NormalZombie()};
+	private final static Zombie[] zombieList = {new NormalZombie(), new FlagZombie(), new ConeheadZombie()};
 
 	public SimpleGameData(int nbLines, int nbColumns) {
 		matrix = new Cell[nbLines][nbColumns];
@@ -356,14 +356,14 @@ public class SimpleGameData {
 	public static void spawnRandomZombie(SimpleGameData dataBord, int squareSize, int ZombieSize, StringBuilder str, 
 			ArrayList<Zombie> myZombies, int yOrigin, float width, int spawnRate, BordView view, ApplicationContext context) {
 		
-		int n = dataBord.RandomPosGenerator(300);
 		int x = (int) width;
-		int y = yOrigin + dataBord.RandomPosGenerator(4) * squareSize + (squareSize / 2) - (ZombieSize / 2);
+		int y = yOrigin + dataBord.RandomPosGenerator(5) * squareSize + (squareSize / 2) - (ZombieSize / 2);
 		ArrayList<Integer> probList = new ArrayList<Integer>();
 		
-		while (probList.size() != 1) {
-			for(Zombie z: zombieList) {
-				probList.add(z.getProb(difficulty));
+		for(Zombie z: zombieList) {
+			
+			if (z.canSpawn(difficulty)) {
+				probList.add(dataBord.RandomPosGenerator(z.getProb(difficulty)));
 			}
 		}
 		
