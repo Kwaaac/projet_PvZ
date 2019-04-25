@@ -29,7 +29,7 @@ public class SimpleGameData {
 	private final ArrayList<Coordinates> placedPlant = new ArrayList<Coordinates>();
 	private final ArrayList<Plant> myPlants = new ArrayList<>();
 	
-	private static int difficulty = 0;
+	private static int difficulty = 1;
 	private final static Zombie[] zombieList = {new ConeheadZombie(), new FlagZombie(), new NormalZombie()};
 
 	public SimpleGameData(int nbLines, int nbColumns) {
@@ -367,25 +367,16 @@ public class SimpleGameData {
 			}
 		}
 		
-		int valeurSympa = 0, selecteur = 0;
+		int valeurSympa = probList.get(0), selecteur = 0;
 		
-		for(int valeur : probList) {
-			
-			if(valeur>difficulty) {
-				if (valeur-difficulty < valeurSympa) {
-					valeurSympa = valeur-difficulty;
-					selecteur +=1;
-				}
-		    }
-			if(valeur<valeurSympa) {
-				if (difficulty-valeur < valeurSympa) {
-					valeurSympa = difficulty-valeur;
-					selecteur +=1;
-				}
-			}
+		for(int i = 0; i!= probList.size(); i++) {
+			if(probList.get(i)<valeurSympa) {
+				valeurSympa=probList.get(i);
+				selecteur = i;
+		   }
 		}
 		
-		myZombies.add(zombieList[dataBord.RandomPosGenerator(zombieList.length)].createAndDrawNewZombie(view, context, x, y));
+		myZombies.add(zombieList[selecteur].createAndDrawNewZombie(view, context, x, y));
 		str.append("new FlagZombie (" + new SimpleDateFormat("hh:mm:ss").format(new Date()) + ")\n");
 		
 	}
