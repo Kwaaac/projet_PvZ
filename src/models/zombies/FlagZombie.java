@@ -6,7 +6,8 @@ import views.SimpleGameView;
 
 public class FlagZombie extends Zombie{
 	private final String name = "Flag Zombie";
-	private final String color = "FFFFFF";
+	private final String color = "#FFFFFF";
+	private final int threat = 1;
 	public FlagZombie(int x, int y) {
 		super(x, y, 100, 200, -0.75);
 	}
@@ -23,6 +24,10 @@ public class FlagZombie extends Zombie{
 	@Override
 	public String toString() {
 		return super.toString() + "--" + name; 
+	}
+	
+	public Integer getProb(int difficulty) {
+		return (int) (((100/threat)*(difficulty))*0.55+0.10*threat);
 	}
 	
 	public void go() {

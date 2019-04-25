@@ -90,7 +90,7 @@ public class SimpleGameController {
 
 			/*-------------------------------ZOMBIE SPAWNERS-----------------------------*/
 			
-			SimpleGameData.spawnRandomZombie(dataBord, squareSize, ZombieSize, str, myZombies, yOrigin, width, spawnRate);
+			SimpleGameData.spawnRandomZombie(dataBord, squareSize, ZombieSize, str, myZombies, yOrigin, width, spawnRate, view, context);
 
 			/*------------------------------- CONFLICTS ----------------------------------*/
 			

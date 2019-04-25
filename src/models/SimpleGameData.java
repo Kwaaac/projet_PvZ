@@ -30,7 +30,7 @@ public class SimpleGameData {
 	private final ArrayList<Plant> myPlants = new ArrayList<>();
 	
 	private static int difficulty = 0;
-	private static int rand = 300;
+	private final static Zombie[] zombieList = {new ConeheadZombie(), new FlagZombie(), new NormalZombie()};
 
 	public SimpleGameData(int nbLines, int nbColumns) {
 		matrix = new Cell[nbLines][nbColumns];
@@ -343,37 +343,61 @@ public class SimpleGameData {
 		return result;
 	}
 	
-	
-	public void setRand(int x) {
-		rand = x;
-	}
-	
 	public void setDifficulty(int x) {
-		difficulty = x;
 	}
+	
+//	private Zombie zombieChoice(Zombie[] liste) {
+//		
+//		
+//		
+//		return x;
+//	}
 	
 	public static void spawnRandomZombie(SimpleGameData dataBord, int squareSize, int ZombieSize, StringBuilder str, 
-			ArrayList<Zombie> myZombies, int yOrigin, float width, int spawnRate) {
+			ArrayList<Zombie> myZombies, int yOrigin, float width, int spawnRate, BordView view, ApplicationContext context) {
 		
-		int n = dataBord.RandomPosGenerator(rand);
-		int n2 = dataBord.RandomPosGenerator(rand*2);
+		int n = dataBord.RandomPosGenerator(300);
+		int x = (int) width;
+		int y = yOrigin + dataBord.RandomPosGenerator(4) * squareSize + (squareSize / 2) - (ZombieSize / 2);
+		ArrayList<Integer> probList = new ArrayList<Integer>();
 		
-		if (spawnRate == n2) {
-			myZombies.add(new FlagZombie((int) width,
-					yOrigin + dataBord.RandomPosGenerator(4) * squareSize + (squareSize / 2) - ZombieSize / 2));
-			str.append("new FlagZombie (" + new SimpleDateFormat("hh:mm:ss").format(new Date()) + ")\n");
+		while (probList.size() != 1) {
+			for(Zombie z: zombieList) {
+				probList.add(z.getProb(difficulty));
+			}
 		}
-		if (spawnRate == n) {
-			myZombies.add(new NormalZombie((int) width,
-					yOrigin + dataBord.RandomPosGenerator(4) * squareSize + (squareSize / 2) - ZombieSize / 2));
-			str.append("new NormalZombie (" + new SimpleDateFormat("hh:mm:ss").format(new Date()) + ")\n");
+		
+		int valeurSympa = 0, selecteur = 0;
+		
+		for(int valeur : probList) {
+			
+			if(valeur>difficulty) {
+				if (valeur-difficulty < valeurSympa) {
+					valeurSympa = valeur-difficulty;
+					selecteur +=1;
+				}
+		    }
+			if(valeur<valeurSympa) {
+				if (difficulty-valeur < valeurSympa) {
+					valeurSympa = difficulty-valeur;
+					selecteur +=1;
+				}
+			}
 		}
-		if (spawnRate == n2) {
-			myZombies.add(new ConeheadZombie((int) width,
-					yOrigin + dataBord.RandomPosGenerator(4) * squareSize + (squareSize / 2) - ZombieSize / 2));
-			str.append("new ConeheadZombie (" + new SimpleDateFormat("hh:mm:ss").format(new Date()) + ")\n");
-		}
+		
+		myZombies.add(zombieList[dataBord.RandomPosGenerator(zombieList.length)].createAndDrawNewZombie(view, context, x, y));
+		str.append("new FlagZombie (" + new SimpleDateFormat("hh:mm:ss").format(new Date()) + ")\n");
+		
 	}
 	
 	
 }
+
+
+
+
+
+
+
+
+

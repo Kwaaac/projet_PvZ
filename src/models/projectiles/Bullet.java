@@ -7,7 +7,7 @@ import views.SimpleGameView;
 public class Bullet extends Projectile {
 
 	private final String name = "Bullet";
-	private final String color = "133939";
+	private final String color = "#0830b2";
 	
 	public Bullet(float x, float y) {
 		super(x, y, 45, 1 , 7.7);

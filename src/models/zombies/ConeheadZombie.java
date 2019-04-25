@@ -8,6 +8,7 @@ public class ConeheadZombie extends Zombie {
 
 	private final String name = "Conehead Zombie";
 	private final String color = "#CB5050";
+	private final int threat = 2;
 	public ConeheadZombie(int x, int y) {
 		super(x, y, 100, 560, -0.7);
 	}
@@ -24,6 +25,10 @@ public class ConeheadZombie extends Zombie {
 	@Override
 	public String toString() {
 		return super.toString() + "--" + name; 
+	}
+	
+	public Integer getProb(int difficulty) {
+		return (int) (((100/threat)*(difficulty))*0.55+0.10*threat);
 	}
 	
 	public void go() {

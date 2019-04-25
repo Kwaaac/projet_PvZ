@@ -8,7 +8,8 @@ public class NormalZombie extends Zombie {
 
 	private final String name = "Normal Zombie";
 	private final String color = "#000000";
-
+	private final int threat = 1;
+	
 	public NormalZombie(int x, int y) {
 		super(x, y, 100, 200, -0.73);
 	}
@@ -27,10 +28,14 @@ public class NormalZombie extends Zombie {
 		return super.toString() + "--" + name;
 	}
 
+	public Integer getProb(int difficulty) {
+		return (int) (((100/threat)*(difficulty))*0.55+0.10*threat);
+	}
+	
 	public void go() {
 		super.setSpeed((float) -0.73);
 	}
-
+	
 	@Override
 	public Zombie createAndDrawNewZombie(SimpleGameView view, ApplicationContext context, int x, int y) {
 		view.drawNormalZombie(context, x, y, color);
