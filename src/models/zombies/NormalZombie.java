@@ -1,12 +1,13 @@
 package models.zombies;
 
-import java.awt.Color;
-import java.awt.geom.Ellipse2D;
+import java.awt.Graphics2D;
+import fr.umlv.zen5.ApplicationContext;
+import views.SimpleGameView;
 
 public class NormalZombie extends Zombie {
 
 	private final String name = "Normal Zombie";
-	private final Color color = Color.BLACK;
+	private final String color = "#000000";
 
 	public NormalZombie(int x, int y) {
 		super(x, y, 100, 200, -0.73);
@@ -17,13 +18,8 @@ public class NormalZombie extends Zombie {
 	}
 
 	@Override
-	public Color getColor() {
+	public String getColor() {
 		return color;
-	}
-
-	@Override
-	public Ellipse2D.Float draw() {
-		return new Ellipse2D.Float(getX(), getY(), getSizeOfZombie(), getSizeOfZombie());
 	}
 
 	@Override
@@ -33,6 +29,18 @@ public class NormalZombie extends Zombie {
 
 	public void go() {
 		super.setSpeed((float) -0.73);
+	}
+
+	@Override
+	public Zombie createAndDrawNewZombie(SimpleGameView view, ApplicationContext context, int x, int y) {
+		view.drawNormalZombie(context, x, y, color);
+		
+		return new NormalZombie(x, y);
+	}
+	
+	@Override
+	public void draw(SimpleGameView view, Graphics2D graphics, float x, float y) {
+		view.drawNormalZombie(graphics, x, y, color);
 	}
 
 }

@@ -1,12 +1,16 @@
 package models;
 
-import java.awt.Color;
-import java.awt.geom.Ellipse2D;
+import java.awt.Graphics2D;
+import views.SimpleGameView;
 
 public interface MovingElement {
 	void move();
-
-	Ellipse2D.Float draw();
 	
-	Color getColor();
+	String getColor();
+	
+	float getX();
+	
+	float getY();
+
+	void draw(SimpleGameView view, Graphics2D graphics, float x, float y);
 }

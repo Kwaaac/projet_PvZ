@@ -1,10 +1,9 @@
-package models;
+package models.plants;
 
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 
 import fr.umlv.zen5.ApplicationContext;
-import models.plants.Plant;
 import models.projectiles.Projectile;
 import models.zombies.Zombie;
 import views.BordView;

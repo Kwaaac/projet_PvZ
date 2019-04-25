@@ -141,5 +141,4 @@ public class BordView extends SimpleGameView {
 	public void moveAndDrawElement(Graphics2D graphics, SimpleGameData data, MovingElement moving) {
 		super.moveAndDrawElement(graphics, data, moving);
 	}
-
 }

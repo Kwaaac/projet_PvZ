@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.Random;
 
 import fr.umlv.zen5.ApplicationContext;
+import models.plants.IPlant;
 import models.plants.Plant;
 import models.projectiles.Projectile;
 import models.zombies.ConeheadZombie;

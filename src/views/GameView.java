@@ -70,9 +70,15 @@ public interface GameView {
 	 * @param data    the GameData containing the game data.
 	 * @param x       the float x-coordinate of the cell.
 	 * @param y       the float y-coordinate of the cell.
-	 * @param yellow 
+	 * @param yellow
 	 */
 	public default void drawOnlyOneCell(ApplicationContext context, int x, int y, String s) {
+		context.renderFrame(graphics -> drawOnlyOneCell(graphics, x, y, s));
+	}
+	
+	public void drawOnlyOneCell(Graphics2D graphics, float x, float y, String s);
+	
+	public default void drawOnlyOneCell(ApplicationContext context, float x, float y, String s) {
 		context.renderFrame(graphics -> drawOnlyOneCell(graphics, x, y, s));
 	}
 
@@ -95,33 +101,62 @@ public interface GameView {
 	 * @param data    the GameData containing the game data.
 	 * @param moving  the moving element.
 	 */
-	public default void moveAndDrawElement(ApplicationContext context, SimpleGameData data, MovingElement moving ) {
+	public default void moveAndDrawElement(ApplicationContext context, SimpleGameData data, MovingElement moving) {
 		context.renderFrame(graphics -> moveAndDrawElement(graphics, data, moving));
 	}
 
-	
-	
+	/*-----------------------------Plants------------------------------*/
+
 	void drawPeashooter(Graphics2D graphics, int x, int y, String s);
-	
+
 	public default void drawPeashooter(ApplicationContext context, int x, int y, String s) {
 		context.renderFrame(graphics -> drawOnlyOneCell(graphics, x, y, s));
 	}
-	
+
 	void drawCherryBomb(Graphics2D graphics, int x, int y, String s);
-	
+
 	public default void drawCherryBomb(ApplicationContext context, int x, int y, String s) {
 		context.renderFrame(graphics -> drawOnlyOneCell(graphics, x, y, s));
 	}
-	
+
 	void drawWallNut(Graphics2D graphics, int x, int y, String s);
-	
+
 	public default void drawWallNut(ApplicationContext context, int x, int y, String s) {
 		context.renderFrame(graphics -> drawOnlyOneCell(graphics, x, y, s));
 	}
-	
+
 	void drawPotatoMine(Graphics2D graphics, int x, int y, String s);
-	
+
 	public default void drawPotatoMine(ApplicationContext context, int x, int y, String s) {
+		context.renderFrame(graphics -> drawOnlyOneCell(graphics, x, y, s));
+	}
+
+	/*-----------------------------Zombies------------------------------*/
+
+	void drawNormalZombie(Graphics2D graphics, float x, float y, String s);
+
+	public default void drawNormalZombie(ApplicationContext context, float x, float y, String s) {
+		context.renderFrame(graphics -> drawOnlyOneCell(graphics, x, y, s));
+	}
+
+	void drawConeheadZombie(Graphics2D graphics, float x, float y, String s);
+
+	public default void drawConeheadZombie(ApplicationContext context, float x, float y, String s) {
+		context.renderFrame(graphics -> drawOnlyOneCell(graphics, x, y, s));
+	}
+
+	void drawFlagZombie(Graphics2D graphics, float x, float y, String s);
+
+	public default void drawFlagZombie(ApplicationContext context, float x, float y, String s) {
+		context.renderFrame(graphics -> drawOnlyOneCell(graphics, x, y, s));
+	}
+	
+	
+	/*-----------------------------Bullets------------------------------*/
+
+	void drawBullet(Graphics2D graphics, float x, float y, String s);
+
+	public default void drawBullet(ApplicationContext context, float x, float y, String s) {
 		context.renderFrame(graphics -> drawOnlyOneCell(graphics, x, y, s));
 	}
 	

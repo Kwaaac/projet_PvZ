@@ -12,7 +12,7 @@ import models.plants.Plant;
 import models.projectiles.Projectile;
 import views.BordView;
 
-public abstract class Zombie extends Entities implements MovingElement {
+public abstract class Zombie extends Entities implements MovingElement, IZombie {
 	private final String type = "Zombie";
 	private double speed;
 	private final static int sizeOfZombie = 75;
@@ -26,6 +26,14 @@ public abstract class Zombie extends Entities implements MovingElement {
 		this.speed = -1.7;
 		this.shootBarMax = (int) (speed * -7500);
 		shootTime = System.currentTimeMillis();
+	}
+	
+	public float getX() {
+		return super.getX();
+	}
+	
+	public float getY() {
+		return super.getY();
 	}
 
 	@Override

@@ -1,28 +1,23 @@
 package models.projectiles;
 
-import java.awt.Color;
-import java.awt.geom.Ellipse2D;
+import java.awt.Graphics2D;
+import views.SimpleGameView;
 
 
 public class Bullet extends Projectile {
 
 	private final String name = "Bullet";
-	private final Color color = Color.BLUE;
+	private final String color = "133939";
 	
 	public Bullet(float x, float y) {
 		super(x, y, 45, 1 , 7.7);
 	}
 	
 	@Override
-	public Color getColor() {
+	public String getColor() {
 		return color;
 	}
 
-	@Override
-	public Ellipse2D.Float draw(){
-		return new Ellipse2D.Float(super.x, super.y, super.getSizeOfProjectile(), super.getSizeOfProjectile());
-	}
-	
 	@Override
 	public String toString() {
 		return super.toString() + "--" + name; 
@@ -33,6 +28,11 @@ public class Bullet extends Projectile {
 
 	@Override
 	public void resetAS() {}
+
+	@Override
+	public void draw(SimpleGameView view, Graphics2D graphics, float x, float y) {
+		view.drawBullet(graphics, x, y, color);
+	}
 
 	
 

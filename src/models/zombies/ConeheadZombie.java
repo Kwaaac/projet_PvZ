@@ -1,12 +1,13 @@
 package models.zombies;
 
-import java.awt.Color;
-import java.awt.geom.Ellipse2D;
+import java.awt.Graphics2D;
+import fr.umlv.zen5.ApplicationContext;
+import views.SimpleGameView;
 
 public class ConeheadZombie extends Zombie {
 
 	private final String name = "Conehead Zombie";
-	private final Color color = Color.RED.darker();
+	private final String color = "#CB5050";
 	public ConeheadZombie(int x, int y) {
 		super(x, y, 100, 560, -0.7);
 	}
@@ -16,15 +17,10 @@ public class ConeheadZombie extends Zombie {
 	}
 
 	@Override
-	public Color getColor() {
+	public String getColor() {
 		return color;
 	}
 
-	@Override
-	public Ellipse2D.Float draw(){
-		return new Ellipse2D.Float(super.x, super.y, getSizeOfZombie(), getSizeOfZombie());
-	}
-	
 	@Override
 	public String toString() {
 		return super.toString() + "--" + name; 
@@ -32,5 +28,17 @@ public class ConeheadZombie extends Zombie {
 	
 	public void go() {
 		super.setSpeed((float) -0.7);
+	}
+
+	@Override
+	public Zombie createAndDrawNewZombie(SimpleGameView view, ApplicationContext context, int x, int y) {
+		view.drawConeheadZombie(context, x, y, color);
+		
+		return new ConeheadZombie(x, y);
+	}
+	
+	@Override
+	public void draw(SimpleGameView view, Graphics2D graphics, float x, float y) {
+		view.drawConeheadZombie(graphics, x, y, color);
 	}
 }

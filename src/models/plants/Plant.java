@@ -5,7 +5,6 @@ import java.util.ArrayList;
 
 import models.Coordinates;
 import models.Entities;
-import models.IPlant;
 import models.zombies.Zombie;
 
 
