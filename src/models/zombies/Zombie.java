@@ -60,8 +60,6 @@ public abstract class Zombie extends Entities implements MovingElement {
 
 	public void incAS() {
 		shootBar = System.currentTimeMillis() - shootTime;
-		
-		System.out.println(shootBar + "///" + shootBarMax);
 	}
 
 	public void resetAS() {

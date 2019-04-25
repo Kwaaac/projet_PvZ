@@ -1,20 +1,14 @@
 package models;
 
 import java.awt.Color;
-import java.awt.geom.Point2D;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.temporal.Temporal;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Random;
 
 import fr.umlv.zen5.ApplicationContext;
-import fr.umlv.zen5.Event;
-import models.plants.CherryBomb;
-import models.plants.Peashooter;
 import models.plants.Plant;
-import models.plants.WallNut;
 import models.projectiles.Projectile;
 import models.zombies.Zombie;
 import views.BordView;
@@ -47,7 +41,7 @@ public class SimpleGameData {
 		Random random = new Random();
 		return random.nextInt(valeurMax);
 	}
-	
+
 	public int RandomPosGenerator(int valeurMin, int valeurMax) {
 		Random r = new Random();
 		return valeurMin + r.nextInt(valeurMax - valeurMin);
@@ -212,11 +206,13 @@ public class SimpleGameData {
 
 	public static void timeEnd(ArrayList<Zombie> myZombies, Temporal time, StringBuilder str,
 			ApplicationContext context, int deathCounterZombie, String mdp) {
+		
+		
 		int xOrigin = 450;
 		int squareSize = BordView.getSquareSize();
-		String choice = null, finalChoice = null;
+		String choice = "Continue", finalChoice = null;
 		int h = 0, m = 0, s = 0;
-
+		
 		for (Zombie z : myZombies) {
 			if (z.isEatingBrain(xOrigin, squareSize)) {
 				choice = "Stop";
@@ -234,39 +230,38 @@ public class SimpleGameData {
 			finalChoice = "Stop";
 		}
 
-		if (choice != null) {
-			switch (choice) {
-			case "Continue":
+		switch (choice) {
+		case "Continue":
+			break;
+		case "Stop":
+			Duration timeEnd = Duration.between(time, Instant.now());
+			h = (int) (timeEnd.getSeconds() / 3600);
+			m = (int) ((timeEnd.getSeconds() % 3600) / 60);
+			s = (int) timeEnd.getSeconds();
+			switch (finalChoice) {
+			case "Win":
+				str.append("-+-+-+-+-+-+-+-+-+-\nVous avez gagne!!!\nLa partie a duree : " + h + " heure(s) " + m
+						+ " minute(s) " + s + " seconde(s)");
+				break;
+			case "Loose":
+				str.append("-+-+-+-+-+-+-+-+-+-\nVous avez perdu...\nLa partie a duree : " + h + " heure(s) " + m
+						+ " minute(s) " + s + " seconde(s)");
 				break;
 			case "Stop":
-				Duration timeEnd = Duration.between(time, Instant.now());
-				h = (int) (timeEnd.getSeconds() / 3600);
-				m = (int) ((timeEnd.getSeconds() % 3600) / 60);
-				s = (int) timeEnd.getSeconds();
-				switch (finalChoice) {
-				case "Win":
-					str.append("-+-+-+-+-+-+-+-+-+-\nVous avez gagne!!!\nLa partie a duree : " + h + " heure(s) " + m
-							+ " minute(s) " + s + " seconde(s)");
-					break;
-				case "Loose":
-					str.append("-+-+-+-+-+-+-+-+-+-\nVous avez perdu...\nLa partie a duree : " + h + " heure(s) " + m
-							+ " minute(s) " + s + " seconde(s)");
-					break;
-				case "Stop":
-					str.append("-+-+-+-+-+-+-+-+-+-\nVous avez quitte la partie !\nLa partie a duree : " + h
-							+ " heure(s) " + m + " minute(s) " + s + " seconde(s)");
-					break;
-				}
-				System.out.println(str.toString());
-				SimpleGameData.setWL(0);
-				context.exit(0);
+				str.append("-+-+-+-+-+-+-+-+-+-\nVous avez quitte la partie !\nLa partie a duree : " + h + " heure(s) "
+						+ m + " minute(s) " + s + " seconde(s)");
+				break;
 			}
+			System.out.println(str.toString());
+			SimpleGameData.setWL(0);
+			context.exit(0);
+
 		}
 	}
 
 	public void planting(ApplicationContext context, SimpleGameData dataSelect, BordView view, SelectBordView psView,
 			float x, float y) {
-		
+
 		if (this.isCorrectLocation(view, x, y) && dataSelect.hasASelectedCell()) {
 
 			this.selectCell(view.lineFromY(y), view.columnFromX(x));
@@ -293,7 +288,7 @@ public class SimpleGameData {
 	public void selectingCellAndPlanting(ApplicationContext context, SimpleGameData dataSelect, BordView view,
 			SelectBordView plantSelectionView, float x, float y) {
 		if (!this.hasASelectedCell()) {
-			
+
 			this.planting(context, dataSelect, view, plantSelectionView, x, y);
 
 		} else {
@@ -315,17 +310,19 @@ public class SimpleGameData {
 			SelectBordView plantSelectionView, Plant[] selectedPlant) {
 
 		boolean result = false;
-		
+
 		int target = this.RandomPosGenerator(20); // 1 chance sur x
-		int xRandomPosition = this.RandomPosGenerator(view.getXOrigin(), view.getLength()); // random position x dans matrice
-		int yRandomPosition = this.RandomPosGenerator(view.getYOrigin(), view.getWidth()); // random position y dans matrice
+		int xRandomPosition = this.RandomPosGenerator(view.getXOrigin(), view.getLength()); // random position x dans
+																							// matrice
+		int yRandomPosition = this.RandomPosGenerator(view.getYOrigin(), view.getWidth()); // random position y dans
+																							// matrice
 		int randomPlantType = this.RandomPosGenerator(selectedPlant.length); // random type plant
-		
+
 		if (target == 1) {
-			
+
 			if (!dataSelect.hasASelectedCell()) {
 				dataSelect.selectCell(randomPlantType, 0);
-				
+
 			} else {
 				dataSelect.unselect();
 				dataSelect.selectCell(randomPlantType, 0);

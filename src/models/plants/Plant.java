@@ -1,8 +1,6 @@
 package models.plants;
 
 import java.awt.geom.Rectangle2D;
-import java.time.Duration;
-import java.time.Instant;
 import java.util.ArrayList;
 
 import models.Coordinates;
@@ -59,10 +57,6 @@ public abstract class Plant extends Entities implements IPlant{
 	@Override
 	public boolean readyToshot(ArrayList<Zombie> mz) {
 		return shootBar >= shootBarMax;
-	}
-	
-	public void setTimerA(int x) {
-		this.shootBar = x;
 	}
 	
 	public Coordinates hitBox() {

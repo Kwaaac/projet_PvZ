@@ -6,7 +6,6 @@ import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 
 import fr.umlv.zen5.Application;
 import fr.umlv.zen5.ApplicationContext;
@@ -14,20 +13,24 @@ import fr.umlv.zen5.Event;
 import fr.umlv.zen5.Event.Action;
 import fr.umlv.zen5.KeyboardKey;
 import fr.umlv.zen5.ScreenInfo;
-import models.Coordinates;
+
 import models.DeadPool;
 import models.SimpleGameData;
+
 import models.plants.CherryBomb;
 import models.plants.Peashooter;
 import models.plants.Plant;
 import models.plants.PotatoMine;
 import models.plants.WallNut;
+
 import models.projectiles.Bullet;
 import models.projectiles.Projectile;
+
 import models.zombies.ConeheadZombie;
 import models.zombies.FlagZombie;
 import models.zombies.NormalZombie;
 import models.zombies.Zombie;
+
 import views.BordView;
 import views.SelectBordView;
 
@@ -59,8 +62,6 @@ public class SimpleGameController {
 
 		ArrayList<Zombie> myZombies = new ArrayList<>();
 		ArrayList<Projectile> myBullet = new ArrayList<>();
-		HashMap<Integer, Integer> possibilityX = new HashMap<Integer, Integer>(); // Test Mod tkt
-		HashMap<Integer, Integer> possibilityY = new HashMap<Integer, Integer>(); // Test Mod tkt
 
 		int spawnRate = 1;
 		int ZombieSize = Zombie.getSizeOfZombie();
@@ -74,15 +75,6 @@ public class SimpleGameController {
 		int day = 0;
 		boolean debug = false;
 
-		for (int x = 0; x < 8; x++) {
-			for (int y = 0; y < 5; y++) {
-
-				possibilityX.put(x, Coordinates.CenteredX(view.realCoordFromIndex(x, xOrigin)));
-				possibilityY.put(y, Coordinates.CenteredY(view.realCoordFromIndex(y, yOrigin)));
-
-			}
-		}
-
 		while (true) {
 			view.draw(context, dataBord);
 			dataBord.movingZombiesAndBullets(context, view, myZombies, myBullet);
@@ -93,22 +85,22 @@ public class SimpleGameController {
 			int n = dataBord.RandomPosGenerator(300);
 			int n2 = dataBord.RandomPosGenerator(600);
 
-			if (day == 0 ) {
+			if (day == 0 || spawnRate == n2) {
 				myZombies.add(new FlagZombie((int) width,
 						yOrigin + dataBord.RandomPosGenerator(5) * squareSize + (squareSize / 2) - ZombieSize / 2));
 				str.append("new FlagZombie (" + new SimpleDateFormat("hh:mm:ss").format(new Date()) + ")\n");
 				day += 1;
 			}
-//			if (spawnRate == n) {
-//				myZombies.add(new NormalZombie((int) width,
-//						yOrigin + dataBord.RandomPosGenerator(4) * squareSize + (squareSize / 2) - ZombieSize / 2));
-//				str.append("new NormalZombie (" + new SimpleDateFormat("hh:mm:ss").format(new Date()) + ")\n");
-//			}
-//			if (spawnRate == n2) {
-//				myZombies.add(new ConeheadZombie((int) width,
-//						yOrigin + dataBord.RandomPosGenerator(4) * squareSize + (squareSize / 2) - ZombieSize / 2));
-//				str.append("new ConeheadZombie (" + new SimpleDateFormat("hh:mm:ss").format(new Date()) + ")\n");
-//			}
+			if (spawnRate == n) {
+				myZombies.add(new NormalZombie((int) width,
+						yOrigin + dataBord.RandomPosGenerator(4) * squareSize + (squareSize / 2) - ZombieSize / 2));
+				str.append("new NormalZombie (" + new SimpleDateFormat("hh:mm:ss").format(new Date()) + ")\n");
+			}
+			if (spawnRate == n2) {
+				myZombies.add(new ConeheadZombie((int) width,
+						yOrigin + dataBord.RandomPosGenerator(4) * squareSize + (squareSize / 2) - ZombieSize / 2));
+				str.append("new ConeheadZombie (" + new SimpleDateFormat("hh:mm:ss").format(new Date()) + ")\n");
+			}
 
 			/*------------------------Gestion des conflits--------------------------------*/
 			Zombie.ZCheckConflict(myZombies, myBullet, dataBord.getMyPlants(), deadPoolE, view, dataBord, str);
