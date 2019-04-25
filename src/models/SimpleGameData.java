@@ -1,15 +1,20 @@
 package models;
 
 import java.awt.Color;
+import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.temporal.Temporal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Random;
 
 import fr.umlv.zen5.ApplicationContext;
 import models.plants.Plant;
 import models.projectiles.Projectile;
+import models.zombies.ConeheadZombie;
+import models.zombies.FlagZombie;
+import models.zombies.NormalZombie;
 import models.zombies.Zombie;
 import views.BordView;
 import views.SelectBordView;
@@ -22,6 +27,9 @@ public class SimpleGameData {
 	private Coordinates selected;
 	private final ArrayList<Coordinates> placedPlant = new ArrayList<Coordinates>();
 	private final ArrayList<Plant> myPlants = new ArrayList<>();
+	
+	private static int difficulty = 0;
+	private static int rand = 300;
 
 	public SimpleGameData(int nbLines, int nbColumns) {
 		matrix = new Cell[nbLines][nbColumns];
@@ -334,5 +342,37 @@ public class SimpleGameData {
 		return result;
 	}
 	
-
+	
+	public void setRand(int x) {
+		rand = x;
+	}
+	
+	public void setDifficulty(int x) {
+		difficulty = x;
+	}
+	
+	public static void spawnRandomZombie(SimpleGameData dataBord, int squareSize, int ZombieSize, StringBuilder str, 
+			ArrayList<Zombie> myZombies, int yOrigin, float width, int spawnRate) {
+		
+		int n = dataBord.RandomPosGenerator(rand);
+		int n2 = dataBord.RandomPosGenerator(rand*2);
+		
+		if (spawnRate == n2) {
+			myZombies.add(new FlagZombie((int) width,
+					yOrigin + dataBord.RandomPosGenerator(4) * squareSize + (squareSize / 2) - ZombieSize / 2));
+			str.append("new FlagZombie (" + new SimpleDateFormat("hh:mm:ss").format(new Date()) + ")\n");
+		}
+		if (spawnRate == n) {
+			myZombies.add(new NormalZombie((int) width,
+					yOrigin + dataBord.RandomPosGenerator(4) * squareSize + (squareSize / 2) - ZombieSize / 2));
+			str.append("new NormalZombie (" + new SimpleDateFormat("hh:mm:ss").format(new Date()) + ")\n");
+		}
+		if (spawnRate == n2) {
+			myZombies.add(new ConeheadZombie((int) width,
+					yOrigin + dataBord.RandomPosGenerator(4) * squareSize + (squareSize / 2) - ZombieSize / 2));
+			str.append("new ConeheadZombie (" + new SimpleDateFormat("hh:mm:ss").format(new Date()) + ")\n");
+		}
+	}
+	
+	
 }

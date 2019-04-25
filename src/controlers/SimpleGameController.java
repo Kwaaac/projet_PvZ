@@ -75,7 +75,6 @@ public class SimpleGameController {
 
 		StringBuilder str = new StringBuilder("Journal de bord\n-+-+-+-+-+-+-+-+-+-\n");
 
-		int day = 0;
 		boolean debug = false;
 
 		while (true) {
@@ -88,28 +87,10 @@ public class SimpleGameController {
 			/*---------------------------INITIALISATION-----------------------------*/
 			
 			DeadPool deadPoolE = new DeadPool();
-			int n = dataBord.RandomPosGenerator(300);
-			int n2 = dataBord.RandomPosGenerator(600);
-			
 
 			/*-------------------------------ZOMBIE SPAWNERS-----------------------------*/
 			
-			if (day == 0 || spawnRate == n2) {
-				myZombies.add(new FlagZombie((int) width,
-						yOrigin + dataBord.RandomPosGenerator(5) * squareSize + (squareSize / 2) - ZombieSize / 2));
-				str.append("new FlagZombie (" + new SimpleDateFormat("hh:mm:ss").format(new Date()) + ")\n");
-				day += 1;
-			}
-			if (spawnRate == n) {
-				myZombies.add(new NormalZombie((int) width,
-						yOrigin + dataBord.RandomPosGenerator(4) * squareSize + (squareSize / 2) - ZombieSize / 2));
-				str.append("new NormalZombie (" + new SimpleDateFormat("hh:mm:ss").format(new Date()) + ")\n");
-			}
-			if (spawnRate == n2) {
-				myZombies.add(new ConeheadZombie((int) width,
-						yOrigin + dataBord.RandomPosGenerator(4) * squareSize + (squareSize / 2) - ZombieSize / 2));
-				str.append("new ConeheadZombie (" + new SimpleDateFormat("hh:mm:ss").format(new Date()) + ")\n");
-			}
+			SimpleGameData.spawnRandomZombie(dataBord, squareSize, ZombieSize, str, myZombies, yOrigin, width, spawnRate);
 
 			/*------------------------------- CONFLICTS ----------------------------------*/
 			
