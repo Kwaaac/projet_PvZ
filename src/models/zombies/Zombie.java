@@ -103,19 +103,19 @@ public abstract class Zombie extends Entities implements MovingElement {
 	
 	public void conflictBvZ(DeadPool DPe, ArrayList<Projectile> Le) {
 		for (IEntite e : Le) {
-			if (this.hit(e)) {
-
+			if (this.hit(e) && !(e.isInConflict())) {
+				e.setConflictMode(true);
 				this.mortalKombat(e);
 				if (e.isDead()) {
 					DPe.addInDP(e);
 				} 
 				/*
 				 * si ils sont plusieur a le taper et que sa vie tombe a zero avant que les
-				 * attaquant ne sois mort on empeche des echange de dégats(on en a besoin pour
-				 * pas qu'une plante morte soit capable de tué après sa mort)
+				 * attaquant ne sois mort on empeche des echange de d�gats(on en a besoin pour
+				 * pas qu'une plante morte soit capable de tu� apr�s sa mort)
 				 */
 				else if (this.isDead()) {
-					
+					e.setConflictMode(false);
 					DPe.addInDP(this);
 					break;
 				}

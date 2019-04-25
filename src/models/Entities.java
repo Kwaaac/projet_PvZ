@@ -11,6 +11,7 @@ public abstract class Entities implements IEntite {
 	protected Coordinates caseXY;
 	protected int damage;
 	protected int life;
+	protected boolean inConflict;
 
 	public Entities(float x, float y, int damage, int life) {
 		this.x = x;
@@ -94,6 +95,17 @@ public abstract class Entities implements IEntite {
 	 * @param e entit�es qui subira les d�gats de l'entitée objet utilisant la
 	 *          méthode et qui attaquera cette meme entitées par la suite
 	 */
+	
+	@Override
+	public boolean isInConflict() {
+		return this.inConflict;
+	}
+	
+	@Override
+	public void setConflictMode(boolean b) {
+		this.inConflict = b;
+	}
+	
 	public void conflict(ArrayList<Entities> entities) {
 		if (!entities.isEmpty()) {
 			for (Entities e : entities) {

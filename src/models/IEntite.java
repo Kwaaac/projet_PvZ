@@ -16,6 +16,9 @@ public interface IEntite {
 
 	boolean isDead();
 
-
+	boolean isInConflict();
+	
+	void setConflictMode(boolean b);
+	
 	public int getDamage();
 }
