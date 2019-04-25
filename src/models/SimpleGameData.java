@@ -25,7 +25,6 @@ public class SimpleGameData {
 
 	public SimpleGameData(int nbLines, int nbColumns) {
 		matrix = new Cell[nbLines][nbColumns];
-
 	}
 
 	public ArrayList<Plant> getMyPlants() {
@@ -334,4 +333,6 @@ public class SimpleGameData {
 
 		return result;
 	}
+	
+
 }

@@ -11,6 +11,10 @@ public class ConeheadZombie extends Zombie {
 		super(x, y, 100, 560, -0.7);
 	}
 
+	public ConeheadZombie() {
+		super(50, 50, 100, 560, -0.7);
+	}
+
 	@Override
 	public Color getColor() {
 		return color;

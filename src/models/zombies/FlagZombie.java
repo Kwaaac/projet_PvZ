@@ -10,6 +10,10 @@ public class FlagZombie extends Zombie{
 		super(x, y, 100, 200, -0.75);
 	}
 
+	public FlagZombie() {
+		super(50, 50, 100, 200, -0.75);
+	}
+
 	@Override
 	public Color getColor() {
 		return color;

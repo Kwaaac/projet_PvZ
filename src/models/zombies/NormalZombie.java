@@ -12,6 +12,10 @@ public class NormalZombie extends Zombie {
 		super(x, y, 100, 200, -0.73);
 	}
 
+	public NormalZombie() {
+		super(50, 50, 100, 200, -0.73);
+	}
+
 	@Override
 	public Color getColor() {
 		return color;

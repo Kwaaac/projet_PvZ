@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 
 import fr.umlv.zen5.Application;
 import fr.umlv.zen5.ApplicationContext;
@@ -39,10 +40,12 @@ public class SimpleGameController {
 	static void simpleGame(ApplicationContext context) {
 		ScreenInfo screenInfo = context.getScreenInfo();
 		float width = screenInfo.getWidth();
-		Plant[] selectedPlant = {new Peashooter(), new WallNut(), new CherryBomb(), new PotatoMine()}; // à remplacer par les choix de
-																									// plantes du
-																									// joueur quand on aura la
-																									// selection de plante
+		Plant[] selectedPlant = {new Peashooter(), new WallNut(), new CherryBomb(), new PotatoMine()}; 
+		HashMap<Zombie, Integer> selectedZombie = new HashMap<Zombie, Integer>();
+		selectedZombie.put(new ConeheadZombie(), 1);
+		selectedZombie.put(new FlagZombie(), 1);
+		selectedZombie.put(new NormalZombie(), 1);
+		
 
 		SimpleGameData dataBord = new SimpleGameData(5, 8);
 		SimpleGameData dataSelect = new SimpleGameData(selectedPlant.length, 1);
@@ -88,23 +91,6 @@ public class SimpleGameController {
 			int n = dataBord.RandomPosGenerator(300);
 			int n2 = dataBord.RandomPosGenerator(600);
 			
-			/*------------------------------EVENTS----------------------------------*/
-
-			Event event = context.pollOrWaitEvent(25); // modifier pour avoir un affichage fluide
-			if (event == null) { // no event
-				continue;
-			}
-			
-			KeyboardKey KB = event.getKey();
-			String mdp = null;
-			if (KB != null) {
-				mdp = KB.toString();
-			}
-			
-			Action action = event.getAction();
-			Point2D.Float location = event.getLocation();
-			float x = location.x;
-			float y = location.y;
 
 			/*-------------------------------ZOMBIE SPAWNERS-----------------------------*/
 			
@@ -144,6 +130,22 @@ public class SimpleGameController {
 					str.append("new plant (" + new SimpleDateFormat("hh:mm:ss").format(new Date()) + ")\n");
 				}
 			}
+			
+			/*------------------------------EVENTS----------------------------------*/
+
+			Event event = context.pollOrWaitEvent(25); // modifier pour avoir un affichage fluide
+			if (event == null) { // no event
+				continue;
+			}
+			
+			KeyboardKey KB = event.getKey();
+			String mdp = null;
+			if (KB != null) {
+				mdp = KB.toString();
+			}
+			
+			/*---------------------------------DEBUG 2--------------------------------------*/
+			Action action = event.getAction();
 			if (action == Action.KEY_PRESSED || action == Action.KEY_RELEASED) {
 				if (mdp == "Y") {
 					debug = true;
@@ -159,14 +161,21 @@ public class SimpleGameController {
 
 			/*---Gestion de la selection de cellules et de la plante manuelle de plante---*/
 			
+			if (action != Action.POINTER_DOWN) {
+				continue;
+			}
+			
+			Point2D.Float location = event.getLocation();
+			float x = location.x;
+			float y = location.y;
+			
 			dataBord.selectingCellAndPlanting(context, dataSelect, view, plantSelectionView, x, y);
 			
 			/*-----------------------------------ELSE-------------------------------------*/
 			
-			if (action != Action.POINTER_DOWN) {
-				continue;
-			}
-
+			
+			
+			
 		}
 
 	}
