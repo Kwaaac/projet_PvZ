@@ -1,27 +1,28 @@
-package models.plants;
+package models.plants.night;
 
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 
 import fr.umlv.zen5.ApplicationContext;
 import models.Entities;
+import models.plants.Plant;
 import models.projectiles.Bullet;
 import models.projectiles.Projectile;
 import models.zombies.Zombie;
 import views.BordView;
 import views.SimpleGameView;
 
-public class Repeater extends Plant{
-	private final String name = "Repeater";
-	private final String color = "#AAFF1D";
+public class ScaredyShroom extends Plant{
+	private final String name = "ScaredyShroom";
+	private final String color = "#90D322";
 	
-	public Repeater(int x, int y) {
-		super(x, y, 0, 300, 5100);
+	public ScaredyShroom(int x, int y) {
+		super(x, y, 0, 300, 5100, 25);
 		shootBar = shootBarMax;			// La plante tire dès qu'elle est posée
 	}
 	
-	public Repeater() {
-		super(-10, -10, 0, 1, 1);
+	public ScaredyShroom() {
+		super(-10, -10, 0, 1, 1, 25);
 	}
 	
 	@Override
@@ -44,20 +45,19 @@ public class Repeater extends Plant{
 	
 	@Override
 	public Plant createAndDrawNewPlant(SimpleGameView view, ApplicationContext context, int x, int y) {
-		view.drawRepeater(context, x,  y, color);
+		view.drawScaredyShroom(context, x,  y, color);
 		
-		return new Repeater(x, y);
+		return new ScaredyShroom(x, y);
 	}
 	
 	@Override
 	public void draw(SimpleGameView view, Graphics2D graphics, int x, int y) {
-		view.drawRepeater(graphics, x, y, color);
+		view.drawScaredyShroom(graphics, x, y, color);
 	}
 
 	@Override
 	public void action(ArrayList<Projectile> myBullet, BordView view, ArrayList<Zombie> myZombies) {
 		if(this.readyToshot(myZombies)) {
-			myBullet.add(new Bullet(super.getX() + super.getSizeOfPlant(), super.getY() + (super.getSizeOfPlant() / 2) - 10));
 			myBullet.add(new Bullet(super.getX() + super.getSizeOfPlant(), super.getY() + (super.getSizeOfPlant() / 2) - 10));
 			
 			this.resetAS();

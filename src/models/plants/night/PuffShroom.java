@@ -1,27 +1,28 @@
-package models.plants;
+package models.plants.night;
 
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 
 import fr.umlv.zen5.ApplicationContext;
 import models.Entities;
+import models.plants.Plant;
 import models.projectiles.Bullet;
 import models.projectiles.Projectile;
 import models.zombies.Zombie;
 import views.BordView;
 import views.SimpleGameView;
 
-public class SnowPea extends Plant{
-	private final String name = "SnowPea";
-	private final String color = "#33FFEA";
+public class PuffShroom extends Plant{
+	private final String name = "PuffShroom";
+	private final String color = "#90D322";
 	
-	public SnowPea(int x, int y) {
-		super(x, y, 0, 300, 5100);
+	public PuffShroom(int x, int y) {
+		super(x, y, 0, 300, 180*3, 0);
 		shootBar = shootBarMax;			// La plante tire dès qu'elle est posée
 	}
 	
-	public SnowPea() {
-		super(-10, -10, 0, 1, 1);
+	public PuffShroom() {
+		super(-10, -10, 0, 1, 1, 0);
 	}
 	
 	@Override
@@ -44,14 +45,14 @@ public class SnowPea extends Plant{
 	
 	@Override
 	public Plant createAndDrawNewPlant(SimpleGameView view, ApplicationContext context, int x, int y) {
-		view.drawSnowPea(context, x,  y, color);
+		view.drawPuffShroom(context, x,  y, color);
 		
-		return new SnowPea(x, y);
+		return new PuffShroom(x, y);
 	}
 	
 	@Override
 	public void draw(SimpleGameView view, Graphics2D graphics, int x, int y) {
-		view.drawSnowPea(graphics, x, y, color);
+		view.drawPuffShroom(graphics, x, y, color);
 	}
 
 	@Override

@@ -106,6 +106,7 @@ public interface GameView {
 	}
 
 	/*-----------------------------Plants------------------------------*/
+	/*------------------------------DAY--------------------------------*/
 
 	void drawPeashooter(Graphics2D graphics, int x, int y, String s);
 
@@ -154,7 +155,55 @@ public interface GameView {
 	public default void drawRepeater(ApplicationContext context, int x, int y, String s) {
 		context.renderFrame(graphics -> drawOnlyOneCell(graphics, x, y, s));
 	}
-
+	/*-------------------------------NIGHT------------------------------*/
+	void drawPuffShroom(Graphics2D graphics, int x, int y, String color);
+	
+	public default void drawPuffShroom(ApplicationContext context, int x, int y, String s) {
+		context.renderFrame(graphics -> drawOnlyOneCell(graphics, x, y, s));
+	}
+	
+	void drawSunShroom(Graphics2D graphics, int x, int y, String color);
+	
+	public default void drawSunShroom(ApplicationContext context, int x, int y, String s) {
+		context.renderFrame(graphics -> drawOnlyOneCell(graphics, x, y, s));
+	}
+	
+	void drawFumeShroom(Graphics2D graphics, int x, int y, String color);
+	
+	public default void drawFumeShroom(ApplicationContext context, int x, int y, String s) {
+		context.renderFrame(graphics -> drawOnlyOneCell(graphics, x, y, s));
+	}
+	
+	void drawGraveBuster(Graphics2D graphics, int x, int y, String color);
+	
+	public default void drawGraveBuster(ApplicationContext context, int x, int y, String s) {
+		context.renderFrame(graphics -> drawOnlyOneCell(graphics, x, y, s));
+	}
+	
+	void drawHypnoShroom(Graphics2D graphics, int x, int y, String color);
+	
+	public default void drawHypnoShroom(ApplicationContext context, int x, int y, String s) {
+		context.renderFrame(graphics -> drawOnlyOneCell(graphics, x, y, s));
+	}
+	
+	void drawScaredyShroom(Graphics2D graphics, int x, int y, String color);
+	
+	public default void drawScaredyShroom(ApplicationContext context, int x, int y, String s) {
+		context.renderFrame(graphics -> drawOnlyOneCell(graphics, x, y, s));
+	}
+	
+	void drawIceShroom(Graphics2D graphics, int x, int y, String color);
+	
+	public default void drawIceShroom(ApplicationContext context, int x, int y, String s) {
+		context.renderFrame(graphics -> drawOnlyOneCell(graphics, x, y, s));
+	}
+	
+	void drawDoomShroom(Graphics2D graphics, int x, int y, String color);
+	
+	public default void drawDoomShroom(ApplicationContext context, int x, int y, String s) {
+		context.renderFrame(graphics -> drawOnlyOneCell(graphics, x, y, s));
+	}
+	
 	/*-----------------------------Zombies------------------------------*/
 
 	void drawNormalZombie(Graphics2D graphics, float x, float y, String s);
@@ -172,6 +221,12 @@ public interface GameView {
 	void drawFlagZombie(Graphics2D graphics, float x, float y, String s);
 
 	public default void drawFlagZombie(ApplicationContext context, float x, float y, String s) {
+		context.renderFrame(graphics -> drawOnlyOneCell(graphics, x, y, s));
+	}
+	
+	void drawBucketheadZombie(Graphics2D graphics, float x, float y, String s);
+
+	public default void drawBucketheadZombie(ApplicationContext context, float x, float y, String s) {
 		context.renderFrame(graphics -> drawOnlyOneCell(graphics, x, y, s));
 	}
 	

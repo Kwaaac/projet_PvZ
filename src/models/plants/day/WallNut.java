@@ -1,10 +1,11 @@
-package models.plants;
+package models.plants.day;
 
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
 import fr.umlv.zen5.ApplicationContext;
+import models.plants.Plant;
 import models.projectiles.Projectile;
 import models.zombies.Zombie;
 import views.BordView;
@@ -15,11 +16,11 @@ public class WallNut extends Plant {
 	private final String color = "#ECB428";
 
 	public WallNut(int x, int y) {
-		super(x, y, 0, 1000, 0);
+		super(x, y, 0, 1000, 0, 50);
 	}
 	
 	public WallNut() {
-		super(-10, -10, 0, 1, 1);
+		super(-10, -10, 0, 1, 1, 50);
 	}
 	
 	int sizeOfPlant = super.getSizeOfPlant();

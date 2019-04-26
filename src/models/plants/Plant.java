@@ -14,10 +14,12 @@ public abstract class Plant extends Entities implements IPlant{
 	protected final int shootBarMax;
 	protected long shootBar;
 	protected long shootTime;
+	private final int cost;
 	
-	public Plant(int x, int y, int damage, int life, int shootBarMax) {
+	public Plant(int x, int y, int damage, int life, int shootBarMax, int cost) {
 		super(x, y, damage, life);
 		this.shootBarMax = shootBarMax;
+		this.cost = cost;
 		shootTime = System.currentTimeMillis();
 	}
 	

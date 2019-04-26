@@ -1,10 +1,11 @@
-package models.plants;
+package models.plants.day;
 
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 
 import fr.umlv.zen5.ApplicationContext;
 import models.Entities;
+import models.plants.Plant;
 import models.projectiles.Bullet;
 import models.projectiles.Projectile;
 import models.zombies.Zombie;
@@ -16,12 +17,12 @@ public class Peashooter extends Plant{
 	private final String color = "#90D322";
 	
 	public Peashooter(int x, int y) {
-		super(x, y, 0, 300, 5100);
+		super(x, y, 0, 300, 5100, 100);
 		shootBar = shootBarMax;			// La plante tire dès qu'elle est posée
 	}
 	
 	public Peashooter() {
-		super(-10, -10, 0, 1, 1);
+		super(-10, -10, 0, 1, 1, 100);
 	}
 	
 	@Override

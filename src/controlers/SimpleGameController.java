@@ -17,15 +17,13 @@ import fr.umlv.zen5.ScreenInfo;
 
 import models.DeadPool;
 import models.SimpleGameData;
-
-import models.plants.CherryBomb;
-import models.plants.Chomper;
-import models.plants.Peashooter;
 import models.plants.Plant;
-import models.plants.PotatoMine;
-import models.plants.SnowPea;
-import models.plants.WallNut;
-
+import models.plants.day.CherryBomb;
+import models.plants.day.Chomper;
+import models.plants.day.Peashooter;
+import models.plants.day.PotatoMine;
+import models.plants.day.SnowPea;
+import models.plants.day.WallNut;
 import models.projectiles.Bullet;
 import models.projectiles.Projectile;
 
@@ -59,7 +57,7 @@ public class SimpleGameController {
 
 		dataBord.setRandomMatrix();
 		dataSelect.setRandomMatrix();
-		int yOrigin = 100;
+		int yOrigin = 150;
 		int xOrigin = 450;
 
 		BordView view = BordView.initGameGraphics(xOrigin, yOrigin, 900, dataBord);

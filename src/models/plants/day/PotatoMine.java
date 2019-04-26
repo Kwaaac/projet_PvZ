@@ -1,4 +1,4 @@
-package models.plants;
+package models.plants.day;
 
 import java.awt.Graphics2D;
 import java.util.ArrayList;
@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import fr.umlv.zen5.ApplicationContext;
 import models.Coordinates;
 import models.Entities;
+import models.plants.Plant;
 import models.projectiles.Projectile;
 import models.zombies.Zombie;
 import views.BordView;
@@ -19,12 +20,12 @@ public class PotatoMine extends Plant {
 	private boolean activate = false;
 
 	public PotatoMine(int x, int y) {
-		super(x, y, 0, 120, 14_000);
+		super(x, y, 0, 120, 14_000, 25);
 
 	}
 
 	public PotatoMine() {
-		super(-10, -10, 0, 1, 1);
+		super(-10, -10, 0, 1, 1, 25);
 		activate = true;
 	}
 

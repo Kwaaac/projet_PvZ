@@ -125,54 +125,103 @@ public abstract class SimpleGameView implements GameView {
 	}
 
 	/*-----------------------------Plants------------------------------*/
-	
+	/*-------------------------------DAY-------------------------------*/
 	@Override
 	public void drawPeashooter(Graphics2D graphics, int x, int y, String color) {
 		graphics.setColor(Color.decode(color));
-		graphics.fill(new Rectangle2D.Float(x, y, sizeOfPlant, sizeOfPlant));
+		graphics.fill(new Rectangle2D.Float(x, y+50, sizeOfPlant, sizeOfPlant));
 	}
 
 	@Override
 	public void drawCherryBomb(Graphics2D graphics, int x, int y, String color) {
 		graphics.setColor(Color.decode(color));
-		graphics.fill(new Rectangle2D.Float(x, y, sizeOfPlant, sizeOfPlant));
+		graphics.fill(new Rectangle2D.Float(x, y+50, sizeOfPlant, sizeOfPlant));
 	}
 
 	@Override
 	public void drawWallNut(Graphics2D graphics, int x, int y, String color) {
 		graphics.setColor(Color.decode(color));
-		graphics.fill(new Rectangle2D.Float(x, y, sizeOfPlant, sizeOfPlant));
+		graphics.fill(new Rectangle2D.Float(x, y+50, sizeOfPlant, sizeOfPlant));
 	}
 
 	@Override
 	public void drawPotatoMine(Graphics2D graphics, int x, int y, String color) {
 		graphics.setColor(Color.decode(color));
-		graphics.fill(new Rectangle2D.Float(x + 10, y + 10, sizeOfPlant - 20, sizeOfPlant - 20));
+		graphics.fill(new Rectangle2D.Float(x + 10, y + 60, sizeOfPlant - 20, sizeOfPlant - 20));
 	}
 	
 	@Override
 	public void drawSnowPea(Graphics2D graphics, int x, int y, String color) {
 		graphics.setColor(Color.decode(color));
-		graphics.fill(new Rectangle2D.Float(x, y, sizeOfPlant, sizeOfPlant));
+		graphics.fill(new Rectangle2D.Float(x, y+50, sizeOfPlant, sizeOfPlant));
 	}
 	
 	@Override
 	public void drawSunFlower(Graphics2D graphics, int x, int y, String color) {
 		graphics.setColor(Color.decode(color));
-		graphics.fill(new Rectangle2D.Float(x, y, sizeOfPlant, sizeOfPlant));
+		graphics.fill(new Rectangle2D.Float(x, y+50, sizeOfPlant, sizeOfPlant));
 	}
 	
 	@Override
 	public void drawChomper(Graphics2D graphics, int x, int y, String color) {
 		graphics.setColor(Color.decode(color));
-		graphics.fill(new Rectangle2D.Float(x - 10, y - 10, sizeOfPlant + 20, sizeOfPlant + 20));
+		graphics.fill(new Rectangle2D.Float(x - 10, y + 40, sizeOfPlant + 20, sizeOfPlant + 20));
 	}
 	
 	@Override
 	public void drawRepeater(Graphics2D graphics, int x, int y, String color) {
 		graphics.setColor(Color.decode(color));
-		graphics.fill(new Rectangle2D.Float(x, y, sizeOfPlant, sizeOfPlant));
+		graphics.fill(new Rectangle2D.Float(x, y+50, sizeOfPlant, sizeOfPlant));
 	}
+	/*-------------------------------NIGHT------------------------------*/
+	@Override
+	public void drawPuffShroom(Graphics2D graphics, int x, int y, String color) {
+		graphics.setColor(Color.decode(color));
+		graphics.fill(new Rectangle2D.Float(x, y+50, sizeOfPlant, sizeOfPlant));
+	}
+	
+	@Override
+	public void drawSunShroom(Graphics2D graphics, int x, int y, String color) {
+		graphics.setColor(Color.decode(color));
+		graphics.fill(new Rectangle2D.Float(x, y+50, sizeOfPlant, sizeOfPlant));
+	}
+	
+	@Override
+	public void drawFumeShroom(Graphics2D graphics, int x, int y, String color) {
+		graphics.setColor(Color.decode(color));
+		graphics.fill(new Rectangle2D.Float(x, y+50, sizeOfPlant, sizeOfPlant));
+	}
+	
+	@Override
+	public void drawGraveBuster(Graphics2D graphics, int x, int y, String color) {
+		graphics.setColor(Color.decode(color));
+		graphics.fill(new Rectangle2D.Float(x, y+50, sizeOfPlant, sizeOfPlant));
+	}
+	
+	@Override
+	public void drawHypnoShroom(Graphics2D graphics, int x, int y, String color) {
+		graphics.setColor(Color.decode(color));
+		graphics.fill(new Rectangle2D.Float(x, y+50, sizeOfPlant, sizeOfPlant));
+	}
+	
+	@Override
+	public void drawScaredyShroom(Graphics2D graphics, int x, int y, String color) {
+		graphics.setColor(Color.decode(color));
+		graphics.fill(new Rectangle2D.Float(x, y+50, sizeOfPlant, sizeOfPlant));
+	}
+	
+	@Override
+	public void drawIceShroom(Graphics2D graphics, int x, int y, String color) {
+		graphics.setColor(Color.decode(color));
+		graphics.fill(new Rectangle2D.Float(x, y+50, sizeOfPlant, sizeOfPlant));
+	}
+	
+	@Override
+	public void drawDoomShroom(Graphics2D graphics, int x, int y, String color) {
+		graphics.setColor(Color.decode(color));
+		graphics.fill(new Rectangle2D.Float(x, y+50, sizeOfPlant, sizeOfPlant));
+	}
+	
 	/*-----------------------------Zombies------------------------------*/
 	
 	int sizeOfZombie = Zombie.getSizeOfZombie();
@@ -191,6 +240,12 @@ public abstract class SimpleGameView implements GameView {
 	
 	@Override
 	public void drawFlagZombie(Graphics2D graphics, float x, float y, String color) {
+		graphics.setColor(Color.decode(color));
+		graphics.fill(new Ellipse2D.Float(x, y, sizeOfZombie, sizeOfZombie));
+	}
+	
+	@Override
+	public void drawBucketheadZombie(Graphics2D graphics, float x, float y, String color) {
 		graphics.setColor(Color.decode(color));
 		graphics.fill(new Ellipse2D.Float(x, y, sizeOfZombie, sizeOfZombie));
 	}

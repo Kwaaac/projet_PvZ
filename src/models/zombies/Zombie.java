@@ -65,6 +65,14 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie 
 	public void go() {
 		speed = -1.7;
 	}
+	
+	public void SpeedBoostON() {
+		speed+=2;
+	}
+	
+	public void SpeedBoostOFF() {
+		speed-=2;
+	}
 
 	public void incAS() {
 		shootBar = System.currentTimeMillis() - shootTime;
