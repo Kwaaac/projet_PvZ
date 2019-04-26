@@ -4,6 +4,7 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Line2D;
+import java.awt.geom.Rectangle2D;
 import java.awt.geom.RectangularShape;
 import java.util.ArrayList;
 
@@ -103,14 +104,17 @@ public class BordView extends SimpleGameView {
 				graphics.setColor(data.getCellColor(i, j));
 			}
 		}
-		
+
+		graphics.setColor(Color.LIGHT_GRAY);
+		graphics.fill(
+				new Rectangle2D.Float(super.getXOrigin() + super.getWidth(), super.getYOrigin(), super.getXOrigin() + super.getWidth(), super.getLength()));
+
 		ArrayList<Plant> myPlants = data.getMyPlants();
 
 		for (Plant p : myPlants) {
 			p.draw(this, graphics, (int) p.getX(), (int) p.getY());
 		}
-		
-		
+
 	}
 
 	/**

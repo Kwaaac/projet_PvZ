@@ -41,10 +41,13 @@ public class SimpleGameController {
 		ScreenInfo screenInfo = context.getScreenInfo();
 		float width = screenInfo.getWidth();
 		Plant[] selectedPlant = {new Peashooter(), new WallNut(), new CherryBomb(), new PotatoMine()}; 
-		HashMap<Zombie, Integer> selectedZombie = new HashMap<Zombie, Integer>();
-		selectedZombie.put(new ConeheadZombie(), 1);
-		selectedZombie.put(new FlagZombie(), 1);
-		selectedZombie.put(new NormalZombie(), 1);
+		HashMap<Zombie, Integer> normalWaveZombie = new HashMap<Zombie, Integer>();
+		normalWaveZombie.put(new ConeheadZombie(), 2);
+		normalWaveZombie.put(new NormalZombie(), 2);
+		
+		HashMap<Zombie, Integer> superWaveZombie = new HashMap<Zombie, Integer>();
+		superWaveZombie.put(new ConeheadZombie(), 3);
+		superWaveZombie.put(new NormalZombie(), 5);
 		
 
 		SimpleGameData dataBord = new SimpleGameData(5, 8);
@@ -90,7 +93,7 @@ public class SimpleGameController {
 
 			/*-------------------------------ZOMBIE SPAWNERS-----------------------------*/
 			
-			SimpleGameData.spawnRandomZombie(dataBord, squareSize, ZombieSize, str, myZombies, yOrigin, width, spawnRate, view, context);
+			SimpleGameData.spawnZombies(dataBord, squareSize, str, myZombies, view, context, normalWaveZombie, superWaveZombie);
 
 			/*------------------------------- CONFLICTS ----------------------------------*/
 			
@@ -114,7 +117,7 @@ public class SimpleGameController {
 			
 			/*------------------------------EVENTS----------------------------------*/
 
-			Event event = context.pollOrWaitEvent(25); // modifier pour avoir un affichage fluide
+			Event event = context.pollOrWaitEvent(35); // modifier pour avoir un affichage fluide
 			if (event == null) { // no event
 				continue;
 			}

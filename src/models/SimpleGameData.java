@@ -6,17 +6,16 @@ import java.time.Duration;
 import java.time.Instant;
 import java.time.temporal.Temporal;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 import fr.umlv.zen5.ApplicationContext;
 import models.plants.IPlant;
 import models.plants.Plant;
 import models.projectiles.Projectile;
-import models.zombies.ConeheadZombie;
 import models.zombies.FlagZombie;
-import models.zombies.NormalZombie;
 import models.zombies.Zombie;
 import views.BordView;
 import views.SelectBordView;
@@ -35,14 +34,14 @@ public class SimpleGameData {
 	private static long difficultyTime;
 
 	private static int difficulty = 1;
-	private final static Zombie[] zombieList = { new NormalZombie(), new FlagZombie(), new ConeheadZombie() };
+	private static int superWave = 0;
 
 	public SimpleGameData(int nbLines, int nbColumns) {
 		matrix = new Cell[nbLines][nbColumns];
-		
+
 		spawnTime = System.currentTimeMillis();
 		timeLimit = 10_000;
-		
+
 		difficultyTime = System.currentTimeMillis();
 	}
 
@@ -353,60 +352,120 @@ public class SimpleGameData {
 	}
 
 	public static void updateDifficulty() {
-		if(System.currentTimeMillis() - difficultyTime >= 20_000) {
+		if (System.currentTimeMillis() - difficultyTime >= 15_000) {
 			difficulty += 1;
 
-			difficultyTime =  System.currentTimeMillis();
+			difficultyTime = System.currentTimeMillis();
 		}
 	}
 
-	public static void spawnRandomZombie(SimpleGameData dataBord, int squareSize, int ZombieSize, StringBuilder str,
-			ArrayList<Zombie> myZombies, int yOrigin, float width, int spawnRate, BordView view,
-			ApplicationContext context) {
-		
-		
-		
+	public static void spawnNormalWave(SimpleGameData dataBord, int squareSize, StringBuilder str,
+			ArrayList<Zombie> myZombies, BordView view, ApplicationContext context,
+			HashMap<Zombie, Integer> zombieList) {
+
 		if (System.currentTimeMillis() - spawnTime >= timeLimit) {
-			System.out.println(timeLimit);
-			
-			int x = (int) width;
-			int y = yOrigin + dataBord.RandomPosGenerator(5) * squareSize + (squareSize / 2) - (ZombieSize / 2);
-			ArrayList<Integer> probList = new ArrayList<Integer>();
 
-			for (Zombie z : zombieList) {
+			int sqrS = BordView.getSquareSize();
 
-				if (z.canSpawn(difficulty)) {
+			int endWave = 0;
+			int x = view.getXOrigin() + view.getWidth();
+			int y = view.getYOrigin() + dataBord.RandomPosGenerator(5) * sqrS + (sqrS / 2)
+					- (Zombie.getSizeOfZombie() / 2);
+			ArrayList<Zombie> zombieAvailable = new ArrayList<>();
+			ArrayList<Integer> probList = new ArrayList<>();
+
+			for (Map.Entry<Zombie, Integer> entry : zombieList.entrySet()) {
+				Zombie z = entry.getKey();
+				Integer spawn = entry.getValue();
+
+				if (spawn == 0) {
+					endWave += 1;
+				}
+
+				if (z.canSpawn(difficulty) && spawn > 0) {
 					probList.add(dataBord.RandomPosGenerator(z.getProb(difficulty)));
+					zombieAvailable.add(z);
+
+					entry.setValue(spawn - 1);
 				}
 			}
 
-			int valeurSympa = probList.get(0), selecteur = 0;
+			if (!probList.isEmpty()) {
+				int valeurSympa = probList.get(0), selecteur = 0;
 
-			for (int i = 0; i != probList.size(); i++) {
-				if (probList.get(i) < valeurSympa) {
-					valeurSympa = probList.get(i);
-					selecteur = i;
+				for (int i = 0; i != probList.size(); i++) {
+					if (probList.get(i) < valeurSympa) {
+						valeurSympa = probList.get(i);
+						selecteur = i;
+					}
+				}
+
+				myZombies.add(zombieAvailable.get(selecteur).createAndDrawNewZombie(view, context, x, y));
+				str.append("new " + zombieAvailable.get(selecteur) + new SimpleDateFormat("hh:mm:ss").format(new Date())
+						+ ")\n");
+
+			} else {
+				if (endWave == zombieList.size()) {
+					superWave = 1;
 				}
 			}
 
-			myZombies.add(zombieList[selecteur].createAndDrawNewZombie(view, context, x, y));
-			str.append("new " +   zombieList[selecteur]  + new SimpleDateFormat("hh:mm:ss").format(new Date()) + ")\n");
-			
-			if(timeLimit >= 3000) {
+			if (timeLimit >= 4000) {
 				timeLimit -= 1000;
-				
+
 				spawnTime = System.currentTimeMillis();
 			} else {
 				spawnTime = System.currentTimeMillis();
 			}
-			
+
 			updateDifficulty();
-			
 			System.out.println(difficulty);
 		}
 	}
 
+	public static void spawnSuperWave(SimpleGameData dataBord, int squareSize, StringBuilder str,
+			ArrayList<Zombie> myZombies, BordView view, ApplicationContext context,
+			HashMap<Zombie, Integer> zombieList) {
 
+		System.out.println("Zombies are coming");
 
+		int sqrS = BordView.getSquareSize();
+
+		int x = view.getXOrigin() + view.getWidth();
+		int y = view.getYOrigin() + dataBord.RandomPosGenerator(5) * sqrS + (sqrS / 2) - (Zombie.getSizeOfZombie() / 2);
+
+		for (Map.Entry<Zombie, Integer> entry : zombieList.entrySet()) {
+			Zombie z = entry.getKey();
+			Integer spawn = entry.getValue();
+
+			if (spawn > 0) {
+				myZombies.add(z.createAndDrawNewZombie(view, context, x, y));
+				str.append("new " + z + new SimpleDateFormat("hh:mm:ss").format(new Date()) + ")\n");
+
+				entry.setValue(spawn - 1);
+			}
+		}
+
+	}
+
+	public static void spawnZombies(SimpleGameData dataBord, int squareSize, StringBuilder str,
+			ArrayList<Zombie> myZombies, BordView view, ApplicationContext context, HashMap<Zombie, Integer> zombieList,
+			HashMap<Zombie, Integer> superZombieList) {
+
+		if (superWave == 0) {
+			spawnNormalWave(dataBord, squareSize, str, myZombies, view, context, zombieList);
+		} else if (superWave == 1 && myZombies.isEmpty()) {
+			int sqrS = BordView.getSquareSize();
+
+			myZombies.add(new FlagZombie(view.getXOrigin() + view.getWidth(), view.getYOrigin()
+					+ dataBord.RandomPosGenerator(5) * sqrS + (sqrS / 2) - (Zombie.getSizeOfZombie() / 2)));
+			str.append("new FlagZombie" + new SimpleDateFormat("hh:mm:ss").format(new Date()));
+
+			spawnSuperWave(dataBord, squareSize, str, myZombies, view, context, superZombieList);
+
+			superWave = 2;
+		}
+
+	}
 
 }
