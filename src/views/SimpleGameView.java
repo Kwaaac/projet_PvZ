@@ -5,15 +5,11 @@ import java.awt.Graphics2D;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.RectangularShape;
-import java.util.ArrayList;
 
 import models.MovingElement;
 import models.SimpleGameData;
 import models.plants.Plant;
 import models.projectiles.Projectile;
-import models.zombies.ConeheadZombie;
-import models.zombies.FlagZombie;
-import models.zombies.NormalZombie;
 import models.zombies.Zombie;
 
 public abstract class SimpleGameView implements GameView {
@@ -131,49 +127,71 @@ public abstract class SimpleGameView implements GameView {
 	/*-----------------------------Plants------------------------------*/
 	
 	@Override
-	public void drawPeashooter(Graphics2D graphics, int x, int y, String s) {
-		graphics.setColor(Color.decode(s));
+	public void drawPeashooter(Graphics2D graphics, int x, int y, String color) {
+		graphics.setColor(Color.decode(color));
 		graphics.fill(new Rectangle2D.Float(x, y, sizeOfPlant, sizeOfPlant));
 	}
 
 	@Override
-	public void drawCherryBomb(Graphics2D graphics, int x, int y, String s) {
-		graphics.setColor(Color.decode(s));
+	public void drawCherryBomb(Graphics2D graphics, int x, int y, String color) {
+		graphics.setColor(Color.decode(color));
 		graphics.fill(new Rectangle2D.Float(x, y, sizeOfPlant, sizeOfPlant));
 	}
 
 	@Override
-	public void drawWallNut(Graphics2D graphics, int x, int y, String s) {
-		graphics.setColor(Color.decode(s));
+	public void drawWallNut(Graphics2D graphics, int x, int y, String color) {
+		graphics.setColor(Color.decode(color));
 		graphics.fill(new Rectangle2D.Float(x, y, sizeOfPlant, sizeOfPlant));
 	}
 
 	@Override
-	public void drawPotatoMine(Graphics2D graphics, int x, int y, String s) {
-		graphics.setColor(Color.decode(s));
+	public void drawPotatoMine(Graphics2D graphics, int x, int y, String color) {
+		graphics.setColor(Color.decode(color));
 		graphics.fill(new Rectangle2D.Float(x + 10, y + 10, sizeOfPlant - 20, sizeOfPlant - 20));
 	}
 	
+	@Override
+	public void drawSnowPea(Graphics2D graphics, int x, int y, String color) {
+		graphics.setColor(Color.decode(color));
+		graphics.fill(new Rectangle2D.Float(x, y, sizeOfPlant, sizeOfPlant));
+	}
 	
+	@Override
+	public void drawSunFlower(Graphics2D graphics, int x, int y, String color) {
+		graphics.setColor(Color.decode(color));
+		graphics.fill(new Rectangle2D.Float(x, y, sizeOfPlant, sizeOfPlant));
+	}
+	
+	@Override
+	public void drawChomper(Graphics2D graphics, int x, int y, String color) {
+		graphics.setColor(Color.decode(color));
+		graphics.fill(new Rectangle2D.Float(x - 10, y - 10, sizeOfPlant + 20, sizeOfPlant + 20));
+	}
+	
+	@Override
+	public void drawRepeater(Graphics2D graphics, int x, int y, String color) {
+		graphics.setColor(Color.decode(color));
+		graphics.fill(new Rectangle2D.Float(x, y, sizeOfPlant, sizeOfPlant));
+	}
 	/*-----------------------------Zombies------------------------------*/
 	
 	int sizeOfZombie = Zombie.getSizeOfZombie();
 	
 	@Override
-	public void drawNormalZombie(Graphics2D graphics, float x, float y, String s) {
-		graphics.setColor(Color.decode(s));
+	public void drawNormalZombie(Graphics2D graphics, float x, float y, String color) {
+		graphics.setColor(Color.decode(color));
 		graphics.fill(new Ellipse2D.Float(x, y, sizeOfZombie, sizeOfZombie));
 	}
 	
 	@Override
-	public void drawConeheadZombie(Graphics2D graphics, float x, float y, String s) {
-		graphics.setColor(Color.decode(s));
+	public void drawConeheadZombie(Graphics2D graphics, float x, float y, String color) {
+		graphics.setColor(Color.decode(color));
 		graphics.fill(new Ellipse2D.Float(x, y, sizeOfZombie, sizeOfZombie));
 	}
 	
 	@Override
-	public void drawFlagZombie(Graphics2D graphics, float x, float y, String s) {
-		graphics.setColor(Color.decode(s));
+	public void drawFlagZombie(Graphics2D graphics, float x, float y, String color) {
+		graphics.setColor(Color.decode(color));
 		graphics.fill(new Ellipse2D.Float(x, y, sizeOfZombie, sizeOfZombie));
 	}
 	
@@ -182,8 +200,8 @@ public abstract class SimpleGameView implements GameView {
 	int sizeOfProjectile = Projectile.getSizeOfProjectile();
 	
 	@Override
-	public void drawBullet(Graphics2D graphics, float x, float y, String s) {
-		graphics.setColor(Color.decode(s));
+	public void drawBullet(Graphics2D graphics, float x, float y, String color) {
+		graphics.setColor(Color.decode(color));
 		graphics.fill(new Ellipse2D.Float(x, y, sizeOfProjectile, sizeOfProjectile));
 	}
 	
@@ -200,7 +218,6 @@ public abstract class SimpleGameView implements GameView {
 	@Override
 	public void moveAndDrawElement(Graphics2D graphics, SimpleGameData data, MovingElement moving) {
 		moving.move();
-
 		moving.draw(this, graphics, moving.getX(), moving.getY());
 	}
 

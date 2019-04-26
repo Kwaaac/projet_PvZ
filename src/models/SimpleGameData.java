@@ -15,7 +15,6 @@ import fr.umlv.zen5.ApplicationContext;
 import models.plants.IPlant;
 import models.plants.Plant;
 import models.projectiles.Projectile;
-import models.zombies.FlagZombie;
 import models.zombies.Zombie;
 import views.BordView;
 import views.SelectBordView;
@@ -44,6 +43,8 @@ public class SimpleGameData {
 
 		difficultyTime = System.currentTimeMillis();
 	}
+	
+	
 
 	public ArrayList<Plant> getMyPlants() {
 		return myPlants;
@@ -419,7 +420,6 @@ public class SimpleGameData {
 			}
 
 			updateDifficulty();
-			System.out.println(difficulty);
 			
 		}
 	}
@@ -427,8 +427,6 @@ public class SimpleGameData {
 	public static void spawnSuperWave(SimpleGameData dataBord, int squareSize, StringBuilder str,
 			ArrayList<Zombie> myZombies, BordView view, ApplicationContext context,
 			HashMap<Zombie, Integer> zombieList) {
-
-		System.out.println("Zombies are coming");
 
 		int sqrS = BordView.getSquareSize();
 		int endWave = 0;

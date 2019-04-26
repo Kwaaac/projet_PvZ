@@ -130,6 +130,30 @@ public interface GameView {
 	public default void drawPotatoMine(ApplicationContext context, int x, int y, String s) {
 		context.renderFrame(graphics -> drawOnlyOneCell(graphics, x, y, s));
 	}
+	
+	void drawSnowPea(Graphics2D graphics, int x, int y, String color);
+	
+	public default void drawSnowPea(ApplicationContext context, int x, int y, String s) {
+		context.renderFrame(graphics -> drawOnlyOneCell(graphics, x, y, s));
+	}
+	
+	void drawSunFlower(Graphics2D graphics, int x, int y, String color);
+	
+	public default void drawSunFlower(ApplicationContext context, int x, int y, String s) {
+		context.renderFrame(graphics -> drawOnlyOneCell(graphics, x, y, s));
+	}
+	
+	void drawChomper(Graphics2D graphics, int x, int y, String color);
+	
+	public default void drawChomper(ApplicationContext context, int x, int y, String s) {
+		context.renderFrame(graphics -> drawOnlyOneCell(graphics, x, y, s));
+	}
+	
+	void drawRepeater(Graphics2D graphics, int x, int y, String color);
+	
+	public default void drawRepeater(ApplicationContext context, int x, int y, String s) {
+		context.renderFrame(graphics -> drawOnlyOneCell(graphics, x, y, s));
+	}
 
 	/*-----------------------------Zombies------------------------------*/
 
@@ -159,5 +183,7 @@ public interface GameView {
 	public default void drawBullet(ApplicationContext context, float x, float y, String s) {
 		context.renderFrame(graphics -> drawOnlyOneCell(graphics, x, y, s));
 	}
+
+	
 	
 }

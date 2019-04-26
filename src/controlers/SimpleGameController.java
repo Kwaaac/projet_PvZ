@@ -19,9 +19,11 @@ import models.DeadPool;
 import models.SimpleGameData;
 
 import models.plants.CherryBomb;
+import models.plants.Chomper;
 import models.plants.Peashooter;
 import models.plants.Plant;
 import models.plants.PotatoMine;
+import models.plants.SnowPea;
 import models.plants.WallNut;
 
 import models.projectiles.Bullet;
@@ -40,7 +42,8 @@ public class SimpleGameController {
 	static void simpleGame(ApplicationContext context) {
 		ScreenInfo screenInfo = context.getScreenInfo();
 		screenInfo.getWidth();
-		Plant[] selectedPlant = {new Peashooter(), new WallNut(), new CherryBomb(), new PotatoMine()}; 
+		Plant[] selectedPlant = {new Peashooter(), new WallNut(), new CherryBomb(), new PotatoMine(), new Chomper()}; 
+		
 		HashMap<Zombie, Integer> normalWaveZombie = new HashMap<Zombie, Integer>();
 		normalWaveZombie.put(new ConeheadZombie(), 0);
 		normalWaveZombie.put(new NormalZombie(), 1);
@@ -73,7 +76,6 @@ public class SimpleGameController {
 		Zombie.getSizeOfZombie();
 		Bullet.getSizeOfProjectile();
 		int deathCounterZombie = 0;
-//		int deathCounterPlant = 0;
 		Instant time = Instant.now();
 
 		StringBuilder str = new StringBuilder("Journal de bord\n-+-+-+-+-+-+-+-+-+-\n");
@@ -154,10 +156,6 @@ public class SimpleGameController {
 			float y = location.y;
 			
 			dataBord.selectingCellAndPlanting(context, dataSelect, view, plantSelectionView, x, y);
-			
-			/*-----------------------------------ELSE-------------------------------------*/
-			
-			
 			
 			
 		}
