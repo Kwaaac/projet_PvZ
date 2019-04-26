@@ -110,6 +110,7 @@ public class SimpleGameController {
 			/*---------------------------------DEBUG--------------------------------------*/
 			
 			if (debug == true) {
+				Zombie.SpeedBoostON();
 				if (dataBord.spawnRandomPlant(context, dataSelect, view, plantSelectionView, selectedPlant)) {
 					str.append("new plant (" + new SimpleDateFormat("hh:mm:ss").format(new Date()) + ")\n");
 				}
@@ -136,6 +137,7 @@ public class SimpleGameController {
 				} // debug ON
 				if (mdp == "N") {
 					debug = false;
+					Zombie.SpeedBoostOFF();
 				} // debug OFF
 			}
 

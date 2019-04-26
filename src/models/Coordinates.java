@@ -71,7 +71,7 @@ public class Coordinates {
 	public static int CenteredY(float y) {
 		int squareSize = BordView.getSquareSize();
 		int sizeOfPlant = Plant.getSizeOfPlant();
-		int yCentered = (int)(y + (squareSize / 2) - (sizeOfPlant / 2));
+		int yCentered = (int)(y);
 		return yCentered;
 	}
 }

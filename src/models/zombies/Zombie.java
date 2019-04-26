@@ -14,7 +14,7 @@ import views.BordView;
 
 public abstract class Zombie extends Entities implements MovingElement, IZombie {
 	private final String type = "Zombie";
-	private double speed;
+	private static double speed;
 	private final static int sizeOfZombie = 75;
 
 	protected final int shootBarMax;
@@ -66,12 +66,12 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie 
 		speed = -1.7;
 	}
 	
-	public void SpeedBoostON() {
-		speed+=2;
+	public static void SpeedBoostON() {
+		speed-=2;
 	}
 	
-	public void SpeedBoostOFF() {
-		speed-=2;
+	public static void SpeedBoostOFF() {
+		speed+=2;
 	}
 
 	public void incAS() {

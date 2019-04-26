@@ -328,7 +328,7 @@ public class SimpleGameData {
 
 		boolean result = false;
 
-		int target = this.RandomPosGenerator(20); // 1 chance sur x
+		int target = this.RandomPosGenerator(15); // 1 chance sur x
 		int xRandomPosition = this.RandomPosGenerator(view.getXOrigin(), view.getLength()); // random position x dans
 																							// matrice
 		int yRandomPosition = this.RandomPosGenerator(view.getYOrigin(), view.getWidth()); // random position y dans
@@ -336,7 +336,7 @@ public class SimpleGameData {
 		int randomPlantType = this.RandomPosGenerator(selectedPlant.length); // random type plant
 
 		if (target == 1) {
-
+			result = true;
 			if (!dataSelect.hasASelectedCell()) {
 				dataSelect.selectCell(randomPlantType, 0);
 
