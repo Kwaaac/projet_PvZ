@@ -10,11 +10,11 @@ public class ConeheadZombie extends Zombie {
 	private final String color = "#CB5050";
 	private final int threat = 2;
 	public ConeheadZombie(int x, int y) {
-		super(x, y, 100, 560, -0.7);
+		super(x, y, 100, 560, -0.95);
 	}
 
 	public ConeheadZombie() {
-		super(50, 50, 100, 560, -0.7);
+		super(50, 50, 100, 560, -0.95);
 	}
 
 	@Override

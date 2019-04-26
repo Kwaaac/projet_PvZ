@@ -40,7 +40,7 @@ public class SimpleGameData {
 		matrix = new Cell[nbLines][nbColumns];
 
 		spawnTime = System.currentTimeMillis();
-		timeLimit = 10_000;
+		timeLimit = 5_000;
 
 		difficultyTime = System.currentTimeMillis();
 	}
@@ -399,13 +399,13 @@ public class SimpleGameData {
 						selecteur = i;
 					}
 				}
-
+				
 				myZombies.add(zombieAvailable.get(selecteur).createAndDrawNewZombie(view, context, x, y));
 				str.append("new " + zombieAvailable.get(selecteur) + new SimpleDateFormat("hh:mm:ss").format(new Date())
 						+ ")\n");
 
 			} else {
-				if (endWave == zombieList.size()) {
+				if (endWave == zombieList.size() && myZombies.isEmpty()) {
 					superWave = 1;
 				}
 			}
@@ -420,6 +420,7 @@ public class SimpleGameData {
 
 			updateDifficulty();
 			System.out.println(difficulty);
+			
 		}
 	}
 
@@ -430,20 +431,30 @@ public class SimpleGameData {
 		System.out.println("Zombies are coming");
 
 		int sqrS = BordView.getSquareSize();
-
+		int endWave = 0;
 		int x = view.getXOrigin() + view.getWidth();
-		int y = view.getYOrigin() + dataBord.RandomPosGenerator(5) * sqrS + (sqrS / 2) - (Zombie.getSizeOfZombie() / 2);
+		
 
 		for (Map.Entry<Zombie, Integer> entry : zombieList.entrySet()) {
 			Zombie z = entry.getKey();
 			Integer spawn = entry.getValue();
-
+			
+			int y = view.getYOrigin() + dataBord.RandomPosGenerator(5) * sqrS + (sqrS / 2) - (Zombie.getSizeOfZombie() / 2);
+			
+			if (spawn == 0) {
+				endWave += 1;
+			}
+			
 			if (spawn > 0) {
 				myZombies.add(z.createAndDrawNewZombie(view, context, x, y));
 				str.append("new " + z + new SimpleDateFormat("hh:mm:ss").format(new Date()) + ")\n");
 
 				entry.setValue(spawn - 1);
 			}
+		}
+		
+		if(endWave == zombieList.size()) {
+			superWave = 2;
 		}
 
 	}
@@ -454,16 +465,10 @@ public class SimpleGameData {
 
 		if (superWave == 0) {
 			spawnNormalWave(dataBord, squareSize, str, myZombies, view, context, zombieList);
-		} else if (superWave == 1 && myZombies.isEmpty()) {
-			int sqrS = BordView.getSquareSize();
-
-			myZombies.add(new FlagZombie(view.getXOrigin() + view.getWidth(), view.getYOrigin()
-					+ dataBord.RandomPosGenerator(5) * sqrS + (sqrS / 2) - (Zombie.getSizeOfZombie() / 2)));
-			str.append("new FlagZombie" + new SimpleDateFormat("hh:mm:ss").format(new Date()));
-
+		} else if (superWave == 1) {
+			
 			spawnSuperWave(dataBord, squareSize, str, myZombies, view, context, superZombieList);
 
-			superWave = 2;
 		}
 
 	}

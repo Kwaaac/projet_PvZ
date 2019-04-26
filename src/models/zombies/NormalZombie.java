@@ -11,11 +11,11 @@ public class NormalZombie extends Zombie {
 	private final int threat = 1;
 	
 	public NormalZombie(int x, int y) {
-		super(x, y, 100, 200, -0.73);
+		super(x, y, 100, 200, -0.93);
 	}
 
 	public NormalZombie() {
-		super(50, 50, 100, 200, -0.73);
+		super(50, 50, 100, 200, -0.93);
 	}
 
 	@Override
@@ -37,7 +37,7 @@ public class NormalZombie extends Zombie {
 	}
 	
 	public void go() {
-		super.setSpeed((float) -0.73);
+		super.setSpeed((float) -0.93);
 	}
 	
 	@Override
