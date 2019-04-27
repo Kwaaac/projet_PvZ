@@ -13,9 +13,11 @@ import models.SimpleGameData;
 import models.plants.Plant;
 
 public class BordView extends SimpleGameView {
+	private static int squareSize;
 
 	public BordView(int xOrigin, int yOrigin, int length, int width, int squareSize) {
-		super(xOrigin, yOrigin, length, width, squareSize);
+		super(xOrigin, yOrigin, length, width);
+		BordView.squareSize = squareSize;
 	}
 
 	public static BordView initGameGraphics(int xOrigin, int yOrigin, int length, SimpleGameData data) {
@@ -24,8 +26,27 @@ public class BordView extends SimpleGameView {
 	}
 
 	public int indexFromReaCoord(float coord, int origin) { // attention, il manque des test de validité des
-															// coordonn�es!
-		return super.indexFromReaCoord(coord, origin);
+		return (int) ((coord - origin) / squareSize); // coordonnées!
+	}
+
+	public float realCoordFromIndex(int index, int origin) {
+		return origin + index * squareSize;
+	}
+
+	public static int getSquareSize() {
+		return squareSize;
+	}
+
+	/**
+	 * Transforms a real y-coordinate into the index of the corresponding line.
+	 *
+	 * @param y a float y-coordinate
+	 * @return the index of the corresponding line.
+	 * @throws IllegalArgumentException if the float coordinate doesn't fit in the
+	 *                                  game board.
+	 */
+	public int lineFromY(float y) {
+		return indexFromReaCoord(y, super.getYOrigin());
 	}
 
 	/**
@@ -37,11 +58,11 @@ public class BordView extends SimpleGameView {
 	 *                                  game board.
 	 */
 	public static int caseYFromY(float y) {
-		return (int) ((y - 100) / getSquareSize());
+		return (int) ((y - 100) / squareSize);
 	}
 
 	public static int caseXFromX(float x) {
-		return (int) ((x - 450) / getSquareSize());
+		return (int) ((x - 450) / squareSize);
 	}
 
 	/**
@@ -53,23 +74,19 @@ public class BordView extends SimpleGameView {
 	 *                                  game board.
 	 */
 	public int columnFromX(float x) {
-		return super.columnFromX(x);
-	}
-
-	public float realCoordFromIndex(int index, int origin) {
-		return super.realCoordFromIndex(index, origin);
+		return indexFromReaCoord(x, super.getXOrigin());
 	}
 
 	protected float xFromI(int i) {
-		return super.xFromI(i);
+		return realCoordFromIndex(i, super.getXOrigin());
 	}
 
 	protected float yFromJ(int j) {
-		return super.yFromJ(j);
+		return realCoordFromIndex(j, super.getYOrigin());
 	}
 
 	protected RectangularShape drawCell(int i, int j) {
-		return super.drawCell(i, j);
+		return new Rectangle2D.Float(xFromI(j) + 2, yFromJ(i) + 2, squareSize - 4, squareSize - 4);
 	}
 
 	public Plant[] getSelectedPlants() {
@@ -88,13 +105,13 @@ public class BordView extends SimpleGameView {
 		graphics.setColor(Color.WHITE.darker());
 		for (int i = 0; i <= data.getNbLines(); i++) {
 			graphics.setStroke(new BasicStroke(4));
-			graphics.draw(new Line2D.Float(super.getXOrigin(), super.getYOrigin() + i * super.getSquareSize(),
-					super.getXOrigin() + super.getWidth(), super.getYOrigin() + i * super.getSquareSize()));
+			graphics.draw(new Line2D.Float(super.getXOrigin(), super.getYOrigin() + i * squareSize,
+					super.getXOrigin() + super.getWidth(), super.getYOrigin() + i * squareSize));
 		}
 
 		for (int i = 0; i <= data.getNbColumns(); i++) {
-			graphics.draw(new Line2D.Float(super.getXOrigin() + i * super.getSquareSize(), super.getYOrigin(),
-					super.getXOrigin() + i * super.getSquareSize(), super.getYOrigin() + super.getLength()));
+			graphics.draw(new Line2D.Float(super.getXOrigin() + i * squareSize, super.getYOrigin(),
+					super.getXOrigin() + i * squareSize, super.getYOrigin() + super.getLength()));
 		}
 
 		for (int i = 0; i < data.getNbLines(); i++) {
@@ -106,8 +123,8 @@ public class BordView extends SimpleGameView {
 		}
 
 		graphics.setColor(Color.LIGHT_GRAY);
-		graphics.fill(
-				new Rectangle2D.Float(super.getXOrigin() + super.getWidth(), super.getYOrigin(), super.getXOrigin() + super.getWidth(), super.getLength()));
+		graphics.fill(new Rectangle2D.Float(super.getXOrigin() + super.getWidth(), super.getYOrigin(),
+				super.getXOrigin() + super.getWidth(), super.getLength()));
 
 		ArrayList<Plant> myPlants = data.getMyPlants();
 
@@ -145,4 +162,5 @@ public class BordView extends SimpleGameView {
 	public void moveAndDrawElement(Graphics2D graphics, SimpleGameData data, MovingElement moving) {
 		super.moveAndDrawElement(graphics, data, moving);
 	}
+
 }

@@ -9,10 +9,10 @@ import models.zombies.Zombie;
 import views.BordView;
 import views.SimpleGameView;
 
- public interface IPlant {
-	
+public interface IPlant {
+
 	void incAS();
-	
+
 	void resetAS();
 
 	boolean isDead();
@@ -20,12 +20,13 @@ import views.SimpleGameView;
 	float getY();
 
 	float getX();
-	
+
 	void action(ArrayList<Projectile> myBullet, BordView view, ArrayList<Zombie> myZombies);
-	
+
 	boolean readyToshot(ArrayList<Zombie> mz);
-		
+
 	Plant createAndDrawNewPlant(SimpleGameView view, ApplicationContext context, int x, int y);
-	
+
 	void draw(SimpleGameView view, Graphics2D graphics, int x, int y);
+
 }

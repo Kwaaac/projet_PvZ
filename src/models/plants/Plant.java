@@ -60,6 +60,7 @@ public abstract class Plant extends Entities implements IPlant{
 		return shootBar >= shootBarMax;
 	}
 	
+	@Override
 	public Coordinates hitBox() {
 		return new Coordinates((int) x, (int) x + sizeOfPlant);
 	}

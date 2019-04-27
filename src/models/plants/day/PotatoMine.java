@@ -67,15 +67,14 @@ public class PotatoMine extends Plant {
 
 		for (Entities z : myZombies) {
 			if (this.sameLine(z)) {
-				
+
 				Coordinates zombie = z.getCase();
 
 				if (zombie.equals(PotatoMine)) {
 					Lz.add(z);
-					
+
 				}
 			}
-
 		}
 		return Lz;
 	}
@@ -95,5 +94,10 @@ public class PotatoMine extends Plant {
 		} else {
 			view.drawPotatoMine(graphics, x, y, color1);
 		}
+	}
+
+	@Override
+	public Coordinates hitBox() {
+		return new Coordinates((int) x, (int) x + Plant.getSizeOfPlant() - 10);
 	}
 }

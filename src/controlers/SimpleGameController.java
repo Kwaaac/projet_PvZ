@@ -23,6 +23,7 @@ import models.plants.day.Chomper;
 import models.plants.day.Peashooter;
 import models.plants.day.PotatoMine;
 import models.plants.day.SnowPea;
+import models.plants.day.SunFlower;
 import models.plants.day.WallNut;
 import models.projectiles.Bullet;
 import models.projectiles.Projectile;
@@ -40,7 +41,7 @@ public class SimpleGameController {
 	static void simpleGame(ApplicationContext context) {
 		ScreenInfo screenInfo = context.getScreenInfo();
 		screenInfo.getWidth();
-		Plant[] selectedPlant = {new Peashooter(), new WallNut(), new CherryBomb(), new PotatoMine(), new Chomper()}; 
+		Plant[] selectedPlant = {new SunFlower(), new Peashooter(), new SnowPea(), new WallNut(), new CherryBomb(), new PotatoMine(), new Chomper()}; 
 		
 		HashMap<Zombie, Integer> normalWaveZombie = new HashMap<Zombie, Integer>();
 		normalWaveZombie.put(new ConeheadZombie(), 0);
@@ -62,7 +63,7 @@ public class SimpleGameController {
 
 		BordView view = BordView.initGameGraphics(xOrigin, yOrigin, 900, dataBord);
 		int squareSize = BordView.getSquareSize();
-		SelectBordView plantSelectionView = SelectBordView.initGameGraphics(0, yOrigin, squareSize * selectedPlant.length, dataSelect, selectedPlant);
+		SelectBordView plantSelectionView = SelectBordView.initGameGraphics(0, yOrigin, 900, dataSelect, selectedPlant);
 		
 
 		view.draw(context, dataBord);
@@ -132,10 +133,10 @@ public class SimpleGameController {
 			/*---------------------------------DEBUG 2--------------------------------------*/
 			Action action = event.getAction();
 			if (action == Action.KEY_PRESSED || action == Action.KEY_RELEASED) {
-				if (mdp == "Y") {
+				if (mdp == "Y" && debug == false) {
 					debug = true;
 				} // debug ON
-				if (mdp == "N") {
+				if (mdp == "N" && debug == true) {
 					debug = false;
 					Zombie.SpeedBoostOFF();
 				} // debug OFF

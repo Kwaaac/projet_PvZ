@@ -123,11 +123,24 @@ public class SimpleGameData {
 		return selected != null;
 	}
 
-	private boolean isCorrectLocation(SimpleGameView view, float x, float y) {
+	private boolean isCorrectBordLocation(BordView view, float x, float y) {
 
 		int xOrigin = view.getXOrigin();
 		int yOrigin = view.getYOrigin();
-		int squareSize = SimpleGameView.getSquareSize();
+		int squareSize = BordView.getSquareSize();
+
+		if (xOrigin <= x && x <= xOrigin + squareSize * this.getNbColumns()) {
+			return yOrigin <= y && y <= yOrigin + squareSize * this.getNbLines();
+		}
+
+		return false;
+	}
+	
+	private boolean isCorrectSelectLocation(SelectBordView view, float x, float y) {
+
+		int xOrigin = view.getXOrigin();
+		int yOrigin = view.getYOrigin();
+		int squareSize = SelectBordView.getSquareSize();
 
 		if (xOrigin <= x && x <= xOrigin + squareSize * this.getNbColumns()) {
 			return yOrigin <= y && y <= yOrigin + squareSize * this.getNbLines();
@@ -279,7 +292,7 @@ public class SimpleGameData {
 	public void planting(ApplicationContext context, SimpleGameData dataSelect, BordView view, SelectBordView psView,
 			float x, float y) {
 
-		if (this.isCorrectLocation(view, x, y) && dataSelect.hasASelectedCell()) {
+		if (this.isCorrectBordLocation(view, x, y) && dataSelect.hasASelectedCell()) {
 
 			this.selectCell(view.lineFromY(y), view.columnFromX(x));
 
@@ -314,7 +327,7 @@ public class SimpleGameData {
 
 		if (!dataSelect.hasASelectedCell()) {
 
-			if (dataSelect.isCorrectLocation(plantSelectionView, x, y)) {
+			if (dataSelect.isCorrectSelectLocation(plantSelectionView, x, y)) {
 				dataSelect.selectCell(plantSelectionView.lineFromY(y), plantSelectionView.columnFromX(x));
 			}
 
