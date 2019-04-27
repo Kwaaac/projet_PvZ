@@ -17,72 +17,94 @@ public class Chrono {
 		pauseFin = 0;
 		duree = 0;
 	}
-    
-    /**
-     * met en pause le chronomètre
-     */
-    public void pause()
-        {
-        if(tempsDepart==0) {return;}
-        pauseDepart=System.currentTimeMillis();
-        }
-    
-    /**
-     * relance le chronomètre
-     */
-    public void resume()
-        {
-        if(tempsDepart==0) {return;}
-        if(pauseDepart==0) {return;}
-        pauseFin=System.currentTimeMillis();
-        tempsDepart=tempsDepart+pauseFin-pauseDepart;
-        tempsFin=0;
-        pauseDepart=0;
-        pauseFin=0;
-        duree=0;
-        }
-    
-    /**
-     * arrête le chronomètre
-     */
-    public void stop()
-        {
-        if(tempsDepart==0) {return;}
-        tempsFin=System.currentTimeMillis();
-        duree=(tempsFin-tempsDepart) - (pauseFin-pauseDepart);
-        tempsDepart=0;
-        tempsFin=0;
-        pauseDepart=0;
-        pauseFin=0;
-        }        
-    
-    /**
-     * 
-     * @return renvoie la durée du chrono en seconde
-     */
-    public long getDureeSec()
-        {
-        return duree/1000;
-        }
-    
-    /**
-     * 
-     * @returnrenvoie la durée du chrono en milliseconde
-     */
-    public long getDureeMs()
-        {
-        return duree;
-        }        
-    
-    /**
-     * 
-     * @return renvoie la durée du chrono au format texte
-     */
-    public String getDureeTxt()
-        {
-        return timeToHMS(getDureeSec());
-        }
-    
+
+	/**
+	 * met en pause le chronomètre
+	 */
+	public void pause() {
+		if (tempsDepart == 0) {
+			return;
+		}
+		pauseDepart = System.currentTimeMillis();
+		duree = (tempsFin - tempsDepart) - (pauseFin - pauseDepart);
+	}
+
+	/**
+	 * relance le chronomètre
+	 */
+	public void resume() {
+		if (tempsDepart == 0) {
+			return;
+		}
+		if (pauseDepart == 0) {
+			return;
+		}
+		pauseFin = System.currentTimeMillis();
+		tempsDepart = tempsDepart + pauseFin - pauseDepart;
+		tempsFin = 0;
+		pauseDepart = 0;
+		pauseFin = 0;
+		duree = 0;
+	}
+
+	/**
+	 * arrête le chronomètre
+	 */
+	public void stop() {
+		if (tempsDepart == 0) {
+			return;
+		}
+		tempsFin = System.currentTimeMillis();
+		duree = (tempsFin - tempsDepart) - (pauseFin - pauseDepart);
+		tempsDepart = 0;
+		tempsFin = 0;
+		pauseDepart = 0;
+		pauseFin = 0;
+	}
+
+	/**
+	 * 
+	 * @return renvoie la durée du chrono en seconde
+	 */
+	public long getDureeSec() {
+		return duree / 1000;
+	}
+
+	/**
+	 * 
+	 * @returnrenvoie la durée du chrono en milliseconde
+	 */
+	public long getDureeMs() {
+		return duree;
+	}
+
+	/**
+	 * 
+	 * @return renvoie la durée du chrono au format texte
+	 */
+	public String getDureeTxt() {
+		return timeToHMS(getDureeSec());
+	}
+
+	/**
+	 * 
+	 * @param tempsS temps a atteindre
+	 * @return revoie si le chronometre a atteind le temps donnee en parametre
+	 */
+	public boolean asReachTimer(long tempsS) {
+		this.pause();
+		if (this.getDureeSec() >= tempsS) {
+			this.stop();
+			return true;
+		}
+		this.resume();
+		return false;
+	}
+
+	public boolean isReset() {
+		return (tempsDepart == 0 && tempsFin == 0 && pauseDepart == 0 && pauseFin == 0);
+	}
+
 	/**
 	 * 
 	 * @param tempsS temps en seconde

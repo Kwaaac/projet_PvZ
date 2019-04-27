@@ -55,6 +55,10 @@ public abstract class Plant extends Entities implements IPlant{
 		return shootBar;
 	}
 	
+	public long getCooldown() {
+		return cooldown;
+	}
+	
 	@Override
 	public void incAS() {
 		shootBar = System.currentTimeMillis() - shootTime;

@@ -7,6 +7,7 @@ import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.RectangularShape;
 
+import models.Chrono;
 import models.Coordinates;
 import models.MovingElement;
 import models.SimpleGameData;
@@ -15,6 +16,8 @@ import models.plants.Plant;
 public class SelectBordView extends SimpleGameView {
 	private final Plant[] selectedPlants;
 	private static int squareSize;
+	private final Chrono[] caseChrono = { new Chrono(), new Chrono(), new Chrono(), new Chrono(), new Chrono(),
+			new Chrono(), new Chrono(), new Chrono(), new Chrono() };
 
 	public SelectBordView(int xOrigin, int yOrigin, int length, int width, int squareSize, Plant[] selectedPlants) {
 		super(xOrigin, yOrigin, length, width);
@@ -29,6 +32,30 @@ public class SelectBordView extends SimpleGameView {
 				selectedPlants);
 	}
 
+	public void startCooldown(int numCase) {
+		Chrono askedChrono = caseChrono[numCase];
+		if(askedChrono.isReset()) {
+			askedChrono.start();
+		}
+		
+	}
+	
+	public boolean isThisChronoReset(float coord, int origin) {
+		int numCase = this.indexFromReaCoord(coord, origin);
+		Chrono askedChrono = caseChrono[numCase];
+		return askedChrono.isReset();
+	}
+	
+	public void checkCooldown() {
+		for(int i = 0 ; i < selectedPlants.length; i++) {
+			Chrono askedChrono = caseChrono[i];
+			Plant askedPlant = selectedPlants[i];
+			if(askedChrono.asReachTimer(askedPlant.getCooldown())) {
+				askedChrono.stop();
+			}
+		}
+	}
+	
 	public static int getSquareSize() {
 		return squareSize;
 	}
@@ -64,7 +91,11 @@ public class SelectBordView extends SimpleGameView {
 	public int columnFromX(float x) {
 		return indexFromReaCoord(x, super.getXOrigin());
 	}
-
+	
+	public Plant[] getSelectedPlants() {
+		return selectedPlants;
+	}
+	
 	protected float xFromI(int i) {
 		return realCoordFromIndex(i, super.getXOrigin());
 	}
@@ -81,9 +112,6 @@ public class SelectBordView extends SimpleGameView {
 		return new Rectangle2D.Float(xFromI(j), yFromJ(i), squareSize, squareSize);
 	}
 
-	public Plant[] getSelectedPlants() {
-		return selectedPlants;
-	}
 
 	/**
 	 * Draws the game board from its data, using an existing Graphics2D object.
@@ -166,8 +194,7 @@ public class SelectBordView extends SimpleGameView {
 	public void moveAndDrawElement(Graphics2D graphics, SimpleGameData data, MovingElement moving) {
 		super.moveAndDrawElement(graphics, data, moving);
 	}
-	
-	
+
 	int sizeOfPlant = Plant.getSizeOfPlant() - 10;
 
 	/**
@@ -192,7 +219,7 @@ public class SelectBordView extends SimpleGameView {
 	@Override
 	public void drawPeashooter(Graphics2D graphics, int x, int y, String color) {
 		graphics.setColor(Color.decode(color));
-		graphics.fill(new Rectangle2D.Float(x - 15, y + sizeOfPlant / 2, sizeOfPlant , sizeOfPlant));
+		graphics.fill(new Rectangle2D.Float(x - 15, y + sizeOfPlant / 2, sizeOfPlant, sizeOfPlant));
 	}
 
 	@Override
@@ -210,7 +237,7 @@ public class SelectBordView extends SimpleGameView {
 	@Override
 	public void drawPotatoMine(Graphics2D graphics, int x, int y, String color) {
 		graphics.setColor(Color.decode(color));
-		graphics.fill(new Rectangle2D.Float(x - 10, y + sizeOfPlant / 2 , sizeOfPlant - 15, sizeOfPlant - 15));
+		graphics.fill(new Rectangle2D.Float(x - 10, y + sizeOfPlant / 2, sizeOfPlant - 15, sizeOfPlant - 15));
 	}
 
 	@Override
@@ -223,7 +250,7 @@ public class SelectBordView extends SimpleGameView {
 	public void drawSunFlower(Graphics2D graphics, int x, int y, String color) {
 		graphics.setColor(Color.decode(color));
 		graphics.fill(new Ellipse2D.Float(x - 15, y + sizeOfPlant / 2, sizeOfPlant, sizeOfPlant));
-		
+
 		graphics.setColor(Color.decode("#AF6907"));
 		graphics.fill(new Ellipse2D.Float(x - 7, y + sizeOfPlant / 2 + 8, sizeOfPlant - 15, sizeOfPlant - 15));
 	}
@@ -288,6 +315,5 @@ public class SelectBordView extends SimpleGameView {
 		graphics.setColor(Color.decode(color));
 		graphics.fill(new Rectangle2D.Float(x - 15, y + sizeOfPlant / 2, sizeOfPlant, sizeOfPlant));
 	}
-	
-	
+
 }

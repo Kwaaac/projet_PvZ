@@ -83,6 +83,8 @@ public class SimpleGameController {
 		boolean debug = false;
 
 		while (true) {
+			/*-----------------------------CHECK CHRONO----------------------------*/
+			plantSelectionView.checkCooldown();
 			/*--------------------------------DRAWS--------------------------------*/
 			
 			view.draw(context, dataBord);

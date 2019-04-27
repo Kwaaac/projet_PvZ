@@ -309,6 +309,7 @@ public class SimpleGameData {
 			if (!this.hasPlant(i, j)) {
 				this.plantOnBoard(i, j);
 				myPlants.add(psView.getSelectedPlants()[p].createAndDrawNewPlant(view, context, x2, y2));
+				psView.startCooldown(p);
 			}
 
 		}
@@ -326,7 +327,7 @@ public class SimpleGameData {
 
 		if (!dataSelect.hasASelectedCell()) {
 
-			if (dataSelect.isCorrectSelectLocation(plantSelectionView, x, y)) {
+			if (dataSelect.isCorrectSelectLocation(plantSelectionView, x, y) && plantSelectionView.isThisChronoReset(y, view.getYOrigin())) {
 				dataSelect.selectCell(plantSelectionView.lineFromY(y), plantSelectionView.columnFromX(x));
 			}
 
