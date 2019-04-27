@@ -15,11 +15,11 @@ public class IceShroom extends Plant{
 	private final String color = "#90D322";
 	
 	public IceShroom(int x, int y) {
-		super(x, y, 0, 1, 0, 75);
+		super(x, y, 0, 1, 0, 75, "fast");
 	}
 	
 	public IceShroom() {
-		super(-10, -10, 0, 1, 1, 75);
+		super(-10, -10, 0, 1, 1, 75, "fast");
 	}
 	
 	@Override

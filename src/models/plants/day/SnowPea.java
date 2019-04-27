@@ -17,12 +17,12 @@ public class SnowPea extends Plant{
 	private final String color = "#33FFEA";
 	
 	public SnowPea(int x, int y) {
-		super(x, y, 0, 300, 5100, 175);
+		super(x, y, 0, 300, 5100, 175, "fast");
 		shootBar = shootBarMax;			// La plante tire dès qu'elle est posée
 	}
 	
 	public SnowPea() {
-		super(-10, -10, 0, 1, 1, 175);
+		super(-10, -10, 0, 1, 1, 175, "fast");
 	}
 	
 	@Override

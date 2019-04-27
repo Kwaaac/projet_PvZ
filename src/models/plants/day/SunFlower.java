@@ -15,11 +15,11 @@ public class SunFlower extends Plant{
 	private final String color = "#FEFF33";
 	
 	public SunFlower(int x, int y) {
-		super(x, y, 0, 300, 0, 50);
+		super(x, y, 0, 300, 0, 50, "fast");
 	}
 	
 	public SunFlower() {
-		super(-10, -10, 0, 1, 1, 50);
+		super(-10, -10, 0, 1, 1, 50, "fast");
 	}
 	
 	@Override

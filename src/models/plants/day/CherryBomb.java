@@ -18,11 +18,11 @@ public class CherryBomb extends Plant {
 	private final String color = "#CB5050";
 	
 	public CherryBomb(int x, int y) {
-		super(x, y, 0, 1, 1200, 150);
+		super(x, y, 0, 1, 1200, 150, "fast");
 	}
 	
 	public CherryBomb() {
-		super(-10, -10, 0, 1, 1, 150);
+		super(-10, -10, 0, 1, 1, 150, "fast");
 	}
 	
 	int sizeOfPlant = super.getSizeOfPlant();

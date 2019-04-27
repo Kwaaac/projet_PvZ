@@ -17,11 +17,11 @@ public class DoomShroom extends Plant{
 	private final String color = "#90D322";
 	
 	public DoomShroom(int x, int y) {
-		super(x, y, 0, 1, 0, 125);
+		super(x, y, 0, 1, 0, 125, "fast");
 	}
 	
 	public DoomShroom() {
-		super(-10, -10, 0, 1, 1, 125);
+		super(-10, -10, 0, 1, 1, 125, "fast");
 	}
 	
 	@Override

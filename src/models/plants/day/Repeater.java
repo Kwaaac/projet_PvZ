@@ -17,12 +17,12 @@ public class Repeater extends Plant{
 	private final String color = "#AAFF1D";
 	
 	public Repeater(int x, int y) {
-		super(x, y, 0, 300, 5100, 200);
+		super(x, y, 0, 300, 5100, 200, "fast");
 		shootBar = shootBarMax;			// La plante tire dès qu'elle est posée
 	}
 	
 	public Repeater() {
-		super(-10, -10, 0, 1, 1, 200);
+		super(-10, -10, 0, 1, 1, 200, "fast");
 	}
 	
 	@Override

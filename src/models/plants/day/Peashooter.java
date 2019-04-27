@@ -16,13 +16,14 @@ public class Peashooter extends Plant{
 	private final String name = "Peashooter";
 	private final String color = "#90D322";
 	
+	
 	public Peashooter(int x, int y) {
-		super(x, y, 0, 300, 5100, 100);
+		super(x, y, 0, 300, 5100, 100, "fast");
 		shootBar = shootBarMax;			// La plante tire dès qu'elle est posée
 	}
 	
 	public Peashooter() {
-		super(-10, -10, 0, 1, 1, 100);
+		super(-10, -10, 0, 1, 1, 100, "fast");
 	}
 	
 	@Override

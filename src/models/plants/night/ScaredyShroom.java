@@ -17,12 +17,12 @@ public class ScaredyShroom extends Plant{
 	private final String color = "#90D322";
 	
 	public ScaredyShroom(int x, int y) {
-		super(x, y, 0, 300, 5100, 25);
+		super(x, y, 0, 300, 5100, 25, "fast");
 		shootBar = shootBarMax;			// La plante tire dès qu'elle est posée
 	}
 	
 	public ScaredyShroom() {
-		super(-10, -10, 0, 1, 1, 25);
+		super(-10, -10, 0, 1, 1, 25, "fast");
 	}
 	
 	@Override

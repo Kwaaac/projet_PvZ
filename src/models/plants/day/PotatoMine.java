@@ -20,12 +20,12 @@ public class PotatoMine extends Plant {
 	private boolean activate = false;
 
 	public PotatoMine(int x, int y) {
-		super(x, y, 0, 120, 14_000, 25);
+		super(x, y, 0, 120, 14_000, 25, "fast");
 
 	}
 
 	public PotatoMine() {
-		super(-10, -10, 0, 1, 1, 25);
+		super(-10, -10, 0, 1, 1, 25, "fast");
 		activate = true;
 	}
 

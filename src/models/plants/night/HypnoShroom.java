@@ -15,11 +15,11 @@ public class HypnoShroom extends Plant{
 	private final String color = "#90D322";
 	
 	public HypnoShroom(int x, int y) {
-		super(x, y, 0, 300, 0, 75);
+		super(x, y, 0, 300, 0, 75, "fast");
 	}
 	
 	public HypnoShroom() {
-		super(-10, -10, 0, 1, 1, 75);
+		super(-10, -10, 0, 1, 1, 75, "fast");
 	}
 	
 	@Override

@@ -2,6 +2,8 @@ package models.plants;
 
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import models.Coordinates;
 import models.Entities;
@@ -15,11 +17,25 @@ public abstract class Plant extends Entities implements IPlant{
 	protected long shootBar;
 	protected long shootTime;
 	private final int cost;
+	private final Long cooldown;
 	
-	public Plant(int x, int y, int damage, int life, int shootBarMax, int cost) {
+	private static final HashMap<String, Long> mCooldown = new HashMap<String, Long>();
+	
+	static {
+	mCooldown.put("free",(long)0);
+	mCooldown.put("fast",(long)5);
+	mCooldown.put("medium",(long)15);
+	mCooldown.put("slow",(long)20);
+	mCooldown.put("verySlow",(long)35);
+	mCooldown.put("bigTime",(long)60);
+	}
+
+	
+	public Plant(int x, int y, int damage, int life, int shootBarMax, int cost,String cooldown) {
 		super(x, y, damage, life);
 		this.shootBarMax = shootBarMax;
 		this.cost = cost;
+		this.cooldown = mCooldown.get(cooldown);
 		shootTime = System.currentTimeMillis();
 	}
 	

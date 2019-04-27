@@ -15,11 +15,11 @@ public class SunShroom extends Plant{
 	private final String color = "#90D322";
 	
 	public SunShroom(int x, int y) {
-		super(x, y, 0, 300, 0, 25);
+		super(x, y, 0, 300, 0, 25, "fast");
 	}
 	
 	public SunShroom() {
-		super(-10, -10, 0, 1, 1, 25);
+		super(-10, -10, 0, 1, 1, 25, "fast");
 	}
 	
 	@Override

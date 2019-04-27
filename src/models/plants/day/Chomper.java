@@ -18,11 +18,11 @@ public class Chomper extends Plant{
 	private boolean activate = false;
 	
 	public Chomper(int x, int y) {
-		super(x, y, 0, 1, 1200, 150);
+		super(x, y, 0, 1, 1200, 150, "fast");
 	}
 	
 	public Chomper() {
-		super(-10, -10, 0, 1, 1, 150);
+		super(-10, -10, 0, 1, 1, 150, "fast");
 	}
 	
 	int sizeOfPlant = super.getSizeOfPlant();

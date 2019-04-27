@@ -17,12 +17,12 @@ public class FumeShroom extends Plant{
 	private final String color = "#90D322";
 	
 	public FumeShroom(int x, int y) {
-		super(x, y, 0, 300, 180*4, 75); //180 = SquareSize
+		super(x, y, 0, 300, 180*4, 75, "fast"); //180 = SquareSize
 		shootBar = shootBarMax;			// La plante tire dès qu'elle est posée
 	}
 	
 	public FumeShroom() {
-		super(-10, -10, 0, 1, 1, 75);
+		super(-10, -10, 0, 1, 1, 75, "fast");
 	}
 	
 	@Override
