@@ -221,10 +221,10 @@ public class SelectBordView extends SimpleGameView {
 
 	@Override
 	public void drawSunFlower(Graphics2D graphics, int x, int y, String color) {
-		graphics.setColor(Color.decode("#AF6907"));
+		graphics.setColor(Color.decode(color));
 		graphics.fill(new Ellipse2D.Float(x - 15, y + sizeOfPlant / 2, sizeOfPlant, sizeOfPlant));
 		
-		graphics.setColor(Color.decode(color));
+		graphics.setColor(Color.decode("#AF6907"));
 		graphics.fill(new Ellipse2D.Float(x - 7, y + sizeOfPlant / 2 + 8, sizeOfPlant - 15, sizeOfPlant - 15));
 	}
 

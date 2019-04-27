@@ -226,16 +226,20 @@ public class SimpleGameData {
 			ArrayList<Projectile> myBullet) {
 
 		for (Zombie z : myZombies) {
-			view.moveAndDrawElement(context, this, z);
+			System.out.println("\n" + z);
+			System.out.println(z.getSpeed() + "\n");
+			view.moveAndDrawElement(context, this, z); 
 			z.setCase(z.x, z.y);
 		}
 
 		for (Projectile b : myBullet) {
 			view.moveAndDrawElement(context, this, b);
 		}
+		
+		
 	}
 
-	public static void timeEnd(ArrayList<Zombie> myZombies, Temporal time, StringBuilder str,
+	public static void timeEnd(ArrayList<Zombie> myZombies, Chrono time, StringBuilder str,
 			ApplicationContext context, int deathCounterZombie, String mdp) {
 
 		int xOrigin = 450;
@@ -264,24 +268,19 @@ public class SimpleGameData {
 		case "Continue":
 			break;
 		case "Stop":
-			Duration timeEnd = Duration.between(time, Instant.now());
-			h = (int) (timeEnd.getSeconds() / 3600);
-			m = (int) ((timeEnd.getSeconds() % 3600) / 60);
-			s = (int) timeEnd.getSeconds();
+			time.stop();
 			switch (finalChoice) {
 			case "Win":
-				str.append("-+-+-+-+-+-+-+-+-+-\nVous avez gagne!!!\nLa partie a duree : " + h + " heure(s) " + m
-						+ " minute(s) " + s + " seconde(s)");
+				str.append("-+-+-+-+-+-+-+-+-+-\nVous avez gagne!!!\n");
 				break;
 			case "Loose":
-				str.append("-+-+-+-+-+-+-+-+-+-\nVous avez perdu...\nLa partie a duree : " + h + " heure(s) " + m
-						+ " minute(s) " + s + " seconde(s)");
+				str.append("-+-+-+-+-+-+-+-+-+-\nVous avez perdu...\n");
 				break;
 			case "Stop":
-				str.append("-+-+-+-+-+-+-+-+-+-\nVous avez quitte la partie !\nLa partie a duree : " + h + " heure(s) "
-						+ m + " minute(s) " + s + " seconde(s)");
+				str.append("-+-+-+-+-+-+-+-+-+-\nVous avez quitte la partie !\n");
 				break;
 			}
+			str.append("La partie à durée: " + time.getDureeTxt());
 			System.out.println(str.toString());
 			SimpleGameData.setWL(0);
 			context.exit(0);

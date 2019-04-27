@@ -100,13 +100,12 @@ public abstract class SimpleGameView implements GameView {
 
 	@Override
 	public void drawSunFlower(Graphics2D graphics, int x, int y, String color) {
-		graphics.setColor(Color.decode("#AF6907"));
+		graphics.setColor(Color.decode(color));
 		graphics.fill(new Ellipse2D.Float(x, y, sizeOfPlant, sizeOfPlant));
 		
-		graphics.setColor(Color.decode(color));
+		graphics.setColor(Color.decode("#AF6907"));
 		graphics.fill(new Ellipse2D.Float(x + 8, y + 8, sizeOfPlant - 16, sizeOfPlant - 16));
 	}
-
 
 	@Override
 	public void drawChomper(Graphics2D graphics, int x, int y, String color) {
@@ -218,6 +217,7 @@ public abstract class SimpleGameView implements GameView {
 	 */
 	@Override
 	public void moveAndDrawElement(Graphics2D graphics, SimpleGameData data, MovingElement moving) {
+		
 		moving.move();
 		moving.draw(this, graphics, moving.getX(), moving.getY());
 	}

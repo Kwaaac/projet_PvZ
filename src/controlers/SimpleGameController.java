@@ -14,7 +14,7 @@ import fr.umlv.zen5.Event;
 import fr.umlv.zen5.Event.Action;
 import fr.umlv.zen5.KeyboardKey;
 import fr.umlv.zen5.ScreenInfo;
-
+import models.Chrono;
 import models.DeadPool;
 import models.SimpleGameData;
 import models.plants.Plant;
@@ -44,7 +44,7 @@ public class SimpleGameController {
 		Plant[] selectedPlant = {new SunFlower(), new Peashooter(), new SnowPea(), new WallNut(), new CherryBomb(), new PotatoMine(), new Chomper()}; 
 		
 		HashMap<Zombie, Integer> normalWaveZombie = new HashMap<Zombie, Integer>();
-		normalWaveZombie.put(new ConeheadZombie(), 0);
+		normalWaveZombie.put(new ConeheadZombie(), 1);
 		normalWaveZombie.put(new NormalZombie(), 1);
 		
 		HashMap<Zombie, Integer> superWaveZombie = new HashMap<Zombie, Integer>();
@@ -75,7 +75,8 @@ public class SimpleGameController {
 		Zombie.getSizeOfZombie();
 		Bullet.getSizeOfProjectile();
 		int deathCounterZombie = 0;
-		Instant time = Instant.now();
+		Chrono time = new Chrono();
+		time.start();
 
 		StringBuilder str = new StringBuilder("Journal de bord\n-+-+-+-+-+-+-+-+-+-\n");
 
@@ -111,7 +112,6 @@ public class SimpleGameController {
 			/*---------------------------------DEBUG--------------------------------------*/
 			
 			if (debug == true) {
-				Zombie.SpeedBoostON();
 				if (dataBord.spawnRandomPlant(context, dataSelect, view, plantSelectionView, selectedPlant)) {
 					str.append("new plant (" + new SimpleDateFormat("hh:mm:ss").format(new Date()) + ")\n");
 				}
@@ -138,7 +138,6 @@ public class SimpleGameController {
 				} // debug ON
 				if (mdp == "N" && debug == true) {
 					debug = false;
-					Zombie.SpeedBoostOFF();
 				} // debug OFF
 			}
 
