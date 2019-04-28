@@ -10,26 +10,29 @@ public class Soleil implements MovingElement {
 	private float y;
 	private Coordinates caseXY;
 
+	private final int yTarget;
+
 	private final int size = 85;
 
 	private String color = "#FFFF00";
 
 	private final int sunny = 25;
 
-	private final double speed;
+	private double speed;
 
 	public Soleil(float x, float y, double speed) {
 		this.x = x;
 		this.y = y;
 		this.speed = speed;
 		this.caseXY = new Coordinates(BordView.caseXFromX(x), BordView.caseYFromY(y));
+		this.yTarget = (150 + SimpleGameData.RandomPosGenerator(1, 6) * BordView.getSquareSize()) - 125;
 	}
-	
+
 	public boolean isClicked(float clicX, float clicY) {
-		if(x <= clicX && clicX <= x + size) {
+		if (x <= clicX && clicX <= x + size) {
 			return y <= clicY && clicY <= y + size;
 		}
-		
+
 		return false;
 	}
 
@@ -49,6 +52,14 @@ public class Soleil implements MovingElement {
 
 	public Coordinates getCase() {
 		return caseXY;
+	}
+	
+	public void setCase(float x, float y) {
+		System.out.println(y + " :: " + yTarget);
+		if(y >= yTarget) {
+			this.speed = 0;
+		}
+		caseXY = new Coordinates(BordView.caseXFromX(x), BordView.caseYFromY(y));
 	}
 
 	public int getSunny() {
@@ -73,10 +84,6 @@ public class Soleil implements MovingElement {
 	@Override
 	public void draw(SimpleGameView view, Graphics2D graphics, float x, float y) {
 		view.drawSun(graphics, x, y, color);
-	}
-
-	public void setCase(float x, float y) {
-		caseXY = new Coordinates(BordView.caseXFromX(x), BordView.caseYFromY(y));
 	}
 
 }

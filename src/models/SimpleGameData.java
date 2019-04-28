@@ -244,7 +244,7 @@ public class SimpleGameData {
 	}
 
 	public void naturalSun(BordView view) {
-		if (time.asReachTimer(2)) {
+		if (time.asReachTimer(5)) {
 			spawnSun(view, -1, -1);
 		}
 	}
@@ -373,9 +373,8 @@ public class SimpleGameData {
 		}
 
 		if (!dataSelect.hasASelectedCell()) {
-
 			if (dataSelect.isCorrectSelectLocation(plantSelectionView, x, y)
-					&& plantSelectionView.isThisChronoReset(y, view.getYOrigin()) && actualMoney >= plantSelectionView.getSelectedPlants()[view.lineFromY(y)].getCost()) {
+					&& plantSelectionView.isThisChronoReset(y, view.getYOrigin()) && actualMoney >= plantSelectionView.getSelectedPlants()[plantSelectionView.lineFromY(y)].getCost()) {
 				dataSelect.selectCell(plantSelectionView.lineFromY(y), plantSelectionView.columnFromX(x));
 			}
 
@@ -420,7 +419,7 @@ public class SimpleGameData {
 																							// matrice
 		int randomPlantType = this.RandomPosGenerator(selectedPlant.length); // random type plant
 
-		if (target == 1) {
+		if (target == 1 && actualMoney >= plantSelectionView.getSelectedPlants()[plantSelectionView.lineFromY(randomPlantType)].getCost()) {
 			result = true;
 			if (!dataSelect.hasASelectedCell()) {
 				dataSelect.selectCell(randomPlantType, 0);

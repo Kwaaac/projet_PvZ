@@ -77,6 +77,7 @@ public class SelectBordView extends SimpleGameView {
 	 *                                  game board.
 	 */
 	public int lineFromY(float y) {
+		System.out.println(super.getYOrigin());
 		return indexFromReaCoord(y, super.getYOrigin());
 	}
 
