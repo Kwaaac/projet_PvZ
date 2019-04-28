@@ -237,14 +237,14 @@ public class SimpleGameData {
 
 			float xRandom = RandomPosGenerator(xOrigin, xOrigin * 2 + view.getLength());
 
-			mySun.add(new Soleil(xRandom, 150, 1.5));
+			mySun.add(new Soleil(xRandom, 0, 1.5));
 		} else {
 			mySun.add(new Soleil(x, y, 0));
 		}
 	}
 
 	public void naturalSun(BordView view) {
-		if (time.asReachTimer(20)) {
+		if (time.asReachTimer(2)) {
 			spawnSun(view, -1, -1);
 		}
 	}

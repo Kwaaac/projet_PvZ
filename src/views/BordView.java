@@ -125,6 +125,8 @@ public class BordView extends SimpleGameView {
 		graphics.setColor(Color.LIGHT_GRAY);
 		graphics.fill(new Rectangle2D.Float(super.getXOrigin() + super.getWidth(), super.getYOrigin(),
 				super.getXOrigin() + super.getWidth(), super.getLength()));
+		
+		graphics.fill(new Rectangle2D.Float(super.getXOrigin(), 0, super.getXOrigin() + super.getWidth(), 148));
 
 		ArrayList<Plant> myPlants = data.getMyPlants();
 
