@@ -249,15 +249,30 @@ public class SimpleGameData {
 		}
 	}
 
-	public void movingZombiesAndBullets(ApplicationContext context, BordView view, ArrayList<Zombie> myZombies,
-			ArrayList<Projectile> myBullet) {
+	public boolean movingZombiesAndBullets(ApplicationContext context, BordView view, ArrayList<Zombie> myZombies,
+			ArrayList<Projectile> myBullet, boolean debug, boolean debuglock) {
 
 		for (Zombie z : myZombies) {
+			if (debug == true) {
+				z.SpeedBoostON();
+				debuglock = true;
+			}
+			if (debug == false && debuglock == true) {
+				z.SpeedBoostOFF();
+			}
 			view.moveAndDrawElement(context, this, z);
 			z.setCase(z.x, z.y);
+			
 		}
 
 		for (Projectile b : myBullet) {
+			if (debug == true) {
+				b.SpeedBoostON();
+				debuglock = true;
+			}
+			if (debug == false && debuglock == true) {
+				b.SpeedBoostOFF();
+			}
 			view.moveAndDrawElement(context, this, b);
 		}
 
@@ -265,7 +280,7 @@ public class SimpleGameData {
 			view.moveAndDrawElement(context, this, s);
 			s.setCase(s.getX(), s.getY());
 		}
-
+		return debuglock = false;
 	}
 
 	public static void timeEnd(ArrayList<Zombie> myZombies, StringBuilder str, ApplicationContext context,

@@ -3,11 +3,9 @@ package controlers;
 import java.awt.Color;
 import java.awt.geom.Point2D;
 import java.text.SimpleDateFormat;
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
 
 import fr.umlv.zen5.Application;
 import fr.umlv.zen5.ApplicationContext;
@@ -15,10 +13,8 @@ import fr.umlv.zen5.Event;
 import fr.umlv.zen5.Event.Action;
 import fr.umlv.zen5.KeyboardKey;
 import fr.umlv.zen5.ScreenInfo;
-import models.Chrono;
 import models.DeadPool;
 import models.SimpleGameData;
-import models.Soleil;
 import models.plants.Plant;
 import models.plants.day.CherryBomb;
 import models.plants.day.Chomper;
@@ -50,9 +46,9 @@ public class SimpleGameController {
 		normalWaveZombie.put(new NormalZombie(), 1);
 		
 		HashMap<Zombie, Integer> superWaveZombie = new HashMap<Zombie, Integer>();
-		superWaveZombie.put(new ConeheadZombie(), 30);
+		superWaveZombie.put(new ConeheadZombie(), 5);
 		superWaveZombie.put(new FlagZombie(), 1);
-		superWaveZombie.put(new NormalZombie(), 20);
+		superWaveZombie.put(new NormalZombie(), 5);
 		
 
 		SimpleGameData dataBord = new SimpleGameData(5, 8);
@@ -80,7 +76,7 @@ public class SimpleGameController {
 
 		StringBuilder str = new StringBuilder("Journal de bord\n-+-+-+-+-+-+-+-+-+-\n");
 
-		boolean debug = false;
+		boolean debug = false, debuglock = false;
 
 		while (true) {
 			/*-----------------------------CHECK CHRONO----------------------------*/
@@ -88,7 +84,7 @@ public class SimpleGameController {
 			/*--------------------------------DRAWS--------------------------------*/
 			
 			view.draw(context, dataBord);
-			dataBord.movingZombiesAndBullets(context, view, myZombies, myBullet);
+			debuglock = dataBord.movingZombiesAndBullets(context, view, myZombies, myBullet, debug, debuglock);
 			plantSelectionView.draw(context, dataSelect);
 
 			/*---------------------------INITIALISATION-----------------------------*/

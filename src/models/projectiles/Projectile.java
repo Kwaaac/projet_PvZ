@@ -6,7 +6,7 @@ import models.MovingElement;
 
 public abstract class Projectile extends Entities implements MovingElement{
 	private final String type = "Projectile";
-	private final double speed;
+	private double speed;
 	private static final int sizeOfProjectile = 25;
 	
 	public Projectile(float x, float y, int damage, int life, double speed) {
@@ -34,5 +34,13 @@ public abstract class Projectile extends Entities implements MovingElement{
 	
 	public boolean isOutside(int xOrigin, int sqrSize, int nbrSqr) {
 		return x > xOrigin + sqrSize * nbrSqr;
+	}
+
+	public void SpeedBoostON() {
+		speed += 2;
+	}
+	
+	public void SpeedBoostOFF() {
+		speed -= 2;
 	}
 }
