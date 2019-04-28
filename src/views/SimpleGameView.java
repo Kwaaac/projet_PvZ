@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
-import java.awt.geom.RectangularShape;
 
 import models.MovingElement;
 import models.SimpleGameData;
@@ -175,7 +174,44 @@ public abstract class SimpleGameView implements GameView {
 		graphics.setColor(Color.decode(color));
 		graphics.fill(new Rectangle2D.Float(x, y, sizeOfPlant, sizeOfPlant));
 	}
+	/*-------------------------------POOL-------------------------------*/
+	
+	@Override
+	public void drawCattails(Graphics2D graphics, int x, int y, String color) {
+		graphics.setColor(Color.decode(color));
+		graphics.fill(new Rectangle2D.Float(x, y, sizeOfPlant, sizeOfPlant));
+		
+		graphics.setColor(Color.decode("#DB5FBD"));
+		graphics.fill(new Ellipse2D.Float(x + 8, y + 8, sizeOfPlant - 16, sizeOfPlant - 16));
+	}
 
+	@Override
+	public void drawSeaShroom(Graphics2D graphics, int x, int y, String color) {
+		graphics.setColor(Color.decode(color));
+		graphics.fill(new Rectangle2D.Float(x, y, sizeOfPlant, sizeOfPlant));
+		
+		graphics.setColor(Color.decode("#16D9B6"));
+		graphics.fill(new Ellipse2D.Float(x + 8, y + 8, sizeOfPlant - 16, sizeOfPlant - 16));
+	}
+
+	@Override
+	public void drawTangleKelp(Graphics2D graphics, int x, int y, String color) {
+		graphics.setColor(Color.decode(color));
+		graphics.fill(new Rectangle2D.Float(x, y, sizeOfPlant, sizeOfPlant));
+		
+		graphics.setColor(Color.decode("#000000"));
+		graphics.fill(new Ellipse2D.Float(x + 8, y + 8, sizeOfPlant - 16, sizeOfPlant - 16));
+	}
+
+	@Override
+	public void drawLilyPad(Graphics2D graphics, int x, int y, String color) {
+		graphics.setColor(Color.decode(color));
+		graphics.fill(new Rectangle2D.Float(x, y, sizeOfPlant, sizeOfPlant));
+		
+		graphics.setColor(Color.decode("#90D322"));
+		graphics.fill(new Ellipse2D.Float(x + 8, y + 8, sizeOfPlant - 16, sizeOfPlant - 16));
+	}
+	
 	/*-----------------------------Zombies------------------------------*/
 
 	int sizeOfZombie = Zombie.getSizeOfZombie();

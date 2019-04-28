@@ -211,6 +211,31 @@ public interface GameView {
 	public default void drawDoomShroom(ApplicationContext context, int x, int y, String s) {
 		context.renderFrame(graphics -> drawOnlyOneCell(graphics, x, y, s));
 	}
+	/*-------------------------------POOL-------------------------------*/
+	void drawCattails(Graphics2D graphics, int x, int y, String color);
+	
+	public default void drawCattails(ApplicationContext context, int x, int y, String s) {
+		context.renderFrame(graphics -> drawOnlyOneCell(graphics, x, y, s));
+	}
+	
+	void drawSeaShroom(Graphics2D graphics, int x, int y, String color);
+	
+	public default void drawSeaShroom(ApplicationContext context, int x, int y, String s) {
+		context.renderFrame(graphics -> drawOnlyOneCell(graphics, x, y, s));
+	}
+	
+	void drawTangleKelp(Graphics2D graphics, int x, int y, String color);
+	
+	public default void drawTangleKelp(ApplicationContext context, int x, int y, String s) {
+		context.renderFrame(graphics -> drawOnlyOneCell(graphics, x, y, s));
+	}
+	
+	void drawLilyPad(Graphics2D graphics, int x, int y, String color);
+	
+	public default void drawLilyPad(ApplicationContext context, int x, int y, String s) {
+		context.renderFrame(graphics -> drawOnlyOneCell(graphics, x, y, s));
+	}
+	
 	
 	/*-----------------------------Zombies------------------------------*/
 

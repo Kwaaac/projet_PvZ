@@ -3,7 +3,6 @@ package models.plants;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 
 import models.Coordinates;
 import models.Entities;
@@ -31,7 +30,7 @@ public abstract class Plant extends Entities implements IPlant{
 	}
 
 	
-	public Plant(int x, int y, int damage, int life, int shootBarMax, int cost,String cooldown) {
+	public Plant(int x, int y, int damage, int life, int shootBarMax, int cost, String cooldown) {
 		super(x, y, damage, life);
 		this.shootBarMax = shootBarMax;
 		this.cost = cost;
