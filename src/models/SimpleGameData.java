@@ -2,9 +2,6 @@ package models;
 
 import java.awt.Color;
 import java.text.SimpleDateFormat;
-import java.time.Duration;
-import java.time.Instant;
-import java.time.temporal.Temporal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -18,7 +15,6 @@ import models.projectiles.Projectile;
 import models.zombies.Zombie;
 import views.BordView;
 import views.SelectBordView;
-import views.SimpleGameView;
 
 public class SimpleGameData {
 	private final static int score = 5;
@@ -27,6 +23,7 @@ public class SimpleGameData {
 	private Coordinates selected;
 	private final ArrayList<Coordinates> placedPlant = new ArrayList<Coordinates>();
 	private final ArrayList<Plant> myPlants = new ArrayList<>();
+	private final static ArrayList<Soleil> mySun = new ArrayList<>();
 
 	private static long spawnTime;
 	private static long timeLimit;
@@ -35,16 +32,28 @@ public class SimpleGameData {
 	private static int difficulty = 1;
 	private static int superWave = 0;
 
+	private int actualMoney = 0;
+	private Chrono sunSpawn = new Chrono();
+	
+	static Chrono time = new Chrono();
+	
+
 	public SimpleGameData(int nbLines, int nbColumns) {
 		matrix = new Cell[nbLines][nbColumns];
 
+		//Spawn des zombies et leurs limite de temps avant spawn
 		spawnTime = System.currentTimeMillis();
 		timeLimit = 5_000;
 
+		// Temps pour augmenter la difficulté
 		difficultyTime = System.currentTimeMillis();
+
+		// Temps du spawn des soleil
+		sunSpawn.start();
+		
+		// Temps du jeu
+		time.start();
 	}
-	
-	
 
 	public ArrayList<Plant> getMyPlants() {
 		return myPlants;
@@ -60,7 +69,7 @@ public class SimpleGameData {
 		return random.nextInt(valeurMax);
 	}
 
-	public int RandomPosGenerator(int valeurMin, int valeurMax) {
+	public static int RandomPosGenerator(int valeurMin, int valeurMax) {
 		Random r = new Random();
 		return valeurMin + r.nextInt(valeurMax - valeurMin);
 	}
@@ -135,7 +144,7 @@ public class SimpleGameData {
 
 		return false;
 	}
-	
+
 	private boolean isCorrectSelectLocation(SelectBordView view, float x, float y) {
 
 		int xOrigin = view.getXOrigin();
@@ -221,31 +230,50 @@ public class SimpleGameData {
 		}
 
 	}
+	
+	public static void spawnSun(BordView view, float x, float y) {
+		if (x == -1 && y == -1) {
+			int xOrigin = view.getXOrigin();
+
+			float xRandom = RandomPosGenerator(xOrigin, xOrigin * 2 + view.getLength());
+
+			mySun.add(new Soleil(xRandom, 150, 1.5));
+		} else {
+			mySun.add(new Soleil(x, y, 0));
+		}
+	}
+
+	public void naturalSun(BordView view) {
+		if (time.asReachTimer(20)) {
+			spawnSun(view, -1, -1);
+		}
+	}
 
 	public void movingZombiesAndBullets(ApplicationContext context, BordView view, ArrayList<Zombie> myZombies,
 			ArrayList<Projectile> myBullet) {
 
 		for (Zombie z : myZombies) {
-			System.out.println("\n" + z);
-			System.out.println(z.getSpeed() + "\n");
-			view.moveAndDrawElement(context, this, z); 
+			view.moveAndDrawElement(context, this, z);
 			z.setCase(z.x, z.y);
 		}
 
 		for (Projectile b : myBullet) {
 			view.moveAndDrawElement(context, this, b);
 		}
-		
-		
+
+		for (Soleil s : mySun) {
+			view.moveAndDrawElement(context, this, s);
+			s.setCase(s.getX(), s.getY());
+		}
+
 	}
 
-	public static void timeEnd(ArrayList<Zombie> myZombies, Chrono time, StringBuilder str,
-			ApplicationContext context, int deathCounterZombie, String mdp) {
+	public static void timeEnd(ArrayList<Zombie> myZombies, StringBuilder str, ApplicationContext context,
+			int deathCounterZombie, String mdp) {
 
 		int xOrigin = 450;
 		int squareSize = BordView.getSquareSize();
 		String choice = "Continue", finalChoice = null;
-		int h = 0, m = 0, s = 0;
 
 		for (Zombie z : myZombies) {
 			if (z.isEatingBrain(xOrigin, squareSize)) {
@@ -290,7 +318,7 @@ public class SimpleGameData {
 
 	public void planting(ApplicationContext context, SimpleGameData dataSelect, BordView view, SelectBordView psView,
 			float x, float y) {
-
+		
 		if (this.isCorrectBordLocation(view, x, y) && dataSelect.hasASelectedCell()) {
 
 			this.selectCell(view.lineFromY(y), view.columnFromX(x));
@@ -309,6 +337,8 @@ public class SimpleGameData {
 			if (!this.hasPlant(i, j)) {
 				this.plantOnBoard(i, j);
 				myPlants.add(psView.getSelectedPlants()[p].createAndDrawNewPlant(view, context, x2, y2));
+				actualMoney -= psView.getSelectedPlants()[p].getCost();
+				System.out.println("Vous avez " + actualMoney);
 				psView.startCooldown(p);
 			}
 
@@ -319,7 +349,9 @@ public class SimpleGameData {
 			SelectBordView plantSelectionView, float x, float y) {
 		if (!this.hasASelectedCell()) {
 
-			this.planting(context, dataSelect, view, plantSelectionView, x, y);
+			if (!clickSun(x, y)) {
+				this.planting(context, dataSelect, view, plantSelectionView, x, y);
+			}
 
 		} else {
 			this.unselect();
@@ -327,13 +359,38 @@ public class SimpleGameData {
 
 		if (!dataSelect.hasASelectedCell()) {
 
-			if (dataSelect.isCorrectSelectLocation(plantSelectionView, x, y) && plantSelectionView.isThisChronoReset(y, view.getYOrigin())) {
+			if (dataSelect.isCorrectSelectLocation(plantSelectionView, x, y)
+					&& plantSelectionView.isThisChronoReset(y, view.getYOrigin()) && actualMoney >= plantSelectionView.getSelectedPlants()[view.lineFromY(y)].getCost()) {
 				dataSelect.selectCell(plantSelectionView.lineFromY(y), plantSelectionView.columnFromX(x));
 			}
 
 		} else {
 			dataSelect.unselect();
+			if (dataSelect.isCorrectSelectLocation(plantSelectionView, x, y)
+					&& plantSelectionView.isThisChronoReset(y, view.getYOrigin())) {
+				dataSelect.selectCell(plantSelectionView.lineFromY(y), plantSelectionView.columnFromX(x));
+			}
 		}
+	}
+
+	private boolean clickSun(float x, float y) {
+		boolean res = false;
+		int position = -1;
+
+		for (int i = 0; i < mySun.size(); i++) {
+			if (mySun.get(i).isClicked(x, y)) {
+				res = true;
+				position = i;
+				break;
+			}
+		}
+
+		if (res) {
+			actualMoney += mySun.remove(position).getSunny();
+			System.out.println("Vous avez " + actualMoney);
+		}
+
+		return res;
 	}
 
 	public boolean spawnRandomPlant(ApplicationContext context, SimpleGameData dataSelect, BordView view,
@@ -342,9 +399,9 @@ public class SimpleGameData {
 		boolean result = false;
 
 		int target = this.RandomPosGenerator(15); // 1 chance sur x
-		int xRandomPosition = this.RandomPosGenerator(view.getXOrigin(), view.getLength()); // random position x dans
+		int xRandomPosition = SimpleGameData.RandomPosGenerator(view.getXOrigin(), view.getLength()); // random position x dans
 																							// matrice
-		int yRandomPosition = this.RandomPosGenerator(view.getYOrigin(), view.getWidth()); // random position y dans
+		int yRandomPosition = SimpleGameData.RandomPosGenerator(view.getYOrigin(), view.getWidth()); // random position y dans
 																							// matrice
 		int randomPlantType = this.RandomPosGenerator(selectedPlant.length); // random type plant
 
@@ -413,7 +470,7 @@ public class SimpleGameData {
 						selecteur = i;
 					}
 				}
-				
+
 				myZombies.add(zombieAvailable.get(selecteur).createAndDrawNewZombie(view, context, x, y));
 				str.append("new " + zombieAvailable.get(selecteur) + new SimpleDateFormat("hh:mm:ss").format(new Date())
 						+ ")\n");
@@ -433,7 +490,7 @@ public class SimpleGameData {
 			}
 
 			updateDifficulty();
-			
+
 		}
 	}
 
@@ -444,18 +501,18 @@ public class SimpleGameData {
 		int sqrS = BordView.getSquareSize();
 		int endWave = 0;
 		int x = view.getXOrigin() + view.getWidth();
-		
 
 		for (Map.Entry<Zombie, Integer> entry : zombieList.entrySet()) {
 			Zombie z = entry.getKey();
 			Integer spawn = entry.getValue();
-			
-			int y = view.getYOrigin() + dataBord.RandomPosGenerator(5) * sqrS + (sqrS / 2) - (Zombie.getSizeOfZombie() / 2);
-			
+
+			int y = view.getYOrigin() + dataBord.RandomPosGenerator(5) * sqrS + (sqrS / 2)
+					- (Zombie.getSizeOfZombie() / 2);
+
 			if (spawn == 0) {
 				endWave += 1;
 			}
-			
+
 			if (spawn > 0) {
 				myZombies.add(z.createAndDrawNewZombie(view, context, x, y));
 				str.append("new " + z + new SimpleDateFormat("hh:mm:ss").format(new Date()) + ")\n");
@@ -463,8 +520,8 @@ public class SimpleGameData {
 				entry.setValue(spawn - 1);
 			}
 		}
-		
-		if(endWave == zombieList.size()) {
+
+		if (endWave == zombieList.size()) {
 			superWave = 2;
 		}
 
@@ -477,7 +534,7 @@ public class SimpleGameData {
 		if (superWave == 0) {
 			spawnNormalWave(dataBord, squareSize, str, myZombies, view, context, zombieList);
 		} else if (superWave == 1) {
-			
+
 			spawnSuperWave(dataBord, squareSize, str, myZombies, view, context, superZombieList);
 
 		}

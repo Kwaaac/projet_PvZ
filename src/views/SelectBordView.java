@@ -50,7 +50,7 @@ public class SelectBordView extends SimpleGameView {
 		for(int i = 0 ; i < selectedPlants.length; i++) {
 			Chrono askedChrono = caseChrono[i];
 			Plant askedPlant = selectedPlants[i];
-			if(askedChrono.asReachTimer(askedPlant.getCooldown())) {
+			if(askedChrono.asReachTimerAndStop(askedPlant.getCooldown())) {
 				askedChrono.stop();
 			}
 		}
@@ -315,5 +315,4 @@ public class SelectBordView extends SimpleGameView {
 		graphics.setColor(Color.decode(color));
 		graphics.fill(new Rectangle2D.Float(x - 15, y + sizeOfPlant / 2, sizeOfPlant, sizeOfPlant));
 	}
-
 }

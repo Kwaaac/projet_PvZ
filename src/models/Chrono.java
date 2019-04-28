@@ -88,13 +88,28 @@ public class Chrono {
 
 	/**
 	 * 
-	 * @param tempsS temps a atteindre
+	 * @param tempsS temps a atteindre et arrete le chrono
+	 * @return revoie si le chronometre a atteind le temps donnee en parametre
+	 */
+	public boolean asReachTimerAndStop(long tempsS) {
+		this.pause();
+		if (this.getDureeSec() >= tempsS) {
+			this.stop();
+			return true;
+		}
+		this.resume();
+		return false;
+	}
+	
+	/**
+	 * 
+	 * @param tempsS temps a atteindre et relance le chrono
 	 * @return revoie si le chronometre a atteind le temps donnee en parametre
 	 */
 	public boolean asReachTimer(long tempsS) {
 		this.pause();
-		if (this.getDureeSec() >= tempsS) {
-			this.stop();
+		if (this.getDureeSec() >= tempsS ) {
+			this.start();
 			return true;
 		}
 		this.resume();

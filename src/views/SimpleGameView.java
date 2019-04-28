@@ -65,6 +65,14 @@ public abstract class SimpleGameView implements GameView {
 		graphics.setColor(Color.decode(s));
 		graphics.fill(new Rectangle2D.Float(x, y, sizeOfPlant, sizeOfPlant));
 	}
+	
+	
+	@Override
+	public void drawSun(Graphics2D graphics, float x, float y, String s) {
+		graphics.setColor(Color.decode(s));
+		graphics.fill(new Ellipse2D.Float(x, y, 85, 85));
+	}
+	
 
 	/*-----------------------------Plants------------------------------*/
 	/*-------------------------------DAY-------------------------------*/

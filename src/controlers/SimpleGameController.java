@@ -7,6 +7,7 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 
 import fr.umlv.zen5.Application;
 import fr.umlv.zen5.ApplicationContext;
@@ -17,6 +18,7 @@ import fr.umlv.zen5.ScreenInfo;
 import models.Chrono;
 import models.DeadPool;
 import models.SimpleGameData;
+import models.Soleil;
 import models.plants.Plant;
 import models.plants.day.CherryBomb;
 import models.plants.day.Chomper;
@@ -75,8 +77,6 @@ public class SimpleGameController {
 		Zombie.getSizeOfZombie();
 		Bullet.getSizeOfProjectile();
 		int deathCounterZombie = 0;
-		Chrono time = new Chrono();
-		time.start();
 
 		StringBuilder str = new StringBuilder("Journal de bord\n-+-+-+-+-+-+-+-+-+-\n");
 
@@ -94,6 +94,10 @@ public class SimpleGameController {
 			/*---------------------------INITIALISATION-----------------------------*/
 			
 			DeadPool deadPoolE = new DeadPool();
+			
+			/*--------------------------------SUN SPAWNERS----------------------------*/
+			
+			dataBord.naturalSun(view);
 
 			/*-------------------------------ZOMBIE SPAWNERS-----------------------------*/
 			
@@ -145,7 +149,7 @@ public class SimpleGameController {
 
 			/*------------------------------- WIN / LOOSE --------------------------------*/
 
-			SimpleGameData.timeEnd(myZombies, time, str, context, deathCounterZombie, mdp);
+			SimpleGameData.timeEnd(myZombies, str, context, deathCounterZombie, mdp);
 
 			/*---Gestion de la selection de cellules et de la plante manuelle de plante---*/
 			
@@ -158,6 +162,7 @@ public class SimpleGameController {
 			float y = location.y;
 			
 			dataBord.selectingCellAndPlanting(context, dataSelect, view, plantSelectionView, x, y);
+			
 			
 			
 		}

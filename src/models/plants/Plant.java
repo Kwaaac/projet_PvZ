@@ -39,6 +39,10 @@ public abstract class Plant extends Entities implements IPlant{
 		shootTime = System.currentTimeMillis();
 	}
 	
+	public int getCost() {
+		return cost;
+	}
+	
 	public String toString() {
 		return "Type: " + type;
 	}

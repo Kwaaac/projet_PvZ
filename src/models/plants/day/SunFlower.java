@@ -4,6 +4,7 @@ import java.awt.Graphics2D;
 import java.util.ArrayList;
 
 import fr.umlv.zen5.ApplicationContext;
+import models.SimpleGameData;
 import models.plants.Plant;
 import models.projectiles.Projectile;
 import models.zombies.Zombie;
@@ -15,11 +16,12 @@ public class SunFlower extends Plant{
 	private final String color = "#FEFF33";
 	
 	public SunFlower(int x, int y) {
-		super(x, y, 0, 300, 0, 50, "fast");
+		//    x, y, damage,  life,  shootBarMax,  cost, cooldown
+		super(x, y, 0, 300, 10_000, 25, "fast");
 	}
 	
 	public SunFlower() {
-		super(-10, -10, 0, 1, 1, 50, "fast");
+		super(-10, -10, 0, 1, 10_000, 25, "fast");
 	}
 	
 	@Override
@@ -42,6 +44,13 @@ public class SunFlower extends Plant{
 	}
 
 	@Override
-	public void action(ArrayList<Projectile> myBullet, BordView view, ArrayList<Zombie> myZombies) {}
+	public void action(ArrayList<Projectile> myBullet, BordView view, ArrayList<Zombie> myZombies) {
+		if(this.readyToshot(myZombies)) {
+			SimpleGameData.spawnSun(view, x + 20, y + 20);
+			this.resetAS();
+		}
+		
+		this.incAS();
+	}
 
 }

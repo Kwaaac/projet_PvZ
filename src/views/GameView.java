@@ -104,6 +104,14 @@ public interface GameView {
 	public default void moveAndDrawElement(ApplicationContext context, SimpleGameData data, MovingElement moving) {
 		context.renderFrame(graphics -> moveAndDrawElement(graphics, data, moving));
 	}
+	
+	
+	void drawSun(Graphics2D graphics, float x, float y, String s);
+
+	public default void drawSun(ApplicationContext context, float x, float y, String s) {
+		context.renderFrame(graphics -> drawOnlyOneCell(graphics, x, y, s));
+	}
+	
 
 	/*-----------------------------Plants------------------------------*/
 	/*------------------------------DAY--------------------------------*/
@@ -238,7 +246,4 @@ public interface GameView {
 	public default void drawBullet(ApplicationContext context, float x, float y, String s) {
 		context.renderFrame(graphics -> drawOnlyOneCell(graphics, x, y, s));
 	}
-
-	
-	
 }
