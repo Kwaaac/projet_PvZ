@@ -14,7 +14,6 @@ import fr.umlv.zen5.Event.Action;
 import fr.umlv.zen5.KeyboardKey;
 import fr.umlv.zen5.ScreenInfo;
 import models.DeadPool;
-import models.MenuData;
 import models.SimpleGameData;
 import models.plants.Plant;
 import models.plants.day.CherryBomb;
@@ -42,51 +41,6 @@ import views.SelectBordView;
 
 
 public class SimpleGameController {
-	
-	static void startGame(ApplicationContext context) {
-
-		ScreenInfo screenInfo = context.getScreenInfo();
-		int width = (int) screenInfo.getWidth();
-		int height = (int) screenInfo.getHeight();
-		
-		BordView view = new BordView(0, 0, width, height, width/3);
-		
-		while (true) {
-			view.drawRectangle(context, 0, 0, width, height/3, "#61DB5F");
-			view.drawRectangle(context, 0, height/3, width, height/3, "#5F79DB");
-			view.drawRectangle(context, 0, height/3 + height/3, width, height/3, "#5FC1DB");
-			Event event = context.pollOrWaitEvent(20);
-			if (event == null) {
-				continue;
-			}
-			Action action = event.getAction();
-			
-			if (action == Action.KEY_PRESSED || action == Action.KEY_RELEASED) {
-				context.exit(0);
-				return;
-			}
-			
-			Point2D.Float location = event.getLocation();
-			float y = location.y;
-			
-			int Y = view.indexFromReaCoord(y,0);
-			
-			switch(Y) {
-				case 0:
-					
-					break;
-					
-				case 1:
-					
-					break;
-				
-				case 2:
-					
-					break;
-			}
-		}
-		
-	}
 	
 	static void simpleGame(ApplicationContext context) {
 		ScreenInfo screenInfo = context.getScreenInfo();
@@ -130,6 +84,7 @@ public class SimpleGameController {
 		boolean debug = false, debuglock = false;
 
 		while (true) {
+			
 			/*-----------------------------CHECK CHRONO----------------------------*/
 			plantSelectionView.checkCooldown();
 			/*--------------------------------DRAWS--------------------------------*/
@@ -213,60 +168,13 @@ public class SimpleGameController {
 			
 			dataBord.selectingCellAndPlanting(context, dataSelect, view, plantSelectionView, x, y);
 			
-			
-			
 		}
 
-	}
-
-	static void endGame(ApplicationContext context) {
-
-		ScreenInfo screenInfo = context.getScreenInfo();
-		float width = screenInfo.getWidth();
-		float height = screenInfo.getHeight();
-
-		SimpleGameData data = new SimpleGameData(1, 1);
-
-		data.setRandomMatrix();
-		int yOrigin = (int) (height/2.5);
-		int xOrigin = (int) (width/2.5);
-
-		BordView view = BordView.initGameGraphics(xOrigin, yOrigin, 200, data);
-
-
-
-		int WL = SimpleGameData.getWL();
-		
-		while (true) {
-			view.draw(context, data);
-			Event event = context.pollOrWaitEvent(20);
-			if (event == null) {
-				continue;
-			}
-			Action action = event.getAction();
-			
-			
-//			if (WL == 0) {
-//				view.drawString(context, (int)width/2, (int)height/2, "LOOSE");
-//			}
-//			if (WL == 1) {
-//				view.drawString(context, (int)width/2, (int)height/2, "WIN");
-//			}
-//			else {
-//				view.drawString(context, (int)width/2, (int)height/2, "STOP");
-//			}
-			
-			if (action == Action.KEY_PRESSED || action == Action.KEY_RELEASED) {
-				context.exit(0);
-				return;
-			}
-		}
-		
 	}
 
 	public static void main(String[] args) {
-		Application.run(Color.BLACK, SimpleGameController::startGame); // attention, utilisation d'une lambda.
-//		Application.run(Color.LIGHT_GRAY, SimpleGameController::simpleGame); // attention, utilisation d'une lambda.
+		Application.run(Color.LIGHT_GRAY, MenuController::startGame);
+		Application.run(Color.LIGHT_GRAY, SimpleGameController::simpleGame); // attention, utilisation d'une lambda.
 //		Application.run(Color.BLACK, SimpleGameController::endGame); // attention, utilisation d'une lambda.
 	}
 }

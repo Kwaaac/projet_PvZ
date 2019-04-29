@@ -39,6 +39,8 @@ public class SimpleGameData {
 	
 	static Chrono time = new Chrono();
 	
+	private static String map =  "";
+	
 
 	public SimpleGameData(int nbLines, int nbColumns) {
 		matrix = new Cell[nbLines][nbColumns];
@@ -567,6 +569,12 @@ public class SimpleGameData {
 
 	}
 	
+	public static void setMap(String mape) {
+		map = mape;
+	}
 	
+	public static String getMap() {
+		return map;
+	}
 
 }
