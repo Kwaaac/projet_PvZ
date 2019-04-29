@@ -105,7 +105,7 @@ public class BordView extends SimpleGameView {
 	
 	
 	public void draw(Graphics2D graphics, SimpleGameData data) {
-		graphics.setColor(Color.WHITE.darker());
+		graphics.setColor(Color.decode("#A9A9A9"));
 		for (int i = 0; i <= data.getNbLines(); i++) {
 			graphics.setStroke(new BasicStroke(4));
 			graphics.draw(new Line2D.Float(super.getXOrigin(), super.getYOrigin() + i * squareSize,
@@ -125,7 +125,7 @@ public class BordView extends SimpleGameView {
 			}
 		}
 
-		graphics.setColor(Color.LIGHT_GRAY);
+		graphics.setColor(Color.decode("#A9A9A9"));
 		graphics.fill(new Rectangle2D.Float(super.getXOrigin() + super.getWidth(), super.getYOrigin(),
 				super.getXOrigin() + super.getWidth(), super.getLength()));
 		

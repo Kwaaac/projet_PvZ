@@ -43,6 +43,8 @@ import views.SelectBordView;
 public class SimpleGameController {
 	
 	static void simpleGame(ApplicationContext context) {
+		MenuController.startGame(context);
+		
 		ScreenInfo screenInfo = context.getScreenInfo();
 		screenInfo.getWidth();
 		Plant[] selectedPlant = {new SunFlower(), new Peashooter(), new TangleKelp(), new WallNut(), new CherryBomb(), new PotatoMine(), new Chomper()}; 
@@ -83,6 +85,8 @@ public class SimpleGameController {
 
 		boolean debug = false, debuglock = false;
 
+		
+		
 		while (true) {
 			
 			/*-----------------------------CHECK CHRONO----------------------------*/
@@ -173,7 +177,7 @@ public class SimpleGameController {
 	}
 
 	public static void main(String[] args) {
-		Application.run(Color.LIGHT_GRAY, MenuController::startGame);
+		
 		Application.run(Color.LIGHT_GRAY, SimpleGameController::simpleGame); // attention, utilisation d'une lambda.
 //		Application.run(Color.BLACK, SimpleGameController::endGame); // attention, utilisation d'une lambda.
 	}

@@ -12,7 +12,7 @@ import models.plants.Plant;
 import views.BordView;
 
 public class MenuController {
-	static void startGame(ApplicationContext context) {
+	public static void startGame(ApplicationContext context) {
 
 		ScreenInfo screenInfo = context.getScreenInfo();
 		int width = (int) screenInfo.getWidth();
@@ -26,12 +26,14 @@ public class MenuController {
 		Plant[] plantNight = Plant.getPlantList("night");
 		Plant[] plantPool = Plant.getPlantList("pool");
 		
+		view.drawRectangle(context, 0, 0, width, height/3, "#61DB5F");
+		view.drawRectangle(context, 0, height/3, width, height/3, "#5F79DB");
+		view.drawRectangle(context, 0, height/3 + height/3, width, height/3, "#5FC1DB");
+		view.drawRectangle(context, width-65, 15, 50, 50, "#DE0000");
+		
 		while (true) {
 			
-			view.drawRectangle(context, 0, 0, width, height/3, "#61DB5F");
-			view.drawRectangle(context, 0, height/3, width, height/3, "#5F79DB");
-			view.drawRectangle(context, 0, height/3 + height/3, width, height/3, "#5FC1DB");
-			view.drawRectangle(context, width-65, 15, 50, 50, "#DE0000");
+			
 			Event event = context.pollOrWaitEvent(20);
 			
 			if (event == null) {
@@ -46,9 +48,12 @@ public class MenuController {
 			
 			Action action = event.getAction();
 			if (action == Action.KEY_PRESSED || action == Action.KEY_RELEASED) {
-				if (mdp == "SPACE") {
-					context.exit(0);
+				if (mdp == "A") {
+					view.drawRectangle(context, 0, 0, width, height, "#A9A9A9");
 					return;
+				}
+				else {
+					continue;
 				}
 			}
 			
@@ -57,6 +62,12 @@ public class MenuController {
 			float y = location.y;
 			int Y = view.indexFromReaCoord(y,0);
 			int X = view.indexFromReaCoord(x,0);
+			
+			if (width-65 <= location.x && location.x <= width-15) {
+				if (15 <= location.y && location.y <= 65) {
+					System.exit(0);
+				}
+			}
 			
 			if (choice == "map") {
 				
@@ -84,7 +95,6 @@ public class MenuController {
 				y = height/6;
 				for (Plant p: plantDay) {
 					p.createAndDrawNewPlant(view, context, (int)x, (int)y);
-					
 					x += 100;
 				}
 			}
@@ -110,7 +120,6 @@ public class MenuController {
 					x += 100;
 				}
 			}
-			System.out.println(choice);
 			
 		}
 	}
