@@ -66,6 +66,12 @@ public abstract class SimpleGameView implements GameView {
 	}
 	
 	@Override
+	public void drawRectangle(Graphics2D graphics, int x, int y, int width, int height, String s) {
+		graphics.setColor(Color.decode(s));
+		graphics.fill(new Rectangle2D.Float(x, y, width, height));
+	}
+	
+	@Override
 	public void drawString(Graphics2D graphics, int x, int y, String s) {
 		graphics.setColor(Color.decode(s));
 		graphics.drawString(s, x, y);

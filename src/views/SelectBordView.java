@@ -182,6 +182,11 @@ public class SelectBordView extends SimpleGameView {
 		super.drawOnlyOneCell(graphics, x, y, s);
 	}
 
+	
+	@Override
+	public void drawRectangle(Graphics2D graphics, int x, int y, int width, int height, String color) {
+		super.drawRectangle(graphics, x, y, width, height, color);
+	}
 	/**
 	 * Draws only the cell specified by the given coordinates in the game board from
 	 * its data, using an existing Graphics2D object.
@@ -353,4 +358,6 @@ public class SelectBordView extends SimpleGameView {
 		graphics.setColor(Color.decode("#90D322"));
 		graphics.fill(new Ellipse2D.Float(x - 7, y + sizeOfPlant / 2 + 8, sizeOfPlant - 15, sizeOfPlant - 15));
 	}
+
+	
 }

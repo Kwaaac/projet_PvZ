@@ -1,7 +1,6 @@
 package views;
 
 import java.awt.Graphics2D;
-
 import fr.umlv.zen5.ApplicationContext;
 import models.MovingElement;
 import models.SimpleGameData;
@@ -38,7 +37,7 @@ public interface GameView {
 	 * @param data     the GameData containing the game data.
 	 */
 	public void draw(Graphics2D graphics, SimpleGameData data);
-
+	
 	/**
 	 * Draws the game board from its data, using an existing
 	 * {@code ApplicationContext}.
@@ -81,7 +80,12 @@ public interface GameView {
 	public default void drawOnlyOneCell(ApplicationContext context, float x, float y, String s) {
 		context.renderFrame(graphics -> drawOnlyOneCell(graphics, x, y, s));
 	}
-
+	
+	
+	void drawRectangle(Graphics2D graphics, int x, int y, int width, int height, String color);
+	public default void drawRectangle(ApplicationContext context, int x, int y, int width, int height, String color) {
+		context.renderFrame(graphics -> drawRectangle(graphics, x, y, width, height, color));
+	}
 	/**
 	 * Draws only only the specified moving element in the game board from its data,
 	 * using an existing Graphics2D object.
@@ -468,6 +472,8 @@ public interface GameView {
 	public default void drawBullet(ApplicationContext context, float x, float y, String s) {
 		context.renderFrame(graphics -> drawOnlyOneCell(graphics, x, y, s));
 	}
+
+	
 
 	
 }

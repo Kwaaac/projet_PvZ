@@ -170,6 +170,10 @@ public class BordView extends SimpleGameView {
 		graphics.drawString(string, j, j);
 		
 	}
+	public void drawRectangle(Graphics2D graphics, int x, int y, int width, int height, String string) {
+		graphics.setColor(Color.decode(string));
+		graphics.fill(new Rectangle2D.Float(x,y,width,height));
+	}
 
 
 }
