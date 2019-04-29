@@ -10,6 +10,7 @@ import fr.umlv.zen5.Event.Action;
 import models.SimpleGameData;
 import models.plants.Plant;
 import views.BordView;
+import views.SelectBordView;
 
 public class MenuController {
 	public static void startGame(ApplicationContext context) {
@@ -18,13 +19,28 @@ public class MenuController {
 		int width = (int) screenInfo.getWidth();
 		int height = (int) screenInfo.getHeight();
 		
-		BordView view = new BordView(0, 0, width, height, height/3);
+		int yOrigin = 50;
+		int xOrigin = 100;
 		
-		String choice = "map";
+		Plant[] selectedPlant = {};
+		
+		SimpleGameData dataBord = new SimpleGameData(7, 7);
+		SimpleGameData dataSelect = new SimpleGameData(7, 1);
+
+		dataBord.setRandomMatrix();
+		dataSelect.setRandomMatrix();
+		
+		
+		BordView viewContent = BordView.initGameGraphics(xOrigin, yOrigin, 100, dataBord);
+		SelectBordView plantSelectionView = SelectBordView.initGameGraphics(0, yOrigin, 900, dataSelect, selectedPlant);
+		
+		String choice = "mapSelection";
 		
 		Plant[] plantDay = Plant.getPlantList("day");
 		Plant[] plantNight = Plant.getPlantList("night");
 		Plant[] plantPool = Plant.getPlantList("pool");
+		
+		BordView view = new BordView(0, 0, width, height, height/3);
 		
 		view.drawRectangle(context, 0, 0, width, height/3, "#61DB5F");
 		view.drawRectangle(context, 0, height/3, width, height/3, "#5F79DB");
@@ -63,64 +79,42 @@ public class MenuController {
 			int Y = view.indexFromReaCoord(y,0);
 			int X = view.indexFromReaCoord(x,0);
 			
-			if (width-65 <= location.x && location.x <= width-15) {
+			if (width-65 <= location.x && location.x <= width-15) { //quit
 				if (15 <= location.y && location.y <= 65) {
 					System.exit(0);
 				}
 			}
 			
-			if (choice == "map") {
-				
-				switch(Y) {
-				
-					case 0:
-						choice = "day";
-						SimpleGameData.setMap("garden");
-						break;
+			switch (choice) {
+				case "mapSelection":
+					switch(Y) {
+						case 0:
+							SimpleGameData.setMap("garden");
+							choice = "plantSelection";
+							break;
+							
+						case 1:
+							SimpleGameData.setMap("night");
+							choice = "plantSelection";
+							break;
 						
-					case 1:
-						choice = "night";
-						SimpleGameData.setMap("night");
-						break;
+						case 2:
+							SimpleGameData.setMap("pool");
+							choice = "plantSelection";
+							break;
+					}
+					break;
 					
-					case 2:
-						choice = "pool";
-						SimpleGameData.setMap("pool");
-						break;
-				}
+				case "plantSelection":
+					view.drawRectangle(context, 0, 0, width, height, "#ffffff"); //background
+					viewContent.draw(context, dataBord);
+					plantSelectionView.draw(context, dataSelect);
+					view.drawRectangle(context, width-65, 15, 50, 50, "#DE0000"); //quit
+					
+					
+					
+					break;
 			}
-			
-			if (choice == "day") {
-				x = 100;
-				y = height/6;
-				for (Plant p: plantDay) {
-					p.createAndDrawNewPlant(view, context, (int)x, (int)y);
-					x += 100;
-				}
-			}
-			
-			if (choice == "night") {
-				x = 100;
-				y = height/2;
-				for (Plant p: plantNight) {
-					p.createAndDrawNewPlant(view, context, (int)x, (int)y);
-					x += 100;
-				}
-			}
-			
-			if (choice == "pool") {
-				x = 100;
-				y = height-(height/6);
-				for (Plant p: plantDay) {
-					p.createAndDrawNewPlant(view, context, (int)x, (int)y);
-					x += 100;
-				}
-				for (Plant p: plantNight) {
-					p.createAndDrawNewPlant(view, context, (int)x, (int)y);
-					x += 100;
-				}
-			}
-			
 		}
 	}
 }
