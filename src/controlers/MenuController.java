@@ -111,19 +111,31 @@ public class MenuController {
 					plantSelectionView.draw(context, dataSelect);
 					view.drawRectangle(context, width-65, 15, 50, 50, "#DE0000"); //quit
 					
-					x = 100;
-					y = height/2;
+					x = xOrigin+28;
+					y = yOrigin+28;
 					for (Plant p: plantDay) {
 						p.createAndDrawNewPlant(viewContent, context, (int)x, (int)y);
-						x += 100;
+						x += 128;
+						if (x >= xOrigin+900) {
+							y+=128;
+							x=xOrigin+28;
+						}
 					}
 					for (Plant p: plantNight) {
 						p.createAndDrawNewPlant(viewContent, context, (int)x, (int)y);
-						x += 100;
+						x += 128;
+						if (x >= xOrigin+900) {
+							y+=128;
+							x=xOrigin+28;
+						}
 					}
 					for (Plant p: plantPool) {
 						p.createAndDrawNewPlant(viewContent, context, (int)x, (int)y);
-						x += 100;
+						x += 128;
+						if (x >= xOrigin+900) {
+							y+=128;
+							x=xOrigin+28;
+						}
 					}
 					
 					break;
