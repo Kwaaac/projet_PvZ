@@ -20,7 +20,7 @@ public class MenuController {
 		int height = (int) screenInfo.getHeight();
 		
 		int yOrigin = 50;
-		int xOrigin = 100;
+		int xOrigin = 500;
 		
 		Plant[] selectedPlant = {};
 		
@@ -31,8 +31,8 @@ public class MenuController {
 		dataSelect.setRandomMatrix();
 		
 		
-		BordView viewContent = BordView.initGameGraphics(xOrigin, yOrigin, 100, dataBord);
-		SelectBordView plantSelectionView = SelectBordView.initGameGraphics(0, yOrigin, 900, dataSelect, selectedPlant);
+		SelectBordView viewContent = SelectBordView.initGameGraphics(xOrigin, yOrigin, 100, dataBord, selectedPlant);
+		SelectBordView plantSelectionView = SelectBordView.initGameGraphics(30, yOrigin, 900, dataSelect, selectedPlant);
 		
 		String choice = "mapSelection";
 		
@@ -111,7 +111,20 @@ public class MenuController {
 					plantSelectionView.draw(context, dataSelect);
 					view.drawRectangle(context, width-65, 15, 50, 50, "#DE0000"); //quit
 					
-					
+					x = 100;
+					y = height/2;
+					for (Plant p: plantDay) {
+						p.createAndDrawNewPlant(viewContent, context, (int)x, (int)y);
+						x += 100;
+					}
+					for (Plant p: plantNight) {
+						p.createAndDrawNewPlant(viewContent, context, (int)x, (int)y);
+						x += 100;
+					}
+					for (Plant p: plantPool) {
+						p.createAndDrawNewPlant(viewContent, context, (int)x, (int)y);
+						x += 100;
+					}
 					
 					break;
 			}
