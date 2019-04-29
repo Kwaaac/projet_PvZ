@@ -24,6 +24,8 @@ public class SimpleGameData {
 	private final ArrayList<Coordinates> placedPlant = new ArrayList<Coordinates>();
 	private final ArrayList<Plant> myPlants = new ArrayList<>();
 	private final static ArrayList<Soleil> mySun = new ArrayList<>();
+	
+	private static boolean stop = false;
 
 	private static long spawnTime;
 	private static long timeLimit;
@@ -72,6 +74,10 @@ public class SimpleGameData {
 	public static int RandomPosGenerator(int valeurMin, int valeurMax) {
 		Random r = new Random();
 		return valeurMin + r.nextInt(valeurMax - valeurMin);
+	}
+	
+	public void gameStop() {
+		stop = true;
 	}
 
 	/**
@@ -211,8 +217,14 @@ public class SimpleGameData {
 		return false;
 	}
 
-	public static boolean win(int x) {
-		return x == score;
+	public static boolean win(HashMap<Zombie, Integer> superWaveZombie, ArrayList<Zombie> myZombies) {
+		for(int nbrZ : superWaveZombie.values()) {
+			if(nbrZ != 0) {
+				return false;
+			}
+		}
+		
+		return myZombies.isEmpty();
 	}
 
 	public static void setWL(int x) {
@@ -244,7 +256,7 @@ public class SimpleGameData {
 	}
 
 	public void naturalSun(BordView view) {
-		if (time.asReachTimer(5)) {
+		if (sunSpawn.asReachTimer(5)) {
 			spawnSun(view, -1, -1);
 		}
 	}
@@ -284,7 +296,7 @@ public class SimpleGameData {
 	}
 
 	public static void timeEnd(ArrayList<Zombie> myZombies, StringBuilder str, ApplicationContext context,
-			int deathCounterZombie, String mdp) {
+			HashMap<Zombie, Integer> superWaveZombie) {
 
 		int xOrigin = 450;
 		int squareSize = BordView.getSquareSize();
@@ -297,12 +309,12 @@ public class SimpleGameData {
 			}
 		}
 
-		if (SimpleGameData.win(deathCounterZombie)) {
+		if (SimpleGameData.win(superWaveZombie, myZombies)) {
 			choice = "Stop";
 			finalChoice = "Win";
 		}
 
-		if (mdp == "SPACE") {
+		if (stop) {
 			choice = "Stop";
 			finalChoice = "Stop";
 		}

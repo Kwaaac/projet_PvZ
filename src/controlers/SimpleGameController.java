@@ -122,7 +122,6 @@ public class SimpleGameController {
 
 		Zombie.getSizeOfZombie();
 		Bullet.getSizeOfProjectile();
-		int deathCounterZombie = 0;
 
 		StringBuilder str = new StringBuilder("Journal de bord\n-+-+-+-+-+-+-+-+-+-\n");
 
@@ -161,6 +160,10 @@ public class SimpleGameController {
 			
 			dataBord.actionning(myBullet, view, myZombies);
 			
+			/*------------------------------- WIN / LOOSE --------------------------------*/
+
+			SimpleGameData.timeEnd(myZombies, str, context, superWaveZombie);
+			
 			/*---------------------------------DEBUG--------------------------------------*/
 			
 			if (debug == true) {
@@ -188,14 +191,13 @@ public class SimpleGameController {
 				if (mdp == "Y" && debug == false) {
 					debug = true;
 				} // debug ON
-				if (mdp == "N" && debug == true) {
+				else if (mdp == "N" && debug == true) {
 					debug = false;
 				} // debug OFF
+				else if (mdp == "SPACE") {
+					dataBord.gameStop();
+				}
 			}
-
-			/*------------------------------- WIN / LOOSE --------------------------------*/
-
-			SimpleGameData.timeEnd(myZombies, str, context, deathCounterZombie, mdp);
 
 			/*---Gestion de la selection de cellules et de la plante manuelle de plante---*/
 			
@@ -262,7 +264,7 @@ public class SimpleGameController {
 
 	public static void main(String[] args) {
 //		Application.run(Color.BLACK, SimpleGameController::startGame); // attention, utilisation d'une lambda.
-//		Application.run(Color.LIGHT_GRAY, SimpleGameController::simpleGame); // attention, utilisation d'une lambda.
-		Application.run(Color.BLACK, SimpleGameController::endGame); // attention, utilisation d'une lambda.
+		Application.run(Color.LIGHT_GRAY, SimpleGameController::simpleGame); // attention, utilisation d'une lambda.
+//		Application.run(Color.BLACK, SimpleGameController::endGame); // attention, utilisation d'une lambda.
 	}
 }
