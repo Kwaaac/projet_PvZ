@@ -165,4 +165,11 @@ public class BordView extends SimpleGameView {
 		super.moveAndDrawElement(graphics, data, moving);
 	}
 
+	public void drawString(Graphics2D graphics, SimpleGameData data, int i, int j, String string) {
+		graphics.setColor(Color.BLACK);
+		graphics.drawString(string, j, j);
+		
+	}
+
+
 }

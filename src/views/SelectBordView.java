@@ -316,4 +316,41 @@ public class SelectBordView extends SimpleGameView {
 		graphics.setColor(Color.decode(color));
 		graphics.fill(new Rectangle2D.Float(x - 15, y + sizeOfPlant / 2, sizeOfPlant, sizeOfPlant));
 	}
+	/*-------------------------------POOL-------------------------------*/
+	
+	@Override
+	public void drawCattails(Graphics2D graphics, int x, int y, String color) {
+		graphics.setColor(Color.decode(color));
+		graphics.fill(new Ellipse2D.Float(x - 15, y + sizeOfPlant / 2, sizeOfPlant, sizeOfPlant));
+		
+		graphics.setColor(Color.decode("#DB5FBD"));
+		graphics.fill(new Ellipse2D.Float(x - 7, y + sizeOfPlant / 2 + 8, sizeOfPlant - 15, sizeOfPlant - 15));
+	}
+
+	@Override
+	public void drawSeaShroom(Graphics2D graphics, int x, int y, String color) {
+		graphics.setColor(Color.decode(color));
+		graphics.fill(new Ellipse2D.Float(x - 15, y + sizeOfPlant / 2, sizeOfPlant, sizeOfPlant));
+		
+		graphics.setColor(Color.decode("#16D9B6"));
+		graphics.fill(new Ellipse2D.Float(x - 7, y + sizeOfPlant / 2 + 8, sizeOfPlant - 15, sizeOfPlant - 15));
+	}
+
+	@Override
+	public void drawTangleKelp(Graphics2D graphics, int x, int y, String color) {
+		graphics.setColor(Color.decode(color));
+		graphics.fill(new Ellipse2D.Float(x - 15 - sizeOfPlant/4, y + sizeOfPlant / 4, sizeOfPlant+sizeOfPlant/2, sizeOfPlant+sizeOfPlant/2));
+		
+		graphics.setColor(Color.decode("#000000"));
+		graphics.fill(new Ellipse2D.Float(x - 7 - sizeOfPlant / 4, y + sizeOfPlant / 4 + 8, sizeOfPlant - 15+sizeOfPlant/2, sizeOfPlant - 15+sizeOfPlant/2));
+	}
+
+	@Override
+	public void drawLilyPad(Graphics2D graphics, int x, int y, String color) {
+		graphics.setColor(Color.decode(color));
+		graphics.fill(new Ellipse2D.Float(x - 15, y + sizeOfPlant / 2, sizeOfPlant, sizeOfPlant));
+		
+		graphics.setColor(Color.decode("#90D322"));
+		graphics.fill(new Ellipse2D.Float(x - 7, y + sizeOfPlant / 2 + 8, sizeOfPlant - 15, sizeOfPlant - 15));
+	}
 }

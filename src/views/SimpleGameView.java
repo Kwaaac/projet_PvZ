@@ -65,6 +65,12 @@ public abstract class SimpleGameView implements GameView {
 		graphics.fill(new Rectangle2D.Float(x, y, sizeOfPlant, sizeOfPlant));
 	}
 	
+	@Override
+	public void drawString(Graphics2D graphics, int x, int y, String s) {
+		graphics.setColor(Color.decode(s));
+		graphics.drawString(s, x, y);
+	}
+	
 	
 	@Override
 	public void drawSun(Graphics2D graphics, float x, float y, String s) {
@@ -236,6 +242,198 @@ public abstract class SimpleGameView implements GameView {
 
 	@Override
 	public void drawBucketheadZombie(Graphics2D graphics, float x, float y, String color) {
+		graphics.setColor(Color.decode(color));
+		graphics.fill(new Ellipse2D.Float(x, y, sizeOfZombie, sizeOfZombie));
+	}
+	
+	@Override
+	public void drawBackupDancerZombie(Graphics2D graphics, float x, float y, String color) {
+		graphics.setColor(Color.decode(color));
+		graphics.fill(new Ellipse2D.Float(x, y, sizeOfZombie, sizeOfZombie));
+	}
+
+	@Override
+	public void drawBalloonZombie(Graphics2D graphics, float x, float y, String color) {
+		graphics.setColor(Color.decode(color));
+		graphics.fill(new Ellipse2D.Float(x, y, sizeOfZombie, sizeOfZombie));
+	}
+
+	@Override
+	public void drawBaseballZombie(Graphics2D graphics, float x, float y, String color) {
+		graphics.setColor(Color.decode(color));
+		graphics.fill(new Ellipse2D.Float(x, y, sizeOfZombie, sizeOfZombie));
+	}
+
+	@Override
+	public void drawBungeeZombie(Graphics2D graphics, float x, float y, String color) {
+		graphics.setColor(Color.decode(color));
+		graphics.fill(new Ellipse2D.Float(x, y, sizeOfZombie, sizeOfZombie));
+	}
+	
+	@Override
+	public void drawCatapultBaseballZombie(Graphics2D graphics, float x, float y, String color) {
+		graphics.setColor(Color.decode(color));
+		graphics.fill(new Ellipse2D.Float(x, y, sizeOfZombie, sizeOfZombie));
+	}
+
+	@Override
+	public void drawCatapultZombie(Graphics2D graphics, float x, float y, String color) {
+		graphics.setColor(Color.decode(color));
+		graphics.fill(new Ellipse2D.Float(x, y, sizeOfZombie, sizeOfZombie));
+	}
+
+	@Override
+	public void drawDancingZombie(Graphics2D graphics, float x, float y, String color) {
+		graphics.setColor(Color.decode(color));
+		graphics.fill(new Ellipse2D.Float(x, y, sizeOfZombie, sizeOfZombie));
+	}
+
+	@Override
+	public void drawDiggerZombie(Graphics2D graphics, float x, float y, String color) {
+		graphics.setColor(Color.decode(color));
+		graphics.fill(new Ellipse2D.Float(x, y, sizeOfZombie, sizeOfZombie));
+	}
+	
+	@Override
+	public void drawDolphinRiderZombie(Graphics2D graphics, float x, float y, String color) {
+		graphics.setColor(Color.decode(color));
+		graphics.fill(new Ellipse2D.Float(x, y, sizeOfZombie, sizeOfZombie));
+	}
+
+	@Override
+	public void drawDrZomboss(Graphics2D graphics, float x, float y, String color) {
+		graphics.setColor(Color.decode(color));
+		graphics.fill(new Ellipse2D.Float(x, y, sizeOfZombie, sizeOfZombie));
+	}
+
+	@Override
+	public void drawDuckyTubeZombie(Graphics2D graphics, float x, float y, String color) {
+		graphics.setColor(Color.decode(color));
+		graphics.fill(new Ellipse2D.Float(x, y, sizeOfZombie, sizeOfZombie));
+	}
+
+	@Override
+	public void drawFootballZombie(Graphics2D graphics, float x, float y, String color) {
+		graphics.setColor(Color.decode(color));
+		graphics.fill(new Ellipse2D.Float(x, y, sizeOfZombie, sizeOfZombie));
+	}
+	
+	@Override
+	public void drawGaltingPeaZombie(Graphics2D graphics, float x, float y, String color) {
+		graphics.setColor(Color.decode(color));
+		graphics.fill(new Ellipse2D.Float(x, y, sizeOfZombie, sizeOfZombie));
+	}
+
+	@Override
+	public void drawGargantuar(Graphics2D graphics, float x, float y, String color) {
+		graphics.setColor(Color.decode(color));
+		graphics.fill(new Ellipse2D.Float(x, y, sizeOfZombie, sizeOfZombie));
+	}
+
+	@Override
+	public void drawGigaFootballZombie(Graphics2D graphics, float x, float y, String color) {
+		graphics.setColor(Color.decode(color));
+		graphics.fill(new Ellipse2D.Float(x, y, sizeOfZombie, sizeOfZombie));
+	}
+
+	@Override
+	public void drawGigagargantuar(Graphics2D graphics, float x, float y, String color) {
+		graphics.setColor(Color.decode(color));
+		graphics.fill(new Ellipse2D.Float(x, y, sizeOfZombie, sizeOfZombie));
+	}
+	
+	@Override
+	public void drawImp(Graphics2D graphics, float x, float y, String color) {
+		graphics.setColor(Color.decode(color));
+		graphics.fill(new Ellipse2D.Float(x, y, sizeOfZombie, sizeOfZombie));
+	}
+
+	@Override
+	public void drawJackintheBoxZombie(Graphics2D graphics, float x, float y, String color) {
+		graphics.setColor(Color.decode(color));
+		graphics.fill(new Ellipse2D.Float(x, y, sizeOfZombie, sizeOfZombie));
+	}
+
+	@Override
+	public void drawJalapenoZombie(Graphics2D graphics, float x, float y, String color) {
+		graphics.setColor(Color.decode(color));
+		graphics.fill(new Ellipse2D.Float(x, y, sizeOfZombie, sizeOfZombie));
+	}
+
+	@Override
+	public void drawLadderZombie(Graphics2D graphics, float x, float y, String color) {
+		graphics.setColor(Color.decode(color));
+		graphics.fill(new Ellipse2D.Float(x, y, sizeOfZombie, sizeOfZombie));
+	}
+	
+	@Override
+	public void drawNewspaperZombie(Graphics2D graphics, float x, float y, String color) {
+		graphics.setColor(Color.decode(color));
+		graphics.fill(new Ellipse2D.Float(x, y, sizeOfZombie, sizeOfZombie));
+	}
+
+	@Override
+	public void drawPeashooterZombie(Graphics2D graphics, float x, float y, String color) {
+		graphics.setColor(Color.decode(color));
+		graphics.fill(new Ellipse2D.Float(x, y, sizeOfZombie, sizeOfZombie));
+	}
+	
+	@Override
+	public void drawPogoZombie(Graphics2D graphics, float x, float y, String color) {
+		graphics.setColor(Color.decode(color));
+		graphics.fill(new Ellipse2D.Float(x, y, sizeOfZombie, sizeOfZombie));
+	}
+
+	@Override
+	public void drawPoleVaultingZombie(Graphics2D graphics, float x, float y, String color) {
+		graphics.setColor(Color.decode(color));
+		graphics.fill(new Ellipse2D.Float(x, y, sizeOfZombie, sizeOfZombie));
+	}
+	
+	@Override
+	public void drawScreenDoorZombie(Graphics2D graphics, float x, float y, String color) {
+		graphics.setColor(Color.decode(color));
+		graphics.fill(new Ellipse2D.Float(x, y, sizeOfZombie, sizeOfZombie));
+	}
+
+	@Override
+	public void drawSnorkelZombie(Graphics2D graphics, float x, float y, String color) {
+		graphics.setColor(Color.decode(color));
+		graphics.fill(new Ellipse2D.Float(x, y, sizeOfZombie, sizeOfZombie));
+	}
+	
+	@Override
+	public void drawTrashCanZombie(Graphics2D graphics, float x, float y, String color) {
+		graphics.setColor(Color.decode(color));
+		graphics.fill(new Ellipse2D.Float(x, y, sizeOfZombie, sizeOfZombie));
+	}
+
+	@Override
+	public void drawWallNutZombie(Graphics2D graphics, float x, float y, String color) {
+		graphics.setColor(Color.decode(color));
+		graphics.fill(new Ellipse2D.Float(x, y, sizeOfZombie, sizeOfZombie));
+	}
+	
+	@Override
+	public void drawZombieBobsledTeam(Graphics2D graphics, float x, float y, String color) {
+		graphics.setColor(Color.decode(color));
+		graphics.fill(new Ellipse2D.Float(x, y, sizeOfZombie, sizeOfZombie));
+	}
+
+	@Override
+	public void drawZombieYeti(Graphics2D graphics, float x, float y, String color) {
+		graphics.setColor(Color.decode(color));
+		graphics.fill(new Ellipse2D.Float(x, y, sizeOfZombie, sizeOfZombie));
+	}
+	
+	@Override
+	public void drawTallNutZombie(Graphics2D graphics, float x, float y, String color) {
+		graphics.setColor(Color.decode(color));
+		graphics.fill(new Ellipse2D.Float(x, y, sizeOfZombie, sizeOfZombie));
+	}
+
+	@Override
+	public void drawSquashZombie(Graphics2D graphics, float x, float y, String color) {
 		graphics.setColor(Color.decode(color));
 		graphics.fill(new Ellipse2D.Float(x, y, sizeOfZombie, sizeOfZombie));
 	}

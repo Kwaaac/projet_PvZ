@@ -23,6 +23,10 @@ import models.plants.day.PotatoMine;
 import models.plants.day.SnowPea;
 import models.plants.day.SunFlower;
 import models.plants.day.WallNut;
+import models.plants.pool.Cattails;
+import models.plants.pool.LilyPad;
+import models.plants.pool.SeaShroom;
+import models.plants.pool.TangleKelp;
 import models.projectiles.Bullet;
 import models.projectiles.Projectile;
 
@@ -34,21 +38,67 @@ import models.zombies.Zombie;
 import views.BordView;
 import views.SelectBordView;
 
+
+
 public class SimpleGameController {
+	
+//	static int startGame(ApplicationContext context) {
+//
+//		ScreenInfo screenInfo = context.getScreenInfo();
+//		float width = screenInfo.getWidth();
+//		float height = screenInfo.getHeight();
+//		int choice;
+//
+//		SimpleGameData data = new SimpleGameData(1, 1);
+//
+//		data.setRandomMatrix();
+//		int yOrigin = (int) (height/2.5);
+//		int xOrigin = (int) (width/2.5);
+//
+//		BordView view = BordView.initGameGraphics(xOrigin, yOrigin, 400, data);
+//
+//
+//
+//		int WL = SimpleGameData.getWL();
+//		
+//		while (true) {
+//			view.draw(context, data);
+//			Event event = context.pollOrWaitEvent(20);
+//			if (event == null) {
+//				continue;
+//			}
+//			Action action = event.getAction();
+//			
+//			
+//			if (WL == 0) {
+//				view.drawString(context, (int)width/2, (int)height/2, "LOOSE");
+//			}
+//			else {
+//				view.drawString(context, (int)width/2, (int)height/2, "WIN");
+//			}
+//			
+//			if (action == Action.KEY_PRESSED || action == Action.KEY_RELEASED) {
+//				context.exit(0);
+//				return choice = 3;
+//			}
+//		}
+//		return choice;
+//		
+//	}
 	
 	static void simpleGame(ApplicationContext context) {
 		ScreenInfo screenInfo = context.getScreenInfo();
 		screenInfo.getWidth();
-		Plant[] selectedPlant = {new SunFlower(), new Peashooter(), new SnowPea(), new WallNut(), new CherryBomb(), new PotatoMine(), new Chomper()}; 
+		Plant[] selectedPlant = {new SunFlower(), new Peashooter(), new TangleKelp(), new WallNut(), new CherryBomb(), new PotatoMine(), new Chomper()}; 
 		
 		HashMap<Zombie, Integer> normalWaveZombie = new HashMap<Zombie, Integer>();
 		normalWaveZombie.put(new ConeheadZombie(), 1);
 		normalWaveZombie.put(new NormalZombie(), 1);
 		
 		HashMap<Zombie, Integer> superWaveZombie = new HashMap<Zombie, Integer>();
-		superWaveZombie.put(new ConeheadZombie(), 5);
+		superWaveZombie.put(new ConeheadZombie(), 1);
 		superWaveZombie.put(new FlagZombie(), 1);
-		superWaveZombie.put(new NormalZombie(), 5);
+		superWaveZombie.put(new NormalZombie(), 1);
 		
 
 		SimpleGameData dataBord = new SimpleGameData(5, 8);
@@ -165,50 +215,54 @@ public class SimpleGameController {
 
 	}
 
-//	static void endGame(ApplicationContext context) {
-//
-//		ScreenInfo screenInfo = context.getScreenInfo();
-//		float width = screenInfo.getWidth();
-//		float height = screenInfo.getHeight();
-//
-//		SimpleGameData data = new SimpleGameData(1, 1);
-//
-//		data.setRandomMatrix();
-//		int yOrigin = (int) (height/2.5);
-//		int xOrigin = (int) (width/2.5);
-//
-//		BordView view = BordView.initGameGraphics(xOrigin, yOrigin, 400, data);
-//
-//
-//
-//		int WL = SimpleGameData.getWL();
-//		
-//		while (true) {
-//			view.draw(context, data);
-//			Event event = context.pollOrWaitEvent(20);
-//			if (event == null) {
-//				continue;
-//			}
-//			Action action = event.getAction();
-//			
-//			
+	static void endGame(ApplicationContext context) {
+
+		ScreenInfo screenInfo = context.getScreenInfo();
+		float width = screenInfo.getWidth();
+		float height = screenInfo.getHeight();
+
+		SimpleGameData data = new SimpleGameData(1, 1);
+
+		data.setRandomMatrix();
+		int yOrigin = (int) (height/2.5);
+		int xOrigin = (int) (width/2.5);
+
+		BordView view = BordView.initGameGraphics(xOrigin, yOrigin, 200, data);
+
+
+
+		int WL = SimpleGameData.getWL();
+		
+		while (true) {
+			view.draw(context, data);
+			Event event = context.pollOrWaitEvent(20);
+			if (event == null) {
+				continue;
+			}
+			Action action = event.getAction();
+			
+			
 //			if (WL == 0) {
-//				view.drawString(context, data, "LOOSE", (int)width/2, (int)height/2, Color.WHITE);
+//				view.drawString(context, (int)width/2, (int)height/2, "LOOSE");
+//			}
+//			if (WL == 1) {
+//				view.drawString(context, (int)width/2, (int)height/2, "WIN");
 //			}
 //			else {
-//				view.drawString(context, data, "WIN", (int)width/2, (int)height/2, Color.WHITE);
+//				view.drawString(context, (int)width/2, (int)height/2, "STOP");
 //			}
-//			
-//			if (action == Action.KEY_PRESSED || action == Action.KEY_RELEASED) {
-//				context.exit(0);
-//				return;
-//			}
-//		}
-//		
-//	}
+			
+			if (action == Action.KEY_PRESSED || action == Action.KEY_RELEASED) {
+				context.exit(0);
+				return;
+			}
+		}
+		
+	}
 
 	public static void main(String[] args) {
-		Application.run(Color.LIGHT_GRAY, SimpleGameController::simpleGame); // attention, utilisation d'une lambda.
-//		Application.run(Color.BLACK, SimpleGameController::endGame); // attention, utilisation d'une lambda.
+//		Application.run(Color.BLACK, SimpleGameController::startGame); // attention, utilisation d'une lambda.
+//		Application.run(Color.LIGHT_GRAY, SimpleGameController::simpleGame); // attention, utilisation d'une lambda.
+		Application.run(Color.BLACK, SimpleGameController::endGame); // attention, utilisation d'une lambda.
 	}
 }

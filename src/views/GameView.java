@@ -113,6 +113,11 @@ public interface GameView {
 	}
 	
 
+	
+	void drawString(Graphics2D graphics, int x, int y, String s);
+	public default void drawString(ApplicationContext context, int x, int y, String s) {
+		context.renderFrame(graphics -> drawOnlyOneCell(graphics, x, y, s));
+	}
 	/*-----------------------------Plants------------------------------*/
 	/*------------------------------DAY--------------------------------*/
 
@@ -263,6 +268,198 @@ public interface GameView {
 		context.renderFrame(graphics -> drawOnlyOneCell(graphics, x, y, s));
 	}
 	
+	void drawBackupDancerZombie(Graphics2D graphics, float x, float y, String s);
+
+	public default void drawBackupDancerZombie(ApplicationContext context, float x, float y, String s) {
+		context.renderFrame(graphics -> drawOnlyOneCell(graphics, x, y, s));
+	}
+	
+	void drawBalloonZombie(Graphics2D graphics, float x, float y, String s);
+
+	public default void drawBalloonZombie(ApplicationContext context, float x, float y, String s) {
+		context.renderFrame(graphics -> drawOnlyOneCell(graphics, x, y, s));
+	}
+	
+	void drawBaseballZombie(Graphics2D graphics, float x, float y, String s);
+
+	public default void drawBaseballZombie(ApplicationContext context, float x, float y, String s) {
+		context.renderFrame(graphics -> drawOnlyOneCell(graphics, x, y, s));
+	}
+	
+	void drawBungeeZombie(Graphics2D graphics, float x, float y, String s);
+
+	public default void drawBungeeZombie(ApplicationContext context, float x, float y, String s) {
+		context.renderFrame(graphics -> drawOnlyOneCell(graphics, x, y, s));
+	}
+	
+	void drawCatapultBaseballZombie(Graphics2D graphics, float x, float y, String s);
+
+	public default void drawCatapultBaseballZombie(ApplicationContext context, float x, float y, String s) {
+		context.renderFrame(graphics -> drawOnlyOneCell(graphics, x, y, s));
+	}
+	
+	void drawCatapultZombie(Graphics2D graphics, float x, float y, String s);
+
+	public default void drawCatapultZombie(ApplicationContext context, float x, float y, String s) {
+		context.renderFrame(graphics -> drawOnlyOneCell(graphics, x, y, s));
+	}
+	
+	void drawDancingZombie(Graphics2D graphics, float x, float y, String s);
+
+	public default void drawDancingZombie(ApplicationContext context, float x, float y, String s) {
+		context.renderFrame(graphics -> drawOnlyOneCell(graphics, x, y, s));
+	}
+	
+	void drawDiggerZombie(Graphics2D graphics, float x, float y, String s);
+
+	public default void drawDiggerZombie(ApplicationContext context, float x, float y, String s) {
+		context.renderFrame(graphics -> drawOnlyOneCell(graphics, x, y, s));
+	}
+	
+	void drawDolphinRiderZombie(Graphics2D graphics, float x, float y, String s);
+
+	public default void drawDolphinRiderZombie(ApplicationContext context, float x, float y, String s) {
+		context.renderFrame(graphics -> drawOnlyOneCell(graphics, x, y, s));
+	}
+	
+	void drawDrZomboss(Graphics2D graphics, float x, float y, String s);
+
+	public default void drawDrZomboss(ApplicationContext context, float x, float y, String s) {
+		context.renderFrame(graphics -> drawOnlyOneCell(graphics, x, y, s));
+	}
+	
+	void drawDuckyTubeZombie(Graphics2D graphics, float x, float y, String s);
+
+	public default void drawDuckyTubeZombie(ApplicationContext context, float x, float y, String s) {
+		context.renderFrame(graphics -> drawOnlyOneCell(graphics, x, y, s));
+	}
+	
+	void drawFootballZombie(Graphics2D graphics, float x, float y, String s);
+
+	public default void drawFootballZombie(ApplicationContext context, float x, float y, String s) {
+		context.renderFrame(graphics -> drawOnlyOneCell(graphics, x, y, s));
+	}
+	
+	void drawGaltingPeaZombie(Graphics2D graphics, float x, float y, String s);
+
+	public default void drawGaltingPeaZombie(ApplicationContext context, float x, float y, String s) {
+		context.renderFrame(graphics -> drawOnlyOneCell(graphics, x, y, s));
+	}
+	
+	void drawGargantuar(Graphics2D graphics, float x, float y, String s);
+
+	public default void drawGargantuar(ApplicationContext context, float x, float y, String s) {
+		context.renderFrame(graphics -> drawOnlyOneCell(graphics, x, y, s));
+	}
+	
+	void drawGigaFootballZombie(Graphics2D graphics, float x, float y, String s);
+
+	public default void drawGigaFootballZombie(ApplicationContext context, float x, float y, String s) {
+		context.renderFrame(graphics -> drawOnlyOneCell(graphics, x, y, s));
+	}
+	
+	void drawGigagargantuar(Graphics2D graphics, float x, float y, String s);
+
+	public default void drawGigagargantuar(ApplicationContext context, float x, float y, String s) {
+		context.renderFrame(graphics -> drawOnlyOneCell(graphics, x, y, s));
+	}
+	
+	void drawImp(Graphics2D graphics, float x, float y, String s);
+
+	public default void drawImp(ApplicationContext context, float x, float y, String s) {
+		context.renderFrame(graphics -> drawOnlyOneCell(graphics, x, y, s));
+	}
+	
+	void drawJackintheBoxZombie(Graphics2D graphics, float x, float y, String s);
+
+	public default void drawJackintheBoxZombie(ApplicationContext context, float x, float y, String s) {
+		context.renderFrame(graphics -> drawOnlyOneCell(graphics, x, y, s));
+	}
+	
+	void drawJalapenoZombie(Graphics2D graphics, float x, float y, String s);
+
+	public default void drawJalapenoZombie(ApplicationContext context, float x, float y, String s) {
+		context.renderFrame(graphics -> drawOnlyOneCell(graphics, x, y, s));
+	}
+	
+	void drawLadderZombie(Graphics2D graphics, float x, float y, String s);
+
+	public default void drawLadderZombie(ApplicationContext context, float x, float y, String s) {
+		context.renderFrame(graphics -> drawOnlyOneCell(graphics, x, y, s));
+	}
+	
+	void drawNewspaperZombie(Graphics2D graphics, float x, float y, String s);
+
+	public default void drawNewspaperZombie(ApplicationContext context, float x, float y, String s) {
+		context.renderFrame(graphics -> drawOnlyOneCell(graphics, x, y, s));
+	}
+	
+	void drawPeashooterZombie(Graphics2D graphics, float x, float y, String s);
+
+	public default void drawPeashooterZombie(ApplicationContext context, float x, float y, String s) {
+		context.renderFrame(graphics -> drawOnlyOneCell(graphics, x, y, s));
+	}
+	
+	void drawPogoZombie(Graphics2D graphics, float x, float y, String s);
+
+	public default void drawPogoZombie(ApplicationContext context, float x, float y, String s) {
+		context.renderFrame(graphics -> drawOnlyOneCell(graphics, x, y, s));
+	}
+	
+	void drawPoleVaultingZombie(Graphics2D graphics, float x, float y, String s);
+
+	public default void drawPoleVaultingZombie(ApplicationContext context, float x, float y, String s) {
+		context.renderFrame(graphics -> drawOnlyOneCell(graphics, x, y, s));
+	}
+	
+	void drawScreenDoorZombie(Graphics2D graphics, float x, float y, String s);
+
+	public default void drawScreenDoorZombie(ApplicationContext context, float x, float y, String s) {
+		context.renderFrame(graphics -> drawOnlyOneCell(graphics, x, y, s));
+	}
+	
+	void drawSnorkelZombie(Graphics2D graphics, float x, float y, String s);
+
+	public default void drawSnorkelZombie(ApplicationContext context, float x, float y, String s) {
+		context.renderFrame(graphics -> drawOnlyOneCell(graphics, x, y, s));
+	}
+	
+	void drawSquashZombie(Graphics2D graphics, float x, float y, String s);
+
+	public default void drawSquashZombie(ApplicationContext context, float x, float y, String s) {
+		context.renderFrame(graphics -> drawOnlyOneCell(graphics, x, y, s));
+	}
+	
+	void drawTallNutZombie(Graphics2D graphics, float x, float y, String s);
+
+	public default void drawTallNutZombie(ApplicationContext context, float x, float y, String s) {
+		context.renderFrame(graphics -> drawOnlyOneCell(graphics, x, y, s));
+	}
+	
+	void drawTrashCanZombie(Graphics2D graphics, float x, float y, String s);
+
+	public default void drawTrashCanZombie(ApplicationContext context, float x, float y, String s) {
+		context.renderFrame(graphics -> drawOnlyOneCell(graphics, x, y, s));
+	}
+	
+	void drawWallNutZombie(Graphics2D graphics, float x, float y, String s);
+
+	public default void drawWallNutZombie(ApplicationContext context, float x, float y, String s) {
+		context.renderFrame(graphics -> drawOnlyOneCell(graphics, x, y, s));
+	}
+	
+	void drawZombieBobsledTeam(Graphics2D graphics, float x, float y, String s);
+
+	public default void drawZombieBobsledTeam(ApplicationContext context, float x, float y, String s) {
+		context.renderFrame(graphics -> drawOnlyOneCell(graphics, x, y, s));
+	}
+	
+	void drawZombieYeti(Graphics2D graphics, float x, float y, String s);
+
+	public default void drawZombieYeti(ApplicationContext context, float x, float y, String s) {
+		context.renderFrame(graphics -> drawOnlyOneCell(graphics, x, y, s));
+	}
+	
 	
 	/*-----------------------------Bullets------------------------------*/
 
@@ -271,4 +468,6 @@ public interface GameView {
 	public default void drawBullet(ApplicationContext context, float x, float y, String s) {
 		context.renderFrame(graphics -> drawOnlyOneCell(graphics, x, y, s));
 	}
+
+	
 }
