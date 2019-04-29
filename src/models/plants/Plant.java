@@ -1,11 +1,30 @@
 package models.plants;
 
-import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import models.Coordinates;
 import models.Entities;
+import models.plants.day.CherryBomb;
+import models.plants.day.Chomper;
+import models.plants.day.Peashooter;
+import models.plants.day.PotatoMine;
+import models.plants.day.Repeater;
+import models.plants.day.SnowPea;
+import models.plants.day.SunFlower;
+import models.plants.day.WallNut;
+import models.plants.night.DoomShroom;
+import models.plants.night.FumeShroom;
+import models.plants.night.GraveBuster;
+import models.plants.night.HypnoShroom;
+import models.plants.night.IceShroom;
+import models.plants.night.PuffShroom;
+import models.plants.night.ScaredyShroom;
+import models.plants.night.SunShroom;
+import models.plants.pool.Cattails;
+import models.plants.pool.LilyPad;
+import models.plants.pool.SeaShroom;
+import models.plants.pool.TangleKelp;
 import models.zombies.Zombie;
 
 
@@ -20,6 +39,12 @@ public abstract class Plant extends Entities implements IPlant{
 	
 	private static final HashMap<String, Long> mCooldown = new HashMap<String, Long>();
 	
+	private final static Plant[] day = {new CherryBomb(), new Chomper(), new Peashooter(), new PotatoMine(), new Repeater(), new SnowPea(), new SunFlower(), new WallNut()};
+	private final static Plant[] night = {new DoomShroom(), new FumeShroom(), new GraveBuster(), new HypnoShroom(), new IceShroom(), new PuffShroom(), new ScaredyShroom(), new SunShroom()};
+	private final static Plant[] pool = {new Cattails(), new LilyPad(), new SeaShroom(), new TangleKelp()};
+	
+	
+	
 	static {
 	mCooldown.put("free",(long)0);
 	mCooldown.put("fast",(long)5);
@@ -29,7 +54,15 @@ public abstract class Plant extends Entities implements IPlant{
 	mCooldown.put("bigTime",(long)60);
 	}
 
-	
+	public static Plant[] getPlantList(String s) {
+		if (s == "night") {
+			return night;
+		}
+		if (s == "pool") {
+			return pool;
+		}
+		return day;
+	}
 	public Plant(int x, int y, int damage, int life, int shootBarMax, int cost, String cooldown) {
 		super(x, y, damage, life);
 		this.shootBarMax = shootBarMax;
@@ -44,10 +77,6 @@ public abstract class Plant extends Entities implements IPlant{
 	
 	public String toString() {
 		return "Type: " + type;
-	}
-	
-	public Rectangle2D.Float draw() {
-		return null;
 	}
 	
 	public static int getSizeOfPlant() {
@@ -87,4 +116,5 @@ public abstract class Plant extends Entities implements IPlant{
 	public Coordinates hitBox() {
 		return new Coordinates((int) x, (int) x + sizeOfPlant);
 	}
+	
 }

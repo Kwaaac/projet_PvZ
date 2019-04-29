@@ -67,4 +67,5 @@ public class Repeater extends Plant{
 		this.incAS();
 	}
 
+
 }

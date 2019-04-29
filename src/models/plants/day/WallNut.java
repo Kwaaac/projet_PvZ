@@ -1,7 +1,6 @@
 package models.plants.day;
 
 import java.awt.Graphics2D;
-import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
 import fr.umlv.zen5.ApplicationContext;
@@ -24,11 +23,6 @@ public class WallNut extends Plant {
 	}
 	
 	int sizeOfPlant = super.getSizeOfPlant();
-
-	@Override
-	public Rectangle2D.Float draw() {
-		return new Rectangle2D.Float(super.x, super.y, sizeOfPlant, sizeOfPlant);
-	}
 
 	@Override
 	public String toString() {

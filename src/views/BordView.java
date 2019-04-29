@@ -8,6 +8,7 @@ import java.awt.geom.Rectangle2D;
 import java.awt.geom.RectangularShape;
 import java.util.ArrayList;
 
+import fr.umlv.zen5.ApplicationContext;
 import models.MovingElement;
 import models.SimpleGameData;
 import models.plants.Plant;
@@ -101,6 +102,8 @@ public class BordView extends SimpleGameView {
 	 * @param data     the GameData containing the game data.
 	 */
 
+	
+	
 	public void draw(Graphics2D graphics, SimpleGameData data) {
 		graphics.setColor(Color.WHITE.darker());
 		for (int i = 0; i <= data.getNbLines(); i++) {
@@ -175,5 +178,6 @@ public class BordView extends SimpleGameView {
 		graphics.fill(new Rectangle2D.Float(x,y,width,height));
 	}
 
+	
 
 }

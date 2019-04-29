@@ -17,7 +17,6 @@ import views.BordView;
 import views.SelectBordView;
 
 public class SimpleGameData {
-	private final static int score = 5;
 	private static int WL = 0;
 	private final Cell[][] matrix;
 	private Coordinates selected;

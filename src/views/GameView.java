@@ -48,6 +48,9 @@ public interface GameView {
 	public default void draw(ApplicationContext context, SimpleGameData data) {
 		context.renderFrame(graphics -> draw(graphics, data));
 	}
+	
+	
+	
 
 	/**
 	 * Draws only the cell specified by the given coordinates in the game board from
