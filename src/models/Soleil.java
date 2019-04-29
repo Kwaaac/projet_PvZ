@@ -54,7 +54,7 @@ public class Soleil implements MovingElement {
 		return caseXY;
 	}
 	
-	public void setCase(float x, float y) {
+	public void setCase() {
 		if(y >= yTarget) {
 			this.speed = 0;
 		}

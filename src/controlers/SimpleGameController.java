@@ -43,11 +43,13 @@ import views.SelectBordView;
 public class SimpleGameController {
 	
 	static void simpleGame(ApplicationContext context) {
-		MenuController.startGame(context);
+//		MenuController.startGame(context);
 		
 		ScreenInfo screenInfo = context.getScreenInfo();
 		screenInfo.getWidth();
 		Plant[] selectedPlant = {new SunFlower(), new Peashooter(), new TangleKelp(), new WallNut(), new CherryBomb(), new PotatoMine(), new Chomper()}; 
+		
+		
 		
 		HashMap<Zombie, Integer> normalWaveZombie = new HashMap<Zombie, Integer>();
 		normalWaveZombie.put(new ConeheadZombie(), 1);
@@ -88,6 +90,9 @@ public class SimpleGameController {
 		
 		
 		while (true) {
+			
+			System.out.println("Case 2-7\n" + dataBord.getCell(2, 7) + "\n\n\n");
+			System.out.println("Case 2-6\n" + dataBord.getCell(2, 6) + "\n\n\n\n\n\n\n\n\n\n");
 			
 			/*-----------------------------CHECK CHRONO----------------------------*/
 			plantSelectionView.checkCooldown();

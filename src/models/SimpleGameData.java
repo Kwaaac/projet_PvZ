@@ -19,6 +19,8 @@ import views.SelectBordView;
 public class SimpleGameData {
 	private static int WL = 0;
 	private final Cell[][] matrix;
+	private final int nbLines;
+	private final int nbColumns;
 	private Coordinates selected;
 	private final ArrayList<Coordinates> placedPlant = new ArrayList<Coordinates>();
 	private final ArrayList<Plant> myPlants = new ArrayList<>();
@@ -40,8 +42,10 @@ public class SimpleGameData {
 	
 	private static String map =  "";
 	
-
 	public SimpleGameData(int nbLines, int nbColumns) {
+		this.nbLines = nbLines;
+		this.nbColumns = nbColumns;
+		
 		matrix = new Cell[nbLines][nbColumns];
 
 		//Spawn des zombies et leurs limite de temps avant spawn
@@ -56,6 +60,14 @@ public class SimpleGameData {
 		
 		// Temps du jeu
 		time.start();
+	}
+	
+	public Cell getCell(int x, int y) {
+		if(x >= 0 && x < nbLines && y >= 0 && y < nbColumns) {
+			return matrix[x][y];
+		}
+		
+		return null;
 	}
 
 	public ArrayList<Plant> getMyPlants() {
@@ -108,17 +120,6 @@ public class SimpleGameData {
 	 */
 	public Color getCellColor(int i, int j) {
 		return matrix[i][j].getColor();
-	}
-
-	/**
-	 * The value of the cell specified by its coordinates.
-	 * 
-	 * @param i the first coordinate of the cell.
-	 * @param j the second coordinate of the cell.
-	 * @return the value of the cell specified by its coordinates
-	 */
-	public int getCellValue(int i, int j) {
-		return matrix[i][j].getValue();
 	}
 
 	/**
@@ -274,7 +275,7 @@ public class SimpleGameData {
 				z.SpeedBoostOFF();
 			}
 			view.moveAndDrawElement(context, this, z);
-			z.setCase(z.x, z.y);
+			z.setCase(this);
 			
 		}
 
@@ -291,7 +292,7 @@ public class SimpleGameData {
 
 		for (Soleil s : mySun) {
 			view.moveAndDrawElement(context, this, s);
-			s.setCase(s.getX(), s.getY());
+			s.setCase();
 		}
 		return debuglock = false;
 	}
@@ -498,7 +499,7 @@ public class SimpleGameData {
 					}
 				}
 
-				myZombies.add(zombieAvailable.get(selecteur).createAndDrawNewZombie(view, context, x, y));
+				myZombies.add(zombieAvailable.get(selecteur).createAndDrawNewZombie(view, context, x, 150 + 180 * 2 + 35));
 				str.append("new " + zombieAvailable.get(selecteur) + new SimpleDateFormat("hh:mm:ss").format(new Date())
 						+ ")\n");
 

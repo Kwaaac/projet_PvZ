@@ -21,7 +21,7 @@ public abstract class Entities implements IEntite {
 		this.life = life;
 	}
 	
-	public void setCase(float x, float y) {
+	public void setCase(SimpleGameData data) {
 		caseXY = new Coordinates(BordView.caseXFromX(x), BordView.caseYFromY(y));
 	}
 	

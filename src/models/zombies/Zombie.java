@@ -2,6 +2,7 @@ package models.zombies;
 
 import java.util.ArrayList;
 
+import models.Cell;
 import models.Coordinates;
 import models.DeadPool;
 import models.Entities;
@@ -30,6 +31,30 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie 
 
 	public float getX() {
 		return super.getX();
+	}
+
+	@Override
+	public void setCase(SimpleGameData data) {
+		int cX = BordView.caseXFromX(x);
+		int cY = BordView.caseYFromY(y);
+
+		Coordinates caseZ = new Coordinates(cX, cY);
+		
+		if (!caseZ.equals(caseXY)) {
+
+			Cell actCell = data.getCell(cY, cX);
+			if (actCell != null) {
+
+				if (!(cX == data.getNbColumns() - 1)) {
+					data.getCell(caseXY.getJ(), caseXY.getI()).removeZombie(this);
+				}
+				
+				actCell.addZombie(this);
+				
+				caseXY = caseZ;
+			}
+		}
+
 	}
 
 	public float getY() {
