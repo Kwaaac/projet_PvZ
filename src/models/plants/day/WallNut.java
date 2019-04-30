@@ -16,7 +16,7 @@ public class WallNut extends Plant {
 	private final String color = "#ECB428";
 
 	public WallNut(int x, int y) {
-		super(x, y, 0, 1000, 0, 50, "veryslow");
+		super(x, y, 0, 1000, 0, 50, "verySlow");
 	}
 	
 	public WallNut() {
