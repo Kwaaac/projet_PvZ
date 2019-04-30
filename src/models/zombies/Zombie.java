@@ -216,8 +216,8 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie 
 			if (p.isDead()) {
 				str.append(p + "meurt\n");
 				deadPoolE.add(p);
-				data.plantOutBord(view.lineFromY(p.getY()), view.columnFromX(p.getX()));
-			}
+				data.getCell(view.lineFromY(p.getY()), view.columnFromX(p.getX())).removePlant();
+			} 
 		}
 	}
 

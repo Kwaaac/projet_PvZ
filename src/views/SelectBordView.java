@@ -40,6 +40,15 @@ public class SelectBordView extends SimpleGameView {
 		
 	}
 	
+	/**
+	 * Check si le chono est lancé ou en stand-by
+	 * 
+	 * @param coord Coordonné y du clic
+	 * @param origin yOrigin
+	 * 
+	 * @return True si le chrono est en stand-by, false si le chrono tourne
+	 * 
+	 */
 	public boolean isThisChronoReset(float coord, int origin) {
 		int numCase = this.indexFromReaCoord(coord, origin);
 		Chrono askedChrono = caseChrono[numCase];
@@ -150,9 +159,13 @@ public class SelectBordView extends SimpleGameView {
 
 		for (int i = 0; i < data.getNbLines(); i++) {
 			for (int j = 0; j < data.getNbColumns(); j++) {
-				graphics.setColor(Color.GREEN.darker());
-				graphics.fill(drawCell(i, j));
-				graphics.setColor(data.getCellColor(i, j));
+				if(caseChrono[i].isReset()) {
+					graphics.setColor(Color.GREEN.darker());
+					graphics.fill(drawCell(i, j));
+				} else {
+					graphics.setColor(Color.GREEN.darker().darker());
+					graphics.fill(drawCell(i, j));
+				}
 			}
 		}
 

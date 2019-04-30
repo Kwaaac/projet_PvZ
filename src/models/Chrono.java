@@ -116,6 +116,12 @@ public class Chrono {
 		return false;
 	}
 
+	/**
+	 * Observe sir le chrono est en stand-by
+	 * 
+	 * @return Renvoie true si le chrono est en stand-by, false si il est lancé
+	 */
+	
 	public boolean isReset() {
 		return (tempsDepart == 0 && tempsFin == 0 && pauseDepart == 0 && pauseFin == 0);
 	}

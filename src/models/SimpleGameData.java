@@ -62,9 +62,17 @@ public class SimpleGameData {
 		time.start();
 	}
 	
-	public Cell getCell(int x, int y) {
-		if(x >= 0 && x < nbLines && y >= 0 && y < nbColumns) {
-			return matrix[x][y];
+	/**
+	 * Renvoie une cellule du plateau sinon renvoie null si la cellule n'existe pas
+	 * 
+	 * @param y La ligne du plateau
+	 * @param x La colonne du plateau
+	 * @return La cellule correspondantes au coordonnées
+	 * 
+	 */
+	public Cell getCell(int y, int x) {
+		if(y >= 0 && y < nbLines && x >= 0 && x < nbColumns) {
+			return matrix[y][x];
 		}
 		
 		return null;
