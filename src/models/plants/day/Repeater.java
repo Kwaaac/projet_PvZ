@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import fr.umlv.zen5.ApplicationContext;
 import models.Entities;
+import models.SimpleGameData;
 import models.plants.Plant;
 import models.projectiles.Bullet;
 import models.projectiles.Projectile;
@@ -33,14 +34,8 @@ public class Repeater extends Plant{
 	int sizeOfPlant = super.getSizeOfPlant();
 	
 	@Override
-	public boolean readyToshot(ArrayList<Zombie> myZombies) {
-		for(Entities z : myZombies) {
-			if(this.sameLine(z)) {
+	public boolean readyToshot() {
 				return shootBar >= shootBarMax;
-			}
-		}
-		
-		return false;
 	}
 	
 	@Override
@@ -56,8 +51,8 @@ public class Repeater extends Plant{
 	}
 
 	@Override
-	public void action(ArrayList<Projectile> myBullet, BordView view, ArrayList<Zombie> myZombies) {
-		if(this.readyToshot(myZombies)) {
+	public void action(ArrayList<Projectile> myBullet, BordView view, ArrayList<Zombie> myZombies, SimpleGameData dataBord) {
+		if(this.readyToshot()) {
 			myBullet.add(new Bullet(super.getX() + super.getSizeOfPlant(), super.getY() + (super.getSizeOfPlant() / 2) - 10));
 			myBullet.add(new Bullet(super.getX() + super.getSizeOfPlant(), super.getY() + (super.getSizeOfPlant() / 2) - 10));
 			

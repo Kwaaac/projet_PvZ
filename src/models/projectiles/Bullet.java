@@ -10,7 +10,7 @@ public class Bullet extends Projectile {
 	private final String color = "#0830b2";
 	
 	public Bullet(float x, float y) {
-		super(x, y, 20, 1 , 20.0);
+		super(x, y, 75, 1 , 20.0);
 	}
 	
 	@Override

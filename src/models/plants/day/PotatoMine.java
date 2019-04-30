@@ -4,8 +4,10 @@ import java.awt.Graphics2D;
 import java.util.ArrayList;
 
 import fr.umlv.zen5.ApplicationContext;
+import models.Cell;
 import models.Coordinates;
 import models.Entities;
+import models.SimpleGameData;
 import models.plants.Plant;
 import models.projectiles.Projectile;
 import models.zombies.Zombie;
@@ -20,12 +22,12 @@ public class PotatoMine extends Plant {
 	private boolean activate = false;
 
 	public PotatoMine(int x, int y) {
-		super(x, y, 0, 120, 14_000, 25, "fast");
+		super(x, y, 0, 120, 14_000, 0, "free");
 
 	}
 
 	public PotatoMine() {
-		super(-10, -10, 0, 1, 1, 25, "fast");
+		this(-10, -10);
 		activate = true;
 	}
 
@@ -41,13 +43,15 @@ public class PotatoMine extends Plant {
 	}
 
 	@Override
-	public void action(ArrayList<Projectile> myBullet, BordView view, ArrayList<Zombie> myZombies) {
-		if (this.readyToshot(myZombies)) {
+	public void action(ArrayList<Projectile> myBullet, BordView view, ArrayList<Zombie> myZombies,
+			SimpleGameData dataBord) {
+
+		if (this.readyToshot()) {
 			activation();
 		}
 
 		if (activate) {
-			ArrayList<Entities> lz = this.detect(view, myZombies);
+			ArrayList<Entities> lz = this.detect(dataBord);
 
 			if (!lz.isEmpty()) {
 				for (Entities z : lz) {
@@ -61,21 +65,17 @@ public class PotatoMine extends Plant {
 		this.incAS();
 	}
 
-	private ArrayList<Entities> detect(BordView view, ArrayList<Zombie> myZombies) {
-		Coordinates PotatoMine = super.caseXY;
+	private ArrayList<Entities> detect(SimpleGameData dataBord) {
 		ArrayList<Entities> Lz = new ArrayList<>();
 
-		for (Entities z : myZombies) {
-			if (this.sameLine(z)) {
+		Cell cell = dataBord.getCell(getCaseJ(), getCaseI());
 
-				Coordinates zombie = z.getCase();
-
-				if (zombie.equals(PotatoMine)) {
-					Lz.add(z);
-
-				}
+		if (cell != null && cell.isThereEntity()) {
+			for (Entities z : cell.getEntitiesInCell()) {
+				Lz.add(z);
 			}
 		}
+		
 		return Lz;
 	}
 

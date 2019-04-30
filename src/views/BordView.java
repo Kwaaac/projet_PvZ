@@ -119,13 +119,12 @@ public class BordView extends SimpleGameView {
 
 		for (int i = 0; i < data.getNbLines(); i++) {
 			for (int j = 0; j < data.getNbColumns(); j++) {
-				graphics.setColor(Color.GREEN.darker());
-				graphics.fill(drawCell(i, j));
-				graphics.setColor(data.getCellColor(i, j));
+					graphics.setColor(Color.GREEN.darker());
+					graphics.fill(drawCell(i, j));
 			}
 		}
 
-		graphics.setColor(Color.decode("#A9A9A9"));
+		graphics.setColor(Color.LIGHT_GRAY);
 		graphics.fill(new Rectangle2D.Float(super.getXOrigin() + super.getWidth(), super.getYOrigin(),
 				super.getXOrigin() + super.getWidth(), super.getLength()));
 		

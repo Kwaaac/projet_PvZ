@@ -28,6 +28,14 @@ public abstract class Entities implements IEntite {
 	public Coordinates getCase() {
 		return caseXY;
 	}
+	
+	public int getCaseI() {
+		return caseXY.getI();
+	}
+	
+	public int getCaseJ() {
+		return caseXY.getJ();
+	}
 
 	public int lineY() {
 		return (int) ((y - 100) / 180);

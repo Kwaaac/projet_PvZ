@@ -52,13 +52,13 @@ public class SimpleGameController {
 		
 		
 		HashMap<Zombie, Integer> normalWaveZombie = new HashMap<Zombie, Integer>();
-		normalWaveZombie.put(new ConeheadZombie(), 1);
+		normalWaveZombie.put(new ConeheadZombie(), 0);
 		normalWaveZombie.put(new NormalZombie(), 1);
 		
 		HashMap<Zombie, Integer> superWaveZombie = new HashMap<Zombie, Integer>();
-		superWaveZombie.put(new ConeheadZombie(), 1);
+		superWaveZombie.put(new ConeheadZombie(), 20);
 		superWaveZombie.put(new FlagZombie(), 1);
-		superWaveZombie.put(new NormalZombie(), 1);
+		superWaveZombie.put(new NormalZombie(), 30);
 		
 
 		SimpleGameData dataBord = new SimpleGameData(5, 8);
@@ -91,9 +91,6 @@ public class SimpleGameController {
 		
 		while (true) {
 			
-			System.out.println("Case 2-7\n" + dataBord.getCell(2, 7) + "\n\n\n");
-			System.out.println("Case 2-6\n" + dataBord.getCell(2, 6) + "\n\n\n\n\n\n\n\n\n\n");
-			
 			/*-----------------------------CHECK CHRONO----------------------------*/
 			plantSelectionView.checkCooldown();
 			/*--------------------------------DRAWS--------------------------------*/
@@ -120,7 +117,7 @@ public class SimpleGameController {
 			
 			/*-------------------------------- DEATHS ------------------------------------*/
 			
-			deadPoolE.deletingEverything(myZombies, dataBord.getMyPlants(), myBullet);
+			deadPoolE.deletingEverything(myZombies, dataBord, myBullet);
 			
 			/*--------------------------------SHOOTING------------------------------------*/
 			
@@ -140,7 +137,7 @@ public class SimpleGameController {
 			
 			/*------------------------------EVENTS----------------------------------*/
 
-			Event event = context.pollOrWaitEvent(45); // modifier pour avoir un affichage fluide
+			Event event = context.pollOrWaitEvent(35); // modifier pour avoir un affichage fluide
 			if (event == null) { // no event
 				continue;
 			}

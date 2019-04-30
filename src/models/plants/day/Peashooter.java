@@ -4,7 +4,9 @@ import java.awt.Graphics2D;
 import java.util.ArrayList;
 
 import fr.umlv.zen5.ApplicationContext;
+import models.Cell;
 import models.Entities;
+import models.SimpleGameData;
 import models.plants.Plant;
 import models.projectiles.Bullet;
 import models.projectiles.Projectile;
@@ -18,13 +20,13 @@ public class Peashooter extends Plant{
 	
 	
 	public Peashooter(int x, int y) {
-		super(x, y, 0, 300, 1500, 100, "fast");
+		super(x, y, 0, 300, 5000, 0, "free");
 
 		shootBar = shootBarMax;			// La plante tire dès qu'elle est posée
 	}
 	
 	public Peashooter() {
-		super(-10, -10, 0, 1, 1, 100, "fast");
+		this(-10, -10);
 	}
 	
 	@Override
@@ -34,10 +36,10 @@ public class Peashooter extends Plant{
 	
 	int sizeOfPlant = super.getSizeOfPlant();
 	
-	@Override
-	public boolean readyToshot(ArrayList<Zombie> myZombies) {
-		for(Entities z : myZombies) {
-			if(this.sameLine(z)) {
+	
+	public boolean readyToshot(ArrayList<Cell> cells) {
+		for(Cell c : cells) {
+			if(c.isThereEntity()) {
 				return shootBar >= shootBarMax;
 			}
 		}
@@ -58,8 +60,8 @@ public class Peashooter extends Plant{
 	}
 
 	@Override
-	public void action(ArrayList<Projectile> myBullet, BordView view, ArrayList<Zombie> myZombies) {
-		if(this.readyToshot(myZombies)) {
+	public void action(ArrayList<Projectile> myBullet, BordView view, ArrayList<Zombie> myZombies, SimpleGameData dataBord) {
+		if(this.readyToshot(dataBord.getLineCell(this.getCaseI(), this.getCaseJ()))) {
 			myBullet.add(new Bullet(super.getX() + super.getSizeOfPlant(), super.getY() + (super.getSizeOfPlant() / 2) - 10));
 			
 			this.resetAS();

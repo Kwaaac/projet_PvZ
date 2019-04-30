@@ -69,6 +69,15 @@ public class SimpleGameData {
 		
 		return null;
 	}
+	
+	public ArrayList<Cell> getLineCell(int x, int y) {
+		ArrayList<Cell> cells = new ArrayList<>();
+		for(int i = x; i < nbColumns; i++) {
+			cells.add(getCell(y, i));
+		}
+		
+		return cells;
+	}
 
 	public ArrayList<Plant> getMyPlants() {
 		return myPlants;
@@ -240,7 +249,7 @@ public class SimpleGameData {
 	public void actionning(ArrayList<Projectile> myBullet, BordView view, ArrayList<Zombie> myZombies) {
 
 		for (IPlant p : myPlants) {
-			p.action(myBullet, view, myZombies);
+			p.action(myBullet, view, myZombies, this);
 		}
 
 	}
@@ -362,9 +371,10 @@ public class SimpleGameData {
 
 			int x2 = Coordinates.CenteredX(view.realCoordFromIndex(j, view.getXOrigin()));
 			int y2 = Coordinates.CenteredY(view.realCoordFromIndex(i, view.getYOrigin()));
-
-			if (!this.hasPlant(i, j)) {
-				this.plantOnBoard(i, j);
+			
+			Cell actualCell = this.getCell(i, j);
+			if (!actualCell.isPlantedPlant()) {
+				actualCell.addPlant();
 				myPlants.add(psView.getSelectedPlants()[p].createAndDrawNewPlant(view, context, x2, y2));
 				actualMoney -= psView.getSelectedPlants()[p].getCost();
 				System.out.println("Vous avez " + actualMoney);
@@ -499,7 +509,7 @@ public class SimpleGameData {
 					}
 				}
 
-				myZombies.add(zombieAvailable.get(selecteur).createAndDrawNewZombie(view, context, x, 150 + 180 * 2 + 35));
+				myZombies.add(zombieAvailable.get(selecteur).createAndDrawNewZombie(view, context, x, y));
 				str.append("new " + zombieAvailable.get(selecteur) + new SimpleDateFormat("hh:mm:ss").format(new Date())
 						+ ")\n");
 

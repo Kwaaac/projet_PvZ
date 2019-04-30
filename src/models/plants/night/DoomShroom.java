@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import fr.umlv.zen5.ApplicationContext;
 import models.Coordinates;
 import models.Entities;
+import models.SimpleGameData;
 import models.plants.Plant;
 import models.projectiles.Projectile;
 import models.zombies.Zombie;
@@ -63,9 +64,9 @@ public class DoomShroom extends Plant{
 	}
 	
 	@Override
-	public void action(ArrayList<Projectile> myBullet, BordView view, ArrayList<Zombie> myZombies) {
+	public void action(ArrayList<Projectile> myBullet, BordView view, ArrayList<Zombie> myZombies, SimpleGameData dataBord) {
 		
-		if(this.readyToshot(myZombies)) {
+		if(this.readyToshot()) {
 			for (Entities z : this.detect(view, myZombies)) {
 				z.takeDmg(1800);
 			}

@@ -108,7 +108,7 @@ public abstract class Plant extends Entities implements IPlant{
 	}
 	
 	@Override
-	public boolean readyToshot(ArrayList<Zombie> mz) {
+	public boolean readyToshot() {
 		return shootBar >= shootBarMax;
 	}
 	

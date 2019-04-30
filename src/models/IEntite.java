@@ -19,4 +19,8 @@ public interface IEntite {
 	void setConflictMode(boolean b);
 
 	int getDamage();
+
+	int getCaseJ();
+
+	int getCaseI();
 }

@@ -8,11 +8,11 @@ public class Cell {
 	private Color color; //Later
 	private boolean dirt;  //Later
 	
-	private final ArrayList<Zombie> zombiesInCell;
+	private final ArrayList<Entities> entitiesInCell;
 	private boolean plantedPlant = false;
 
 	public Cell() {
-		zombiesInCell = new ArrayList<>();
+		entitiesInCell = new ArrayList<>();
 	}
 	
 	// Lorsqu'on pose une plante sur la cellule, on indique qu'une plante est posée
@@ -30,26 +30,26 @@ public class Cell {
 		return plantedPlant;
 	}
 	
-	public void addZombie(Zombie z) {
-		zombiesInCell.add(z);
+	public void addEntity(Zombie z) {
+		entitiesInCell.add(z);
 	}
 	
-	public void removeZombie(Zombie z) {
-		zombiesInCell.remove(z);
+	public void removeEntity(IEntite dPe) {
+		entitiesInCell.remove(dPe);
 	}
 	
-	public ArrayList<Zombie> getZombiesInCell(){
-		return zombiesInCell;
+	public ArrayList<Entities> getEntitiesInCell(){
+		return entitiesInCell;
 	}
 	
 	// Renvoie si il y a des zombies sur la case
-	public boolean isThereZombies() {
-		return !zombiesInCell.isEmpty();
+	public boolean isThereEntity() {
+		return !entitiesInCell.isEmpty();
 	}
 	
 	// Renvoie si la cellules contient des entites
 	public boolean isCellEmpty() {
-		return isPlantedPlant() && isThereZombies();
+		return isPlantedPlant() || isThereEntity();
 	}
 
 	public static Cell randomGameCell() {
@@ -63,6 +63,6 @@ public class Cell {
 	@Override
 	public String toString() {
 		return  (plantedPlant == true ? "Il y a une plante, " : "Il n'y a pas de plante, ")
-				+ (!zombiesInCell.isEmpty() ? "Voici les zombies présents \n" + zombiesInCell + ", " : "Il n'y a pas de zombie");
+				+ (!entitiesInCell.isEmpty() ? "Voici les zombies présents \n" + entitiesInCell + ", " : "Il n'y a pas de zombie");
 	}
 }

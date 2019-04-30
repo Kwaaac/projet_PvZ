@@ -44,16 +44,20 @@ public class DeadPool {
 		return bs.toString();
 	}
 	
-	public void clearEntity(ArrayList<?> Le) {
+	public void clearEntity(ArrayList<?> Le, SimpleGameData dataBord) {
+
 		for(IEntite DPe: deadPool) {
 			Le.remove(DPe);
+			dataBord.getCell(DPe.getCaseJ(), DPe.getCaseI()).removeEntity(DPe);
 		}
+
 	}
+
 	
-	public void deletingEverything(ArrayList<Zombie> MyZombies, ArrayList<Plant> MyPlants, ArrayList<Projectile> MyBullet) {
-		this.clearEntity(MyBullet);
-		this.clearEntity(MyZombies);
-		this.clearEntity(MyPlants);
+	public void deletingEverything(ArrayList<Zombie> MyZombies, SimpleGameData dataBord, ArrayList<Projectile> MyBullet) {
+		this.clearEntity(MyBullet, dataBord);
+		this.clearEntity(dataBord.getMyPlants(), dataBord);
+		this.clearEntity(MyZombies, dataBord);
 		deadPool.clear();
 	}
 

@@ -6,7 +6,7 @@ import views.SimpleGameView;
 
 public class NormalZombie extends Zombie {
 
-	private final String name = "Normal Zombie";
+	private final String type = "Normal Zombie";
 	private final String color = "#000000";
 	private final int threat = 1;
 	
@@ -15,7 +15,7 @@ public class NormalZombie extends Zombie {
 	}
 
 	public NormalZombie() {
-		super(50, 50, 100, 200, -0.93);
+		this(50, 50);
 	}
 
 	@Override
@@ -25,7 +25,7 @@ public class NormalZombie extends Zombie {
 
 	@Override
 	public String toString() {
-		return name;
+		return type;
 	}
 
 	public Integer getProb(int difficulty) {
