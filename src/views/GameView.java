@@ -1,5 +1,6 @@
 package views;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import fr.umlv.zen5.ApplicationContext;
 import models.MovingElement;
@@ -89,6 +90,7 @@ public interface GameView {
 	public default void drawRectangle(ApplicationContext context, int x, int y, int width, int height, String color) {
 		context.renderFrame(graphics -> drawRectangle(graphics, x, y, width, height, color));
 	}
+	
 	/**
 	 * Draws only only the specified moving element in the game board from its data,
 	 * using an existing Graphics2D object.
@@ -478,11 +480,13 @@ public interface GameView {
 	
 	/*-----------------------------Miscellaneous------------------------------*/
 	
-	void drawLawnMower(Graphics2D graphics, float x, float y, String color);
+	void drawLawnMower(Graphics2D graphics, float x, float y, String s);
 	
 	public default void drawLawnMower(ApplicationContext context, float x, float y, String s) {
-		context.renderFrame(graphics -> drawOnlyOneCell(graphics, x, y, s));
+		context.renderFrame(graphics -> drawLawnMower(graphics, x, y, s));
 	}
+
+	
 
 	
 

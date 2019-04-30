@@ -1,6 +1,7 @@
 package models.plants;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 import models.Coordinates;
@@ -35,17 +36,18 @@ public abstract class Plant extends Entities implements IPlant {
 	protected final int shootBarMax;
 	protected long shootBar;
 	protected long shootTime;
-	private final int cost;
-	private final Long cooldown;
-
+	protected final int cost;
+	protected final Long cooldown;
+	private Coordinates plantSelect;
+	
 	private static final HashMap<String, Long> mCooldown = new HashMap<String, Long>();
-
-	private final static Plant[] day = { new CherryBomb(), new Chomper(), new Peashooter(), new PotatoMine(),
-			new Repeater(), new SnowPea(), new SunFlower(), new WallNut() };
-	private final static Plant[] night = { new DoomShroom(), new FumeShroom(), new GraveBuster(), new HypnoShroom(),
-			new IceShroom(), new PuffShroom(), new ScaredyShroom(), new SunShroom() };
-	private final static Plant[] pool = { new Cattails(), new LilyPad(), new SeaShroom(), new TangleKelp() };
-
+	
+	private final static ArrayList<Plant> day = new ArrayList<>(Arrays.asList(new CherryBomb(), new Chomper(), new Peashooter(), new PotatoMine(), new Repeater(), new SnowPea(), new SunFlower(), new WallNut()));
+	private final static ArrayList<Plant> night = new ArrayList<>(Arrays.asList(new DoomShroom(), new FumeShroom(), new GraveBuster(), new HypnoShroom(), new IceShroom(), new PuffShroom(), new ScaredyShroom(), new SunShroom()));
+	private final static ArrayList<Plant> pool = new ArrayList<>(Arrays.asList(new Cattails(), new LilyPad(), new SeaShroom(), new TangleKelp()));
+	
+	
+	
 	static {
 		mCooldown.put("free", (long) 0);
 		mCooldown.put("fast", (long) 5);
@@ -55,7 +57,7 @@ public abstract class Plant extends Entities implements IPlant {
 		mCooldown.put("bigTime", (long) 60);
 	}
 
-	public static Plant[] getPlantList(String s) {
+	public static ArrayList<Plant> getPlantList(String s) {
 		if (s == "night") {
 			return night;
 		}
@@ -64,12 +66,20 @@ public abstract class Plant extends Entities implements IPlant {
 		}
 		return day;
 	}
-
+	
+	/**
+	 * @return Coordinates for it's placement in the PlantSelection
+	 */
+	public Coordinates getPlaceSelect() {
+		return this.plantSelect;
+	}
+	
+	
 	public Plant(int x, int y, int damage, int life, int shootBarMax, int cost, String cooldown) {
 		super(x, y, damage, life);
 		this.shootBarMax = shootBarMax;
 		this.cost = cost;
-		this.cooldown = mCooldown.get(cooldown);
+		this.cooldown = (long) 5;
 		shootTime = System.currentTimeMillis();
 	}
 

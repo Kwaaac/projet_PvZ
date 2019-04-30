@@ -4,6 +4,7 @@ import java.awt.Graphics2D;
 import java.util.ArrayList;
 
 import fr.umlv.zen5.ApplicationContext;
+import models.Coordinates;
 import models.SimpleGameData;
 import models.plants.Plant;
 import models.projectiles.Projectile;
@@ -14,6 +15,8 @@ import views.SimpleGameView;
 public class SunFlower extends Plant{
 	private final String name = "SunFlower";
 	private final String color = "#FEFF33";
+	
+	private final Coordinates placeSelect = new Coordinates(0,1);
 	
 	public SunFlower(int x, int y) {
 		//    x, y, damage,  life,  shootBarMax,  cost, cooldown

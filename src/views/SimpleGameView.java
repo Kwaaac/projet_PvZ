@@ -457,6 +457,7 @@ public abstract class SimpleGameView implements GameView {
 	/*-----------------------------Miscellaneous------------------------------*/
 	int[] SizeOfLawnMower = LawnMower.getSizeOfLawnMower();
 	
+	
 	@Override
 	public void drawLawnMower(Graphics2D graphics, float x, float y, String color) {
 		graphics.setColor(Color.decode(color));

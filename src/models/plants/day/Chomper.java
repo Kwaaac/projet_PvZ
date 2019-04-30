@@ -23,7 +23,7 @@ public class Chomper extends Plant{
 	}
 	
 	public Chomper() {
-		super(-10, -10, 0, 1, 1, 150, "fast");
+		this(-10, -10);
 	}
 	
 	int sizeOfPlant = super.getSizeOfPlant();

@@ -21,7 +21,7 @@ public class CherryBomb extends Plant {
 	private final ArrayList<Coordinates> zone;
 
 	public CherryBomb(int x, int y) {
-		super(x, y, 0, 1, 1200, 150, "verySlow");
+		super(x, y, 0, 1, 1200, 0, "free");
 		this.zone = zone();
 	}
 

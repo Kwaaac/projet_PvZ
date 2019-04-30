@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.geom.Point2D;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 
@@ -13,27 +14,18 @@ import fr.umlv.zen5.Event;
 import fr.umlv.zen5.Event.Action;
 import fr.umlv.zen5.KeyboardKey;
 import fr.umlv.zen5.ScreenInfo;
+
 import models.DeadPool;
 import models.SimpleGameData;
-import models.plants.Plant;
-import models.plants.day.CherryBomb;
-import models.plants.day.Chomper;
-import models.plants.day.Peashooter;
-import models.plants.day.PotatoMine;
-import models.plants.day.SnowPea;
-import models.plants.day.SunFlower;
-import models.plants.day.WallNut;
-import models.plants.pool.Cattails;
-import models.plants.pool.LilyPad;
-import models.plants.pool.SeaShroom;
-import models.plants.pool.TangleKelp;
-import models.projectiles.Bullet;
-import models.projectiles.Projectile;
 
-import models.zombies.ConeheadZombie;
-import models.zombies.FlagZombie;
-import models.zombies.NormalZombie;
-import models.zombies.Zombie;
+import models.plants.*;
+import models.plants.day.*;
+import models.plants.night.*;
+import models.plants.pool.*;
+
+import models.projectiles.*;
+
+import models.zombies.*;
 
 import views.BordView;
 import views.SelectBordView;
@@ -43,11 +35,11 @@ import views.SelectBordView;
 public class SimpleGameController {
 	
 	static void simpleGame(ApplicationContext context) {
-//		MenuController.startGame(context);
+		
+		ArrayList<Plant> selectedPlant = MenuController.startGame(context);
 		
 		ScreenInfo screenInfo = context.getScreenInfo();
 		screenInfo.getWidth();
-		Plant[] selectedPlant = {new SunFlower(), new Peashooter(), new TangleKelp(), new WallNut(), new CherryBomb(), new PotatoMine(), new Chomper()}; 
 		
 		
 		
@@ -62,7 +54,7 @@ public class SimpleGameController {
 		
 
 		SimpleGameData dataBord = new SimpleGameData(5, 8);
-		SimpleGameData dataSelect = new SimpleGameData(selectedPlant.length, 1);
+		SimpleGameData dataSelect = new SimpleGameData(selectedPlant.size(), 1);
 
 		dataBord.setRandomMatrix();
 		dataSelect.setRandomMatrix();

@@ -54,7 +54,7 @@ public class SimpleGameData {
 		spawnTime = System.currentTimeMillis();
 		timeLimit = 5_000;
 
-		// Temps pour augmenter la difficulté
+		// Temps pour augmenter la difficultï¿½
 		difficultyTime = System.currentTimeMillis();
 
 		// Temps du spawn des soleil
@@ -69,7 +69,7 @@ public class SimpleGameData {
 	 * 
 	 * @param y La ligne du plateau
 	 * @param x La colonne du plateau
-	 * @return La cellule correspondantes au coordonnées
+	 * @return La cellule correspondantes au coordonnï¿½es
 	 * 
 	 */
 	public Cell getCell(int y, int x) {
@@ -94,7 +94,7 @@ public class SimpleGameData {
 	}
 
 	/**
-	 * Genere un nombre aléatoire entre 0 et x
+	 * Genere un nombre alï¿½atoire entre 0 et x
 	 * 
 	 * @return Ligne du plateau
 	 */
@@ -159,7 +159,7 @@ public class SimpleGameData {
 		return selected != null;
 	}
 
-	private boolean isCorrectBordLocation(BordView view, float x, float y) {
+	public boolean isCorrectBordLocation(BordView view, float x, float y) {
 
 		int xOrigin = view.getXOrigin();
 		int yOrigin = view.getYOrigin();
@@ -172,7 +172,7 @@ public class SimpleGameData {
 		return false;
 	}
 
-	private boolean isCorrectSelectLocation(SelectBordView view, float x, float y) {
+	public boolean isCorrectSelectLocation(SelectBordView view, float x, float y) {
 
 		int xOrigin = view.getXOrigin();
 		int yOrigin = view.getYOrigin();
@@ -261,7 +261,6 @@ public class SimpleGameData {
 		for (IPlant p : myPlants) {
 			p.action(myBullet, view, myZombies, this);
 		}
-
 	}
 
 	public static void spawnSun(BordView view, float x, float y) {
@@ -356,7 +355,7 @@ public class SimpleGameData {
 				str.append("-+-+-+-+-+-+-+-+-+-\nVous avez quitte la partie !\n");
 				break;
 			}
-			str.append("La partie à durée: " + time.getDureeTxt());
+			str.append("La partie ï¿½ durï¿½e: " + time.getDureeTxt());
 			System.out.println(str.toString());
 			SimpleGameData.setWL(0);
 			context.exit(0);
@@ -385,8 +384,8 @@ public class SimpleGameData {
 			Cell actualCell = this.getCell(i, j);
 			if (!actualCell.isPlantedPlant()) {
 				actualCell.addPlant();
-				myPlants.add(psView.getSelectedPlants()[p].createAndDrawNewPlant(view, context, x2, y2));
-				actualMoney -= psView.getSelectedPlants()[p].getCost();
+				myPlants.add(psView.getSelectedPlants().get(p).createAndDrawNewPlant(view, context, x2, y2));
+				actualMoney -= psView.getSelectedPlants().get(p).getCost();
 				System.out.println("Vous avez " + actualMoney);
 				psView.startCooldown(p);
 			}
@@ -408,16 +407,16 @@ public class SimpleGameData {
 
 		if (!dataSelect.hasASelectedCell()) {
 			if (dataSelect.isCorrectSelectLocation(plantSelectionView, x, y)
-					&& plantSelectionView.isThisChronoReset(y, view.getYOrigin())
-					&& actualMoney >= plantSelectionView.getSelectedPlants()[plantSelectionView.lineFromY(y)]
-							.getCost()) {
+					&& plantSelectionView.isThisChronoReset(y, view.getYOrigin()) 
+					&& actualMoney >= plantSelectionView.getSelectedPlants().get(plantSelectionView.lineFromY(y)).getCost()) {
 				dataSelect.selectCell(plantSelectionView.lineFromY(y), plantSelectionView.columnFromX(x));
 			}
 
 		} else {
 			dataSelect.unselect();
 			if (dataSelect.isCorrectSelectLocation(plantSelectionView, x, y)
-					&& plantSelectionView.isThisChronoReset(y, view.getYOrigin())) {
+					&& plantSelectionView.isThisChronoReset(y, view.getYOrigin())
+					&& actualMoney >= plantSelectionView.getSelectedPlants().get(plantSelectionView.lineFromY(y)).getCost()) {
 				dataSelect.selectCell(plantSelectionView.lineFromY(y), plantSelectionView.columnFromX(x));
 			}
 		}
@@ -444,22 +443,18 @@ public class SimpleGameData {
 	}
 
 	public boolean spawnRandomPlant(ApplicationContext context, SimpleGameData dataSelect, BordView view,
-			SelectBordView plantSelectionView, Plant[] selectedPlant) {
+			SelectBordView plantSelectionView, ArrayList<Plant> selectedPlant) {
 
 		boolean result = false;
 
 		int target = this.RandomPosGenerator(15); // 1 chance sur x
-		int xRandomPosition = SimpleGameData.RandomPosGenerator(view.getXOrigin(), view.getLength()); // random position
-																										// x dans
-		// matrice
-		int yRandomPosition = SimpleGameData.RandomPosGenerator(view.getYOrigin(), view.getWidth()); // random position
-																										// y dans
-		// matrice
-		int randomPlantType = this.RandomPosGenerator(selectedPlant.length); // random type plant
-
-		if (target == 1
-				&& actualMoney >= plantSelectionView.getSelectedPlants()[plantSelectionView.lineFromY(randomPlantType)]
-						.getCost()) {
+		int xRandomPosition = SimpleGameData.RandomPosGenerator(view.getXOrigin(), view.getLength()); // random position x dans
+																							// matrice
+		int yRandomPosition = SimpleGameData.RandomPosGenerator(view.getYOrigin(), view.getWidth()); // random position y dans
+																							// matrice
+		int randomPlantType = this.RandomPosGenerator(selectedPlant.size()); // random type plant
+		
+		if (target == 1 && actualMoney >= plantSelectionView.getSelectedPlants().get(randomPlantType).getCost()) {
 			result = true;
 			if (!dataSelect.hasASelectedCell()) {
 				dataSelect.selectCell(randomPlantType, 0);
@@ -471,6 +466,8 @@ public class SimpleGameData {
 
 			this.selectingCellAndPlanting(context, dataSelect, view, plantSelectionView, xRandomPosition,
 					yRandomPosition);
+		} else {
+			actualMoney += 1;
 		}
 
 		return result;
@@ -488,7 +485,7 @@ public class SimpleGameData {
 		int staticX = view.getXOrigin() - BordView.getSquareSize();
 		for (int i = 1; i <= nbLines; i++) {
 			myLawnMower.add(new LawnMower(staticX, BordView.getSquareSize() * i));
-			view.drawLawnMower(context, staticX, BordView.getSquareSize() * i, "#B44A4A");
+			view.drawLawnMower(context,(float) staticX,(float) BordView.getSquareSize() * i, "#FFFFFF");
 		}
 	}
 

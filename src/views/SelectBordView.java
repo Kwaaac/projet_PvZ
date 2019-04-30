@@ -6,6 +6,7 @@ import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.RectangularShape;
+import java.util.ArrayList;
 import java.awt.geom.RoundRectangle2D;
 
 import models.Chrono;
@@ -16,19 +17,21 @@ import models.plants.Plant;
 import models.projectiles.LawnMower;
 
 public class SelectBordView extends SimpleGameView {
-	private final Plant[] selectedPlants;
+	private final ArrayList<Plant> selectedPlants;
+
 	private static int squareSize;
 	private final Chrono[] caseChrono = { new Chrono(), new Chrono(), new Chrono(), new Chrono(), new Chrono(),
 			new Chrono(), new Chrono(), new Chrono(), new Chrono() };
 
-	public SelectBordView(int xOrigin, int yOrigin, int length, int width, int squareSize, Plant[] selectedPlants) {
+	public SelectBordView(int xOrigin, int yOrigin, int length, int width, int squareSize,
+			ArrayList<Plant> selectedPlants) {
 		super(xOrigin, yOrigin, length, width);
 		this.selectedPlants = selectedPlants;
 		SelectBordView.squareSize = squareSize;
 	}
 
 	public static SelectBordView initGameGraphics(int xOrigin, int yOrigin, int length, SimpleGameData data,
-			Plant[] selectedPlants) {
+			ArrayList<Plant> selectedPlants) {
 		int squareSize = (int) (length * 1.0 / data.getNbLines());
 		return new SelectBordView(xOrigin, yOrigin, length, data.getNbColumns() * squareSize, squareSize,
 				selectedPlants);
@@ -36,16 +39,16 @@ public class SelectBordView extends SimpleGameView {
 
 	public void startCooldown(int numCase) {
 		Chrono askedChrono = caseChrono[numCase];
-		if(askedChrono.isReset()) {
+		if (askedChrono.isReset()) {
 			askedChrono.start();
 		}
-		
+
 	}
-	
+
 	/**
-	 * Check si le chono est lancé ou en stand-by
+	 * Check si le chono est lancï¿½ ou en stand-by
 	 * 
-	 * @param coord Coordonné y du clic
+	 * @param coord  Coordonnï¿½ y du clic
 	 * @param origin yOrigin
 	 * 
 	 * @return True si le chrono est en stand-by, false si le chrono tourne
@@ -56,17 +59,49 @@ public class SelectBordView extends SimpleGameView {
 		Chrono askedChrono = caseChrono[numCase];
 		return askedChrono.isReset();
 	}
-	
+
 	public void checkCooldown() {
-		for(int i = 0 ; i < selectedPlants.length; i++) {
+		for (int i = 0; i < selectedPlants.size(); i++) {
 			Chrono askedChrono = caseChrono[i];
-			Plant askedPlant = selectedPlants[i];
-			if(askedChrono.asReachTimerAndStop(askedPlant.getCooldown())) {
+			Plant askedPlant = selectedPlants.get(i);
+			if (askedChrono.asReachTimerAndStop(askedPlant.getCooldown())) {
 				askedChrono.stop();
 			}
 		}
 	}
-	
+
+	/**
+	 * This function will allow the player to pick a plant from the global list of
+	 * plants
+	 * 
+	 * @param x                  x of the clic location
+	 * @param y                  y of the clic location
+	 * @param plantSelectionView View of the player list
+	 * @param thisData           Data from the global list of plants
+	 * @param theOtherData         Data from the player list of plants
+	 */
+
+	public void truc(float x, float y, SelectBordView plantSelectionView, SimpleGameData thisData,
+			SimpleGameData theOtherData) {
+
+		int X = this.indexFromReaCoord(x, super.getXOrigin());
+		int Y = this.indexFromReaCoord(y, super.getYOrigin());
+
+		int plantIndex = (Y * thisData.getNbColumns() + X);
+		
+		if (plantIndex < selectedPlants.size()) {
+			
+			// Plants from the other bord
+			ArrayList<Plant> lstPlants = plantSelectionView.getSelectedPlants();
+			
+			if (lstPlants.size() < theOtherData.getNbLines() * theOtherData.getNbColumns()) {
+
+				Plant clickedPlant = selectedPlants.remove(plantIndex);
+				lstPlants.add(clickedPlant);
+			}
+		}
+	}
+
 	public static int getSquareSize() {
 		return squareSize;
 	}
@@ -88,7 +123,6 @@ public class SelectBordView extends SimpleGameView {
 	 *                                  game board.
 	 */
 	public int lineFromY(float y) {
-		System.out.println(super.getYOrigin());
 		return indexFromReaCoord(y, super.getYOrigin());
 	}
 
@@ -103,11 +137,11 @@ public class SelectBordView extends SimpleGameView {
 	public int columnFromX(float x) {
 		return indexFromReaCoord(x, super.getXOrigin());
 	}
-	
-	public Plant[] getSelectedPlants() {
+
+	public ArrayList<Plant> getSelectedPlants() {
 		return selectedPlants;
 	}
-	
+
 	protected float xFromI(int i) {
 		return realCoordFromIndex(i, super.getXOrigin());
 	}
@@ -124,7 +158,6 @@ public class SelectBordView extends SimpleGameView {
 		return new Rectangle2D.Float(xFromI(j), yFromJ(i), squareSize, squareSize);
 	}
 
-
 	/**
 	 * Draws the game board from its data, using an existing Graphics2D object.
 	 * 
@@ -136,21 +169,11 @@ public class SelectBordView extends SimpleGameView {
 	@Override
 	public void draw(Graphics2D graphics, SimpleGameData data) {
 
-		graphics.setColor(Color.GRAY);
-		graphics.fill(
-				new Rectangle2D.Float(super.getXOrigin(), super.getYOrigin(), super.getWidth(), super.getLength()));
-
-		graphics.setColor(Color.WHITE.darker());
-		for (int i = 0; i <= data.getNbLines(); i++) {
-			graphics.draw(new Line2D.Float(super.getXOrigin(), super.getYOrigin() + i * squareSize,
-					super.getXOrigin() + super.getWidth(), super.getYOrigin() + i * squareSize));
+		if (selectedPlants.size() <= data.getNbLines()) {
+			graphics.setColor(Color.GRAY);
+			graphics.fill(new Rectangle2D.Float(super.getXOrigin(), super.getYOrigin(), super.getWidth() + 2,
+					super.getLength() - 2));
 		}
-
-		for (int i = 0; i <= data.getNbColumns(); i++) {
-			graphics.draw(new Line2D.Float(super.getXOrigin() + i * squareSize, super.getYOrigin(),
-					super.getXOrigin() + i * squareSize, super.getYOrigin() + super.getLength()));
-		}
-
 		Coordinates c = data.getSelected();
 		if (c != null) {
 			if (!data.hasPlant(c.getI(), c.getJ())) {
@@ -161,7 +184,7 @@ public class SelectBordView extends SimpleGameView {
 
 		for (int i = 0; i < data.getNbLines(); i++) {
 			for (int j = 0; j < data.getNbColumns(); j++) {
-				if(caseChrono[i].isReset()) {
+				if (caseChrono[i].isReset()) {
 					graphics.setColor(Color.GREEN.darker());
 					graphics.fill(drawCell(i, j));
 				} else {
@@ -173,12 +196,27 @@ public class SelectBordView extends SimpleGameView {
 
 		int sizeOfPlant = Plant.getSizeOfPlant();
 		int i = 0;
+		int j = 0;
 
-		for (Plant p : selectedPlants) {
-			p.draw(this, graphics, (int) (squareSize / 2) - sizeOfPlant / 4,
-					(int) (squareSize / 2) + 100 + squareSize * i - sizeOfPlant / 4);
+		if (selectedPlants.size() <= data.getNbLines()) {
+			for (Plant p : selectedPlants) {
+				p.draw(this, graphics, (int) this.getXOrigin() + (squareSize / 2) - sizeOfPlant / 4,
+						(int) this.getYOrigin() + squareSize * i);
 
-			i += 1;
+				i += 1;
+			}
+		} else {
+			for (Plant p : selectedPlants) {
+				p.draw(this, graphics, (int) this.getXOrigin() + (squareSize / 2) - sizeOfPlant / 4 + squareSize * i,
+						(int) (squareSize / 2) + squareSize * j - sizeOfPlant / 4);
+
+				i += 1;
+
+				if (i > data.getNbColumns() - 1) {
+					i = 0;
+					j += 1;
+				}
+			}
 		}
 	}
 
@@ -197,11 +235,11 @@ public class SelectBordView extends SimpleGameView {
 		super.drawOnlyOneCell(graphics, x, y, s);
 	}
 
-	
 	@Override
 	public void drawRectangle(Graphics2D graphics, int x, int y, int width, int height, String color) {
 		super.drawRectangle(graphics, x, y, width, height, color);
 	}
+
 	/**
 	 * Draws only the cell specified by the given coordinates in the game board from
 	 * its data, using an existing Graphics2D object.
@@ -337,12 +375,12 @@ public class SelectBordView extends SimpleGameView {
 		graphics.fill(new Rectangle2D.Float(x - 15, y + sizeOfPlant / 2, sizeOfPlant, sizeOfPlant));
 	}
 	/*-------------------------------POOL-------------------------------*/
-	
+
 	@Override
 	public void drawCattails(Graphics2D graphics, int x, int y, String color) {
 		graphics.setColor(Color.decode(color));
 		graphics.fill(new Ellipse2D.Float(x - 15, y + sizeOfPlant / 2, sizeOfPlant, sizeOfPlant));
-		
+
 		graphics.setColor(Color.decode("#DB5FBD"));
 		graphics.fill(new Ellipse2D.Float(x - 7, y + sizeOfPlant / 2 + 8, sizeOfPlant - 15, sizeOfPlant - 15));
 	}
@@ -351,7 +389,7 @@ public class SelectBordView extends SimpleGameView {
 	public void drawSeaShroom(Graphics2D graphics, int x, int y, String color) {
 		graphics.setColor(Color.decode(color));
 		graphics.fill(new Ellipse2D.Float(x - 15, y + sizeOfPlant / 2, sizeOfPlant, sizeOfPlant));
-		
+
 		graphics.setColor(Color.decode("#16D9B6"));
 		graphics.fill(new Ellipse2D.Float(x - 7, y + sizeOfPlant / 2 + 8, sizeOfPlant - 15, sizeOfPlant - 15));
 	}
@@ -359,29 +397,21 @@ public class SelectBordView extends SimpleGameView {
 	@Override
 	public void drawTangleKelp(Graphics2D graphics, int x, int y, String color) {
 		graphics.setColor(Color.decode(color));
-		graphics.fill(new Ellipse2D.Float(x - 15 - sizeOfPlant/4, y + sizeOfPlant / 4, sizeOfPlant+sizeOfPlant/2, sizeOfPlant+sizeOfPlant/2));
-		
+		graphics.fill(new Ellipse2D.Float(x - 15 - sizeOfPlant / 4, y + sizeOfPlant / 4, sizeOfPlant + sizeOfPlant / 2,
+				sizeOfPlant + sizeOfPlant / 2));
+
 		graphics.setColor(Color.decode("#000000"));
-		graphics.fill(new Ellipse2D.Float(x - 7 - sizeOfPlant / 4, y + sizeOfPlant / 4 + 8, sizeOfPlant - 15+sizeOfPlant/2, sizeOfPlant - 15+sizeOfPlant/2));
+		graphics.fill(new Ellipse2D.Float(x - 7 - sizeOfPlant / 4, y + sizeOfPlant / 4 + 8,
+				sizeOfPlant - 15 + sizeOfPlant / 2, sizeOfPlant - 15 + sizeOfPlant / 2));
 	}
 
 	@Override
 	public void drawLilyPad(Graphics2D graphics, int x, int y, String color) {
 		graphics.setColor(Color.decode(color));
 		graphics.fill(new Ellipse2D.Float(x - 15, y + sizeOfPlant / 2, sizeOfPlant, sizeOfPlant));
-		
+
 		graphics.setColor(Color.decode("#90D322"));
 		graphics.fill(new Ellipse2D.Float(x - 7, y + sizeOfPlant / 2 + 8, sizeOfPlant - 15, sizeOfPlant - 15));
 	}
-	
-	/*-----------------------------Miscellaneous------------------------------*/
-	int[] SizeOfLawnMower = LawnMower.getSizeOfLawnMower();
-	
-	@Override
-	public void drawLawnMower(Graphics2D graphics, float x, float y, String color) {
-		graphics.setColor(Color.decode(color));
-		graphics.fill(new RoundRectangle2D.Float(x, y, SizeOfLawnMower[0], SizeOfLawnMower[1], 50, 50));
-	}
 
-	
 }
