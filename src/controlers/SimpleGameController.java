@@ -35,11 +35,11 @@ import views.SelectBordView;
 public class SimpleGameController {
 	
 	static void simpleGame(ApplicationContext context) {
-		
-		ArrayList<Plant> selectedPlant = MenuController.startGame(context);
+		ArrayList<Plant> selectdedPlant = MenuController.startGame(context);
 		
 		ScreenInfo screenInfo = context.getScreenInfo();
 		screenInfo.getWidth();
+		ArrayList<Plant> selectedPlant = new ArrayList<>(Arrays.asList(new SunFlower(), new Peashooter(), new TangleKelp(), new WallNut(), new CherryBomb(), new PotatoMine(), new Chomper())); 
 		
 		
 		

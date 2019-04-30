@@ -8,6 +8,7 @@ import models.Coordinates;
 import models.DeadPool;
 import models.Entities;
 import models.IEntite;
+import models.SimpleGameData;
 import models.plants.day.CherryBomb;
 import models.plants.day.Chomper;
 import models.plants.day.Peashooter;
@@ -40,22 +41,23 @@ public abstract class Plant extends Entities implements IPlant {
 	protected final Long cooldown;
 	private Coordinates plantSelect;
 	
-	private static final HashMap<String, Long> mCooldown = new HashMap<String, Long>();
+	
 	
 	private final static ArrayList<Plant> day = new ArrayList<>(Arrays.asList(new CherryBomb(), new Chomper(), new Peashooter(), new PotatoMine(), new Repeater(), new SnowPea(), new SunFlower(), new WallNut()));
 	private final static ArrayList<Plant> night = new ArrayList<>(Arrays.asList(new DoomShroom(), new FumeShroom(), new GraveBuster(), new HypnoShroom(), new IceShroom(), new PuffShroom(), new ScaredyShroom(), new SunShroom()));
 	private final static ArrayList<Plant> pool = new ArrayList<>(Arrays.asList(new Cattails(), new LilyPad(), new SeaShroom(), new TangleKelp()));
 	
+	private final HashMap<String, Long> mCooldown = new HashMap<String, Long>();
 	
-	
-	static {
-		mCooldown.put("free", (long) 0);
-		mCooldown.put("fast", (long) 5);
-		mCooldown.put("medium", (long) 15);
-		mCooldown.put("slow", (long) 20);
-		mCooldown.put("verySlow", (long) 35);
-		mCooldown.put("bigTime", (long) 60);
-	}
+//	static {
+//		mCooldown.put("free", (long) 0);
+//		mCooldown.put("fast", (long) 5);
+//		mCooldown.put("medium", (long) 15);
+//		mCooldown.put("slow", (long) 20);
+//		mCooldown.put("verySlow", (long) 35);
+//		mCooldown.put("bigTime", (long) 60);
+//		
+//	}
 
 	public static ArrayList<Plant> getPlantList(String s) {
 		if (s == "night") {
@@ -77,9 +79,18 @@ public abstract class Plant extends Entities implements IPlant {
 	
 	public Plant(int x, int y, int damage, int life, int shootBarMax, int cost, String cooldown) {
 		super(x, y, damage, life);
+		
+		mCooldown.put("free", (long) 0);
+		mCooldown.put("fast", (long) 5);
+		mCooldown.put("medium", (long) 15);
+		mCooldown.put("slow", (long) 20);
+		mCooldown.put("verySlow", (long) 35);
+		mCooldown.put("bigTime", (long) 60);
+		
+		
 		this.shootBarMax = shootBarMax;
 		this.cost = cost;
-		this.cooldown = (long) 5;
+		this.cooldown = mCooldown.get(cooldown);
 		shootTime = System.currentTimeMillis();
 	}
 
@@ -129,10 +140,11 @@ public abstract class Plant extends Entities implements IPlant {
 		return new Coordinates((int) x, (int) x + sizeOfPlant);
 	}
 
-	public static void hasToDie(DeadPool DPe, ArrayList<Plant> Mp, ArrayList<Zombie> myZombies) {
+	public static void hasToDie(DeadPool DPe, ArrayList<Plant> Mp, ArrayList<Zombie> myZombies, SimpleGameData data) {
 		if (myZombies.size() == 0) {
 			for (Plant p : Mp) {
 				if (p.isDead()) {
+					data.getCell(p.getCaseJ(), p.getCaseI()).removePlant();
 					DPe.add(p);
 				}
 			}
