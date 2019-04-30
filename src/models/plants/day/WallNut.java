@@ -16,11 +16,11 @@ public class WallNut extends Plant {
 	private final String color = "#ECB428";
 
 	public WallNut(int x, int y) {
-		super(x, y, 0, 1000, 0, 50, "fast");
+		super(x, y, 0, 1000, 0, 50, "veryslow");
 	}
 	
 	public WallNut() {
-		super(-10, -10, 0, 1, 1, 50, "fast");
+		this(-10, -10);
 	}
 	
 	int sizeOfPlant = super.getSizeOfPlant();

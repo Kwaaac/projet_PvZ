@@ -21,7 +21,7 @@ public class SunFlower extends Plant{
 	}
 	
 	public SunFlower() {
-		super(-10, -10, 0, 1, 10_000, 25, "fast");
+		this(-10, -10);
 	}
 	
 	@Override

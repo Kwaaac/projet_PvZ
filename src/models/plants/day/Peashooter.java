@@ -20,7 +20,7 @@ public class Peashooter extends Plant{
 	
 	
 	public Peashooter(int x, int y) {
-		super(x, y, 0, 300, 5000, 0, "free");
+		super(x, y, 0, 300, 5000, 100, "fast");
 
 		shootBar = shootBarMax;			// La plante tire dès qu'elle est posée
 	}

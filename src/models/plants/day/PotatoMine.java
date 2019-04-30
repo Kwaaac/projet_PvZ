@@ -22,7 +22,7 @@ public class PotatoMine extends Plant {
 	private boolean activate = false;
 
 	public PotatoMine(int x, int y) {
-		super(x, y, 0, 120, 14_000, 0, "free");
+		super(x, y, 0, 120, 14_000, 25, "slow");
 
 	}
 
