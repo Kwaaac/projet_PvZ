@@ -471,10 +471,22 @@ public interface GameView {
 	/*-----------------------------Bullets------------------------------*/
 
 	void drawBullet(Graphics2D graphics, float x, float y, String s);
-
+	
 	public default void drawBullet(ApplicationContext context, float x, float y, String s) {
 		context.renderFrame(graphics -> drawOnlyOneCell(graphics, x, y, s));
 	}
+	
+	/*-----------------------------Miscellaneous------------------------------*/
+	
+	void drawLawnMower(Graphics2D graphics, float x, float y, String color);
+	
+	public default void drawLawnMower(ApplicationContext context, float x, float y, String s) {
+		context.renderFrame(graphics -> drawOnlyOneCell(graphics, x, y, s));
+	}
+
+	
+
+	
 
 	
 

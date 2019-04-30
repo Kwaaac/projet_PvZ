@@ -24,12 +24,6 @@ public class Bullet extends Projectile {
 	}
 
 	@Override
-	public void incAS() {}
-
-	@Override
-	public void resetAS() {}
-
-	@Override
 	public void draw(SimpleGameView view, Graphics2D graphics, float x, float y) {
 		view.drawBullet(graphics, x, y, color);
 	}

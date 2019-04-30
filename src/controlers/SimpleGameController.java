@@ -86,8 +86,8 @@ public class SimpleGameController {
 		StringBuilder str = new StringBuilder("Journal de bord\n-+-+-+-+-+-+-+-+-+-\n");
 
 		boolean debug = false, debuglock = false;
-
 		
+		dataBord.spawnLawnMower(view, context);
 		
 		while (true) {
 			

@@ -22,7 +22,7 @@ public class DoomShroom extends Plant{
 	}
 	
 	public DoomShroom() {
-		super(-10, -10, 0, 1, 1, 125, "fast");
+		this(-10, -10);
 	}
 	
 	@Override

@@ -11,6 +11,7 @@ import java.util.Random;
 import fr.umlv.zen5.ApplicationContext;
 import models.plants.IPlant;
 import models.plants.Plant;
+import models.projectiles.LawnMower;
 import models.projectiles.Projectile;
 import models.zombies.Zombie;
 import views.BordView;
@@ -25,7 +26,8 @@ public class SimpleGameData {
 	private final ArrayList<Coordinates> placedPlant = new ArrayList<Coordinates>();
 	private final ArrayList<Plant> myPlants = new ArrayList<>();
 	private final static ArrayList<Soleil> mySun = new ArrayList<>();
-	
+	private final ArrayList<LawnMower> myLawnMower = new ArrayList<>();
+
 	private static boolean stop = false;
 
 	private static long spawnTime;
@@ -37,18 +39,18 @@ public class SimpleGameData {
 
 	private int actualMoney = 0;
 	private Chrono sunSpawn = new Chrono();
-	
+
 	static Chrono time = new Chrono();
-	
-	private static String map =  "";
-	
+
+	private static String map = "";
+
 	public SimpleGameData(int nbLines, int nbColumns) {
 		this.nbLines = nbLines;
 		this.nbColumns = nbColumns;
-		
+
 		matrix = new Cell[nbLines][nbColumns];
 
-		//Spawn des zombies et leurs limite de temps avant spawn
+		// Spawn des zombies et leurs limite de temps avant spawn
 		spawnTime = System.currentTimeMillis();
 		timeLimit = 5_000;
 
@@ -57,11 +59,11 @@ public class SimpleGameData {
 
 		// Temps du spawn des soleil
 		sunSpawn.start();
-		
+
 		// Temps du jeu
 		time.start();
 	}
-	
+
 	/**
 	 * Renvoie une cellule du plateau sinon renvoie null si la cellule n'existe pas
 	 * 
@@ -71,19 +73,19 @@ public class SimpleGameData {
 	 * 
 	 */
 	public Cell getCell(int y, int x) {
-		if(y >= 0 && y < nbLines && x >= 0 && x < nbColumns) {
+		if (y >= 0 && y < nbLines && x >= 0 && x < nbColumns) {
 			return matrix[y][x];
 		}
-		
+
 		return null;
 	}
-	
+
 	public ArrayList<Cell> getLineCell(int x, int y) {
 		ArrayList<Cell> cells = new ArrayList<>();
-		for(int i = x; i < nbColumns; i++) {
+		for (int i = x; i < nbColumns; i++) {
 			cells.add(getCell(y, i));
 		}
-		
+
 		return cells;
 	}
 
@@ -105,7 +107,7 @@ public class SimpleGameData {
 		Random r = new Random();
 		return valeurMin + r.nextInt(valeurMax - valeurMin);
 	}
-	
+
 	public void gameStop() {
 		stop = true;
 	}
@@ -237,12 +239,12 @@ public class SimpleGameData {
 	}
 
 	public static boolean win(HashMap<Zombie, Integer> superWaveZombie, ArrayList<Zombie> myZombies) {
-		for(int nbrZ : superWaveZombie.values()) {
-			if(nbrZ != 0) {
+		for (int nbrZ : superWaveZombie.values()) {
+			if (nbrZ != 0) {
 				return false;
 			}
 		}
-		
+
 		return myZombies.isEmpty();
 	}
 
@@ -261,7 +263,7 @@ public class SimpleGameData {
 		}
 
 	}
-	
+
 	public static void spawnSun(BordView view, float x, float y) {
 		if (x == -1 && y == -1) {
 			int xOrigin = view.getXOrigin();
@@ -293,7 +295,7 @@ public class SimpleGameData {
 			}
 			view.moveAndDrawElement(context, this, z);
 			z.setCase(this);
-			
+
 		}
 
 		for (Projectile b : myBullet) {
@@ -364,7 +366,7 @@ public class SimpleGameData {
 
 	public void planting(ApplicationContext context, SimpleGameData dataSelect, BordView view, SelectBordView psView,
 			float x, float y) {
-		
+
 		if (this.isCorrectBordLocation(view, x, y) && dataSelect.hasASelectedCell()) {
 
 			this.selectCell(view.lineFromY(y), view.columnFromX(x));
@@ -379,7 +381,7 @@ public class SimpleGameData {
 
 			int x2 = Coordinates.CenteredX(view.realCoordFromIndex(j, view.getXOrigin()));
 			int y2 = Coordinates.CenteredY(view.realCoordFromIndex(i, view.getYOrigin()));
-			
+
 			Cell actualCell = this.getCell(i, j);
 			if (!actualCell.isPlantedPlant()) {
 				actualCell.addPlant();
@@ -406,7 +408,9 @@ public class SimpleGameData {
 
 		if (!dataSelect.hasASelectedCell()) {
 			if (dataSelect.isCorrectSelectLocation(plantSelectionView, x, y)
-					&& plantSelectionView.isThisChronoReset(y, view.getYOrigin()) && actualMoney >= plantSelectionView.getSelectedPlants()[plantSelectionView.lineFromY(y)].getCost()) {
+					&& plantSelectionView.isThisChronoReset(y, view.getYOrigin())
+					&& actualMoney >= plantSelectionView.getSelectedPlants()[plantSelectionView.lineFromY(y)]
+							.getCost()) {
 				dataSelect.selectCell(plantSelectionView.lineFromY(y), plantSelectionView.columnFromX(x));
 			}
 
@@ -445,13 +449,17 @@ public class SimpleGameData {
 		boolean result = false;
 
 		int target = this.RandomPosGenerator(15); // 1 chance sur x
-		int xRandomPosition = SimpleGameData.RandomPosGenerator(view.getXOrigin(), view.getLength()); // random position x dans
-																							// matrice
-		int yRandomPosition = SimpleGameData.RandomPosGenerator(view.getYOrigin(), view.getWidth()); // random position y dans
-																							// matrice
+		int xRandomPosition = SimpleGameData.RandomPosGenerator(view.getXOrigin(), view.getLength()); // random position
+																										// x dans
+		// matrice
+		int yRandomPosition = SimpleGameData.RandomPosGenerator(view.getYOrigin(), view.getWidth()); // random position
+																										// y dans
+		// matrice
 		int randomPlantType = this.RandomPosGenerator(selectedPlant.length); // random type plant
 
-		if (target == 1 && actualMoney >= plantSelectionView.getSelectedPlants()[plantSelectionView.lineFromY(randomPlantType)].getCost()) {
+		if (target == 1
+				&& actualMoney >= plantSelectionView.getSelectedPlants()[plantSelectionView.lineFromY(randomPlantType)]
+						.getCost()) {
 			result = true;
 			if (!dataSelect.hasASelectedCell()) {
 				dataSelect.selectCell(randomPlantType, 0);
@@ -473,6 +481,14 @@ public class SimpleGameData {
 			difficulty += 1;
 
 			difficultyTime = System.currentTimeMillis();
+		}
+	}
+
+	public void spawnLawnMower(BordView view, ApplicationContext context) {
+		int staticX = view.getXOrigin() - BordView.getSquareSize();
+		for (int i = 1; i <= nbLines; i++) {
+			myLawnMower.add(new LawnMower(staticX, BordView.getSquareSize() * i));
+			view.drawLawnMower(context, staticX, BordView.getSquareSize() * i, "#B44A4A");
 		}
 	}
 
@@ -586,11 +602,11 @@ public class SimpleGameData {
 		}
 
 	}
-	
+
 	public static void setMap(String mape) {
 		map = mape;
 	}
-	
+
 	public static String getMap() {
 		return map;
 	}

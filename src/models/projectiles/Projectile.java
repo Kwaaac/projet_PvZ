@@ -24,6 +24,12 @@ public abstract class Projectile extends Entities implements MovingElement{
 		return "Type: " + type; 
 	}
 	
+	@Override
+	public void incAS() {}
+
+	@Override
+	public void resetAS() {}
+	
 	public static int getSizeOfProjectile() {
 		return sizeOfProjectile;
 	}
