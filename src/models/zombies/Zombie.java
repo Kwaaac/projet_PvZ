@@ -146,8 +146,6 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie 
 		return shootBar >= shootBarMax;
 	}
 
-	public void conflictAll(Plant p) {
-	}
 
 	public Coordinates hitBox() {
 		return new Coordinates((int) x, (int) x + sizeOfZombie);
@@ -223,6 +221,7 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie 
 
 	public static void ZCheckConflict(ArrayList<Zombie> myZombies, ArrayList<Projectile> myBullet,
 			ArrayList<Plant> myPlants, DeadPool deadPoolE, BordView view, SimpleGameData data, StringBuilder str) {
+		Plant.hasToDie(deadPoolE, myPlants,myZombies); //gere les mort si il n'y a aucun zombie sur le plateau
 		for (Zombie z : myZombies) {
 			z.go();
 			z.incAS();

@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import models.Coordinates;
+import models.DeadPool;
 import models.Entities;
+import models.IEntite;
 import models.plants.day.CherryBomb;
 import models.plants.day.Chomper;
 import models.plants.day.Peashooter;
@@ -27,31 +29,30 @@ import models.plants.pool.SeaShroom;
 import models.plants.pool.TangleKelp;
 import models.zombies.Zombie;
 
-
-public abstract class Plant extends Entities implements IPlant{
-	private final String type = "Plant"; 
+public abstract class Plant extends Entities implements IPlant {
+	private final String type = "Plant";
 	private final static int sizeOfPlant = 75;
 	protected final int shootBarMax;
 	protected long shootBar;
 	protected long shootTime;
 	private final int cost;
 	private final Long cooldown;
-	
+
 	private static final HashMap<String, Long> mCooldown = new HashMap<String, Long>();
-	
-	private final static Plant[] day = {new CherryBomb(), new Chomper(), new Peashooter(), new PotatoMine(), new Repeater(), new SnowPea(), new SunFlower(), new WallNut()};
-	private final static Plant[] night = {new DoomShroom(), new FumeShroom(), new GraveBuster(), new HypnoShroom(), new IceShroom(), new PuffShroom(), new ScaredyShroom(), new SunShroom()};
-	private final static Plant[] pool = {new Cattails(), new LilyPad(), new SeaShroom(), new TangleKelp()};
-	
-	
-	
+
+	private final static Plant[] day = { new CherryBomb(), new Chomper(), new Peashooter(), new PotatoMine(),
+			new Repeater(), new SnowPea(), new SunFlower(), new WallNut() };
+	private final static Plant[] night = { new DoomShroom(), new FumeShroom(), new GraveBuster(), new HypnoShroom(),
+			new IceShroom(), new PuffShroom(), new ScaredyShroom(), new SunShroom() };
+	private final static Plant[] pool = { new Cattails(), new LilyPad(), new SeaShroom(), new TangleKelp() };
+
 	static {
-	mCooldown.put("free",(long)0);
-	mCooldown.put("fast",(long)5);
-	mCooldown.put("medium",(long)15);
-	mCooldown.put("slow",(long)20);
-	mCooldown.put("verySlow",(long)35);
-	mCooldown.put("bigTime",(long)60);
+		mCooldown.put("free", (long) 0);
+		mCooldown.put("fast", (long) 5);
+		mCooldown.put("medium", (long) 15);
+		mCooldown.put("slow", (long) 20);
+		mCooldown.put("verySlow", (long) 35);
+		mCooldown.put("bigTime", (long) 60);
 	}
 
 	public static Plant[] getPlantList(String s) {
@@ -63,6 +64,7 @@ public abstract class Plant extends Entities implements IPlant{
 		}
 		return day;
 	}
+
 	public Plant(int x, int y, int damage, int life, int shootBarMax, int cost, String cooldown) {
 		super(x, y, damage, life);
 		this.shootBarMax = shootBarMax;
@@ -70,15 +72,15 @@ public abstract class Plant extends Entities implements IPlant{
 		this.cooldown = mCooldown.get(cooldown);
 		shootTime = System.currentTimeMillis();
 	}
-	
+
 	public int getCost() {
 		return cost;
 	}
-	
+
 	public String toString() {
 		return "Type: " + type;
 	}
-	
+
 	public static int getSizeOfPlant() {
 		return sizeOfPlant;
 	}
@@ -86,35 +88,46 @@ public abstract class Plant extends Entities implements IPlant{
 	public long getSpeedShooting() {
 		return shootBar;
 	}
-	
+
 	public long getCooldown() {
 		return cooldown;
 	}
-	
+
 	@Override
 	public void incAS() {
 		shootBar = System.currentTimeMillis() - shootTime;
 	}
-	
+
 	@Override
 	public void resetAS() {
 		shootTime = System.currentTimeMillis();
-		
-		this.shootBar = 1 ;
+
+		this.shootBar = 1;
 	}
-	
+
 	public long getTimer() {
 		return shootBar;
 	}
-	
+
 	@Override
 	public boolean readyToshot() {
 		return shootBar >= shootBarMax;
 	}
-	
+
 	@Override
 	public Coordinates hitBox() {
 		return new Coordinates((int) x, (int) x + sizeOfPlant);
 	}
-	
+
+	public static void hasToDie(DeadPool DPe, ArrayList<Plant> Mp, ArrayList<Zombie> myZombies) {
+		if (myZombies.size() == 0) {
+			for (Plant p : Mp) {
+				if (p.isDead()) {
+					DPe.add(p);
+				}
+			}
+
+		}
+	}
+
 }
