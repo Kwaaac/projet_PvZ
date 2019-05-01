@@ -58,19 +58,19 @@ public class LawnMower extends Projectile {
 	}
 	
 	public void go() {
-		this.setSpeed(10.0);
+		this.setSpeed(40.0);
 	}
 	
 	public boolean outBoard(BordView view,SimpleGameData dataBord) {
 		int xOrigin = view.getXOrigin();
-		int squareSize = SelectBordView.getSquareSize();
-		System.out.println(x+"--"+xOrigin + squareSize * dataBord.getNbColumns()+(x > (xOrigin + squareSize * dataBord.getNbColumns())));
+		int squareSize = BordView.getSquareSize();
+		System.out.println(x+"--"+(xOrigin + squareSize * dataBord.getNbColumns())+(x > (xOrigin + squareSize * dataBord.getNbColumns())));
 		
-		return x > (xOrigin + squareSize * dataBord.getNbColumns());
+		return x > (xOrigin + (squareSize * dataBord.getNbColumns()));
 	}
 	
 	public void tondeuse(BordView view,SimpleGameData dataBord) {
-		if(this.outBoard(view, dataBord) == false) {
+		if(!(this.outBoard(view, dataBord))) {
 			ArrayList<Entities> le = this.detect(dataBord);
 			for(Entities e : le) {
 				if(this.hit(e) && this.getSpeed() < 0) {
@@ -79,7 +79,6 @@ public class LawnMower extends Projectile {
 				}
 			}
 		}else {
-		System.out.println(this+"i'm free");
 		life = 0;
 		}
 	}
@@ -98,7 +97,7 @@ public class LawnMower extends Projectile {
 	private ArrayList<Entities> detect(SimpleGameData dataBord) {
 		ArrayList<Entities> Lz = new ArrayList<>();
 
-		Cell cell = dataBord.getCell(getCaseJ(), getCaseI());
+		Cell cell = dataBord.getCell(this.getCaseJ(), this.getCaseI());
 
 		if (cell != null && cell.isThereEntity()) {
 			for (Entities z : cell.getEntitiesInCell()) {

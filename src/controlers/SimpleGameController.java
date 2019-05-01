@@ -118,7 +118,6 @@ public class SimpleGameController {
 			
 			/*------------------------------- WIN / LOOSE --------------------------------*/
 			SimpleGameData.timeEnd(myZombies, str, context, superWaveZombie,view, myLawnMower);
-			System.out.println(myLawnMower);
 			/*---------------------------------DEBUG--------------------------------------*/
 			
 			if (debug == true) {

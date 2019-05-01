@@ -26,7 +26,7 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie 
 	protected long shootBar;
 	protected long shootTime;
 
-	// Liste de nom pour les zombies, tous différents pour que chaque zombie soit unique (200 pseudos provenant du TP 10 de java)
+	// Liste de nom pour les zombies, tous diffï¿½rents pour que chaque zombie soit unique (200 pseudos provenant du TP 10 de java)
 	protected static ArrayList<String> zombieNames = new ArrayList<>(Arrays.asList("PortCharlotte472", "Birdseye722",
 			"Freeville753", "Kamas397", "PrincetonJunction132", "Edroy498", "Marshallberg573", "Anderson828",
 			"NewRome174", "Caneyville505", "PointIsabel867", "Exell248", "Jacksonburg582", "PleasantPrairie521",
@@ -153,7 +153,7 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie 
 	}
 
 	public boolean isEatingBrain(int xOrigin, int squareSize) {
-		return x < xOrigin - squareSize; 
+		return x < xOrigin - squareSize/2; 
 	}
 	
 	public boolean soonEatingBrain(int xOrigin, int squareSize) {
@@ -230,6 +230,16 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie 
 			} 
 		}
 	}
+	
+	public void conflictLvZ(DeadPool deadPoolE, ArrayList<LawnMower> myLawnMower , BordView view, SimpleGameData data,
+			StringBuilder str) {
+		for(LawnMower l : myLawnMower) {
+			if(this.hit(l)) {
+				this.stop();
+				l.go();
+			}
+		}
+	}
 
 	public static void ZCheckConflict(ArrayList<Zombie> myZombies, ArrayList<Projectile> myBullet,
 			ArrayList<Plant> myPlants,ArrayList<LawnMower> myLawnMower, DeadPool deadPoolE, BordView view, SimpleGameData data, StringBuilder str) {
@@ -240,6 +250,7 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie 
 			z.incAS();
 			z.conflictBvZ(deadPoolE, myBullet, data);
 			z.conflictPvZ(deadPoolE, myPlants, view, data, str);
+			z.conflictLvZ(deadPoolE, myLawnMower, view, data, str);
 			if (z.isEatingBrain(view.getXOrigin(), BordView.getSquareSize()) || z.isDead()) {
 				deadPoolE.add(z);
 				str.append(z + " meurt\n");

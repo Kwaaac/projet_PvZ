@@ -54,7 +54,7 @@ public class SimpleGameData {
 		spawnTime = System.currentTimeMillis();
 		timeLimit = 5_000;
 
-		// Temps pour augmenter la difficulté
+		// Temps pour augmenter la difficultï¿½
 		difficultyTime = System.currentTimeMillis();
 
 		// Temps du spawn des soleil
@@ -333,16 +333,10 @@ public class SimpleGameData {
 		String choice = "Continue", finalChoice = null; 
  
 		for (Zombie z : myZombies) { 
-			if (z.soonEatingBrain(xOrigin, squareSize)) { 
-				int pos = z.whereIsHeEatingBrain(xOrigin, squareSize, z.y, view.getYOrigin(), view);
-				if((int) pos != -1 && LawnMower.containsID(myLawnMower, pos)) {
-					myLawnMower.get(pos).go();
-				}
 			if(z.isEatingBrain(xOrigin, squareSize)){
 				choice = "Stop"; 
 				finalChoice = "Loose"; 
 				}
-			}
 		} 
 
 		if (SimpleGameData.win(superWaveZombie, myZombies)) {
@@ -354,7 +348,9 @@ public class SimpleGameData {
 			choice = "Stop";
 			finalChoice = "Stop";
 		}
-
+		
+		System.out.println(choice+"\n"+finalChoice);
+		
 		switch (choice) {
 		case "Continue":
 			break;
@@ -371,7 +367,7 @@ public class SimpleGameData {
 				str.append("-+-+-+-+-+-+-+-+-+-\nVous avez quitte la partie !\n");
 				break;
 			}
-			str.append("La partie à durée: " + time.getDureeTxt());
+			str.append("La partie ï¿½ durï¿½e: " + time.getDureeTxt());
 			System.out.println(str.toString());
 			SimpleGameData.setWL(0);
 			context.exit(0);
