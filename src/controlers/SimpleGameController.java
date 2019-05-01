@@ -106,20 +106,19 @@ public class SimpleGameController {
 
 			/*------------------------------- CONFLICTS ----------------------------------*/
 			
-			Zombie.ZCheckConflict(myZombies, myBullet, dataBord.getMyPlants(), deadPoolE, view, dataBord, str);
+			Zombie.ZCheckConflict(myZombies, myBullet, dataBord.getMyPlants(), myLawnMower, deadPoolE, view, dataBord, str);
 			
 			/*-------------------------------- DEATHS ------------------------------------*/
 			
-			deadPoolE.deletingEverything(myZombies, dataBord, myBullet);
+			deadPoolE.deletingEverything(myZombies, dataBord, myBullet, myLawnMower);
 			
 			/*--------------------------------SHOOTING------------------------------------*/
 			
 			dataBord.actionning(myBullet, view, myZombies, myLawnMower);
 			
 			/*------------------------------- WIN / LOOSE --------------------------------*/
-			if(myZombies.size() !=0) {System.out.println(myZombies.get(0).getX());};
 			SimpleGameData.timeEnd(myZombies, str, context, superWaveZombie,view, myLawnMower);
-			
+			System.out.println(myLawnMower);
 			/*---------------------------------DEBUG--------------------------------------*/
 			
 			if (debug == true) {

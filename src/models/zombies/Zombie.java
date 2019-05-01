@@ -13,6 +13,7 @@ import models.IEntite;
 import models.MovingElement;
 import models.SimpleGameData;
 import models.plants.Plant;
+import models.projectiles.LawnMower;
 import models.projectiles.Projectile;
 import views.BordView;
 
@@ -152,11 +153,15 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie 
 	}
 
 	public boolean isEatingBrain(int xOrigin, int squareSize) {
-		return x < xOrigin - squareSize / 2; 
+		return x < xOrigin - squareSize; 
+	}
+	
+	public boolean soonEatingBrain(int xOrigin, int squareSize) {
+		return (xOrigin - squareSize < x && x < xOrigin) ; 
 	}
 	
 	public int whereIsHeEatingBrain(int xOrigin, int squareSize,float y, int Yorigin ,BordView view) {
-		if(this.isEatingBrain(xOrigin, squareSize)) {
+		if(this.soonEatingBrain(xOrigin, squareSize)) {
 			return view.indexFromReaCoord(y, Yorigin);
 		}
 		return -1;
@@ -227,7 +232,8 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie 
 	}
 
 	public static void ZCheckConflict(ArrayList<Zombie> myZombies, ArrayList<Projectile> myBullet,
-			ArrayList<Plant> myPlants, DeadPool deadPoolE, BordView view, SimpleGameData data, StringBuilder str) {
+			ArrayList<Plant> myPlants,ArrayList<LawnMower> myLawnMower, DeadPool deadPoolE, BordView view, SimpleGameData data, StringBuilder str) {
+		LawnMower.hasToDie(myLawnMower, deadPoolE, data);
 		Plant.hasToDie(deadPoolE, myPlants, myZombies, data); //gere les mort si il n'y a aucun zombie sur le plateau
 		for (Zombie z : myZombies) {
 			z.go();

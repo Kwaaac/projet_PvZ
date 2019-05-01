@@ -14,6 +14,7 @@ import models.Coordinates;
 import models.MovingElement;
 import models.SimpleGameData;
 import models.plants.Plant;
+import models.projectiles.LawnMower;
 
 public class SelectBordView extends SimpleGameView {
 	private final ArrayList<Plant> selectedPlants;
@@ -413,13 +414,5 @@ public class SelectBordView extends SimpleGameView {
 		graphics.fill(new Ellipse2D.Float(x - 7, y + sizeOfPlant / 2 + 8, sizeOfPlant - 15, sizeOfPlant - 15));
 	}
 	
-	/*-----------------------------Miscellaneous------------------------------*/
-	int[] SizeOfLawnMower = LawnMower.getSizeOfLawnMower();
-	
-	@Override
-	public void drawLawnMower(Graphics2D graphics, float x, float y, String color) {
-		graphics.setColor(Color.decode(color));
-		graphics.fill(new RoundRectangle2D.Float(x, y, SizeOfLawnMower[0], SizeOfLawnMower[1], 50, 50));
-	}
 
 }

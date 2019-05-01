@@ -5,12 +5,14 @@ import java.util.ArrayList;
 
 import models.Cell;
 import models.Coordinates;
+import models.DeadPool;
 import models.Entities;
 import models.IEntite;
 import models.SimpleGameData;
 import models.plants.Plant;
 import models.zombies.Zombie;
 import views.BordView;
+import views.SelectBordView;
 import views.SimpleGameView;
 
 public class LawnMower extends Projectile {
@@ -59,13 +61,37 @@ public class LawnMower extends Projectile {
 		this.setSpeed(10.0);
 	}
 	
+	public boolean outBoard(BordView view,SimpleGameData dataBord) {
+		int xOrigin = view.getXOrigin();
+		int squareSize = SelectBordView.getSquareSize();
+		System.out.println(x+"--"+xOrigin + squareSize * dataBord.getNbColumns()+(x > (xOrigin + squareSize * dataBord.getNbColumns())));
+		
+		return x > (xOrigin + squareSize * dataBord.getNbColumns());
+	}
+	
 	public void tondeuse(BordView view,SimpleGameData dataBord) {
-		ArrayList<Entities> le = this.detect(dataBord);
-		for(Entities e : le) {
-		if(this.hit(e) && this.getSpeed() < 0) {
-			this.mortalKombat(e);
-			life = 100000;
+		if(this.outBoard(view, dataBord) == false) {
+			ArrayList<Entities> le = this.detect(dataBord);
+			for(Entities e : le) {
+				if(this.hit(e) && this.getSpeed() < 0) {
+					this.mortalKombat(e);
+					life = 100000;
+				}
 			}
+		}else {
+		System.out.println(this+"i'm free");
+		life = 0;
+		}
+	}
+	
+	public static void hasToDie(ArrayList<LawnMower> lm,DeadPool DPe, SimpleGameData data) {
+		for(LawnMower l : lm) {
+				if (l.isDead()) {
+					if(data.getCell(l.getCaseJ(), l.getCaseI()) != null) {
+					data.getCell(l.getCaseJ(), l.getCaseI()).removeEntity(l);
+					}
+					DPe.add(l);
+				}
 		}
 	}
 	

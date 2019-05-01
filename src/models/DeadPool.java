@@ -3,6 +3,7 @@ package models;
 import java.util.ArrayList;
 
 import models.plants.Plant;
+import models.projectiles.LawnMower;
 import models.projectiles.Projectile;
 import models.zombies.Zombie;
 
@@ -48,16 +49,20 @@ public class DeadPool {
 
 		for(IEntite DPe: deadPool) {
 			Le.remove(DPe);
-			dataBord.getCell(DPe.getCaseJ(), DPe.getCaseI()).removeEntity(DPe);
+			if(dataBord.getCell(DPe.getCaseJ(), DPe.getCaseI()) != null) {
+				dataBord.getCell(DPe.getCaseJ(), DPe.getCaseI()).removeEntity(DPe);
+				}
+
 		}
 
 	}
 
 	
-	public void deletingEverything(ArrayList<Zombie> MyZombies, SimpleGameData dataBord, ArrayList<Projectile> MyBullet) {
+	public void deletingEverything(ArrayList<Zombie> MyZombies, SimpleGameData dataBord, ArrayList<Projectile> MyBullet,ArrayList<LawnMower> MyLawnMower) {
 		this.clearEntity(MyBullet, dataBord);
 		this.clearEntity(dataBord.getMyPlants(), dataBord);
 		this.clearEntity(MyZombies, dataBord);
+		this.clearEntity(MyLawnMower, dataBord);
 		deadPool.clear();
 	}
 

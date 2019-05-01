@@ -462,10 +462,10 @@ public abstract class SimpleGameView implements GameView {
 	@Override
 	public void drawLawnMower(Graphics2D graphics, float x, float y, String color) {
 		graphics.setColor(Color.decode(color));
-		graphics.fill(new RoundRectangle2D.Float(x, y, SizeOfLawnMower[0], SizeOfLawnMower[1], 10, 10));
+		graphics.fill(new RoundRectangle2D.Float(x, y+(SizeOfLawnMower[1]/3), SizeOfLawnMower[0], SizeOfLawnMower[1], 10, 10));
 		graphics.setColor(Color.BLACK);
-		graphics.fill(new Ellipse2D.Float(x+SizeOfLawnMower[0]/4, y+SizeOfLawnMower[1]/4, SizeOfLawnMower[0]/2, SizeOfLawnMower[1]/2));
-		graphics.fill(new Rectangle2D.Float(x+10,y+3,3,SizeOfLawnMower[1]-5));
+		graphics.fill(new Ellipse2D.Float(x+SizeOfLawnMower[0]/4, y+SizeOfLawnMower[1]/4+(SizeOfLawnMower[1]/3), SizeOfLawnMower[0]/2, SizeOfLawnMower[1]/2));
+		graphics.fill(new Rectangle2D.Float(x+10,y+3+(SizeOfLawnMower[1]/3),3,SizeOfLawnMower[1]-5));
 	}
 	
 	
