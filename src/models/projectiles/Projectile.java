@@ -11,12 +11,13 @@ public abstract class Projectile extends Entities implements MovingElement{
 	
 	public Projectile(float x, float y, int damage, int life, double speed) {
 		super(x, y, damage, life);
-		this.speed = speed;
+		this.setSpeed(speed);
 	}
+	
 	
 	@Override
 	public void move() {
-		setX((int) (super.x + speed));
+		setX((int) (super.x + getSpeed()));
 	}
 	
 	@Override
@@ -43,10 +44,18 @@ public abstract class Projectile extends Entities implements MovingElement{
 	}
 
 	public void SpeedBoostON() {
-		speed += 2;
+		setSpeed(getSpeed() + 2);
 	}
 	
 	public void SpeedBoostOFF() {
-		speed -= 2;
+		setSpeed(getSpeed() - 2);
+	}
+
+	public double getSpeed() {
+		return speed;
+	}
+
+	public void setSpeed(double speed) {
+		this.speed = speed;
 	}
 }

@@ -152,7 +152,14 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie 
 	}
 
 	public boolean isEatingBrain(int xOrigin, int squareSize) {
-		return x < xOrigin - squareSize / 2;
+		return x < xOrigin - squareSize / 2; 
+	}
+	
+	public int whereIsHeEatingBrain(int xOrigin, int squareSize,float y, int Yorigin ,BordView view) {
+		if(this.isEatingBrain(xOrigin, squareSize)) {
+			return view.indexFromReaCoord(y, Yorigin);
+		}
+		return -1;
 	}
 
 	/**

@@ -1,17 +1,43 @@
 package models.projectiles;
 
 import java.awt.Graphics2D;
+import java.util.ArrayList;
 
-import fr.umlv.zen5.ApplicationContext;
+import models.Cell;
+import models.Coordinates;
+import models.Entities;
+import models.IEntite;
+import models.SimpleGameData;
+import models.plants.Plant;
+import models.zombies.Zombie;
+import views.BordView;
 import views.SimpleGameView;
 
 public class LawnMower extends Projectile {
 	private final String name = "Tondeuse";
-	private final static String color = "#B44A4A";
-	private static final int[] SizeOfLawnMower = {110,95};
+	private final String color = "#B44A4A";
+	private final int id;
+	private static final int[] SizeOfLawnMower = {100,80};
 	
-	public LawnMower(float x, float y) {
-		super(x, y, 100000, 100000 , 20.0);
+	public LawnMower(float x, float y, int id) {
+		super(x, y, 100000, 100000 , 0);
+		this.id = id;
+	}
+	
+	private int getID() {
+		return id;
+	}
+	
+	public void SpeedBoostON() {
+		this.setSpeed(this.getSpeed()+2);
+	}
+
+	public void SpeedBoostOFF() {
+		this.setSpeed(this.getSpeed()-2);
+	}
+	
+	public static boolean containsID(ArrayList<LawnMower> lawnMower,int ID) {
+		return lawnMower.stream().filter(l -> l.getID() == ID).findFirst().isPresent();
 	}
 	
 	@Override
@@ -21,18 +47,49 @@ public class LawnMower extends Projectile {
 
 	@Override
 	public String toString() {
-		return super.toString() + "--" + name; 
+		return super.toString() + "--" + id +" "+ name; 
 	}
 
 
 	public static int[] getSizeOfLawnMower() {
 		return SizeOfLawnMower;
 	}
+	
+	public void go() {
+		this.setSpeed(10.0);
+	}
+	
+	public void tondeuse(BordView view,SimpleGameData dataBord) {
+		ArrayList<Entities> le = this.detect(dataBord);
+		for(Entities e : le) {
+		if(this.hit(e) && this.getSpeed() < 0) {
+			this.mortalKombat(e);
+			life = 100000;
+			}
+		}
+	}
+	
+	private ArrayList<Entities> detect(SimpleGameData dataBord) {
+		ArrayList<Entities> Lz = new ArrayList<>();
 
-	public static LawnMower createAndDrawNewPlant(SimpleGameView view, ApplicationContext context, int x, int y) {
-		view.drawPeashooter(context, x,  y, color);
+		Cell cell = dataBord.getCell(getCaseJ(), getCaseI());
+
+		if (cell != null && cell.isThereEntity()) {
+			for (Entities z : cell.getEntitiesInCell()) {
+				Lz.add(z);
+			}
+		}
 		
-		return new LawnMower(x, y);
+		return Lz;
+	}
+	
+	public boolean isMoving() {
+		return this.getSpeed() < 0;
+	}
+	
+	@Override
+	public Coordinates hitBox() {
+		return new Coordinates((int) x, (int) x + SizeOfLawnMower[0]);
 	}
 	
 	@Override

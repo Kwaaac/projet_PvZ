@@ -26,7 +26,7 @@ public class SimpleGameData {
 	private final ArrayList<Coordinates> placedPlant = new ArrayList<Coordinates>();
 	private final ArrayList<Plant> myPlants = new ArrayList<>();
 	private final static ArrayList<Soleil> mySun = new ArrayList<>();
-	private final ArrayList<LawnMower> myLawnMower = new ArrayList<>();
+	
 
 	private static boolean stop = false;
 
@@ -256,11 +256,16 @@ public class SimpleGameData {
 		return WL;
 	}
 
-	public void actionning(ArrayList<Projectile> myBullet, BordView view, ArrayList<Zombie> myZombies) {
+	public void actionning(ArrayList<Projectile> myBullet, BordView view, ArrayList<Zombie> myZombies , ArrayList<LawnMower> myLawnMower) {
 
 		for (IPlant p : myPlants) {
 			p.action(myBullet, view, myZombies, this);
 		}
+		
+		for (LawnMower l : myLawnMower) {
+			l.tondeuse(view, this);
+		}
+
 	}
 
 	public static void spawnSun(BordView view, float x, float y) {
@@ -282,7 +287,7 @@ public class SimpleGameData {
 	}
 
 	public boolean movingZombiesAndBullets(ApplicationContext context, BordView view, ArrayList<Zombie> myZombies,
-			ArrayList<Projectile> myBullet, boolean debug, boolean debuglock) {
+			ArrayList<Projectile> myBullet,ArrayList<LawnMower> myLawnMower, boolean debug, boolean debuglock) {
 
 		for (Zombie z : myZombies) {
 			if (debug == true) {
@@ -294,7 +299,6 @@ public class SimpleGameData {
 			}
 			view.moveAndDrawElement(context, this, z);
 			z.setCase(this);
-
 		}
 
 		for (Projectile b : myBullet) {
@@ -307,6 +311,11 @@ public class SimpleGameData {
 			}
 			view.moveAndDrawElement(context, this, b);
 		}
+		
+		for(LawnMower l : myLawnMower) {
+			
+			view.moveAndDrawElement(context, this, l);
+		}
 
 		for (Soleil s : mySun) {
 			view.moveAndDrawElement(context, this, s);
@@ -316,18 +325,23 @@ public class SimpleGameData {
 	}
 
 	public static void timeEnd(ArrayList<Zombie> myZombies, StringBuilder str, ApplicationContext context,
-			HashMap<Zombie, Integer> superWaveZombie) {
+			HashMap<Zombie, Integer> superWaveZombie,BordView view , ArrayList<LawnMower> myLawnMower) {
 
-		int xOrigin = 450;
-		int squareSize = BordView.getSquareSize();
-		String choice = "Continue", finalChoice = null;
-
-		for (Zombie z : myZombies) {
-			if (z.isEatingBrain(xOrigin, squareSize)) {
-				choice = "Stop";
-				finalChoice = "Loose";
+		int xOrigin = 900; 
+		int squareSize = BordView.getSquareSize(); 
+		String choice = "Continue", finalChoice = null; 
+ 
+		for (Zombie z : myZombies) { 
+			if (z.isEatingBrain(xOrigin, squareSize)) { 
+				int pos = z.whereIsHeEatingBrain(xOrigin, squareSize, z.y, view.getYOrigin(), view);
+				if((int) pos != -1 && LawnMower.containsID(myLawnMower, pos)) {
+					myLawnMower.get(pos).go();
+				}else {
+				choice = "Stop"; 
+				finalChoice = "Loose"; 
+				}
 			}
-		}
+		} 
 
 		if (SimpleGameData.win(superWaveZombie, myZombies)) {
 			choice = "Stop";
@@ -481,11 +495,11 @@ public class SimpleGameData {
 		}
 	}
 
-	public void spawnLawnMower(BordView view, ApplicationContext context) {
+	public void spawnLawnMower(BordView view, ApplicationContext context, ArrayList<LawnMower> myLawnMower) {
 		int staticX = view.getXOrigin() - BordView.getSquareSize();
 		for (int i = 1; i <= nbLines; i++) {
-			myLawnMower.add(new LawnMower(staticX, BordView.getSquareSize() * i));
-			view.drawLawnMower(context,(float) staticX,(float) BordView.getSquareSize() * i, "#FFFFFF");
+			myLawnMower.add(new LawnMower(staticX, BordView.getSquareSize() * i,i-1));
+			view.drawLawnMower(context, staticX, BordView.getSquareSize() * i, "#B44A4A");
 		}
 	}
 

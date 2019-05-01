@@ -52,7 +52,7 @@ public class SimpleGameController {
 		superWaveZombie.put(new FlagZombie(), 1);
 		superWaveZombie.put(new NormalZombie(), 30);
 		
-
+		
 		SimpleGameData dataBord = new SimpleGameData(5, 8);
 		SimpleGameData dataSelect = new SimpleGameData(selectedPlant.size(), 1);
 
@@ -71,6 +71,7 @@ public class SimpleGameController {
 
 		ArrayList<Zombie> myZombies = new ArrayList<>();
 		ArrayList<Projectile> myBullet = new ArrayList<>();
+		ArrayList<LawnMower> myLawnMower = new ArrayList<>();
 
 		Zombie.getSizeOfZombie();
 		Bullet.getSizeOfProjectile();
@@ -79,7 +80,7 @@ public class SimpleGameController {
 
 		boolean debug = false, debuglock = false;
 		
-		dataBord.spawnLawnMower(view, context);
+		dataBord.spawnLawnMower(view, context,myLawnMower);
 		
 		while (true) {
 			
@@ -88,7 +89,7 @@ public class SimpleGameController {
 			/*--------------------------------DRAWS--------------------------------*/
 			
 			view.draw(context, dataBord);
-			debuglock = dataBord.movingZombiesAndBullets(context, view, myZombies, myBullet, debug, debuglock);
+			debuglock = dataBord.movingZombiesAndBullets(context, view, myZombies, myBullet, myLawnMower, debug, debuglock);
 			plantSelectionView.draw(context, dataSelect);
 
 			/*---------------------------INITIALISATION-----------------------------*/
@@ -113,11 +114,11 @@ public class SimpleGameController {
 			
 			/*--------------------------------SHOOTING------------------------------------*/
 			
-			dataBord.actionning(myBullet, view, myZombies);
+			dataBord.actionning(myBullet, view, myZombies, myLawnMower);
 			
 			/*------------------------------- WIN / LOOSE --------------------------------*/
-
-			SimpleGameData.timeEnd(myZombies, str, context, superWaveZombie);
+			if(myZombies.size() !=0) {System.out.println(myZombies.get(0).getX());};
+			SimpleGameData.timeEnd(myZombies, str, context, superWaveZombie,view, myLawnMower);
 			
 			/*---------------------------------DEBUG--------------------------------------*/
 			
