@@ -349,7 +349,6 @@ public class SimpleGameData {
 			finalChoice = "Stop";
 		}
 		
-		System.out.println(choice+"\n"+finalChoice);
 		
 		switch (choice) {
 		case "Continue":
@@ -542,7 +541,7 @@ public class SimpleGameData {
 					}
 				}
 
-				myZombies.add(zombieAvailable.get(selecteur).createAndDrawNewZombie(view, context, 550, y));
+				myZombies.add(zombieAvailable.get(selecteur).createAndDrawNewZombie(view, context, x, y));
 				str.append("new " + zombieAvailable.get(selecteur) + new SimpleDateFormat("hh:mm:ss").format(new Date())
 						+ ")\n");
 

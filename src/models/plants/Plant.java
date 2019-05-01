@@ -59,23 +59,6 @@ public abstract class Plant extends Entities implements IPlant {
 //		
 //	}
 
-	public static ArrayList<Plant> getPlantList(String s) {
-		if (s == "night") {
-			return night;
-		}
-		if (s == "pool") {
-			return pool;
-		}
-		return day;
-	}
-	
-	/**
-	 * @return Coordinates for it's placement in the PlantSelection
-	 */
-	public Coordinates getPlaceSelect() {
-		return this.plantSelect;
-	}
-	
 	
 	public Plant(int x, int y, int damage, int life, int shootBarMax, int cost, String cooldown) {
 		super(x, y, damage, life);
@@ -91,7 +74,24 @@ public abstract class Plant extends Entities implements IPlant {
 		this.shootBarMax = shootBarMax;
 		this.cost = cost;
 		this.cooldown = mCooldown.get(cooldown);
-		shootTime = System.currentTimeMillis();
+		shootTime = 0;
+	}
+	
+	public static ArrayList<Plant> getPlantList(String s) {
+		if (s == "night") {
+			return night;
+		}
+		if (s == "pool") {
+			return pool;
+		}
+		return day;
+	}
+	
+	/**
+	 * @return Coordinates for it's placement in the PlantSelection
+	 */
+	public Coordinates getPlaceSelect() {
+		return this.plantSelect;
 	}
 
 	public int getCost() {

@@ -2,8 +2,11 @@ package models.plants.day;
 
 import java.awt.Graphics2D;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import fr.umlv.zen5.ApplicationContext;
+import models.Cell;
+import models.Chrono;
 import models.Entities;
 import models.SimpleGameData;
 import models.plants.Plant;
@@ -15,15 +18,18 @@ import views.SimpleGameView;
 
 public class Repeater extends Plant{
 	private final String name = "Repeater";
-	private final String color = "#AAFF1D";
+	private final String color = "#FFFFFF";
+	private Chrono delayAttack = new Chrono();
 	
 	public Repeater(int x, int y) {
-		super(x, y, 0, 300, 5100, 200, "fast");
+		super(x, y, 0, 300, 5100, 0, "free");
+		
+		delayAttack.steady();
 		shootBar = shootBarMax;			// La plante tire dès qu'elle est posée
 	}
 	
-	public Repeater() {
-		super(-10, -10, 0, 1, 1, 200, "fast");
+	public Repeater() { 
+		this(-10, -10);
 	}
 	
 	@Override
@@ -49,18 +55,65 @@ public class Repeater extends Plant{
 	public void draw(SimpleGameView view, Graphics2D graphics, int x, int y) {
 		view.drawRepeater(graphics, x, y, color);
 	}
+	
+	
+	private ArrayList<Cell> zone(SimpleGameData dataBord) {
+		ArrayList<Cell> cells = new ArrayList<>();
+		for (int i = -1; i < 2; i++) {
 
-	@Override
-	public void action(ArrayList<Projectile> myBullet, BordView view, ArrayList<Zombie> myZombies, SimpleGameData dataBord) {
-		if(this.readyToshot()) {
-			myBullet.add(new Bullet(super.getX() + super.getSizeOfPlant(), super.getY() + (super.getSizeOfPlant() / 2) - 10));
-			myBullet.add(new Bullet(super.getX() + super.getSizeOfPlant(), super.getY() + (super.getSizeOfPlant() / 2) - 10));
-			
-			this.resetAS();
+			Cell cell = dataBord.getCell(getCaseJ(), getCaseI() + i);
+
+			if (cell != null) {
+				cells.add(cell);
+			}
 		}
-		
-		this.incAS();
+
+		return cells;
 	}
 
+	private ArrayList<Zombie> detect(ArrayList<Cell> cells) {
+		ArrayList<Zombie> zombies = new ArrayList<>();
+
+		for (Cell c : cells) {
+			ArrayList<Zombie> lstz = c.getEntitiesInCell();
+
+			if (!lstz.isEmpty()) {
+				for(Zombie z: lstz) {
+					zombies.add(z);
+				}
+				
+			}
+		}
+
+		return zombies;
+	}
+
+	private void startDelay() {
+		if(delayAttack.isReset()) {
+			delayAttack.start();
+		}
+	}
+	
+	@Override
+	public void action(ArrayList<Projectile> myBullet, BordView view, ArrayList<Zombie> myZombies, SimpleGameData dataBord) {
+		
+		if (readyToshot()) {
+			ArrayList<Zombie> zombie = this.detect(this.zone(dataBord));
+			
+			if (!zombie.isEmpty()) {
+				startDelay();
+				
+				if (delayAttack.asReachTimer(2)) {
+					
+					zombie.get(0).setLife(1800);
+					
+					this.setLife(life);
+				}
+			}
+		}
+
+		incAS();
+
+	}
 
 }

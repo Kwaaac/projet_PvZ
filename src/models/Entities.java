@@ -10,7 +10,7 @@ public abstract class Entities implements IEntite {
 	protected float y;
 	protected Coordinates caseXY;
 	protected int damage;
-	protected int life;
+	protected Integer life;
 	protected boolean inConflict;
 
 	public Entities(float x, float y, int damage, int life) {
@@ -58,7 +58,7 @@ public abstract class Entities implements IEntite {
 	}
 
 	public void setLife(int life) {
-		this.life = life;
+		this.life = this.life - life;
 	}
 
 	public boolean isDead() {

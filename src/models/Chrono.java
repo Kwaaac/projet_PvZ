@@ -6,9 +6,22 @@ public class Chrono {
 	private long pauseDepart = 0;
 	private long pauseFin = 0;
 	private long duree = 0;
+	
+	
+	/**
+	 * get the chrono ready for launch
+	 */
+	
+	public void steady() {
+		tempsDepart = 0;
+		tempsFin = 0;
+		pauseDepart = 0;
+		pauseFin = 0;
+		duree = 0;
+	}
 
 	/**
-	 * lance le chronometre / peut être utilise pour le reset
+	 * lance le chronometre / peut ï¿½tre utilise pour le reset
 	 */
 	public void start() {
 		tempsDepart = System.currentTimeMillis();
@@ -19,7 +32,7 @@ public class Chrono {
 	}
 
 	/**
-	 * met en pause le chronomètre
+	 * met en pause le chronomï¿½tre
 	 */
 	public void pause() {
 		if (tempsDepart == 0) {
@@ -30,7 +43,7 @@ public class Chrono {
 	}
 
 	/**
-	 * relance le chronomètre
+	 * relance le chronomï¿½tre
 	 */
 	public void resume() {
 		if (tempsDepart == 0) {
@@ -48,7 +61,7 @@ public class Chrono {
 	}
 
 	/**
-	 * arrête le chronomètre
+	 * arrï¿½te le chronomï¿½tre
 	 */
 	public void stop() {
 		if (tempsDepart == 0) {
@@ -64,7 +77,7 @@ public class Chrono {
 
 	/**
 	 * 
-	 * @return renvoie la durée du chrono en seconde
+	 * @return renvoie la durï¿½e du chrono en seconde
 	 */
 	public long getDureeSec() {
 		return duree / 1000;
@@ -72,7 +85,7 @@ public class Chrono {
 
 	/**
 	 * 
-	 * @returnrenvoie la durée du chrono en milliseconde
+	 * @returnrenvoie la durï¿½e du chrono en milliseconde
 	 */
 	public long getDureeMs() {
 		return duree;
@@ -80,7 +93,7 @@ public class Chrono {
 
 	/**
 	 * 
-	 * @return renvoie la durée du chrono au format texte
+	 * @return renvoie la durï¿½e du chrono au format texte
 	 */
 	public String getDureeTxt() {
 		return timeToHMS(getDureeSec());
@@ -93,6 +106,7 @@ public class Chrono {
 	 */
 	public boolean asReachTimerAndStop(long tempsS) {
 		this.pause();
+		
 		if (this.getDureeSec() >= tempsS) {
 			this.stop();
 			return true;
@@ -108,6 +122,7 @@ public class Chrono {
 	 */
 	public boolean asReachTimer(long tempsS) {
 		this.pause();
+		
 		if (this.getDureeSec() >= tempsS ) {
 			this.start();
 			return true;
@@ -119,7 +134,7 @@ public class Chrono {
 	/**
 	 * Observe sir le chrono est en stand-by
 	 * 
-	 * @return Renvoie true si le chrono est en stand-by, false si il est lancé
+	 * @return Renvoie true si le chrono est en stand-by, false si il est lancï¿½
 	 */
 	
 	public boolean isReset() {

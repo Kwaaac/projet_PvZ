@@ -35,13 +35,12 @@ import views.SelectBordView;
 public class SimpleGameController {
 	
 	static void simpleGame(ApplicationContext context) {
-		ArrayList<Plant> selectdedPlant = MenuController.startGame(context);
+		ArrayList<Plant> selectedPlant = MenuController.startGame(context);
+		
+		System.out.println(selectedPlant);
 		
 		ScreenInfo screenInfo = context.getScreenInfo();
 		screenInfo.getWidth();
-		ArrayList<Plant> selectedPlant = new ArrayList<>(Arrays.asList(new SunFlower(), new Peashooter(), new TangleKelp(), new WallNut(), new CherryBomb(), new PotatoMine(), new Chomper())); 
-		
-		
 		
 		HashMap<Zombie, Integer> normalWaveZombie = new HashMap<Zombie, Integer>();
 		normalWaveZombie.put(new ConeheadZombie(), 0);
@@ -128,7 +127,7 @@ public class SimpleGameController {
 			
 			/*------------------------------EVENTS----------------------------------*/
 
-			Event event = context.pollOrWaitEvent(35); // modifier pour avoir un affichage fluide
+			Event event = context.pollOrWaitEvent(45); // modifier pour avoir un affichage fluide
 			if (event == null) { // no event
 				continue;
 			}

@@ -8,7 +8,7 @@ public class Cell {
 	private Color color; //Later
 	private boolean dirt;  //Later
 	
-	private final ArrayList<Entities> entitiesInCell;
+	private final ArrayList<Zombie> entitiesInCell;
 	private boolean plantedPlant = false;
 
 	public Cell() {
@@ -38,7 +38,7 @@ public class Cell {
 		entitiesInCell.remove(dPe);
 	}
 	
-	public ArrayList<Entities> getEntitiesInCell(){
+	public ArrayList<Zombie> getEntitiesInCell(){
 		return entitiesInCell;
 	}
 	

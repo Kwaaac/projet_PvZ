@@ -17,7 +17,7 @@ import models.projectiles.LawnMower;
 import models.projectiles.Projectile;
 import views.BordView;
 
-public abstract class Zombie extends Entities implements MovingElement, IZombie {
+public abstract class Zombie extends Entities implements MovingElement, IZombie, Comparable<Zombie> {
 	private final String name;
 	private double speed;
 	private final static int sizeOfZombie = 75;
@@ -251,7 +251,7 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie 
 			z.conflictBvZ(deadPoolE, myBullet, data);
 			z.conflictPvZ(deadPoolE, myPlants, view, data, str);
 			z.conflictLvZ(deadPoolE, myLawnMower, view, data, str);
-			if (z.isEatingBrain(view.getXOrigin(), BordView.getSquareSize()) || z.isDead()) {
+			if (z.isDead()) {
 				deadPoolE.add(z);
 				str.append(z + " meurt\n");
 			}
@@ -270,5 +270,10 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie 
 		if (!(o instanceof Zombie)){ return false; }
 		Zombie z = (Zombie) o;
 		return name.equals(z.name);
+	}
+	
+	@Override
+	public int compareTo(Zombie z) {
+		return this.life.compareTo(z.life);
 	}
 }

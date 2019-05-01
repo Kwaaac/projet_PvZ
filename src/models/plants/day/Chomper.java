@@ -2,10 +2,11 @@ package models.plants.day;
 
 import java.awt.Graphics2D;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import fr.umlv.zen5.ApplicationContext;
-import models.Coordinates;
-import models.Entities;
+import models.Cell;
+import models.Chrono;
 import models.SimpleGameData;
 import models.plants.Plant;
 import models.projectiles.Projectile;
@@ -13,49 +14,53 @@ import models.zombies.Zombie;
 import views.BordView;
 import views.SimpleGameView;
 
-public class Chomper extends Plant{
+public class Chomper extends Plant {
 	private final String name = "Chomper";
-	private final String color = "#BE33FF";
-	private boolean activate = false;
-	
+	private final String eatingColor = "#681D8C";
+	private final String notEatingColor = "#BE33FF";
+	private Chrono delayAttack = new Chrono();
+	private boolean eating = false;
+
 	public Chomper(int x, int y) {
-		super(x, y, 0, 1, 1200, 150, "fast");
+		super(x, y, 0, 350, 15_000, 0, "free");
+
+		delayAttack.steady();
+		shootBar = shootBarMax; // La plante tire d�s qu'elle est pos�e
 	}
-	
+
 	public Chomper() {
 		this(-10, -10);
 	}
-	
+
 	int sizeOfPlant = super.getSizeOfPlant();
-	
-	private ArrayList<Coordinates> zone(BordView view) {
-		int caseXChomper = view.columnFromX(x);
-		int caseYChomper = view.lineFromY(y);
-		ArrayList<Coordinates> zone = new ArrayList<>();
-		for (int i = -1; i <= 1; i++) {
-			for (int j = -1; j <= 1; j++) {
-				if (caseXChomper + i >= 0 && caseXChomper + i <= view.getLength() && caseYChomper + j >= 0
-						&& caseYChomper + j <= view.getWidth()) {
-					zone.add(new Coordinates(caseXChomper + i, caseYChomper + j));
-				}
+
+	private ArrayList<Cell> zone(SimpleGameData dataBord) {
+		ArrayList<Cell> cells = new ArrayList<>();
+		for (int i = 0; i < 2; i++) {
+
+			Cell cell = dataBord.getCell(getCaseJ(), getCaseI() + i);
+
+			if (cell != null) {
+				cells.add(cell);
 			}
 		}
 
-		return zone;
+		return cells;
 	}
 
-	private ArrayList<Entities> detect(BordView view, ArrayList<Zombie> myZombies) {
-		ArrayList<Coordinates> chomper = this.zone(view);
-		ArrayList<Entities> Lz = new ArrayList<>();
-		for (Entities z : myZombies) {
-			Coordinates zombie = z.getCase();
-			for (Coordinates c : chomper) {
-				if (zombie.equals(c)) {
-					Lz.add(z);
-				}
+	private ArrayList<Zombie> detect(ArrayList<Cell> cells) {
+		ArrayList<Zombie> zombies = new ArrayList<>();
+
+		for (Cell c : cells) {
+			ArrayList<Zombie> lstz = c.getEntitiesInCell();
+
+			if (!lstz.isEmpty()) {
+				zombies.add(Collections.max(lstz));
+				break;
 			}
 		}
-		return Lz;
+
+		return zombies;
 	}
 
 	@Override
@@ -63,44 +68,51 @@ public class Chomper extends Plant{
 		return super.toString() + "--" + name;
 	}
 	
-	private void activation() {
-		if (activate == false) {
-			activate = true;
+	private void startDelay() {
+		if(delayAttack.isReset()) {
+			delayAttack.start();
 		}
 	}
-	
+
 	@Override
-	public void action(ArrayList<Projectile> myBullet, BordView view, ArrayList<Zombie> myZombies, SimpleGameData dataBord) {
+	public void action(ArrayList<Projectile> myBullet, BordView view, ArrayList<Zombie> myZombies,
+			SimpleGameData dataBord) {
+
 		if (this.readyToshot()) {
-			activation();
-		}
+			eating = false;
+			ArrayList<Zombie> zombie = this.detect(this.zone(dataBord));
+			
+			if (!zombie.isEmpty()) {
+				startDelay();
+				
+				if (delayAttack.asReachTimer(1)) {
 
-		if (activate) {
-			ArrayList<Entities> lz = this.detect(view, myZombies);
-
-			if (!lz.isEmpty()) {
-				for (Entities z : lz) {
-					z.takeDmg(1800);
+					zombie.get(0).setLife(1800);
+					eating = true;
+					resetAS();
 				}
-
-				this.life = 0;
 			}
 		}
 
-		this.incAS();
+		incAS();
+
 	}
 
 	@Override
 	public Plant createAndDrawNewPlant(SimpleGameView view, ApplicationContext context, int x, int y) {
-		view.drawChomper(context, x,  y, color);
-		
+		view.drawChomper(context, x, y, eatingColor);
+
 		return new Chomper(x, y);
-		
+
 	}
 
 	@Override
 	public void draw(SimpleGameView view, Graphics2D graphics, int x, int y) {
-		view.drawChomper(graphics, x,  y, color);
+		if (eating) {
+			view.drawChomper(graphics, x, y, eatingColor);
+		} else {
+			view.drawChomper(graphics, x, y, notEatingColor);
+		}
 	}
 
 }
