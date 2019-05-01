@@ -153,7 +153,7 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie,
 	}
 
 	public boolean isEatingBrain(int xOrigin, int squareSize) {
-		return x < xOrigin - squareSize/2; 
+		return x < xOrigin - squareSize; 
 	}
 	
 	public boolean soonEatingBrain(int xOrigin, int squareSize) {
@@ -235,15 +235,18 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie,
 			StringBuilder str) {
 		for(LawnMower l : myLawnMower) {
 			if(this.hit(l)) {
-				this.stop();
-				l.go();
+				if(!(l.isMoving())){
+					l.go();
+				}
+				life=0;
+				l.setLife(100000);
 			}
 		}
 	}
 
 	public static void ZCheckConflict(ArrayList<Zombie> myZombies, ArrayList<Projectile> myBullet,
 			ArrayList<Plant> myPlants,ArrayList<LawnMower> myLawnMower, DeadPool deadPoolE, BordView view, SimpleGameData data, StringBuilder str) {
-		LawnMower.hasToDie(myLawnMower, deadPoolE, data);
+		LawnMower.hasToDie(myLawnMower, deadPoolE, data, view);
 		Plant.hasToDie(deadPoolE, myPlants, myZombies, data); //gere les mort si il n'y a aucun zombie sur le plateau
 		for (Zombie z : myZombies) {
 			z.go();

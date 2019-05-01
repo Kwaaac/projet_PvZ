@@ -261,10 +261,6 @@ public class SimpleGameData {
 		for (IPlant p : myPlants) {
 			p.action(myBullet, view, myZombies, this);
 		}
-		
-		for (LawnMower l : myLawnMower) {
-			l.tondeuse(view, this);
-		}
 
 	}
 
@@ -541,7 +537,7 @@ public class SimpleGameData {
 					}
 				}
 
-				myZombies.add(zombieAvailable.get(selecteur).createAndDrawNewZombie(view, context, x, y));
+				myZombies.add(zombieAvailable.get(selecteur).createAndDrawNewZombie(view, context, 500, y));
 				str.append("new " + zombieAvailable.get(selecteur) + new SimpleDateFormat("hh:mm:ss").format(new Date())
 						+ ")\n");
 

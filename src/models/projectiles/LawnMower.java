@@ -58,7 +58,7 @@ public class LawnMower extends Projectile {
 	}
 	
 	public void go() {
-		this.setSpeed(40.0);
+		this.setSpeed(20.0);
 	}
 	
 	public boolean outBoard(BordView view,SimpleGameData dataBord) {
@@ -68,23 +68,10 @@ public class LawnMower extends Projectile {
 		return x > (xOrigin + (squareSize * dataBord.getNbColumns()));
 	}
 	
-	public void tondeuse(BordView view,SimpleGameData dataBord) {
-		if(!(this.outBoard(view, dataBord))) {
-			ArrayList<Entities> le = this.detect(dataBord);
-			for(Entities e : le) {
-				if(this.hit(e)) {
-					this.mortalKombat(e);
-					life = 100000;
-				}
-			}
-		}else {
-		life = 0;
-		}
-	}
-	
-	public static void hasToDie(ArrayList<LawnMower> lm,DeadPool DPe, SimpleGameData data) {
+	public static void hasToDie(ArrayList<LawnMower> lm,DeadPool DPe, SimpleGameData data,BordView view) {
 		for(LawnMower l : lm) {
-				if (l.isDead()) {
+				if (l.outBoard(view, data)) {
+					System.out.println("I'm free");
 					if(data.getCell(l.getCaseJ(), l.getCaseI()) != null) {
 					data.getCell(l.getCaseJ(), l.getCaseI()).removeEntity(l);
 					}
