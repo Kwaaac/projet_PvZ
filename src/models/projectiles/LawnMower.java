@@ -64,7 +64,6 @@ public class LawnMower extends Projectile {
 	public boolean outBoard(BordView view,SimpleGameData dataBord) {
 		int xOrigin = view.getXOrigin();
 		int squareSize = BordView.getSquareSize();
-		System.out.println(x+"--"+(xOrigin + squareSize * dataBord.getNbColumns())+(x > (xOrigin + squareSize * dataBord.getNbColumns())));
 		
 		return x > (xOrigin + (squareSize * dataBord.getNbColumns()));
 	}
@@ -73,7 +72,7 @@ public class LawnMower extends Projectile {
 		if(!(this.outBoard(view, dataBord))) {
 			ArrayList<Entities> le = this.detect(dataBord);
 			for(Entities e : le) {
-				if(this.hit(e) && this.getSpeed() < 0) {
+				if(this.hit(e)) {
 					this.mortalKombat(e);
 					life = 100000;
 				}
