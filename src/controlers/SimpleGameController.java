@@ -73,7 +73,7 @@ public class SimpleGameController {
 		ArrayList<LawnMower> myLawnMower = new ArrayList<>();
 
 		Zombie.getSizeOfZombie();
-		Bullet.getSizeOfProjectile();
+		Pea.getSizeOfProjectile();
 
 		StringBuilder str = new StringBuilder("Journal de bord\n-+-+-+-+-+-+-+-+-+-\n");
 

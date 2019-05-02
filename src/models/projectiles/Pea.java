@@ -4,12 +4,12 @@ import java.awt.Graphics2D;
 import views.SimpleGameView;
 
 
-public class Bullet extends Projectile {
+public class Pea extends Projectile {
 
-	private final String name = "Bullet";
-	private final String color = "#0830b2";
+	private final String name = "Pea";
+	private final String color = "#2DFF54";
 	
-	public Bullet(float x, float y) {
+	public Pea(float x, float y) {
 		super(x, y, 75, 1 , 20.0);
 	}
 	
@@ -25,9 +25,11 @@ public class Bullet extends Projectile {
 
 	@Override
 	public void draw(SimpleGameView view, Graphics2D graphics, float x, float y) {
-		view.drawBullet(graphics, x, y, color);
+		view.drawPea(graphics, x, y, color);
 	}
 
-	
-
+	@Override
+	public boolean isSlowing() {
+		return false;
+	}
 }

@@ -35,7 +35,7 @@ public class FlagZombie extends Zombie{
 	}
 	
 	public void go() {
-		super.setSpeed((float) -0.95);
+		super.go((float) -0.95);
 	}
 
 	@Override

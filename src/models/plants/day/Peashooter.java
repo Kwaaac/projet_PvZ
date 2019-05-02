@@ -8,7 +8,7 @@ import models.Cell;
 import models.Entities;
 import models.SimpleGameData;
 import models.plants.Plant;
-import models.projectiles.Bullet;
+import models.projectiles.Pea;
 import models.projectiles.Projectile;
 import models.zombies.Zombie;
 import views.BordView;
@@ -62,7 +62,7 @@ public class Peashooter extends Plant{
 	@Override
 	public void action(ArrayList<Projectile> myBullet, BordView view, ArrayList<Zombie> myZombies, SimpleGameData dataBord) {
 		if(this.readyToshot(dataBord.getLineCell(this.getCaseI(), this.getCaseJ()))) {
-			myBullet.add(new Bullet(super.getX() + super.getSizeOfPlant(), super.getY() + (super.getSizeOfPlant() / 2) - 10));
+			myBullet.add(new Pea(super.getX() + super.getSizeOfPlant(), super.getY() + (super.getSizeOfPlant() / 2) - 10));
 			
 			this.resetAS();
 		}

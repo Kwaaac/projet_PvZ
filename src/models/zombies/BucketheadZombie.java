@@ -37,7 +37,7 @@ public class BucketheadZombie extends Zombie {
 	}
 	
 	public void go() {
-		super.setSpeed((float) -0.7);
+		super.go((float) -0.7);
 	}
 
 	@Override

@@ -14,7 +14,7 @@ public class ConeheadZombie extends Zombie {
 	}
 
 	public ConeheadZombie() {
-		super(50, 50, 100, 560, -0.95);
+		this(50, 50);
 	}
 
 	@Override
@@ -36,7 +36,7 @@ public class ConeheadZombie extends Zombie {
 	}
 	
 	public void go() {
-		super.setSpeed((float) -0.95);
+		super.go((float) -0.95);
 	}
 
 	@Override
