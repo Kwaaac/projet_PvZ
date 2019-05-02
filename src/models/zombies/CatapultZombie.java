@@ -38,7 +38,7 @@ public class CatapultZombie extends Zombie {
 	}
 	
 	public void go() {
-		super.setSpeed((float) -0.93);
+		super.go((float) -0.93);
 	}
 	
 	@Override

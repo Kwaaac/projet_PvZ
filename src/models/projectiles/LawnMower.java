@@ -108,6 +108,11 @@ public class LawnMower extends Projectile {
 		view.drawLawnMower(graphics, x, y, color);
 	}
 
+	@Override
+	public boolean isSlowing() {
+		return false;
+	}
+
 	
 
 }

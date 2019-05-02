@@ -4,10 +4,10 @@ import java.awt.Graphics2D;
 import java.util.ArrayList;
 
 import fr.umlv.zen5.ApplicationContext;
-import models.Entities;
+import models.Cell;
 import models.SimpleGameData;
 import models.plants.Plant;
-import models.projectiles.Bullet;
+import models.projectiles.FrozenPea;
 import models.projectiles.Projectile;
 import models.zombies.Zombie;
 import views.BordView;
@@ -18,12 +18,12 @@ public class SnowPea extends Plant{
 	private final String color = "#33FFEA";
 	
 	public SnowPea(int x, int y) {
-		super(x, y, 0, 300, 5100, 175, "fast");
+		super(x, y, 0, 300, 5000, 0, "free");
 		shootBar = shootBarMax;			// La plante tire dès qu'elle est posée
 	}
 	
 	public SnowPea() {
-		super(-10, -10, 0, 1, 1, 175, "fast");
+		this(-10, -10);
 	}
 	
 	@Override
@@ -45,16 +45,27 @@ public class SnowPea extends Plant{
 	public void draw(SimpleGameView view, Graphics2D graphics, int x, int y) {
 		view.drawSnowPea(graphics, x, y, color);
 	}
-
+	
+	public boolean readyToshot(ArrayList<Cell> cells) {
+		for(Cell c : cells) {
+			if(c.isThereEntity()) {
+				return shootBar >= shootBarMax;
+			}
+		}
+		
+		return false;
+	}
+	
 	@Override
 	public void action(ArrayList<Projectile> myBullet, BordView view, ArrayList<Zombie> myZombies, SimpleGameData dataBord) {
-		if(this.readyToshot()) {
-			myBullet.add(new Bullet(super.getX() + super.getSizeOfPlant(), super.getY() + (super.getSizeOfPlant() / 2) - 10));
+		if(this.readyToshot(dataBord.getLineCell(this.getCaseI(), this.getCaseJ()))) {
+			myBullet.add(new FrozenPea(super.getX() + super.getSizeOfPlant(), super.getY() + (super.getSizeOfPlant() / 2) - 10));
 			
 			this.resetAS();
 		}
 		
 		this.incAS();
 	}
+
 
 }

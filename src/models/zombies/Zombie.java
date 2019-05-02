@@ -6,6 +6,7 @@ import java.util.Collection;
 import java.util.Objects;
 
 import models.Cell;
+import models.Chrono;
 import models.Coordinates;
 import models.DeadPool;
 import models.Entities;
@@ -22,11 +23,14 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie,
 	private double speed;
 	private final static int sizeOfZombie = 75;
 
-	protected final int shootBarMax;
+	protected int shootBarMax;
 	protected long shootBar;
 	protected long shootTime;
 
-	// Liste de nom pour les zombies, tous diff�rents pour que chaque zombie soit unique (200 pseudos provenant du TP 10 de java)
+	protected Chrono slowedTime = new Chrono();
+
+	// Liste de nom pour les zombies, tous diff�rents pour que chaque zombie soit
+	// unique (200 pseudos provenant du TP 10 de java)
 	protected static ArrayList<String> zombieNames = new ArrayList<>(Arrays.asList("PortCharlotte472", "Birdseye722",
 			"Freeville753", "Kamas397", "PrincetonJunction132", "Edroy498", "Marshallberg573", "Anderson828",
 			"NewRome174", "Caneyville505", "PointIsabel867", "Exell248", "Jacksonburg582", "PleasantPrairie521",
@@ -59,8 +63,7 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie,
 		this.speed = -1.7;
 		this.shootBarMax = (int) (speed * -7500);
 		shootTime = System.currentTimeMillis();
-		
-
+		slowedTime.steady();
 	}
 
 	public float getX() {
@@ -109,8 +112,21 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie,
 		return speed;
 	}
 
-	public void setSpeed(float x) {
-		speed = x;
+	public void go(float x) {
+		if (slowedTime.isReset()) {
+			speed = x;
+		} else {
+			speed = x / 2;
+			shootBarMax = (int) (speed * -7500);
+			slowedTime.pause();
+			System.out.println(slowedTime.getDureeSec());
+			slowedTime.resume();
+			
+			if (slowedTime.asReachTimer(6)) {
+				slowedTime.steady();
+			}
+		}
+
 	}
 
 	public static int getSizeOfZombie() {
@@ -119,10 +135,6 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie,
 
 	public void stop() {
 		this.speed = 0;
-	}
-
-	public void go() {
-		speed = -1.7;
 	}
 
 	public void SpeedBoostON() {
@@ -147,21 +159,20 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie,
 		return shootBar >= shootBarMax;
 	}
 
-
 	public Coordinates hitBox() {
 		return new Coordinates((int) x, (int) x + sizeOfZombie);
 	}
 
 	public boolean isEatingBrain(int xOrigin, int squareSize) {
-		return x < xOrigin - squareSize; 
+		return x < xOrigin - squareSize;
 	}
-	
+
 	public boolean soonEatingBrain(int xOrigin, int squareSize) {
-		return (xOrigin - squareSize < x && x < xOrigin) ; 
+		return (xOrigin - squareSize < x && x < xOrigin);
 	}
-	
-	public int whereIsHeEatingBrain(int xOrigin, int squareSize,float y, int Yorigin ,BordView view) {
-		if(this.soonEatingBrain(xOrigin, squareSize)) {
+
+	public int whereIsHeEatingBrain(int xOrigin, int squareSize, float y, int Yorigin, BordView view) {
+		if (this.soonEatingBrain(xOrigin, squareSize)) {
 			return view.indexFromReaCoord(y, Yorigin);
 		}
 		return -1;
@@ -186,8 +197,9 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie,
 	 */
 
 	public void conflictBvZ(DeadPool DPe, ArrayList<Projectile> Le, SimpleGameData data) {
-		for (IEntite e : Le) {
+		for (Projectile e : Le) {
 			if (this.hit(e) && !(e.isInConflict())) {
+				this.slowed(e.isSlowing());
 				e.setConflictMode(true);
 				this.mortalKombat(e);
 				if (e.isDead()) {
@@ -227,27 +239,28 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie,
 				str.append(p + "meurt\n");
 				deadPoolE.add(p);
 				data.getCell(view.lineFromY(p.getY()), view.columnFromX(p.getX())).removePlant();
-			} 
+			}
 		}
 	}
-	
-	public void conflictLvZ(DeadPool deadPoolE, ArrayList<LawnMower> myLawnMower , BordView view, SimpleGameData data,
+
+	public void conflictLvZ(DeadPool deadPoolE, ArrayList<LawnMower> myLawnMower, BordView view, SimpleGameData data,
 			StringBuilder str) {
-		for(LawnMower l : myLawnMower) {
-			if(this.hit(l)) {
-				if(!(l.isMoving())){
+		for (LawnMower l : myLawnMower) {
+			if (this.hit(l)) {
+				if (!(l.isMoving())) {
 					l.go();
 				}
-				life=0;
+				life = 0;
 				l.setLife(100000);
 			}
 		}
 	}
 
 	public static void ZCheckConflict(ArrayList<Zombie> myZombies, ArrayList<Projectile> myBullet,
-			ArrayList<Plant> myPlants,ArrayList<LawnMower> myLawnMower, DeadPool deadPoolE, BordView view, SimpleGameData data, StringBuilder str) {
+			ArrayList<Plant> myPlants, ArrayList<LawnMower> myLawnMower, DeadPool deadPoolE, BordView view,
+			SimpleGameData data, StringBuilder str) {
 		LawnMower.hasToDie(myLawnMower, deadPoolE, data, view);
-		Plant.hasToDie(deadPoolE, myPlants, myZombies, data); //gere les mort si il n'y a aucun zombie sur le plateau
+		Plant.hasToDie(deadPoolE, myPlants, myZombies, data); // gere les mort si il n'y a aucun zombie sur le plateau
 		for (Zombie z : myZombies) {
 			z.go();
 			z.incAS();
@@ -261,6 +274,12 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie,
 		}
 	}
 
+	public void slowed(Boolean slowing) {
+		if (slowing) {
+				slowedTime.start();
+		}
+	}
+
 	public abstract Integer getProb(int difficulty);
 
 	@Override
@@ -270,11 +289,13 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie,
 
 	@Override
 	public boolean equals(Object o) {
-		if (!(o instanceof Zombie)){ return false; }
+		if (!(o instanceof Zombie)) {
+			return false;
+		}
 		Zombie z = (Zombie) o;
 		return name.equals(z.name);
 	}
-	
+
 	@Override
 	public int compareTo(Zombie z) {
 		return this.life.compareTo(z.life);

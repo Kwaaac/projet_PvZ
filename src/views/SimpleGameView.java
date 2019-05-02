@@ -445,12 +445,18 @@ public abstract class SimpleGameView implements GameView {
 		graphics.fill(new Ellipse2D.Float(x, y, sizeOfZombie, sizeOfZombie));
 	}
 
-	/*-----------------------------Bullets------------------------------*/
+	/*-----------------------------Projectiles------------------------------*/
 
 	int sizeOfProjectile = Projectile.getSizeOfProjectile();
 
 	@Override
-	public void drawBullet(Graphics2D graphics, float x, float y, String color) {
+	public void drawPea(Graphics2D graphics, float x, float y, String color) {
+		graphics.setColor(Color.decode(color));
+		graphics.fill(new Ellipse2D.Float(x, y, sizeOfProjectile, sizeOfProjectile));
+	}
+	
+	@Override
+	public void drawFrozenPea(Graphics2D graphics, float x, float y, String color) {
 		graphics.setColor(Color.decode(color));
 		graphics.fill(new Ellipse2D.Float(x, y, sizeOfProjectile, sizeOfProjectile));
 	}

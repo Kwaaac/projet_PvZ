@@ -4,7 +4,7 @@ import models.Coordinates;
 import models.Entities;
 import models.MovingElement;
 
-public abstract class Projectile extends Entities implements MovingElement{
+public abstract class Projectile extends Entities implements MovingElement, IProjectile{
 	private final String type = "Projectile";
 	private double speed;
 	private static final int sizeOfProjectile = 25;

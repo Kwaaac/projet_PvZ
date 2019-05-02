@@ -472,10 +472,16 @@ public interface GameView {
 	
 	/*-----------------------------Bullets------------------------------*/
 
-	void drawBullet(Graphics2D graphics, float x, float y, String s);
+	void drawPea(Graphics2D graphics, float x, float y, String s);
 	
-	public default void drawBullet(ApplicationContext context, float x, float y, String s) {
-		context.renderFrame(graphics -> drawOnlyOneCell(graphics, x, y, s));
+	public default void drawPea(ApplicationContext context, float x, float y, String s) {
+		context.renderFrame(graphics -> drawPea(graphics, x, y, s));
+	}
+	
+	void drawFrozenPea(Graphics2D graphics, float x, float y, String s);
+	
+	public default void drawFrozenPea(ApplicationContext context, float x, float y, String s) {
+		context.renderFrame(graphics -> drawFrozenPea(graphics, x, y, s));
 	}
 	
 	/*-----------------------------Miscellaneous------------------------------*/

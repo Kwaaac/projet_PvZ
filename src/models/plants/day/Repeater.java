@@ -10,7 +10,7 @@ import models.Chrono;
 import models.Entities;
 import models.SimpleGameData;
 import models.plants.Plant;
-import models.projectiles.Bullet;
+import models.projectiles.Pea;
 import models.projectiles.Projectile;
 import models.zombies.Zombie;
 import views.BordView;
