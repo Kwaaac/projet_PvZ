@@ -16,47 +16,46 @@ import models.zombies.Zombie;
 import views.BordView;
 import views.SimpleGameView;
 
-public class Repeater extends Plant{
+public class Repeater extends Plant {
 	private final String name = "Repeater";
 	private final String color = "#FFFFFF";
 	private Chrono delayAttack = new Chrono();
-	
+
 	public Repeater(int x, int y) {
 		super(x, y, 0, 300, 5100, 0, "free");
-		
+
 		delayAttack.steady();
-		shootBar = shootBarMax;			// La plante tire dès qu'elle est posée
+		shootBar = shootBarMax; // La plante tire dès qu'elle est posée
 	}
-	
-	public Repeater() { 
+
+	public Repeater() {
 		this(-10, -10);
 	}
-	
+
 	@Override
 	public String toString() {
-		return super.toString() + "--" + name; 
+		return super.toString() + "--" + name;
 	}
-	
+
 	int sizeOfPlant = super.getSizeOfPlant();
-	
+
 	@Override
 	public boolean readyToshot() {
-				return shootBar >= shootBarMax;
+		return shootBar >= shootBarMax;
 	}
-	
+
 	@Override
 	public Plant createAndDrawNewPlant(SimpleGameView view, ApplicationContext context, int x, int y) {
-		view.drawRepeater(context, x,  y, color);
-		
+		view.drawRepeater(context, x, y, color);
+
 		return new Repeater(x, y);
 	}
-	
+
 	@Override
 	public void draw(SimpleGameView view, Graphics2D graphics, int x, int y) {
 		view.drawRepeater(graphics, x, y, color);
 	}
-	
-	
+
 	private ArrayList<Cell> zone(SimpleGameData dataBord) {
 		ArrayList<Cell> cells = new ArrayList<>();
 		for (int i = -1; i < 2; i++) {
@@ -78,10 +77,10 @@ public class Repeater extends Plant{
 			ArrayList<Zombie> lstz = c.getEntitiesInCell();
 
 			if (!lstz.isEmpty()) {
-				for(Zombie z: lstz) {
+				for (Zombie z : lstz) {
 					zombies.add(z);
 				}
-				
+
 			}
 		}
 
@@ -89,25 +88,28 @@ public class Repeater extends Plant{
 	}
 
 	private void startDelay() {
-		if(delayAttack.isReset()) {
+		if (delayAttack.isReset()) {
 			delayAttack.start();
 		}
 	}
-	
+
 	@Override
-	public void action(ArrayList<Projectile> myBullet, BordView view, ArrayList<Zombie> myZombies, SimpleGameData dataBord) {
-		
+	public void action(ArrayList<Projectile> myBullet, BordView view, ArrayList<Zombie> myZombies,
+			SimpleGameData dataBord) {
+
 		if (readyToshot()) {
 			ArrayList<Zombie> zombie = this.detect(this.zone(dataBord));
-			
+
 			if (!zombie.isEmpty()) {
 				startDelay();
-				
+
 				if (delayAttack.asReachTimer(2)) {
-					
-					zombie.get(0).setLife(1800);
-					
-					this.setLife(life);
+
+					for (Zombie z : zombie) {
+						z.setLife(1800);
+
+						this.setLife(life);
+					}
 				}
 			}
 		}
