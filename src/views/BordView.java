@@ -87,7 +87,7 @@ public class BordView extends SimpleGameView {
 	}
 
 	protected RectangularShape drawCell(int i, int j) {
-		return new Rectangle2D.Float(xFromI(j) + 2, yFromJ(i) + 2, squareSize - 4, squareSize - 4);
+		return new Rectangle2D.Float(xFromI(j), yFromJ(i), squareSize, squareSize);
 	}
 
 	public Plant[] getSelectedPlants() {
@@ -105,30 +105,43 @@ public class BordView extends SimpleGameView {
 	
 	
 	public void draw(Graphics2D graphics, SimpleGameData data) {
-		graphics.setColor(Color.decode("#A9A9A9"));
-		for (int i = 0; i <= data.getNbLines(); i++) {
-			graphics.setStroke(new BasicStroke(4));
-			graphics.draw(new Line2D.Float(super.getXOrigin(), super.getYOrigin() + i * squareSize,
-					super.getXOrigin() + super.getWidth(), super.getYOrigin() + i * squareSize));
-		}
+		String map = SimpleGameData.getMap();
 
-		for (int i = 0; i <= data.getNbColumns(); i++) {
-			graphics.draw(new Line2D.Float(super.getXOrigin() + i * squareSize, super.getYOrigin(),
-					super.getXOrigin() + i * squareSize, super.getYOrigin() + super.getLength()));
-		}
-
+		
+		int compteur = 0;
 		for (int i = 0; i < data.getNbLines(); i++) {
+			if (i%2 == 0) {compteur=1;}
+			else {compteur=0;}
 			for (int j = 0; j < data.getNbColumns(); j++) {
-					graphics.setColor(Color.GREEN.darker());
-					graphics.fill(drawCell(i, j));
+				if (compteur%2 == 0) {
+					if (map == "Pool" && (i == 2 || i == 3)) {
+						graphics.setColor(Color.BLUE.darker());
+						graphics.fill(drawCell(i, j));
+					}
+					else {
+						graphics.setColor(Color.decode("#51FF00"));
+						graphics.fill(drawCell(i, j));
+					}
+				}
+				else {
+					if (map == "Pool" && (i == 2 || i == 3)) {
+						graphics.setColor(Color.BLUE.darker());
+						graphics.fill(drawCell(i, j));
+					}
+					else {
+						graphics.setColor(Color.decode("#45D900"));
+						graphics.fill(drawCell(i, j));
+					}
+				}
+				compteur+=1;
 			}
 		}
 
-		graphics.setColor(Color.LIGHT_GRAY);
-		graphics.fill(new Rectangle2D.Float(super.getXOrigin() + super.getWidth(), super.getYOrigin(),
+		graphics.setColor(Color.decode("#cbd9ef"));
+		graphics.fill(new Rectangle2D.Float(super.getXOrigin() + super.getWidth(), 0,
 				super.getXOrigin() + super.getWidth(), super.getLength()));
 		
-		graphics.fill(new Rectangle2D.Float(super.getXOrigin(), 0, super.getXOrigin() + super.getWidth(), 148));
+		graphics.fill(new Rectangle2D.Float(super.getXOrigin(), 0, super.getXOrigin() + super.getWidth(), 150));
 
 		ArrayList<Plant> myPlants = data.getMyPlants();
 

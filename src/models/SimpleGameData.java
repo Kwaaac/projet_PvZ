@@ -506,7 +506,7 @@ public class SimpleGameData {
 
 			int endWave = 0;
 			int x = view.getXOrigin() + view.getWidth();
-			int y = view.getYOrigin() + dataBord.RandomPosGenerator(5) * sqrS + (sqrS / 2)
+			int y = view.getYOrigin() + dataBord.RandomPosGenerator(dataBord.getNbLines()) * sqrS + (sqrS / 2)
 					- (Zombie.getSizeOfZombie() / 2);
 			ArrayList<Zombie> zombieAvailable = new ArrayList<>();
 			ArrayList<Integer> probList = new ArrayList<>();
@@ -572,7 +572,7 @@ public class SimpleGameData {
 			Zombie z = entry.getKey();
 			Integer spawn = entry.getValue();
 
-			int y = view.getYOrigin() + dataBord.RandomPosGenerator(5) * sqrS + (sqrS / 2)
+			int y = view.getYOrigin() + dataBord.RandomPosGenerator(dataBord.getNbLines()) * sqrS + (sqrS / 2)
 					- (Zombie.getSizeOfZombie() / 2);
 
 			if (spawn == 0) {
