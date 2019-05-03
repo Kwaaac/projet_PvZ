@@ -17,7 +17,7 @@ import fr.umlv.zen5.ScreenInfo;
 
 import models.DeadPool;
 import models.SimpleGameData;
-
+import models.map.Map;
 import models.plants.*;
 import models.plants.day.*;
 import models.plants.night.*;
@@ -37,7 +37,7 @@ public class SimpleGameController {
 	static void simpleGame(ApplicationContext context) {
 		ArrayList<Plant> selectedPlant = MenuController.startGame(context);
 		
-		System.out.println(selectedPlant);
+		ArrayList<Integer> mapProperties = Map.getMapProperties();
 		
 		ScreenInfo screenInfo = context.getScreenInfo();
 		screenInfo.getWidth();
@@ -52,7 +52,7 @@ public class SimpleGameController {
 		superWaveZombie.put(new NormalZombie(), 30);
 		
 		
-		SimpleGameData dataBord = new SimpleGameData(5, 8);
+		SimpleGameData dataBord = new SimpleGameData(mapProperties[0], mapProperties[1]);
 		SimpleGameData dataSelect = new SimpleGameData(selectedPlant.size(), 1);
 
 		dataBord.setRandomMatrix();
@@ -60,7 +60,7 @@ public class SimpleGameController {
 		int yOrigin = 150;
 		int xOrigin = 450;
 
-		BordView view = BordView.initGameGraphics(xOrigin, yOrigin, 900, dataBord);
+		BordView view = BordView.initGameGraphics(mapProperties[2], mapProperties[3], mapProperties[5], dataBord);
 		int squareSize = BordView.getSquareSize();
 		SelectBordView plantSelectionView = SelectBordView.initGameGraphics(0, yOrigin, 900, dataSelect, selectedPlant);
 		

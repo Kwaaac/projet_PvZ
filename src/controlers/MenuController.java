@@ -16,7 +16,7 @@ import views.SelectBordView;
 
 public class MenuController {
 	public static ArrayList<Plant> startGame(ApplicationContext context) {
-
+		
 		ScreenInfo screenInfo = context.getScreenInfo();
 		int width = (int) screenInfo.getWidth();
 		int height = (int) screenInfo.getHeight();
