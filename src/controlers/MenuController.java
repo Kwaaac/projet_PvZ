@@ -95,17 +95,17 @@ public class MenuController {
 			case "mapSelection":
 				switch (Y) {
 				case 0:
-					SimpleGameData.setMap("garden");
+					SimpleGameData.setMap("Day");
 					choice = "plantSelection";
 					break;
 
 				case 1:
-					SimpleGameData.setMap("night");
+					SimpleGameData.setMap("Night");
 					choice = "plantSelection";
 					break;
 
 				case 2:
-					SimpleGameData.setMap("pool");
+					SimpleGameData.setMap("Pool");
 					choice = "plantSelection";
 					break;
 				}

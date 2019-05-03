@@ -37,8 +37,6 @@ public class SimpleGameController {
 	static void simpleGame(ApplicationContext context) {
 		ArrayList<Plant> selectedPlant = MenuController.startGame(context);
 		
-		ArrayList<Integer> mapProperties = Map.getMapProperties();
-		
 		ScreenInfo screenInfo = context.getScreenInfo();
 		screenInfo.getWidth();
 		
@@ -52,7 +50,7 @@ public class SimpleGameController {
 		superWaveZombie.put(new NormalZombie(), 30);
 		
 		
-		SimpleGameData dataBord = new SimpleGameData(mapProperties[0], mapProperties[1]);
+		SimpleGameData dataBord = Map.dataBord();
 		SimpleGameData dataSelect = new SimpleGameData(selectedPlant.size(), 1);
 
 		dataBord.setRandomMatrix();
@@ -60,7 +58,7 @@ public class SimpleGameController {
 		int yOrigin = 150;
 		int xOrigin = 450;
 
-		BordView view = BordView.initGameGraphics(mapProperties[2], mapProperties[3], mapProperties[5], dataBord);
+		BordView view = Map.view();
 		int squareSize = BordView.getSquareSize();
 		SelectBordView plantSelectionView = SelectBordView.initGameGraphics(0, yOrigin, 900, dataSelect, selectedPlant);
 		

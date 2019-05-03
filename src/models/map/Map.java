@@ -1,41 +1,54 @@
 package models.map;
 
+
 import java.util.ArrayList;
 
+import models.SimpleGameData;
+import views.BordView;
+
 public abstract class Map {
-	private final ArrayList<Integer> MapProperties = new ArrayList<Integer>();
-	private final int column;
-	private final int line;
-	private final int xOrigine;
-	private final int yOrigine;
-	private final int width;
-	private final String backgroundColor;
+	private final int column = 8;
 	
 
-
-	public Map(int line, int xOrigine, int yOrigine, int width, String backgroundColor) {
-		this.column = 8;
-		this.line = line;
-		this.xOrigine = xOrigine;
-		this.yOrigine = yOrigine;
-		this.width = width;
-		this.backgroundColor = backgroundColor;
+	public int getColumn() {
+		return column;
 	}
 	
-
-	public ArrayList<Integer> stuffing(String s) {
-		MapProperties.add(column);
-		MapProperties.add(line);
-		MapProperties.add(xOrigine);
-		MapProperties.add(yOrigine);
-		MapProperties.add(width);
-		return MapProperties;
+	public static SimpleGameData dataBord() {
+		ArrayList<Integer> mapProperties = null;
+		
+		String x = SimpleGameData.getMap();
+		switch (x) {
+			case "Day":
+				mapProperties = Day.getMapProperties();
+				break;
+			case "Night":
+				mapProperties = Night.getMapProperties();
+				break;
+			case "Pool":
+				mapProperties = Pool.getMapProperties();
+				break;
+		}
+		
+		return new SimpleGameData(mapProperties.get(0), mapProperties.get(1));
 	}
 	
-	public ArrayList<Integer> getMapProperties() {
-		return MapProperties;
+	public static BordView view() {
+		ArrayList<Integer> mapProperties = null;
+		String x = SimpleGameData.getMap();
+		switch (x) {
+			case "Day":
+				mapProperties = Day.getMapProperties();
+				break;
+			case "Night":
+				mapProperties = Night.getMapProperties();
+				break;
+			case "Pool":
+				mapProperties = Pool.getMapProperties();
+				break;
+		}
+		System.out.println(mapProperties);
+		return BordView.initGameGraphics(mapProperties.get(2),mapProperties.get(3),mapProperties.get(4), dataBord());
 	}
-	
-	
 	
 }
