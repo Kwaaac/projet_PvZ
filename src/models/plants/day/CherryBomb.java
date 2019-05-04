@@ -51,12 +51,6 @@ public class CherryBomb extends Plant {
 		for (Coordinates c : zone) {
 			Cell cell = dataBord.getCell(c.getJ(), c.getI());
 			
-//			System.out.println(c);
-//			System.out.println(cell != null);
-//			if(cell != null) {
-//				System.out.println(cell.isThereZombies());
-//				System.out.println("\n");
-//			}
 			if(cell != null && cell.isThereZombies()) {
 				for(Entities e: cell.getZombiesInCell()) {
 					Lz.add(e);
@@ -82,8 +76,6 @@ public class CherryBomb extends Plant {
 			}
 			
 			this.life = 0;
-			System.out.println(dataBord.getNbLines() + "; " + dataBord.getNbColumns());
-			System.out.println(getCaseJ() + "; " + getCaseI());
 			dataBord.getCell(getCaseJ(), getCaseI()).removePlant();
 		}
 

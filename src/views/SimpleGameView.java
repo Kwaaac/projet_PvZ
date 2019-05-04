@@ -349,7 +349,10 @@ public abstract class SimpleGameView implements GameView {
 	@Override
 	public void drawNewspaperZombie(Graphics2D graphics, float x, float y, String color) {
 		graphics.setColor(Color.decode(color));
-		graphics.fill(new Ellipse2D.Float(x, y, sizeOfZombie, sizeOfZombie));
+		graphics.fill(new Arc2D.Float(x, y, sizeOfZombie, sizeOfZombie, 90, 180, 2));
+		
+		graphics.setColor(Color.decode("#000000"));
+		graphics.fill(new Arc2D.Float(x, y, sizeOfZombie, sizeOfZombie, 90, -180, 2));
 	}
 
 	@Override

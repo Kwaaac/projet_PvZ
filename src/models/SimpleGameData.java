@@ -575,7 +575,7 @@ public class SimpleGameData {
 					zombieAvailable.add(z);
 
 					System.out.println(z);
-					entry.setValue(spawn - 1);
+					
 				}
 			}
 
@@ -588,8 +588,11 @@ public class SimpleGameData {
 						selecteur = i;
 					}
 				}
+				Zombie z = zombieAvailable.get(selecteur);
+				
+				zombieList.put(z, zombieList.get(z) - 1);
 
-				myZombies.add(zombieAvailable.get(selecteur).createAndDrawNewZombie(view, context, x, y));
+				myZombies.add(z.createAndDrawNewZombie(view, context, x, y));
 				str.append("new " + zombieAvailable.get(selecteur) + new SimpleDateFormat("hh:mm:ss").format(new Date())
 						+ ")\n");
 

@@ -9,7 +9,7 @@ import views.SimpleGameView;
 public class NewspaperZombie extends Zombie {
 
 	private final String name = "NewspaperZombie";
-	private final String color = "#000000";
+	private String color = "#FFFFFF";
 	private final int threat = 1;
 	
 	public NewspaperZombie(int x, int y) {
@@ -59,6 +59,7 @@ public class NewspaperZombie extends Zombie {
 		if (this.life <= 200) {
 			setSpeed(-1.70);
 			shootBarMax = (int) (3 * -7500);
+			color = "#000000";
 		}
 		return true;
 	}
