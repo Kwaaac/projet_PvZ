@@ -51,4 +51,9 @@ public class SeaShroom extends Plant {
 		return true;
 	}
 	
+	@Override
+	public boolean canBePlantedOnGrass() {
+		return false;
+	}
+	
 }

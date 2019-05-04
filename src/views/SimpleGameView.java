@@ -192,10 +192,8 @@ public abstract class SimpleGameView implements GameView {
 	@Override
 	public void drawLilyPad(Graphics2D graphics, int x, int y, String color) {
 		graphics.setColor(Color.decode(color));
-		graphics.fill(new Rectangle2D.Float(x, y, sizeOfPlant, sizeOfPlant));
+		graphics.fill(new Ellipse2D.Float(x - 15, y - 15, sizeOfPlant + 30, sizeOfPlant + 30));
 		
-		graphics.setColor(Color.decode("#90D322"));
-		graphics.fill(new Ellipse2D.Float(x + 8, y + 8, sizeOfPlant - 16, sizeOfPlant - 16));
 	}
 	
 	/*-----------------------------Zombies------------------------------*/

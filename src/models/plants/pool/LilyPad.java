@@ -13,10 +13,10 @@ import views.SimpleGameView;
 
 public class LilyPad extends Plant {
 	private final String name = "LilyPad";
-	private final String color = "#FFFFFF";
+	private final String color = "#90D322";
 
 	public LilyPad(int x, int y) {
-		super(x, y, 0, 300, 0, 25, "fast");
+		super(x, y, 0, 300, 0, 0, "free");
 	}
 
 	public LilyPad() {
@@ -51,6 +51,11 @@ public class LilyPad extends Plant {
 	@Override
 	public boolean canBePlantedOnWater() {
 		return true;
+	}
+	
+	@Override
+	public boolean canBePlantedOnGrass() {
+		return false;
 	}
 	
 	@Override 

@@ -45,5 +45,4 @@ public class Cattails extends Plant {
 	public void draw(SimpleGameView view, Graphics2D graphics, int x, int y) {
 		view.drawCattails(graphics, x,  y, color);
 	}
-
 }

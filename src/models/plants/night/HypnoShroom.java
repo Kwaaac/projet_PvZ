@@ -11,7 +11,7 @@ import models.zombies.Zombie;
 import views.BordView;
 import views.SimpleGameView;
 
-public class HypnoShroom extends Plant{
+public class HypnoShroom extends Plant {
 	private final String name = "HypnoShroom";
 	private final String color = "#90D322";
 	
@@ -20,7 +20,7 @@ public class HypnoShroom extends Plant{
 	}
 	
 	public HypnoShroom() {
-		super(-10, -10, 0, 1, 1, 75, "fast");
+		this(-10, -10);
 	}
 	
 	@Override

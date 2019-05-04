@@ -18,11 +18,11 @@ public class WallNut extends Plant {
 	public WallNut(int x, int y) {
 		super(x, y, 0, 1000, 0, 50, "verySlow");
 	}
-	
+
 	public WallNut() {
 		this(-10, -10);
 	}
-	
+
 	int sizeOfPlant = super.getSizeOfPlant();
 
 	@Override
@@ -31,19 +31,21 @@ public class WallNut extends Plant {
 	}
 
 	@Override
-	public void action(ArrayList<Projectile> myBullet, BordView view, ArrayList<Zombie> myZombies, SimpleGameData dataBord) {}
+	public void action(ArrayList<Projectile> myBullet, BordView view, ArrayList<Zombie> myZombies,
+			SimpleGameData dataBord) {
+	}
 
 	@Override
 	public Plant createAndDrawNewPlant(SimpleGameView view, ApplicationContext context, int x, int y) {
-		view.drawWallNut(context, x,  y, color);
-		
+		view.drawWallNut(context, x, y, color);
+
 		return new WallNut(x, y);
-		
+
 	}
 
 	@Override
 	public void draw(SimpleGameView view, Graphics2D graphics, int x, int y) {
-		view.drawWallNut(graphics, x,  y, color);
+		view.drawWallNut(graphics, x, y, color);
 	}
 
 }

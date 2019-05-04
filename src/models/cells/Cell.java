@@ -19,8 +19,15 @@ public abstract class Cell implements ICell {
 	 * Add a plant on the cell
 	 */
 	public boolean addPlant(Plant plant) {
+		if(plantedPlant) {
+			return false;
+		}
+		
+		if(plant.canBePlantedOnGrass()) {
 			plantedPlant = true;
 			return true;
+		}
+		return false;
 	}
 
 	/**

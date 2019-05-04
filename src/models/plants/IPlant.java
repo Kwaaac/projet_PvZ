@@ -26,6 +26,8 @@ public interface IPlant {
 	
 	boolean canBePlantedOnWater();
 	
+	boolean canBePlantedOnGrass();
+	
 	boolean isLilyPad();
 
 }

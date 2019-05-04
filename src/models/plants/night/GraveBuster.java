@@ -20,7 +20,7 @@ public class GraveBuster extends Plant{
 	}
 	
 	public GraveBuster() {
-		super(-10, -10, 0, 1, 1, 75, "fast");
+		this(-10, -10);
 	}
 	
 	@Override

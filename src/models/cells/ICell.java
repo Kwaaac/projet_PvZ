@@ -28,6 +28,4 @@ public interface ICell {
 	Color getColor();
 	
 	Color getColorDarker();
-	
-	String getCellType();
 }

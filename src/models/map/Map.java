@@ -45,7 +45,6 @@ public abstract class Map {
 			mapProperties = Pool.getMapProperties();
 			break;
 		}
-		System.out.println(mapProperties);
 		return BordView.initGameGraphics(mapProperties.get(2), mapProperties.get(3), mapProperties.get(4), dataBord());
 	}
 

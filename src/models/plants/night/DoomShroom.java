@@ -13,26 +13,25 @@ import models.zombies.Zombie;
 import views.BordView;
 import views.SimpleGameView;
 
-public class DoomShroom extends Plant{
+public class DoomShroom extends Plant {
 	private final String name = "DoomShroom";
 	private final String color = "#90D322";
-	
+
 	public DoomShroom(int x, int y) {
 		super(x, y, 0, 1, 0, 125, "fast");
 	}
-	
+
 	public DoomShroom() {
 		this(-10, -10);
 	}
-	
+
 	@Override
 	public String toString() {
-		return super.toString() + "--" + name; 
+		return super.toString() + "--" + name;
 	}
-	
+
 	int sizeOfPlant = super.getSizeOfPlant();
-	
-	
+
 	private ArrayList<Coordinates> zone(BordView view) {
 		int caseXDoom = view.columnFromX(x);
 		int caseYDoom = view.lineFromY(y);
@@ -62,31 +61,32 @@ public class DoomShroom extends Plant{
 		}
 		return Lz;
 	}
-	
+
 	@Override
-	public void action(ArrayList<Projectile> myBullet, BordView view, ArrayList<Zombie> myZombies, SimpleGameData dataBord) {
-		
-		if(this.readyToshot()) {
+	public void action(ArrayList<Projectile> myBullet, BordView view, ArrayList<Zombie> myZombies,
+			SimpleGameData dataBord) {
+
+		if (this.readyToshot()) {
 			for (Entities z : this.detect(view, myZombies)) {
 				z.takeDmg(1800);
 			}
 			this.life = 0;
 		}
-		
+
 		this.incAS();
 	}
 
 	@Override
 	public Plant createAndDrawNewPlant(SimpleGameView view, ApplicationContext context, int x, int y) {
-		view.drawDoomShroom(context, x,  y, color);
-		
+		view.drawDoomShroom(context, x, y, color);
+
 		return new DoomShroom(x, y);
-		
+
 	}
 
 	@Override
 	public void draw(SimpleGameView view, Graphics2D graphics, int x, int y) {
-		view.drawDoomShroom(graphics, x,  y, color);
+		view.drawDoomShroom(graphics, x, y, color);
 	}
 
 }

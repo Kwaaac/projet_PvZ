@@ -13,7 +13,7 @@ import models.zombies.Zombie;
 import views.BordView;
 import views.SimpleGameView;
 
-public class PuffShroom extends Plant{
+public class PuffShroom extends Plant {
 	private final String name = "PuffShroom";
 	private final String color = "#90D322";
 	
@@ -23,7 +23,7 @@ public class PuffShroom extends Plant{
 	}
 	
 	public PuffShroom() {
-		super(-10, -10, 0, 1, 1, 0, "fast");
+		this(-10, -10);
 	}
 	
 	@Override

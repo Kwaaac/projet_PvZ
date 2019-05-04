@@ -1,9 +1,8 @@
-package models;
+package models.cells;
 
 import java.awt.Color;
 import java.util.ArrayList;
 
-import models.cells.Cell;
 import models.zombies.Zombie;
 
 public class NightCell extends Cell {
@@ -22,11 +21,6 @@ public class NightCell extends Cell {
 	
 	public Color getColorDarker() {
 		return colorDarker;
-	}
-	
-	@Override
-	public String getCellType() {
-		return "NightCell";
 	}
 	
 }

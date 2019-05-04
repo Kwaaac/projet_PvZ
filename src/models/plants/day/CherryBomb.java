@@ -102,5 +102,4 @@ public class CherryBomb extends Plant {
 	public void draw(SimpleGameView view, Graphics2D graphics, int x, int y) {
 		view.drawCherryBomb(graphics, x, y, color);
 	}
-
 }

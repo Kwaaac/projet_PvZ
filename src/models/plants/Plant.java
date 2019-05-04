@@ -156,6 +156,11 @@ public abstract class Plant extends Entities implements IPlant {
 		return false;
 	}
 	
+	@Override
+	public boolean canBePlantedOnGrass() {
+		return true;
+	}
+	
 	@Override 
 	public boolean isLilyPad() {
 		return false;

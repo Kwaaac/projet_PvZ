@@ -51,4 +51,9 @@ public class TangleKelp extends Plant {
 	public boolean canBePlantedOnWater() {
 		return true;
 	}
+	
+	@Override
+	public boolean canBePlantedOnGrass() {
+		return false;
+	}
 }

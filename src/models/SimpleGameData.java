@@ -12,6 +12,7 @@ import fr.umlv.zen5.ApplicationContext;
 import models.cells.Cell;
 import models.cells.WaterCell;
 import models.cells.GrassCell;
+import models.cells.NightCell;
 import models.plants.IPlant;
 import models.plants.Plant;
 import models.projectiles.LawnMower;
@@ -435,10 +436,10 @@ public class SimpleGameData {
 
 			Cell actualCell = this.getCell(i, j);
 			
-			System.out.println(actualCell.getCellType());
 			Plant actualPlant = psView.getSelectedPlants().get(p);
 			
-			if (!actualCell.isPlantedPlant() && actualCell.addPlant(actualPlant)) {
+			
+			if (actualCell.addPlant(actualPlant)) {
 				myPlants.add(actualPlant.createAndDrawNewPlant(view, context, x2, y2));
 				actualMoney -= psView.getSelectedPlants().get(p).getCost();
 				System.out.println("Vous avez " + actualMoney);

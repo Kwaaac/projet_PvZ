@@ -20,8 +20,4 @@ public class GrassCell extends Cell {
 		return colorDarker;
 	}
 	
-	@Override
-	public String getCellType() {
-		return "grassCell";
-	}
 }

@@ -20,34 +20,34 @@ public class WaterCell extends Cell {
 
 	@Override
 	public boolean addPlant(Plant plant) {
-		if (plantedPlant = false) {
-
+		
+		if(plantedPlant) {
+			return false;
+		}
+		
+		if (lilypad == true) {
+			if (plant.canBePlantedOnGrass()) {
+				plantedPlant = true;
+				return true;
+			}
+			return false;
+			
+		} else if(lilypad == false){
 			if (plant.canBePlantedOnWater()) {
-
 				if (plant.isLilyPad()) {
 					lilypad = true;
-					return true;
+					
 				} else {
 					plantedPlant = true;
-					return true;
 				}
-
-			} else {
-
-				if (lilypad) {
-
-					plantedPlant = true;
-					return true;
-				}
+				return true;
 			}
+
+			return false;
 		}
 		
 		return false;
-	}
-	
-	@Override
-	public String getCellType() {
-		return "WaterCell";
+
 	}
 
 	public Color getColor() {

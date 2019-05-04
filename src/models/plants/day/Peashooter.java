@@ -14,7 +14,7 @@ import models.zombies.Zombie;
 import views.BordView;
 import views.SimpleGameView;
 
-public class Peashooter extends Plant{
+public class Peashooter extends Plant {
 	private final String name = "Peashooter";
 	private final String color = "#90D322";
 	
@@ -61,7 +61,7 @@ public class Peashooter extends Plant{
 
 	@Override
 	public void action(ArrayList<Projectile> myBullet, BordView view, ArrayList<Zombie> myZombies, SimpleGameData dataBord) {
-		if(this.readyToshot(dataBord.getLineCell(this.getCaseI(), this.getCaseJ()))) {
+		if(this.readyToshot(dataBord.getLineCell( this.getCaseJ(), this.getCaseI()))) {
 			myBullet.add(new Pea(super.getX() + super.getSizeOfPlant(), super.getY() + (super.getSizeOfPlant() / 2) - 10));
 			
 			this.resetAS();

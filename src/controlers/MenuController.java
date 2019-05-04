@@ -16,7 +16,7 @@ import views.SelectBordView;
 
 public class MenuController {
 	public static ArrayList<Plant> startGame(ApplicationContext context) {
-		
+
 		ScreenInfo screenInfo = context.getScreenInfo();
 		int width = (int) screenInfo.getWidth();
 		int height = (int) screenInfo.getHeight();
@@ -33,7 +33,6 @@ public class MenuController {
 
 		SimpleGameData dataBord = new SimpleGameData(7, 7);
 		SimpleGameData dataSelect = new SimpleGameData(7, 1);
-		
 
 		SelectBordView viewContent = SelectBordView.initGameGraphics(xOrigin, yOrigin, 100, dataBord, allPlants);
 		SelectBordView plantSelectionView = SelectBordView.initGameGraphics(30, yOrigin, 900, dataSelect,
@@ -64,7 +63,7 @@ public class MenuController {
 
 			Action action = event.getAction();
 			if (action == Action.KEY_PRESSED || action == Action.KEY_RELEASED) {
-				if (mdp == "A") {
+				if (mdp == "A" && plantSelectionView.getSelectedPlants().size() == 7) {
 					view.drawRectangle(context, 0, 0, width, height, "#cbd9ef");
 					return plantSelectionView.getSelectedPlants();
 				} else {
@@ -75,13 +74,12 @@ public class MenuController {
 			if (action != Action.POINTER_DOWN) {
 				continue;
 			}
-			
+
 			Point2D.Float location = event.getLocation();
 			float x = location.x;
 			float y = location.y;
 			int Y = view.indexFromReaCoord(y, 0);
 			int X = view.indexFromReaCoord(x, 0);
-			
 
 			if (width - 65 <= x && x <= width - 15) { // quit
 				if (15 <= y && y <= 65) {
@@ -110,23 +108,23 @@ public class MenuController {
 				break;
 
 			case "plantSelection":
-				
+
 				view.drawRectangle(context, 0, 0, width, height, "#ffffff"); // background
 				viewContent.draw(context, dataBord);
 				plantSelectionView.draw(context, dataSelect);
 				view.drawRectangle(context, width - 65, 15, 50, 50, "#DE0000"); // quit
 
 				if (dataBord.isCorrectSelectLocation(viewContent, x, y)) {
-					
+
 					viewContent.truc(x, y, plantSelectionView, dataBord, dataSelect);
-					
+
 				} else if (dataSelect.isCorrectSelectLocation(plantSelectionView, x, y)) {
 					plantSelectionView.truc(x, y, viewContent, dataSelect, dataBord);
 				}
 
 				break;
 			}
-			
+
 		}
 	}
 }

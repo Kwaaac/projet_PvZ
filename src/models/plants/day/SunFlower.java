@@ -12,48 +12,49 @@ import models.zombies.Zombie;
 import views.BordView;
 import views.SimpleGameView;
 
-public class SunFlower extends Plant{
+public class SunFlower extends Plant {
 	private final String name = "SunFlower";
 	private final String color = "#FEFF33";
-	
-	private final Coordinates placeSelect = new Coordinates(0,1);
-	
+
+	private final Coordinates placeSelect = new Coordinates(0, 1);
+
 	public SunFlower(int x, int y) {
-		//    x, y, damage,  life,  shootBarMax,  cost, cooldown
+		// x, y, damage, life, shootBarMax, cost, cooldown
 		super(x, y, 0, 300, 10_000, 25, "fast");
 		this.shootTime = System.currentTimeMillis();
 	}
-	
+
 	public SunFlower() {
 		this(-10, -10);
 	}
-	
+
 	@Override
 	public String toString() {
-		return super.toString() + "--" + name; 
+		return super.toString() + "--" + name;
 	}
-	
+
 	int sizeOfPlant = super.getSizeOfPlant();
-	
+
 	@Override
 	public Plant createAndDrawNewPlant(SimpleGameView view, ApplicationContext context, int x, int y) {
-		view.drawSunFlower(context, x,  y, color);
-		
+		view.drawSunFlower(context, x, y, color);
+
 		return new SunFlower(x, y);
 	}
-	
+
 	@Override
 	public void draw(SimpleGameView view, Graphics2D graphics, int x, int y) {
 		view.drawSunFlower(graphics, x, y, color);
 	}
 
 	@Override
-	public void action(ArrayList<Projectile> myBullet, BordView view, ArrayList<Zombie> myZombies, SimpleGameData dataBord) {
-		if(this.readyToshot()) {
+	public void action(ArrayList<Projectile> myBullet, BordView view, ArrayList<Zombie> myZombies,
+			SimpleGameData dataBord) {
+		if (this.readyToshot()) {
 			SimpleGameData.spawnSun(view, x + 20, y + 20);
 			this.resetAS();
 		}
-		
+
 		this.incAS();
 	}
 
