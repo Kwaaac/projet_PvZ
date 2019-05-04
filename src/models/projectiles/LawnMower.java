@@ -18,6 +18,7 @@ import views.SimpleGameView;
 public class LawnMower extends Projectile {
 	private final String name = "Tondeuse";
 	private final String color = "#B44A4A";
+	private final String color2 = "#4AAFB4";
 	private final int id;
 	private static final int[] SizeOfLawnMower = {100,80};
 	
@@ -44,6 +45,9 @@ public class LawnMower extends Projectile {
 	
 	@Override
 	public String getColor() {
+		if (SimpleGameData.getMap() == "Pool") {
+			return color2;
+		}
 		return color;
 	}
 
@@ -70,13 +74,12 @@ public class LawnMower extends Projectile {
 	
 	public static void hasToDie(ArrayList<LawnMower> lm,DeadPool DPe, SimpleGameData data,BordView view) {
 		for(LawnMower l : lm) {
-				if (l.outBoard(view, data)) {
-					System.out.println("I'm free");
-					if(data.getCell(l.getCaseJ(), l.getCaseI()) != null) {
-					data.getCell(l.getCaseJ(), l.getCaseI()).removeEntity(l);
-					}
-					DPe.add(l);
+			if (l.outBoard(view, data)) {
+				if(data.getCell(l.getCaseJ(), l.getCaseI()) != null) {
+				data.getCell(l.getCaseJ(), l.getCaseI()).removeEntity(l);
 				}
+				DPe.add(l);
+			}
 		}
 	}
 	
@@ -105,7 +108,13 @@ public class LawnMower extends Projectile {
 	
 	@Override
 	public void draw(SimpleGameView view, Graphics2D graphics, float x, float y) {
-		view.drawLawnMower(graphics, x, y, color);
+		if (SimpleGameData.getMap() == "Pool") {
+			view.drawLawnMower(graphics, x, y, color2);
+		}
+		else {
+			view.drawLawnMower(graphics, x, y, color);
+		}
+		
 	}
 
 	@Override
