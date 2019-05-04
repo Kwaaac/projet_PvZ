@@ -55,7 +55,7 @@ public class Chomper extends Plant {
 			ArrayList<Zombie> lstz = c.getEntitiesInCell();
 
 			if (!lstz.isEmpty()) {
-				zombies.add(Collections.max(lstz));
+				zombies.add(lstz.get(0));
 				break;
 			}
 		}

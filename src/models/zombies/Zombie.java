@@ -2,7 +2,6 @@ package models.zombies;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Objects;
 
 import models.Cell;
@@ -10,7 +9,6 @@ import models.Chrono;
 import models.Coordinates;
 import models.DeadPool;
 import models.Entities;
-import models.IEntite;
 import models.MovingElement;
 import models.SimpleGameData;
 import models.plants.Plant;
@@ -18,8 +16,7 @@ import models.projectiles.LawnMower;
 import models.projectiles.Projectile;
 import views.BordView;
 
-public abstract class Zombie extends Entities implements MovingElement, IZombie, Comparable<Zombie> {
-	private final String name;
+public abstract class Zombie extends Entities implements MovingElement, IZombie {
 	private double speed;
 	private final static int sizeOfZombie = 75;
 
@@ -29,38 +26,9 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie,
 
 	protected Chrono slowedTime = new Chrono();
 
-	// Liste de nom pour les zombies, tous diff�rents pour que chaque zombie soit
-	// unique (200 pseudos provenant du TP 10 de java)
-	protected static ArrayList<String> zombieNames = new ArrayList<>(Arrays.asList("PortCharlotte472", "Birdseye722",
-			"Freeville753", "Kamas397", "PrincetonJunction132", "Edroy498", "Marshallberg573", "Anderson828",
-			"NewRome174", "Caneyville505", "PointIsabel867", "Exell248", "Jacksonburg582", "PleasantPrairie521",
-			"Keene960", "Marienville401", "Greenleafton109", "Gobler450", "Shickley652", "Hineston722",
-			"SaintPetersburg498", "EastProvidence325", "Sorum711", "Netcong446", "Richtex482", "Hernandez859",
-			"Kodiak857", "Lajitas791", "Moffit265", "Pawnee966", "NorthSaltLake643", "Idabel501", "Clementon338",
-			"Macksburg438", "Whitefish491", "LongIsland276", "HarlemSprings125", "Powderhorn245", "Melby343",
-			"Brookings203", "SanAugustine398", "MillerPlace573", "Bailey840", "Stonybrook200", "Yscloskey301",
-			"Minter630", "Hewins376", "Cecilville429", "ShawsheenVillage468", "Omak205", "OracleJunction654",
-			"CapitolHeights105", "Newsoms820", "Frenchman601", "Felda445", "HartfordCity480", "Emmalane526",
-			"LakeBridgeport886", "Oacoma699", "Post355", "Priddy478", "ShawsheenVillage458", "Piketon525", "Mosby288",
-			"Rapids550", "London532", "Simsbury529", "BloomingPrairie242", "TurtleLake870", "WhiteCastle636",
-			"Dustin705", "Makanda578", "Fayette361", "HickoryWithe453", "Daphne309", "Playita383", "Millerton665",
-			"Emmons226", "AngleInlet584", "WestWinfield815", "Redgranite973", "Wellsford773", "ElOjo913",
-			"Idyllwild303", "VimyRidge703", "Mazie999", "Gatliff953", "Jennersville945", "Leonore563",
-			"BedfordCenter565", "Maxville505", "Roscoe515", "Portville508", "Western600", "Palestine909",
-			"Clintwood716", "ElectricMills702", "JubileeSprings716", "AuGres181", "Joffre705", "Corydon152",
-			"Soperton775", "Monterey349", "Combes945", "Fenn336", "Shelbina268", "FederalDam131", "BuckGrove822",
-			"SanJacinto480", "Hermantown851", "DesLacs240", "NewWoodstock532", "Minersville456", "Repaupo711",
-			"Loyalhanna155", "Boutte799", "Sixes960", "Kellerville984", "SierraBlanca714", "Verdigre680",
-			"NewWilmington713", "Seelyville235", "Buenos702", "McBain430", "EurekaSprings588", "Wheatland444",
-			"LaGrande373", "NewCastle982", "Okolona536", "Wurtland531", "Marmet624", "CapeNeddick428", "Dobson197",
-			"Wakita402", "Bostic998", "PanoramaVillage673", "Finlay362", "CrowsBluff100", "PalmerLake688", "Elkader520",
-			"Regent690", "Berthoud710", "Bray567", "Atlantis551", "BuckGrove253", "HooversonHeights773",
-			"LongboatKey474", "SpringChurch761", "Porterfield"));
-
 	public Zombie(int x, int y, int damage, int life, double speed) {
 		super(x, y, damage, life);
-		this.name = zombieNames.remove(0);
-		this.setSpeed(-1.7);
+		this.speed = -1.7;
 		this.shootBarMax = (int) (speed * -7500);
 		shootTime = System.currentTimeMillis();
 		slowedTime.steady();
@@ -91,7 +59,6 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie,
 				caseXY = caseZ;
 			}
 		}
-
 	}
 
 	public float getY() {
@@ -101,11 +68,6 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie,
 	@Override
 	public void move() {
 		setX((float) (getX() + getSpeed()));
-	}
-
-	@Override
-	public String toString() {
-		return name;
 	}
 
 	public double getSpeed() {
@@ -125,7 +87,7 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie,
 			slowedTime.pause();
 			System.out.println(slowedTime.getDureeSec());
 			slowedTime.resume();
-			
+
 			if (slowedTime.asReachTimer(6)) {
 				slowedTime.steady();
 			}
@@ -216,8 +178,6 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie,
 				 */
 				else if (this.isDead()) {
 					e.setConflictMode(false);
-					// On remet le nom du zombie mort dans la list de nom
-					zombieNames.add(name);
 					DPe.addInDP(this);
 					break;
 				}
@@ -267,45 +227,36 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie,
 		Plant.hasToDie(deadPoolE, myPlants, myZombies, data); // gere les mort si il n'y a aucun zombie sur le plateau
 		for (Zombie z : myZombies) {
 			z.go();
+
 			z.incAS();
 			z.conflictBvZ(deadPoolE, myBullet, data);
-			z.conflictPvZ(deadPoolE, myPlants, view, data, str);
+			if (z.action(data)) {
+				z.conflictPvZ(deadPoolE, myPlants, view, data, str);
+			}
 			z.conflictLvZ(deadPoolE, myLawnMower, view, data, str);
 			if (z.isDead()) {
 				deadPoolE.add(z);
 				str.append(z + " meurt\n");
 			}
+
 		}
+
 	}
 
 	public void slowed(Boolean slowing) {
 		if (slowing) {
-				slowedTime.start();
+			slowedTime.start();
 		}
 	}
 
 	public abstract Integer getProb(int difficulty);
 
+	/*
+	 * For zombies that don't have actions
+	 * 
+	 */
 	@Override
-	public int hashCode() {
-		return Objects.hash(name);
-	}
-
-	@Override
-	public boolean equals(Object o) {
-		if (!(o instanceof Zombie)) {
-			return false;
-		}
-		Zombie z = (Zombie) o;
-		return name.equals(z.name);
-	}
-
-	@Override
-	public int compareTo(Zombie z) {
-		return this.life.compareTo(z.life);
-	}
-
-	public void setSpeed(double speed) {
-		this.speed = speed;
+	public boolean action(SimpleGameData dataBord) {
+		return true;
 	}
 }

@@ -41,7 +41,8 @@ public class SimpleGameController {
 		screenInfo.getWidth();
 		
 		HashMap<Zombie, Integer> normalWaveZombie = new HashMap<Zombie, Integer>();
-		normalWaveZombie.put(new NewspaperZombie(), 1);
+		normalWaveZombie.put(new ConeheadZombie(), 0);
+		normalWaveZombie.put(new PoleVaultingZombie(), 1);
 		
 		HashMap<Zombie, Integer> superWaveZombie = new HashMap<Zombie, Integer>();
 		superWaveZombie.put(new ConeheadZombie(), 20);
