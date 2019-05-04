@@ -42,7 +42,7 @@ public class SimpleGameController {
 		
 		HashMap<Zombie, Integer> normalWaveZombie = new HashMap<Zombie, Integer>();
 		normalWaveZombie.put(new NewspaperZombie(), 1);
-		normalWaveZombie.put(new PoleVaultingZombie(), 1);
+		normalWaveZombie.put(new PoleVaultingZombie(), 0);
 		
 		HashMap<Zombie, Integer> superWaveZombie = new HashMap<Zombie, Integer>();
 		superWaveZombie.put(new ConeheadZombie(), 20);
@@ -52,8 +52,6 @@ public class SimpleGameController {
 		SimpleGameData dataBord = Map.dataBord();
 		SimpleGameData dataSelect = new SimpleGameData(selectedPlant.size(), 1);
 
-		dataBord.setRandomMatrix();
-		dataSelect.setRandomMatrix();
 		int yOrigin = 150;
 		int xOrigin = 450;
 

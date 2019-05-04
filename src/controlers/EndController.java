@@ -15,8 +15,8 @@ public class EndController {
 		float height = screenInfo.getHeight();
 
 		SimpleGameData data = new SimpleGameData(1, 1);
+		
 
-		data.setRandomMatrix();
 		int yOrigin = (int) (height/2.5);
 		int xOrigin = (int) (width/2.5);
 

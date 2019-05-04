@@ -33,9 +33,7 @@ public class MenuController {
 
 		SimpleGameData dataBord = new SimpleGameData(7, 7);
 		SimpleGameData dataSelect = new SimpleGameData(7, 1);
-
-		dataBord.setRandomMatrix();
-		dataSelect.setRandomMatrix();
+		
 
 		SelectBordView viewContent = SelectBordView.initGameGraphics(xOrigin, yOrigin, 100, dataBord, allPlants);
 		SelectBordView plantSelectionView = SelectBordView.initGameGraphics(30, yOrigin, 900, dataSelect,

@@ -53,11 +53,6 @@ public class Cell {
 		return isPlantedPlant() || isThereEntity();
 	}
 
-	// Renvoie si la cellules contient des entites
-//	public boolean isWater() {
-//		return isPlantedLilyPad();
-//	}
-	
 	public static Cell randomGameCell() {
 		return new Cell();
 	}
