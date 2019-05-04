@@ -52,5 +52,7 @@ public class TrashCanZombie extends Zombie {
 	public void draw(SimpleGameView view, Graphics2D graphics, float x, float y) {
 		view.drawTrashCanZombie(graphics, x, y, color);
 	}
-
+	
+	@Override
+	public void action() {}
 }

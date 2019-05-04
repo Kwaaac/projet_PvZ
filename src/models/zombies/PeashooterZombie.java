@@ -52,5 +52,7 @@ public class PeashooterZombie extends Zombie {
 	public void draw(SimpleGameView view, Graphics2D graphics, float x, float y) {
 		view.drawPeashooterZombie(graphics, x, y, color);
 	}
-
+	
+	@Override
+	public void action() {}
 }

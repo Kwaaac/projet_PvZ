@@ -52,5 +52,7 @@ public class GaltingPeaZombie extends Zombie {
 	public void draw(SimpleGameView view, Graphics2D graphics, float x, float y) {
 		view.drawGaltingPeaZombie(graphics, x, y, color);
 	}
-
+	
+	@Override
+	public void action() {}
 }

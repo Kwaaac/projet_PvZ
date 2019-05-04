@@ -52,5 +52,7 @@ public class ScreenDoorZombie extends Zombie {
 	public void draw(SimpleGameView view, Graphics2D graphics, float x, float y) {
 		view.drawScreenDoorZombie(graphics, x, y, color);
 	}
-
+	
+	@Override
+	public void action() {}
 }

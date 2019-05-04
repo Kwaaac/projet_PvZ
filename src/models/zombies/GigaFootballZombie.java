@@ -52,5 +52,7 @@ public class GigaFootballZombie extends Zombie {
 	public void draw(SimpleGameView view, Graphics2D graphics, float x, float y) {
 		view.drawGigaFootballZombie(graphics, x, y, color);
 	}
-
+	
+	@Override
+	public void action() {}
 }

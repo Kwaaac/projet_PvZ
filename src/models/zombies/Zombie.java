@@ -60,7 +60,7 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie,
 	public Zombie(int x, int y, int damage, int life, double speed) {
 		super(x, y, damage, life);
 		this.name = zombieNames.remove(0);
-		this.speed = -1.7;
+		this.setSpeed(-1.7);
 		this.shootBarMax = (int) (speed * -7500);
 		shootTime = System.currentTimeMillis();
 		slowedTime.steady();
@@ -100,7 +100,7 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie,
 
 	@Override
 	public void move() {
-		setX((float) (getX() + speed));
+		setX((float) (getX() + getSpeed()));
 	}
 
 	@Override
@@ -112,12 +112,16 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie,
 		return speed;
 	}
 
+	public void setSpeed(int x) {
+		speed-=x;
+	}
+	
 	public void go(float x) {
 		if (slowedTime.isReset()) {
-			speed = x;
+			setSpeed(x);
 		} else {
-			speed = x / 2;
-			shootBarMax = (int) (speed * -7500);
+			setSpeed(x / 2);
+			shootBarMax = (int) (getSpeed() * -7500);
 			slowedTime.pause();
 			System.out.println(slowedTime.getDureeSec());
 			slowedTime.resume();
@@ -134,15 +138,15 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie,
 	}
 
 	public void stop() {
-		this.speed = 0;
+		this.setSpeed(0);
 	}
 
 	public void SpeedBoostON() {
-		speed -= 2;
+		setSpeed(getSpeed() - 2);
 	}
 
 	public void SpeedBoostOFF() {
-		speed += 2;
+		setSpeed(getSpeed() + 2);
 	}
 
 	public void incAS() {
@@ -299,5 +303,9 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie,
 	@Override
 	public int compareTo(Zombie z) {
 		return this.life.compareTo(z.life);
+	}
+
+	public void setSpeed(double speed) {
+		this.speed = speed;
 	}
 }

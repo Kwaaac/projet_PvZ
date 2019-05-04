@@ -52,5 +52,13 @@ public class NewspaperZombie extends Zombie {
 	public void draw(SimpleGameView view, Graphics2D graphics, float x, float y) {
 		view.drawNewspaperZombie(graphics, x, y, color);
 	}
-
+	
+	@Override
+	public void action() {
+		if (this.life != 320) {
+			setSpeed(3);
+		}
+	}
+	
+	
 }

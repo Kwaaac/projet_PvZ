@@ -10,4 +10,6 @@ public interface IZombie {
 	boolean canSpawn(int difficulty); 
 	
 	void go();
+	
+	void action();
 }

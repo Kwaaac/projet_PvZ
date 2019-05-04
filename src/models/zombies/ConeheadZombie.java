@@ -50,4 +50,7 @@ public class ConeheadZombie extends Zombie {
 	public void draw(SimpleGameView view, Graphics2D graphics, float x, float y) {
 		view.drawConeheadZombie(graphics, x, y, color);
 	}
+	
+	@Override
+	public void action() {}
 }
