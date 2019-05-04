@@ -5,7 +5,8 @@ import java.util.ArrayList;
 import models.zombies.Zombie;
 
 public class Cell {
-	private Color color = Color.decode("#55c920"); //Later
+	private Color color = Color.decode("#55c920"); 
+	private Color colorDarker = Color.decode("#4dba1b"); 
 	private boolean dirt;  //Later
 	
 	private final ArrayList<Zombie> entitiesInCell;
@@ -63,6 +64,10 @@ public class Cell {
 
 	public Color getColor() {
 		return color;
+	}
+	
+	public Color getColorDarker() {
+		return colorDarker;
 	}
 	
 	@Override

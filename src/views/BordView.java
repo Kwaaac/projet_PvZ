@@ -117,7 +117,7 @@ public class BordView extends SimpleGameView {
 				if (checkerboard % 2 == 0) {
 					graphics.setColor(cells.get(j).getColor());
 				} else {
-					graphics.setColor(cells.get(j).getColor().darker());
+					graphics.setColor(cells.get(j).getColorDarker());
 				}
 
 				graphics.fill(drawCell(i, j));
