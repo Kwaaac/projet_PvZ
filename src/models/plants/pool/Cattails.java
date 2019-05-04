@@ -20,7 +20,7 @@ public class Cattails extends Plant {
 	}
 	
 	public Cattails() {
-		super(-10, -10, 0, 1, 1, 250, "verySlow");
+		this(-10, -10);
 	}
 	
 	int sizeOfPlant = super.getSizeOfPlant();

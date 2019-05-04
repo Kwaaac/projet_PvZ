@@ -9,6 +9,9 @@ import java.util.Map;
 import java.util.Random;
 
 import fr.umlv.zen5.ApplicationContext;
+import models.cells.Cell;
+import models.cells.WaterCell;
+import models.cells.GrassCell;
 import models.plants.IPlant;
 import models.plants.Plant;
 import models.projectiles.LawnMower;
@@ -68,7 +71,7 @@ public class SimpleGameData {
 	private void dayBord() {
 		for (int i = 0; i < matrix.length; i++) {
 			for (int j = 0; j < matrix[0].length; j++) {
-				matrix[i][j] = new Cell();
+				matrix[i][j] = new GrassCell();
 			}
 		}
 	}
@@ -79,7 +82,7 @@ public class SimpleGameData {
 				if (i == 2 || i == 3) {
 					matrix[i][j] = new WaterCell();
 				} else {
-					matrix[i][j] = new Cell();
+					matrix[i][j] = new GrassCell();
 				}
 			}
 		}
@@ -431,9 +434,12 @@ public class SimpleGameData {
 			int y2 = Coordinates.CenteredY(view.realCoordFromIndex(i, view.getYOrigin()));
 
 			Cell actualCell = this.getCell(i, j);
-			if (!actualCell.isPlantedPlant()) {
-				actualCell.addPlant();
-				myPlants.add(psView.getSelectedPlants().get(p).createAndDrawNewPlant(view, context, x2, y2));
+			
+			System.out.println(actualCell.getCellType());
+			Plant actualPlant = psView.getSelectedPlants().get(p);
+			
+			if (!actualCell.isPlantedPlant() && actualCell.addPlant(actualPlant)) {
+				myPlants.add(actualPlant.createAndDrawNewPlant(view, context, x2, y2));
 				actualMoney -= psView.getSelectedPlants().get(p).getCost();
 				System.out.println("Vous avez " + actualMoney);
 				psView.startCooldown(p);

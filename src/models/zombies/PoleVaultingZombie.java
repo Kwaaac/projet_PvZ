@@ -3,8 +3,8 @@ package models.zombies;
 import java.awt.Graphics2D;
 
 import fr.umlv.zen5.ApplicationContext;
-import models.Cell;
 import models.SimpleGameData;
+import models.cells.Cell;
 import views.BordView;
 import views.SimpleGameView;
 

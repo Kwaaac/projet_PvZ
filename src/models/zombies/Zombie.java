@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Objects;
 
-import models.Cell;
 import models.Chrono;
 import models.Coordinates;
 import models.DeadPool;
 import models.Entities;
 import models.MovingElement;
 import models.SimpleGameData;
+import models.cells.Cell;
 import models.plants.Plant;
 import models.projectiles.LawnMower;
 import models.projectiles.Projectile;
@@ -51,10 +51,10 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie 
 			if (actCell != null) {
 
 				if (!(cX == data.getNbColumns() - 1)) {
-					data.getCell(caseXY.getJ(), caseXY.getI()).removeEntity(this);
+					data.getCell(caseXY.getJ(), caseXY.getI()).removeZombie(this);
 				}
 
-				actCell.addEntity(this);
+				actCell.addZombie(this);
 
 				caseXY = caseZ;
 			}

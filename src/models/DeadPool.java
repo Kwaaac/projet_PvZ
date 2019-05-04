@@ -50,7 +50,7 @@ public class DeadPool {
 		for(IEntite DPe: deadPool) {
 			Le.remove(DPe);
 			if(dataBord.getCell(DPe.getCaseJ(), DPe.getCaseI()) != null) {
-				dataBord.getCell(DPe.getCaseJ(), DPe.getCaseI()).removeEntity(DPe);
+				dataBord.getCell(DPe.getCaseJ(), DPe.getCaseI()).removeZombie(DPe);
 				}
 
 		}

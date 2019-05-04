@@ -5,9 +5,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import fr.umlv.zen5.ApplicationContext;
-import models.Cell;
 import models.Chrono;
 import models.SimpleGameData;
+import models.cells.Cell;
 import models.plants.Plant;
 import models.projectiles.Projectile;
 import models.zombies.Zombie;
@@ -52,7 +52,7 @@ public class Chomper extends Plant {
 		ArrayList<Zombie> zombies = new ArrayList<>();
 
 		for (Cell c : cells) {
-			ArrayList<Zombie> lstz = c.getEntitiesInCell();
+			ArrayList<Zombie> lstz = c.getZombiesInCell();
 
 			if (!lstz.isEmpty()) {
 				zombies.add(lstz.get(0));

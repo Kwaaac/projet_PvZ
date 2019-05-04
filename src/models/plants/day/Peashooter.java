@@ -4,9 +4,9 @@ import java.awt.Graphics2D;
 import java.util.ArrayList;
 
 import fr.umlv.zen5.ApplicationContext;
-import models.Cell;
 import models.Entities;
 import models.SimpleGameData;
+import models.cells.Cell;
 import models.plants.Plant;
 import models.projectiles.Pea;
 import models.projectiles.Projectile;
@@ -39,7 +39,7 @@ public class Peashooter extends Plant{
 	
 	public boolean readyToshot(ArrayList<Cell> cells) {
 		for(Cell c : cells) {
-			if(c.isThereEntity()) {
+			if(c.isThereZombies()) {
 				return shootBar >= shootBarMax;
 			}
 		}

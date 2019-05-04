@@ -3,12 +3,12 @@ package models.projectiles;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 
-import models.Cell;
 import models.Coordinates;
 import models.DeadPool;
 import models.Entities;
 import models.IEntite;
 import models.SimpleGameData;
+import models.cells.Cell;
 import models.plants.Plant;
 import models.zombies.Zombie;
 import views.BordView;
@@ -76,7 +76,7 @@ public class LawnMower extends Projectile {
 		for(LawnMower l : lm) {
 			if (l.outBoard(view, data)) {
 				if(data.getCell(l.getCaseJ(), l.getCaseI()) != null) {
-				data.getCell(l.getCaseJ(), l.getCaseI()).removeEntity(l);
+				data.getCell(l.getCaseJ(), l.getCaseI()).removeZombie(l);
 				}
 				DPe.add(l);
 			}
@@ -88,8 +88,8 @@ public class LawnMower extends Projectile {
 
 		Cell cell = dataBord.getCell(this.getCaseJ(), this.getCaseI());
 
-		if (cell != null && cell.isThereEntity()) {
-			for (Entities z : cell.getEntitiesInCell()) {
+		if (cell != null && cell.isThereZombies()) {
+			for (Entities z : cell.getZombiesInCell()) {
 				Lz.add(z);
 			}
 		}

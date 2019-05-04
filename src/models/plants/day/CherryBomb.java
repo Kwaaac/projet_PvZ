@@ -4,10 +4,10 @@ import java.awt.Graphics2D;
 import java.util.ArrayList;
 
 import fr.umlv.zen5.ApplicationContext;
-import models.Cell;
 import models.Coordinates;
 import models.Entities;
 import models.SimpleGameData;
+import models.cells.Cell;
 import models.plants.Plant;
 import models.projectiles.Projectile;
 import models.zombies.Zombie;
@@ -41,7 +41,6 @@ public class CherryBomb extends Plant {
 				zone.add(new Coordinates(caseXCherry + i, caseYCherry + j));
 			}
 		}
-
 		return zone;
 	}
 
@@ -52,8 +51,14 @@ public class CherryBomb extends Plant {
 		for (Coordinates c : zone) {
 			Cell cell = dataBord.getCell(c.getJ(), c.getI());
 			
-			if(cell != null && cell.isThereEntity()) {
-				for(Entities e: cell.getEntitiesInCell()) {
+//			System.out.println(c);
+//			System.out.println(cell != null);
+//			if(cell != null) {
+//				System.out.println(cell.isThereZombies());
+//				System.out.println("\n");
+//			}
+			if(cell != null && cell.isThereZombies()) {
+				for(Entities e: cell.getZombiesInCell()) {
 					Lz.add(e);
 				}
 			}
@@ -70,9 +75,6 @@ public class CherryBomb extends Plant {
 	@Override
 	public void action(ArrayList<Projectile> myBullet, BordView view, ArrayList<Zombie> myZombies,
 			SimpleGameData dataBord) {
-
-		
-		System.out.println(this.shootBar + " // " + this.shootBarMax);
 		
 		if (this.readyToshot()) {
 			for (Entities z : this.detect(view, dataBord)) {
@@ -80,6 +82,9 @@ public class CherryBomb extends Plant {
 			}
 			
 			this.life = 0;
+			System.out.println(dataBord.getNbLines() + "; " + dataBord.getNbColumns());
+			System.out.println(getCaseJ() + "; " + getCaseI());
+			dataBord.getCell(getCaseJ(), getCaseI()).removePlant();
 		}
 
 		this.incAS();

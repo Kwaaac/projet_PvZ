@@ -46,4 +46,9 @@ public class SeaShroom extends Plant {
 		view.drawSeaShroom(graphics, x,  y, color);
 	}
 
+	@Override
+	public boolean canBePlantedOnWater() {
+		return true;
+	}
+	
 }

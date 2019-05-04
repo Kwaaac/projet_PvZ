@@ -4,10 +4,10 @@ import java.awt.Graphics2D;
 import java.util.ArrayList;
 
 import fr.umlv.zen5.ApplicationContext;
-import models.Cell;
 import models.Coordinates;
 import models.Entities;
 import models.SimpleGameData;
+import models.cells.Cell;
 import models.plants.Plant;
 import models.projectiles.Projectile;
 import models.zombies.Zombie;
@@ -70,8 +70,8 @@ public class PotatoMine extends Plant {
 
 		Cell cell = dataBord.getCell(getCaseJ(), getCaseI());
 
-		if (cell != null && cell.isThereEntity()) {
-			for (Entities z : cell.getEntitiesInCell()) {
+		if (cell != null && cell.isThereZombies()) {
+			for (Entities z : cell.getZombiesInCell()) {
 				Lz.add(z);
 			}
 		}

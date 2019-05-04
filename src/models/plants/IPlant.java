@@ -16,12 +16,6 @@ public interface IPlant {
 
 	void resetAS();
 
-	boolean isDead();
-
-	float getY();
-
-	float getX();
-
 	void action(ArrayList<Projectile> myBullet, BordView view, ArrayList<Zombie> myZombies, SimpleGameData dataBord);
 
 	boolean readyToshot();
@@ -29,5 +23,9 @@ public interface IPlant {
 	Plant createAndDrawNewPlant(SimpleGameView view, ApplicationContext context, int x, int y);
 
 	void draw(SimpleGameView view, Graphics2D graphics, int x, int y);
+	
+	boolean canBePlantedOnWater();
+	
+	boolean isLilyPad();
 
 }

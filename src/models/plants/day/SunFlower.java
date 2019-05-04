@@ -21,6 +21,7 @@ public class SunFlower extends Plant{
 	public SunFlower(int x, int y) {
 		//    x, y, damage,  life,  shootBarMax,  cost, cooldown
 		super(x, y, 0, 300, 10_000, 25, "fast");
+		this.shootTime = System.currentTimeMillis();
 	}
 	
 	public SunFlower() {

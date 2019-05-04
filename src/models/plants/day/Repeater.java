@@ -5,10 +5,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import fr.umlv.zen5.ApplicationContext;
-import models.Cell;
 import models.Chrono;
 import models.Entities;
 import models.SimpleGameData;
+import models.cells.Cell;
 import models.plants.Plant;
 import models.projectiles.Pea;
 import models.projectiles.Projectile;
@@ -74,7 +74,7 @@ public class Repeater extends Plant {
 		ArrayList<Zombie> zombies = new ArrayList<>();
 
 		for (Cell c : cells) {
-			ArrayList<Zombie> lstz = c.getEntitiesInCell();
+			ArrayList<Zombie> lstz = c.getZombiesInCell();
 
 			if (!lstz.isEmpty()) {
 				for (Zombie z : lstz) {

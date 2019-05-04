@@ -20,14 +20,41 @@ public class SelectBordView extends SimpleGameView {
 	private final ArrayList<Plant> selectedPlants;
 
 	private static int squareSize;
+	private int xOrigin;
+	private int yOrigin;
+	private int length;
+	private int width;
+	
 	private final Chrono[] caseChrono = { new Chrono(), new Chrono(), new Chrono(), new Chrono(), new Chrono(),
 			new Chrono(), new Chrono(), new Chrono(), new Chrono() };
 
 	public SelectBordView(int xOrigin, int yOrigin, int length, int width, int squareSize,
 			ArrayList<Plant> selectedPlants) {
-		super(xOrigin, yOrigin, length, width);
+		
+		this.xOrigin = xOrigin;
+		this.yOrigin = yOrigin;
+		this.length = length;
+		this.width = width;
+		this.squareSize = squareSize;
+		this.squareSize = squareSize;
+		
 		this.selectedPlants = selectedPlants;
-		SelectBordView.squareSize = squareSize;
+	}
+	
+	public int getXOrigin() {
+		return xOrigin;
+	}
+
+	public int getYOrigin() {
+		return yOrigin;
+	}
+
+	public int getWidth() {
+		return width;
+	}
+
+	public int getLength() {
+		return length;
 	}
 
 	public static SelectBordView initGameGraphics(int xOrigin, int yOrigin, int length, SimpleGameData data,
@@ -84,8 +111,8 @@ public class SelectBordView extends SimpleGameView {
 	public void truc(float x, float y, SelectBordView plantSelectionView, SimpleGameData thisData,
 			SimpleGameData theOtherData) {
 
-		int X = this.indexFromReaCoord(x, super.getXOrigin());
-		int Y = this.indexFromReaCoord(y, super.getYOrigin());
+		int X = this.indexFromReaCoord(x, xOrigin);
+		int Y = this.indexFromReaCoord(y, yOrigin);
 
 		int plantIndex = (Y * thisData.getNbColumns() + X);
 		
@@ -123,7 +150,7 @@ public class SelectBordView extends SimpleGameView {
 	 *                                  game board.
 	 */
 	public int lineFromY(float y) {
-		return indexFromReaCoord(y, super.getYOrigin());
+		return indexFromReaCoord(y, yOrigin);
 	}
 
 	/**
@@ -135,7 +162,7 @@ public class SelectBordView extends SimpleGameView {
 	 *                                  game board.
 	 */
 	public int columnFromX(float x) {
-		return indexFromReaCoord(x, super.getXOrigin());
+		return indexFromReaCoord(x, xOrigin);
 	}
 
 	public ArrayList<Plant> getSelectedPlants() {
@@ -143,11 +170,11 @@ public class SelectBordView extends SimpleGameView {
 	}
 
 	protected float xFromI(int i) {
-		return realCoordFromIndex(i, super.getXOrigin());
+		return realCoordFromIndex(i, xOrigin);
 	}
 
 	protected float yFromJ(int j) {
-		return realCoordFromIndex(j, super.getYOrigin());
+		return realCoordFromIndex(j, yOrigin);
 	}
 
 	protected RectangularShape drawCell(int i, int j) {
@@ -171,8 +198,8 @@ public class SelectBordView extends SimpleGameView {
 
 		if (selectedPlants.size() <= data.getNbLines()) {
 			graphics.setColor(Color.GRAY);
-			graphics.fill(new Rectangle2D.Float(super.getXOrigin(), super.getYOrigin(), super.getWidth() + 2,
-					super.getLength() - 2));
+			graphics.fill(new Rectangle2D.Float(xOrigin, yOrigin, width + 2,
+					length - 2));
 		}
 		Coordinates c = data.getSelected();
 		if (c != null) {
@@ -200,14 +227,14 @@ public class SelectBordView extends SimpleGameView {
 
 		if (selectedPlants.size() <= data.getNbLines()) {
 			for (Plant p : selectedPlants) {
-				p.draw(this, graphics, (int) this.getXOrigin() + (squareSize / 2) - sizeOfPlant / 4,
-						(int) this.getYOrigin() + squareSize * i);
+				p.draw(this, graphics, (int) xOrigin + (squareSize / 2) - sizeOfPlant / 4,
+						(int) yOrigin + squareSize * i);
 
 				i += 1;
 			}
 		} else {
 			for (Plant p : selectedPlants) {
-				p.draw(this, graphics, (int) this.getXOrigin() + (squareSize / 2) - sizeOfPlant / 4 + squareSize * i,
+				p.draw(this, graphics, (int) xOrigin + (squareSize / 2) - sizeOfPlant / 4 + squareSize * i,
 						(int) (squareSize / 2) + squareSize * j - sizeOfPlant / 4);
 
 				i += 1;

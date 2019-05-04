@@ -6,22 +6,45 @@ import java.awt.geom.Rectangle2D;
 import java.awt.geom.RectangularShape;
 import java.util.ArrayList;
 
-import models.Cell;
 import models.MovingElement;
 import models.SimpleGameData;
+import models.cells.Cell;
 import models.plants.Plant;
 
 public class BordView extends SimpleGameView {
 	private static int squareSize;
+	private static int xOrigin;
+	private static int yOrigin;
+	private static int length;
+	private static int width;
 
 	public BordView(int xOrigin, int yOrigin, int length, int width, int squareSize) {
-		super(xOrigin, yOrigin, length, width);
+		BordView.xOrigin = xOrigin;
+		BordView.yOrigin = yOrigin;
+		BordView.length = length;
+		BordView.width = width;
 		BordView.squareSize = squareSize;
 	}
 
 	public static BordView initGameGraphics(int xOrigin, int yOrigin, int length, SimpleGameData data) {
 		int squareSize = (int) (length * 1.0 / data.getNbLines());
 		return new BordView(xOrigin, yOrigin, length, data.getNbColumns() * squareSize, squareSize);
+	}
+	
+	public int getXOrigin() {
+		return xOrigin;
+	}
+
+	public int getYOrigin() {
+		return yOrigin;
+	}
+
+	public int getWidth() {
+		return width;
+	}
+
+	public int getLength() {
+		return length;
 	}
 
 	public int indexFromReaCoord(float coord, int origin) { // attention, il manque des test de validité des
@@ -45,7 +68,7 @@ public class BordView extends SimpleGameView {
 	 *                                  game board.
 	 */
 	public int lineFromY(float y) {
-		return indexFromReaCoord(y, super.getYOrigin());
+		return indexFromReaCoord(y, yOrigin);
 	}
 
 	/**
@@ -57,11 +80,11 @@ public class BordView extends SimpleGameView {
 	 *                                  game board.
 	 */
 	public static int caseYFromY(float y) {
-		return (int) ((y - 100) / squareSize);
+		return (int) ((y - yOrigin) / squareSize);
 	}
 
 	public static int caseXFromX(float x) {
-		return (int) ((x - 450) / squareSize);
+		return (int) ((x - xOrigin) / squareSize);
 	}
 
 	/**
@@ -73,15 +96,15 @@ public class BordView extends SimpleGameView {
 	 *                                  game board.
 	 */
 	public int columnFromX(float x) {
-		return indexFromReaCoord(x, super.getXOrigin());
+		return indexFromReaCoord(x, xOrigin);
 	}
 
 	protected float xFromI(int i) {
-		return realCoordFromIndex(i, super.getXOrigin());
+		return realCoordFromIndex(i, xOrigin);
 	}
 
 	protected float yFromJ(int j) {
-		return realCoordFromIndex(j, super.getYOrigin());
+		return realCoordFromIndex(j, yOrigin);
 	}
 
 	public RectangularShape drawCell(int i, int j) {
@@ -126,10 +149,10 @@ public class BordView extends SimpleGameView {
 		}
 
 		graphics.setColor(Color.decode("#cbd9ef"));
-		graphics.fill(new Rectangle2D.Float(super.getXOrigin() + super.getWidth(), 150,
-				super.getXOrigin() + super.getWidth(), 150 + super.getLength()));
+		graphics.fill(new Rectangle2D.Float(xOrigin + width, 150,
+				xOrigin + width, 150 + length));
 
-		graphics.fill(new Rectangle2D.Float(super.getXOrigin(), 0, super.getXOrigin() + super.getWidth(), 150));
+		graphics.fill(new Rectangle2D.Float(xOrigin, 0, xOrigin + width, 150));
 
 		ArrayList<Plant> myPlants = data.getMyPlants();
 

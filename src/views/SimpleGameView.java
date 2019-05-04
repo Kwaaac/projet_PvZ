@@ -15,33 +15,6 @@ import models.projectiles.Projectile;
 import models.zombies.Zombie;
 
 public abstract class SimpleGameView implements GameView {
-	private final int xOrigin;
-	private final int yOrigin;
-	private final int width;
-	private final int length;
-
-	protected SimpleGameView(int xOrigin, int yOrigin, int length, int width) {
-		this.xOrigin = xOrigin;
-		this.yOrigin = yOrigin;
-		this.length = length;
-		this.width = width;
-	}
-
-	public int getXOrigin() {
-		return xOrigin;
-	}
-
-	public int getYOrigin() {
-		return yOrigin;
-	}
-
-	public int getWidth() {
-		return width;
-	}
-
-	public int getLength() {
-		return length;
-	}
 
 	int sizeOfPlant = Plant.getSizeOfPlant();
 

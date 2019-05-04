@@ -20,7 +20,7 @@ public class TangleKelp extends Plant {
 	}
 	
 	public TangleKelp() {
-		super(-10, -10, 0, 1, 1, 50, "slow");
+		this(-10, -10);
 	}
 	
 	int sizeOfPlant = super.getSizeOfPlant();
@@ -47,4 +47,8 @@ public class TangleKelp extends Plant {
 		view.drawTangleKelp(graphics, x,  y, color);
 	}
 
+	@Override
+	public boolean canBePlantedOnWater() {
+		return true;
+	}
 }

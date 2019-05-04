@@ -150,5 +150,15 @@ public abstract class Plant extends Entities implements IPlant {
 
 		}
 	}
+	
+	@Override
+	public boolean canBePlantedOnWater() {
+		return false;
+	}
+	
+	@Override 
+	public boolean isLilyPad() {
+		return false;
+	}
 
 }
