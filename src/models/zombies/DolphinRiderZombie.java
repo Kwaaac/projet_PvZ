@@ -53,6 +53,4 @@ public class DolphinRiderZombie extends Zombie {
 		view.drawDolphinRiderZombie(graphics, x, y, color);
 	}
 	
-	@Override
-	public void action() {}
 }

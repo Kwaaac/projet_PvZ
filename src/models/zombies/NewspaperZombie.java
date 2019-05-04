@@ -3,6 +3,7 @@ package models.zombies;
 import java.awt.Graphics2D;
 
 import fr.umlv.zen5.ApplicationContext;
+import models.SimpleGameData;
 import views.SimpleGameView;
 
 public class NewspaperZombie extends Zombie {
@@ -12,7 +13,7 @@ public class NewspaperZombie extends Zombie {
 	private final int threat = 1;
 	
 	public NewspaperZombie(int x, int y) {
-		super(x, y, 100, 320, -0.93);
+		super(x, y, 100, 340, -0.93);
 	}
 
 	public NewspaperZombie() {
@@ -54,10 +55,12 @@ public class NewspaperZombie extends Zombie {
 	}
 	
 	@Override
-	public void action() {
-		if (this.life != 320) {
-			setSpeed(3);
+	public boolean action(SimpleGameData dataBord) {
+		if (this.life <= 200) {
+			setSpeed(-1.70);
+			shootBarMax = (int) (3 * -7500);
 		}
+		return true;
 	}
 	
 	

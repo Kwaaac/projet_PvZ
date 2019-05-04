@@ -28,8 +28,8 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie 
 
 	public Zombie(int x, int y, int damage, int life, double speed) {
 		super(x, y, damage, life);
-		this.speed = -1.7;
-		this.shootBarMax = (int) (speed * -7500);
+		speed = -1.7;
+		shootBarMax = (int) (speed * -7500);
 		shootTime = System.currentTimeMillis();
 		slowedTime.steady();
 	}
@@ -74,8 +74,8 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie 
 		return speed;
 	}
 
-	public void setSpeed(int x) {
-		speed-=x;
+	public void setSpeed(double d) {
+		speed=d;
 	}
 	
 	public void go(float x) {
@@ -84,9 +84,6 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie 
 		} else {
 			setSpeed(x / 2);
 			shootBarMax = (int) (getSpeed() * -7500);
-			slowedTime.pause();
-			System.out.println(slowedTime.getDureeSec());
-			slowedTime.resume();
 
 			if (slowedTime.asReachTimer(6)) {
 				slowedTime.steady();

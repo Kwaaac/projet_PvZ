@@ -70,7 +70,6 @@ public abstract class Plant extends Entities implements IPlant {
 		mCooldown.put("verySlow", (long) 35);
 		mCooldown.put("bigTime", (long) 60);
 		
-		
 		this.shootBarMax = shootBarMax;
 		this.cost = cost;
 		this.cooldown = mCooldown.get(cooldown);

@@ -53,6 +53,4 @@ public class PeashooterZombie extends Zombie {
 		view.drawPeashooterZombie(graphics, x, y, color);
 	}
 	
-	@Override
-	public void action() {}
 }

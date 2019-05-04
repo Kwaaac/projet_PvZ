@@ -53,6 +53,4 @@ public class SquashZombie extends Zombie {
 		view.drawSquashZombie(graphics, x, y, color);
 	}
 	
-	@Override
-	public void action() {}
 }

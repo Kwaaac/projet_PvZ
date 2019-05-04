@@ -53,6 +53,4 @@ public class JackintheBoxZombie extends Zombie {
 		view.drawJackintheBoxZombie(graphics, x, y, color);
 	}
 	
-	@Override
-	public void action() {}
 }

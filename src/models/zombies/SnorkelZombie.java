@@ -53,6 +53,4 @@ public class SnorkelZombie extends Zombie {
 		view.drawSnorkelZombie(graphics, x, y, color);
 	}
 	
-	@Override
-	public void action() {}
 }

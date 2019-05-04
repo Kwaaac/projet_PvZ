@@ -50,6 +50,4 @@ public class FlagZombie extends Zombie{
 		view.drawFlagZombie(graphics, x, y, color);
 	}
 	
-	@Override
-	public void action() {}
 }

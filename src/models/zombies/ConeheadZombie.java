@@ -51,6 +51,4 @@ public class ConeheadZombie extends Zombie {
 		view.drawConeheadZombie(graphics, x, y, color);
 	}
 	
-	@Override
-	public void action() {}
 }

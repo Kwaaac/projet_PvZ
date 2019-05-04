@@ -53,6 +53,4 @@ public class DrZomboss extends Zombie {
 		view.drawDrZomboss(graphics, x, y, color);
 	}
 	
-	@Override
-	public void action() {}
 }

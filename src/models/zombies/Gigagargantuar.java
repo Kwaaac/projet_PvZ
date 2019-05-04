@@ -53,6 +53,4 @@ public class Gigagargantuar extends Zombie {
 		view.drawGigagargantuar(graphics, x, y, color);
 	}
 	
-	@Override
-	public void action() {}
 }

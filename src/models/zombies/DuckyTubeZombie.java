@@ -53,6 +53,4 @@ public class DuckyTubeZombie extends Zombie {
 		view.drawDuckyTubeZombie(graphics, x, y, color);
 	}
 	
-	@Override
-	public void action() {}
 }

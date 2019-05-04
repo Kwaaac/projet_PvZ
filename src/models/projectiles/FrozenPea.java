@@ -9,7 +9,7 @@ public class FrozenPea extends Projectile {
 	private final String color = "#3A7DF2";
 
 	public FrozenPea(float x, float y) {
-		super(x, y, 2, 1, 20.0);
+		super(x, y, 75, 1, 20.0);
 	}
 
 	@Override

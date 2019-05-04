@@ -53,6 +53,4 @@ public class JalapenoZombie extends Zombie {
 		view.drawJalapenoZombie(graphics, x, y, color);
 	}
 	
-	@Override
-	public void action() {}
 }

@@ -51,7 +51,4 @@ public class BucketheadZombie extends Zombie {
 	public void draw(SimpleGameView view, Graphics2D graphics, float x, float y) {
 		view.drawBucketheadZombie(graphics, x, y, color);
 	}
-	
-	@Override
-	public void action() {}
 }

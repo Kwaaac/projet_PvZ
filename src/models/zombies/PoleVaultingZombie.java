@@ -77,7 +77,7 @@ public class PoleVaultingZombie extends Zombie {
 	public boolean action(SimpleGameData dataBord) {
 		if (detect(dataBord) && jump) {
 			jump = false;
-			setX(x - BordView.getSquareSize() - 20);
+			setX(x - BordView.getSquareSize() - 50);
 			
 			return false;
 		}

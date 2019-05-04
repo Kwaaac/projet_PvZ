@@ -23,6 +23,7 @@ public class CherryBomb extends Plant {
 	public CherryBomb(int x, int y) {
 		super(x, y, 0, 1, 1200, 0, "free");
 		this.zone = zone();
+		this.shootTime = System.currentTimeMillis();
 	}
 
 	public CherryBomb() {
@@ -70,6 +71,9 @@ public class CherryBomb extends Plant {
 	public void action(ArrayList<Projectile> myBullet, BordView view, ArrayList<Zombie> myZombies,
 			SimpleGameData dataBord) {
 
+		
+		System.out.println(this.shootBar + " // " + this.shootBarMax);
+		
 		if (this.readyToshot()) {
 			for (Entities z : this.detect(view, dataBord)) {
 				z.takeDmg(1800);

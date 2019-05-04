@@ -52,7 +52,5 @@ public class NormalZombie extends Zombie {
 		view.drawNormalZombie(graphics, x, y, color);
 	}
 
-	@Override
-	public void action() {}
 
 }

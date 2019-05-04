@@ -53,6 +53,4 @@ public class ScreenDoorZombie extends Zombie {
 		view.drawScreenDoorZombie(graphics, x, y, color);
 	}
 	
-	@Override
-	public void action() {}
 }

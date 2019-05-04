@@ -53,6 +53,4 @@ public class LadderZombie extends Zombie {
 		view.drawLadderZombie(graphics, x, y, color);
 	}
 	
-	@Override
-	public void action() {}
 }

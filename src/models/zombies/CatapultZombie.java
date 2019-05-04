@@ -53,6 +53,4 @@ public class CatapultZombie extends Zombie {
 		view.drawCatapultZombie(graphics, x, y, color);
 	}
 	
-	@Override
-	public void action() {}
 }

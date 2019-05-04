@@ -53,6 +53,4 @@ public class TallNutZombie extends Zombie {
 		view.drawTallNutZombie(graphics, x, y, color);
 	}
 	
-	@Override
-	public void action() {}
 }

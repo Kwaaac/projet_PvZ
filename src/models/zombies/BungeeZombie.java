@@ -53,6 +53,4 @@ public class BungeeZombie extends Zombie {
 		view.drawBungeeZombie(graphics, x, y, color);
 	}
 	
-	@Override
-	public void action() {}
 }

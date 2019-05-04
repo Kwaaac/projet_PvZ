@@ -53,6 +53,4 @@ public class ZombieYeti extends Zombie {
 		view.drawZombieYeti(graphics, x, y, color);
 	}
 	
-	@Override
-	public void action() {}
 }

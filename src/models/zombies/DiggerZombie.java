@@ -53,6 +53,4 @@ public class DiggerZombie extends Zombie {
 		view.drawDiggerZombie(graphics, x, y, color);
 	}
 	
-	@Override
-	public void action() {}
 }

@@ -53,6 +53,4 @@ public class PogoZombie extends Zombie {
 		view.drawPogoZombie(graphics, x, y, color);
 	}
 	
-	@Override
-	public void action() {}
 }

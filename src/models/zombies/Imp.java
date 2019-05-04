@@ -53,6 +53,4 @@ public class Imp extends Zombie {
 		view.drawImp(graphics, x, y, color);
 	}
 	
-	@Override
-	public void action() {}
 }
