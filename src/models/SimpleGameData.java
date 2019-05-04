@@ -79,8 +79,16 @@ public class SimpleGameData {
 
 		return null;
 	}
+	
+	/**
+	 * Allow you to get the y line starting at the x column (start from the left side end at the right side)
+	 * 
+	 * @param x The starting column
+	 * @param y The line
+	 * @return Return an ArrayList<Cell> of cells from the y line, starting at the x column and ending to the right side of the bord
+	 */
 
-	public ArrayList<Cell> getLineCell(int x, int y) {
+	public ArrayList<Cell> getLineCell(int y, int x) {
 		ArrayList<Cell> cells = new ArrayList<>();
 		for (int i = x; i < nbColumns; i++) {
 			cells.add(getCell(y, i));
@@ -514,7 +522,7 @@ public class SimpleGameData {
 			for (Map.Entry<Zombie, Integer> entry : zombieList.entrySet()) {
 				Zombie z = entry.getKey();
 				Integer spawn = entry.getValue();
-
+				
 				if (spawn == 0) {
 					endWave += 1;
 				}
@@ -522,7 +530,8 @@ public class SimpleGameData {
 				if (z.canSpawn(difficulty) && spawn > 0) {
 					probList.add(dataBord.RandomPosGenerator(z.getProb(difficulty)));
 					zombieAvailable.add(z);
-
+					
+					System.out.println(z);
 					entry.setValue(spawn - 1);
 				}
 			}

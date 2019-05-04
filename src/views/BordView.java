@@ -6,6 +6,7 @@ import java.awt.geom.Rectangle2D;
 import java.awt.geom.RectangularShape;
 import java.util.ArrayList;
 
+import models.Cell;
 import models.MovingElement;
 import models.SimpleGameData;
 import models.plants.Plant;
@@ -83,7 +84,7 @@ public class BordView extends SimpleGameView {
 		return realCoordFromIndex(j, super.getYOrigin());
 	}
 
-	protected RectangularShape drawCell(int i, int j) {
+	public RectangularShape drawCell(int i, int j) {
 		return new Rectangle2D.Float(xFromI(j), yFromJ(i), squareSize, squareSize);
 	}
 
@@ -99,45 +100,35 @@ public class BordView extends SimpleGameView {
 	 * @param data     the GameData containing the game data.
 	 */
 
-	
-	
 	public void draw(Graphics2D graphics, SimpleGameData data) {
 		String map = SimpleGameData.getMap();
 
-		
-		int compteur = 0;
+		// used to create a checkerboard with the cells
+		int checkerboard = 1;
+
+		// Draw cells
 		for (int i = 0; i < data.getNbLines(); i++) {
-			if (i%2 == 0) {compteur=1;}
-			else {compteur=0;}
-			for (int j = 0; j < data.getNbColumns(); j++) {
-				if (compteur%2 == 0) {
-					if (map == "Pool" && (i == 2 || i == 3)) {
-						graphics.setColor(Color.BLUE.darker());
-						graphics.fill(drawCell(i, j));
-					}
-					else {
-						graphics.setColor(Color.decode("#51FF00"));
-						graphics.fill(drawCell(i, j));
-					}
+
+			if (i % 2 == 0) { checkerboard = 1; } else { checkerboard = 0; }
+
+			ArrayList<Cell> cells = data.getLineCell(i, 0);
+			for (int j = 0; j < cells.size(); j++) {
+
+				if (checkerboard % 2 == 0) {
+					graphics.setColor(cells.get(j).getColor());
+				} else {
+					graphics.setColor(cells.get(j).getColor().darker());
 				}
-				else {
-					if (map == "Pool" && (i == 2 || i == 3)) {
-						graphics.setColor(Color.BLUE.darker());
-						graphics.fill(drawCell(i, j));
-					}
-					else {
-						graphics.setColor(Color.decode("#45D900"));
-						graphics.fill(drawCell(i, j));
-					}
-				}
-				compteur+=1;
+
+				graphics.fill(drawCell(i, j));
+				checkerboard += 1;
 			}
 		}
 
 		graphics.setColor(Color.decode("#cbd9ef"));
-		graphics.fill(new Rectangle2D.Float(super.getXOrigin() + super.getWidth(), 0,
-				super.getXOrigin() + super.getWidth(), super.getLength()));
-		
+		graphics.fill(new Rectangle2D.Float(super.getXOrigin() + super.getWidth(), 150,
+				super.getXOrigin() + super.getWidth(), 150 + super.getLength()));
+
 		graphics.fill(new Rectangle2D.Float(super.getXOrigin(), 0, super.getXOrigin() + super.getWidth(), 150));
 
 		ArrayList<Plant> myPlants = data.getMyPlants();
@@ -180,13 +171,11 @@ public class BordView extends SimpleGameView {
 	public void drawString(Graphics2D graphics, SimpleGameData data, int i, int j, String string) {
 		graphics.setColor(Color.BLACK);
 		graphics.drawString(string, j, j);
-		
+
 	}
+
 	public void drawRectangle(Graphics2D graphics, int x, int y, int width, int height, String string) {
 		graphics.setColor(Color.decode(string));
-		graphics.fill(new Rectangle2D.Float(x,y,width,height));
+		graphics.fill(new Rectangle2D.Float(x, y, width, height));
 	}
-
-	
-
 }

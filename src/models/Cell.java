@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import models.zombies.Zombie;
 
 public class Cell {
-	private Color color; //Later
+	private Color color = Color.decode("#55c920"); //Later
 	private boolean dirt;  //Later
 	
 	private final ArrayList<Zombie> entitiesInCell;
