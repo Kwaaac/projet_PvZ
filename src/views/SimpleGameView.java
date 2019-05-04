@@ -2,10 +2,12 @@ package views;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.geom.Arc2D;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.RoundRectangle2D;
+import java.awt.geom.Arc2D.Float;
 
 import models.MovingElement;
 import models.SimpleGameData;
@@ -365,7 +367,11 @@ public abstract class SimpleGameView implements GameView {
 	@Override
 	public void drawPoleVaultingZombie(Graphics2D graphics, float x, float y, String color) {
 		graphics.setColor(Color.decode(color));
-		graphics.fill(new Ellipse2D.Float(x, y, sizeOfZombie, sizeOfZombie));
+		graphics.fill(new Arc2D.Float(x, y, sizeOfZombie, sizeOfZombie, 0, 180, 2));
+		
+		graphics.setColor(Color.red);
+		graphics.fill(new Arc2D.Float(x, y, sizeOfZombie, sizeOfZombie, 0, -180, 2));
+		
 	}
 	
 	@Override
