@@ -9,14 +9,13 @@ public class BungeeZombie extends Zombie {
 
 	private final String name = "Normal Zombie";
 	private final String color = "#000000";
-	private final int threat = 1;
 	
 	public BungeeZombie(int x, int y) {
-		super(x, y, 100, 460, "slow");
+		super(x, y, 100, 460, 1, "slow");
 	}
 
 	public BungeeZombie() {
-		super(50, 50, 100, 460, "slow");
+		this(50, 50);
 	}
 
 	@Override
@@ -27,14 +26,6 @@ public class BungeeZombie extends Zombie {
 	@Override
 	public String toString() {
 		return name;
-	}
-
-	public Integer getProb(int difficulty) {
-		return (int) (((100/threat)*(difficulty))*0.55+0.10*threat);
-	}
-	
-	public boolean canSpawn(int difficulty) {
-		return threat<=difficulty;
 	}
 	
 	public void go() {

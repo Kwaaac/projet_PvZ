@@ -9,14 +9,13 @@ public class DiggerZombie extends Zombie {
 
 	private final String name = "DiggerZombie";
 	private final String color = "#000000";
-	private final int threat = 1;
 	
 	public DiggerZombie(int x, int y) {
-		super(x, y, 100, 300, "verySlow");//2 or 7
+		super(x, y, 100, 300, 1, "verySlow");//2 or 7
 	}
 
 	public DiggerZombie() {
-		super(50, 50, 100, 300, "verySlow");
+		this(50, 50);
 	}
 
 	@Override
@@ -29,13 +28,6 @@ public class DiggerZombie extends Zombie {
 		return name;
 	}
 
-	public Integer getProb(int difficulty) {
-		return (int) (((100/threat)*(difficulty))*0.55+0.10*threat);
-	}
-	
-	public boolean canSpawn(int difficulty) {
-		return threat<=difficulty;
-	}
 	
 	public void go() {
 		super.go((float) -0.93);

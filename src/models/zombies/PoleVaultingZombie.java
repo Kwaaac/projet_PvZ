@@ -12,13 +12,12 @@ public class PoleVaultingZombie extends Zombie {
 
 	private final String name = "PoleVaultingZombie";
 	private final String color = "#000000";
-	private final int threat = 1;
 	private final double[] diffSpeed = { -1.23, -0.93 };
 
 	private boolean jump = true;
 
 	public PoleVaultingZombie(int x, int y) {
-		super(x, y, 100, 340, "slow");
+		super(x, y, 100, 340, 1, "slow");
 	}
 
 	public PoleVaultingZombie() {
@@ -33,14 +32,6 @@ public class PoleVaultingZombie extends Zombie {
 	@Override
 	public String toString() {
 		return name;
-	}
-
-	public Integer getProb(int difficulty) {
-		return (int) (((100 / threat) * (difficulty)) * 0.55 + 0.10 * threat);
-	}
-
-	public boolean canSpawn(int difficulty) {
-		return threat <= difficulty;
 	}
 
 	public void go() {

@@ -12,5 +12,9 @@ public interface IZombie {
 	
 	void go();
 	
+	int getThreat();
+	
 	boolean action(SimpleGameData dataBord);
+
+	Integer getProb(int difficulty);
 }

@@ -7,13 +7,13 @@ import views.SimpleGameView;
 public class FlagZombie extends Zombie{
 	private final String name = "Flag Zombie";
 	private final String color = "#FFFFFF";
-	private final int threat = 1;
+
 	public FlagZombie(int x, int y) {
-		super(x, y, 100, 200, "slow");
+		super(x, y, 100, 200, 1, "slow");
 	}
 
 	public FlagZombie() {
-		super(50, 50, 100, 200, "slow");
+		this(50, 50);
 	}
 
 	@Override
@@ -26,13 +26,6 @@ public class FlagZombie extends Zombie{
 		return name;
 	}
 	
-	public Integer getProb(int difficulty) {
-		return (int) (((100/threat)*(difficulty))*0.55+0.10*threat);
-	}
-	
-	public boolean canSpawn(int difficulty) {
-		return threat<=difficulty;
-	}
 	
 	public void go() {
 		super.go((float) -0.95);

@@ -1,6 +1,7 @@
 package models.zombies;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 import models.Chrono;
@@ -22,6 +23,7 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie 
 	protected int shootBarMax;
 	protected long shootBar;
 	protected long shootTime;
+	private final int threat;
 
 	protected Chrono slowedTime = new Chrono();
 
@@ -37,14 +39,18 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie 
         
     };
 	
-	public Zombie(int x, int y, int damage, int life, String s) {
+	public Zombie(int x, int y, int damage, int life, int threat, String s) {
 		super(x, y, damage, life);
 		speed = mSpeed.get(s);
 		shootBarMax = (int) (speed * -7500);
 		shootTime = System.currentTimeMillis();
+		this.threat= threat;
 		slowedTime.steady();
 	}
-
+	
+	private final static ArrayList<Zombie> common = new ArrayList<Zombie>(Arrays.asList(new NormalZombie(),new FlagZombie(),new BucketheadZombie(),new ConeheadZombie(),new NewspaperZombie() ));
+	private final static ArrayList<Zombie> pool = new ArrayList<Zombie>(Arrays.asList(new DolphinRiderZombie(), new DuckyTubeZombie()));
+	
 	public float getX() {
 		return super.getX();
 	}
@@ -264,7 +270,6 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie 
 		}
 	}
 
-	public abstract Integer getProb(int difficulty);
 
 	/*
 	 * For zombies that don't have actions
@@ -273,5 +278,30 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie 
 	@Override
 	public boolean action(SimpleGameData dataBord) {
 		return true;
+	}
+
+	public static ArrayList<Zombie> getZombieList(String map) {
+		if(map == "pool") {
+			ArrayList<Zombie> res =new ArrayList<Zombie>();
+			res.addAll(common);
+			res.addAll(pool);
+			return res;
+		}
+		return common;
+	}
+	
+	@Override
+	public int getThreat() {
+		return threat;
+	}
+	
+	@Override
+	public Integer getProb(int difficulty) {
+		return (int) (((100/threat)*(difficulty))*0.55+0.10*threat);
+	}
+	
+	@Override
+	public boolean canSpawn(int difficulty) {
+		return threat<=difficulty;
 	}
 }

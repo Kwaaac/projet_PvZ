@@ -9,14 +9,13 @@ public class DolphinRiderZombie extends Zombie {
 
 	private final String name = "DolphinRiderZombie";
 	private final String color = "#000000";
-	private final int threat = 1;
 	
 	public DolphinRiderZombie(int x, int y) {
-		super(x, y, 100, 340, "ultraSlow");
+		super(x, y, 100, 340, 1, "ultraSlow");
 	}
 
 	public DolphinRiderZombie() {
-		super(50, 50, 100, 340, "ultraSlow");
+		this(50, 50);
 	}
 
 	@Override
@@ -27,14 +26,6 @@ public class DolphinRiderZombie extends Zombie {
 	@Override
 	public String toString() {
 		return name;
-	}
-
-	public Integer getProb(int difficulty) {
-		return (int) (((100/threat)*(difficulty))*0.55+0.10*threat);
-	}
-	
-	public boolean canSpawn(int difficulty) {
-		return threat<=difficulty;
 	}
 	
 	public void go() {

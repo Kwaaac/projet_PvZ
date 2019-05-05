@@ -9,14 +9,13 @@ public class FootballZombie extends Zombie {
 
 	private final String name = "FootballZombie";
 	private final String color = "#000000";
-	private final int threat = 1;
 	
 	public FootballZombie(int x, int y) {
-		super(x, y, 100, 1600, "verySlow");//2.5
+		super(x, y, 100, 1600, 1, "verySlow");//2.5
 	}
 
 	public FootballZombie() {
-		super(50, 50, 100, 1600, "verySlow");
+		this(50, 50);
 	}
 
 	@Override
@@ -27,14 +26,6 @@ public class FootballZombie extends Zombie {
 	@Override
 	public String toString() {
 		return name;
-	}
-
-	public Integer getProb(int difficulty) {
-		return (int) (((100/threat)*(difficulty))*0.55+0.10*threat);
-	}
-	
-	public boolean canSpawn(int difficulty) {
-		return threat<=difficulty;
 	}
 	
 	public void go() {

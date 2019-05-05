@@ -8,9 +8,9 @@ public class ConeheadZombie extends Zombie {
 
 	private final String name = "Conehead Zombie";
 	private final String color = "#CB5050";
-	private final int threat = 2;
+
 	public ConeheadZombie(int x, int y) {
-		super(x, y, 100, 560, "slow");
+		super(x, y, 100, 560, 2, "slow");
 	}
 
 	public ConeheadZombie() {
@@ -27,13 +27,6 @@ public class ConeheadZombie extends Zombie {
 		return name;
 	}
 	
-	public Integer getProb(int difficulty) {
-		return (int) (((100/threat)*(difficulty))*0.55+0.10*threat);
-	}
-	
-	public boolean canSpawn(int difficulty) {
-		return threat<=difficulty;
-	}
 	
 	public void go() {
 		super.go((float) -0.95);
