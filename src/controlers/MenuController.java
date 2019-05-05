@@ -42,8 +42,14 @@ public class MenuController {
 		BordView view = new BordView(0, 0, width, height, height / 3);
 
 		view.drawRectangle(context, 0, 0, width, height / 3, "#61DB5F");
+		view.drawString(context, (width/2)-100, 1*(height / 6), "DAY", "000000", 50);
+		
 		view.drawRectangle(context, 0, height / 3, width, height / 3, "#5F79DB");
+		view.drawString(context, (width/2)-100, 3*(height / 6), "NIGHT", "000000", 50);
+		
 		view.drawRectangle(context, 0, height / 3 + height / 3, width, height / 3, "#5FC1DB");
+		view.drawString(context, (width/2)-100, 5*(height / 6), "POOL", "000000", 50);
+		
 		view.drawRectangle(context, width - 65, 15, 50, 50, "#DE0000");
 
 		while (true) {

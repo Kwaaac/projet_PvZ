@@ -315,24 +315,36 @@ public class SelectBordView extends SimpleGameView {
 	public void drawCherryBomb(Graphics2D graphics, int x, int y, String color) {
 		graphics.setColor(Color.decode(color));
 		graphics.fill(new Rectangle2D.Float(x - 15, y + sizeOfPlant / 2, sizeOfPlant, sizeOfPlant));
+		graphics.setColor(Color.WHITE);
+		graphics.setFont(new Font("Afterglow", Font.PLAIN, 20));
+		graphics.drawString("150", x+15+sizeOfPlant/2, y+squareSize-5);
 	}
 
 	@Override
 	public void drawWallNut(Graphics2D graphics, int x, int y, String color) {
 		graphics.setColor(Color.decode(color));
 		graphics.fill(new Rectangle2D.Float(x - 15, y + sizeOfPlant / 2, sizeOfPlant, sizeOfPlant));
+		graphics.setColor(Color.WHITE);
+		graphics.setFont(new Font("Afterglow", Font.PLAIN, 20));
+		graphics.drawString("50", x+15+sizeOfPlant/2, y+squareSize-5);
 	}
 
 	@Override
 	public void drawPotatoMine(Graphics2D graphics, int x, int y, String color) {
 		graphics.setColor(Color.decode(color));
 		graphics.fill(new Rectangle2D.Float(x - 10, y + sizeOfPlant / 2 + 7, sizeOfPlant - 15, sizeOfPlant - 15));
+		graphics.setColor(Color.WHITE);
+		graphics.setFont(new Font("Afterglow", Font.PLAIN, 20));
+		graphics.drawString("25", x+15+sizeOfPlant/2, y+squareSize-5);
 	}
 
 	@Override
 	public void drawSnowPea(Graphics2D graphics, int x, int y, String color) {
 		graphics.setColor(Color.decode(color));
 		graphics.fill(new Rectangle2D.Float(x - 15, y + sizeOfPlant / 2, sizeOfPlant, sizeOfPlant));
+		graphics.setColor(Color.WHITE);
+		graphics.setFont(new Font("Afterglow", Font.PLAIN, 20));
+		graphics.drawString("175", x+15+sizeOfPlant/2, y+squareSize-5);
 	}
 
 	@Override
@@ -342,18 +354,28 @@ public class SelectBordView extends SimpleGameView {
 
 		graphics.setColor(Color.decode("#AF6907"));
 		graphics.fill(new Ellipse2D.Float(x - 7, y + sizeOfPlant / 2 + 8, sizeOfPlant - 15, sizeOfPlant - 15));
+		
+		graphics.setColor(Color.WHITE);
+		graphics.setFont(new Font("Afterglow", Font.PLAIN, 20));
+		graphics.drawString("50", x+15+sizeOfPlant/2, y+squareSize-5);
 	}
 
 	@Override
 	public void drawChomper(Graphics2D graphics, int x, int y, String color) {
 		graphics.setColor(Color.decode(color));
 		graphics.fill(new Rectangle2D.Float(x - 25, y + sizeOfPlant / 2 - 10, sizeOfPlant + 20, sizeOfPlant + 20));
+		graphics.setColor(Color.WHITE);
+		graphics.setFont(new Font("Afterglow", Font.PLAIN, 20));
+		graphics.drawString("150", x+15+sizeOfPlant/2, y+squareSize-5);
 	}
 
 	@Override
 	public void drawRepeater(Graphics2D graphics, int x, int y, String color) {
 		graphics.setColor(Color.decode(color));
 		graphics.fill(new Rectangle2D.Float(x - 15, y + sizeOfPlant / 2, sizeOfPlant, sizeOfPlant));
+		graphics.setColor(Color.WHITE);
+		graphics.setFont(new Font("Afterglow", Font.PLAIN, 20));
+		graphics.drawString("200", x+15+sizeOfPlant/2, y+squareSize-5);
 	}
 
 	/*-------------------------------NIGHT------------------------------*/
@@ -361,48 +383,72 @@ public class SelectBordView extends SimpleGameView {
 	public void drawPuffShroom(Graphics2D graphics, int x, int y, String color) {
 		graphics.setColor(Color.decode(color));
 		graphics.fill(new Rectangle2D.Float(x - 10, y + sizeOfPlant / 2 + 7, sizeOfPlant - 15, sizeOfPlant - 15));
+		graphics.setColor(Color.WHITE);
+		graphics.setFont(new Font("Afterglow", Font.PLAIN, 20));
+		graphics.drawString("0", x+15+sizeOfPlant/2, y+squareSize-5);
 	}
 
 	@Override
 	public void drawSunShroom(Graphics2D graphics, int x, int y, String color) {
 		graphics.setColor(Color.decode(color));
 		graphics.fill(new Rectangle2D.Float(x - 15, y + sizeOfPlant / 2, sizeOfPlant, sizeOfPlant));
+		graphics.setColor(Color.WHITE);
+		graphics.setFont(new Font("Afterglow", Font.PLAIN, 20));
+		graphics.drawString("25", x+15+sizeOfPlant/2, y+squareSize-5);
 	}
 
 	@Override
 	public void drawFumeShroom(Graphics2D graphics, int x, int y, String color) {
 		graphics.setColor(Color.decode(color));
 		graphics.fill(new Rectangle2D.Float(x - 15, y + sizeOfPlant / 2, sizeOfPlant, sizeOfPlant));
+		graphics.setColor(Color.WHITE);
+		graphics.setFont(new Font("Afterglow", Font.PLAIN, 20));
+		graphics.drawString("75", x+15+sizeOfPlant/2, y+squareSize-5);
 	}
 
 	@Override
 	public void drawGraveBuster(Graphics2D graphics, int x, int y, String color) {
 		graphics.setColor(Color.decode(color));
 		graphics.fill(new Rectangle2D.Float(x - 15, y + sizeOfPlant / 2, sizeOfPlant, sizeOfPlant));
+		graphics.setColor(Color.WHITE);
+		graphics.setFont(new Font("Afterglow", Font.PLAIN, 20));
+		graphics.drawString("75", x+15+sizeOfPlant/2, y+squareSize-5);
 	}
 
 	@Override
 	public void drawHypnoShroom(Graphics2D graphics, int x, int y, String color) {
 		graphics.setColor(Color.decode(color));
 		graphics.fill(new Rectangle2D.Float(x - 15, y + sizeOfPlant / 2, sizeOfPlant, sizeOfPlant));
+		graphics.setColor(Color.WHITE);
+		graphics.setFont(new Font("Afterglow", Font.PLAIN, 20));
+		graphics.drawString("75", x+15+sizeOfPlant/2, y+squareSize-5);
 	}
 
 	@Override
 	public void drawScaredyShroom(Graphics2D graphics, int x, int y, String color) {
 		graphics.setColor(Color.decode(color));
 		graphics.fill(new Rectangle2D.Float(x - 15, y + sizeOfPlant / 2, sizeOfPlant, sizeOfPlant));
+		graphics.setColor(Color.WHITE);
+		graphics.setFont(new Font("Afterglow", Font.PLAIN, 20));
+		graphics.drawString("25", x+15+sizeOfPlant/2, y+squareSize-5);
 	}
 
 	@Override
 	public void drawIceShroom(Graphics2D graphics, int x, int y, String color) {
 		graphics.setColor(Color.decode(color));
 		graphics.fill(new Rectangle2D.Float(x - 15, y + sizeOfPlant / 2, sizeOfPlant, sizeOfPlant));
+		graphics.setColor(Color.WHITE);
+		graphics.setFont(new Font("Afterglow", Font.PLAIN, 20));
+		graphics.drawString("75", x+15+sizeOfPlant/2, y+squareSize-5);
 	}
 
 	@Override
 	public void drawDoomShroom(Graphics2D graphics, int x, int y, String color) {
 		graphics.setColor(Color.decode(color));
 		graphics.fill(new Rectangle2D.Float(x - 15, y + sizeOfPlant / 2, sizeOfPlant, sizeOfPlant));
+		graphics.setColor(Color.WHITE);
+		graphics.setFont(new Font("Afterglow", Font.PLAIN, 20));
+		graphics.drawString("125", x+15+sizeOfPlant/2, y+squareSize-5);
 	}
 	/*-------------------------------POOL-------------------------------*/
 
@@ -413,6 +459,9 @@ public class SelectBordView extends SimpleGameView {
 
 		graphics.setColor(Color.decode("#DB5FBD"));
 		graphics.fill(new Ellipse2D.Float(x - 7, y + sizeOfPlant / 2 + 8, sizeOfPlant - 15, sizeOfPlant - 15));
+		graphics.setColor(Color.WHITE);
+		graphics.setFont(new Font("Afterglow", Font.PLAIN, 20));
+		graphics.drawString("225", x+15+sizeOfPlant/2, y+squareSize-5);
 	}
 
 	@Override
@@ -422,6 +471,9 @@ public class SelectBordView extends SimpleGameView {
 
 		graphics.setColor(Color.decode("#16D9B6"));
 		graphics.fill(new Ellipse2D.Float(x - 7, y + sizeOfPlant / 2 + 8, sizeOfPlant - 15, sizeOfPlant - 15));
+		graphics.setColor(Color.WHITE);
+		graphics.setFont(new Font("Afterglow", Font.PLAIN, 20));
+		graphics.drawString("0", x+15+sizeOfPlant/2, y+squareSize-5);
 	}
 
 	@Override
@@ -433,6 +485,9 @@ public class SelectBordView extends SimpleGameView {
 		graphics.setColor(Color.decode("#000000"));
 		graphics.fill(new Ellipse2D.Float(x - 7 - sizeOfPlant / 4, y + sizeOfPlant / 4 + 8,
 				sizeOfPlant - 15 + sizeOfPlant / 2, sizeOfPlant - 15 + sizeOfPlant / 2));
+		graphics.setColor(Color.WHITE);
+		graphics.setFont(new Font("Afterglow", Font.PLAIN, 20));
+		graphics.drawString("25", x+15+sizeOfPlant/2, y+squareSize-5);
 	}
 
 	@Override
@@ -442,6 +497,9 @@ public class SelectBordView extends SimpleGameView {
 
 		graphics.setColor(Color.decode("#90D322"));
 		graphics.fill(new Ellipse2D.Float(x - 7, y + sizeOfPlant / 2 + 8, sizeOfPlant - 15, sizeOfPlant - 15));
+		graphics.setColor(Color.WHITE);
+		graphics.setFont(new Font("Afterglow", Font.PLAIN, 20));
+		graphics.drawString("25", x+15+sizeOfPlant/2, y+squareSize-5);
 	}
 	
 
