@@ -109,7 +109,6 @@ public class MenuController {
 					choice = "plantSelection";
 					break;
 				}
-				break;
 
 			case "plantSelection":
 
@@ -119,14 +118,14 @@ public class MenuController {
 				view.drawRectangle(context, width - 65, 15, 50, 50, "#DE0000"); // quit
 
 				if (dataBord.isCorrectSelectLocation(viewContent, x, y)) {
-
 					viewContent.truc(x, y, plantSelectionView, dataBord, dataSelect);
 
-				} else if (dataSelect.isCorrectSelectLocation(plantSelectionView, x, y)) {
-					plantSelectionView.truc(x, y, viewContent, dataSelect, dataBord);
+				} else {
+					if (dataSelect.isCorrectSelectLocation(plantSelectionView, x, y)) {
+						plantSelectionView.truc(x, y, viewContent, dataSelect, dataBord);
+					}
 				}
 
-				break;
 			}
 
 		}
