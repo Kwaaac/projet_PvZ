@@ -81,4 +81,9 @@ public class DolphinRiderZombie extends Zombie {
 		
 	}
 	
+	@Override
+	public boolean isCommon() {
+		return false;
+	}
+	
 }

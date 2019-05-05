@@ -14,9 +14,11 @@ public class DancingZombie extends Zombie {
 	private final String name = "DancingZombie";
 	private final String color = "#000000";
 	private Chrono dance = new Chrono();
+	private boolean lock = false;
 	
 	public DancingZombie(int x, int y) {
 		super(x, y, 100, 340, 1, "ultraSlow");
+		dance.start();
 	}
 
 	public DancingZombie() {
@@ -53,13 +55,27 @@ public class DancingZombie extends Zombie {
 	@Override
 	public void action(BordView view,SimpleGameData dataBord, ArrayList<Zombie> myZombies) {
 		int scareSize = BordView.getSquareSize();
-		if (dance.asReachTimer(5)) {
-			System.out.println("ajgvzejavze");
-			myZombies.add(new BackupDancerZombie((int)super.getX()+scareSize,(int)super.getY()));//avant
-			myZombies.add(new BackupDancerZombie((int)super.getX(),(int)super.getY()+scareSize));//haut
-			myZombies.add(new BackupDancerZombie((int)super.getX()-scareSize,(int)super.getY()));//arriere
-			myZombies.add(new BackupDancerZombie((int)super.getX(),(int)super.getY()-scareSize));//bas
+		ArrayList<Zombie> zombieInQueu = new ArrayList<Zombie>();
+		
+		
+		if (dance.asReachTimer(10) && lock == false) {
+			if (dataBord.isCorrectBordLocation(view, (float)super.getX()+scareSize,(float)super.getY())) {
+				zombieInQueu.add(new BackupDancerZombie((int)super.getX()+scareSize,(int)super.getY()));//avant
+			}
 			
+			if (dataBord.isCorrectBordLocation(view, (float)super.getX(),(float)super.getY()+scareSize)) {
+				zombieInQueu.add(new BackupDancerZombie((int)super.getX(),(int)super.getY()+scareSize));//haut
+			}
+			
+			if (dataBord.isCorrectBordLocation(view, (float)super.getX()+scareSize,(float)super.getY())) {
+				zombieInQueu.add(new BackupDancerZombie((int)super.getX()-scareSize,(int)super.getY()));//arriere
+			}
+			
+			if (dataBord.isCorrectBordLocation(view, (float)super.getX(),(float)super.getY()-scareSize)) {
+				zombieInQueu.add(new BackupDancerZombie((int)super.getX(),(int)super.getY()-scareSize));//bas
+			}
+			lock = true;
+			dataBord.setZombieInQueu(zombieInQueu);
 			this.resetAS();
 		}
 		

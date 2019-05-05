@@ -9,10 +9,12 @@ import models.zombies.Zombie;
 public abstract class Cell implements ICell {
 
 	private final ArrayList<Zombie> zombiesInCell;
+	private final ArrayList<Plant> plantInCell;
 	private boolean plantedPlant = false;
 
 	public Cell() {
 		zombiesInCell = new ArrayList<>();
+		plantInCell = new ArrayList<>();
 	}
 
 	/**
@@ -25,6 +27,7 @@ public abstract class Cell implements ICell {
 		
 		if(plant.canBePlantedOnGrass()) {
 			plantedPlant = true;
+			plantInCell.add(plant);
 			return true;
 		}
 		return false;
@@ -33,8 +36,9 @@ public abstract class Cell implements ICell {
 	/**
 	 * Remove the plant from the cell
 	 */
-	public void removePlant() {
+	public void removePlant(IEntite dPe) {
 		plantedPlant = false;
+		plantInCell.remove(dPe);
 	}
 
 	/**
@@ -70,6 +74,10 @@ public abstract class Cell implements ICell {
 	public ArrayList<Zombie> getZombiesInCell() {
 		return zombiesInCell;
 	}
+	
+	public ArrayList<Plant> getPlantInCell() {
+		return plantInCell;
+	}
 
 	/**
 	 * 
@@ -79,7 +87,10 @@ public abstract class Cell implements ICell {
 	public boolean isThereZombies() {
 		return !zombiesInCell.isEmpty();
 	}
-
+	
+	public boolean isTherePlant() {
+		return !plantInCell.isEmpty();
+	}
 	/**
 	 * 
 	 * @return True if a Plant is on the cell OR if there is zombies on the cell,
@@ -95,4 +106,6 @@ public abstract class Cell implements ICell {
 				+ (!zombiesInCell.isEmpty() ? "Voici les zombies présents \n" + zombiesInCell + ", "
 						: "Il n'y a pas de zombie");
 	}
+
+	
 }

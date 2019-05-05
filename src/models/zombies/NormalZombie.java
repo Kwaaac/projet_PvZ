@@ -4,6 +4,8 @@ import java.awt.Graphics2D;
 import java.util.ArrayList;
 
 import fr.umlv.zen5.ApplicationContext;
+import models.SimpleGameData;
+import views.BordView;
 import views.SimpleGameView;
 
 public class NormalZombie extends Zombie {
@@ -44,6 +46,11 @@ public class NormalZombie extends Zombie {
 	@Override
 	public void draw(SimpleGameView view, Graphics2D graphics, float x, float y) {
 		view.drawNormalZombie(graphics, x, y, color);
+	}
+
+	@Override
+	public void action(BordView view, SimpleGameData dataBord, ArrayList<Zombie> myZombies) {
+		
 	}
 
 

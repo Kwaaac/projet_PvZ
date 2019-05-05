@@ -32,6 +32,7 @@ public class SimpleGameData {
 	private final ArrayList<Coordinates> placedPlant = new ArrayList<Coordinates>();
 	private final ArrayList<Plant> myPlants = new ArrayList<>();
 	private final static ArrayList<Soleil> mySun = new ArrayList<>();
+	private ArrayList<Zombie> zombieInQueu = new ArrayList<>();//Dancing Zombie
 
 	private static boolean stop = false;
 
@@ -333,10 +334,17 @@ public class SimpleGameData {
 
 	}
 	
-	public void actionningZombie(ArrayList<Projectile> myBullet, BordView view, ArrayList<Zombie> myZombies, SimpleGameData dataBord) {
-
+	public void actionningZombie(ArrayList<Projectile> myBullet, BordView view, ArrayList<Zombie> myZombies, 
+			SimpleGameData dataBord) {
+		System.out.println(myZombies);
 		for (IZombie z : myZombies) {
+			
 			z.action(view, dataBord, myZombies);
+		}
+		
+		if (zombieInQueu.size() > 0) {
+			myZombies.addAll(zombieInQueu);
+			zombieInQueu = new ArrayList<Zombie>();
 		}
 
 	}
@@ -662,7 +670,14 @@ public class SimpleGameData {
 
 				zombieList.put(z, zombieList.get(z) - 1);
 
-				myZombies.add(z.createAndDrawNewZombie(view, context, x, y));
+				if (z.isCommon()) {
+					myZombies.add(z.createAndDrawNewZombie(view, context, x, y));
+					
+				}
+				else {
+					y = view.getYOrigin() + dataBord.RandomPosGenerator(2, 4) * sqrS + (sqrS / 2);
+					myZombies.add(z.createAndDrawNewZombie(view, context, x, y));
+				}
 				str.append("new " + zombieAvailable.get(selecteur) + new SimpleDateFormat("hh:mm:ss").format(new Date())
 						+ ")\n");
 
@@ -742,6 +757,10 @@ public class SimpleGameData {
 
 	public static int getActualMoney() {
 		return actualMoney;
+	}
+	
+	public void setZombieInQueu(ArrayList<Zombie> zombieList) {
+		zombieInQueu = zombieList;
 	}
 
 }

@@ -30,7 +30,7 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie 
 
 	private final HashMap<String, Double> mSpeed = new HashMap<String, Double>(){
         {
-        	put("fast", -1.5);//9+
+        	put("reallyFast", -1.5);//9+
         	put("fast", -1.38);//7
         	put("medium", -1.05);//5.5
         	put("slow", -0.93);//4.7
@@ -223,7 +223,7 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie 
 			if (p.isDead()) {
 				str.append(p + "meurt\n");
 				deadPoolE.add(p);
-				data.getCell(view.lineFromY(p.getY()), view.columnFromX(p.getX())).removePlant();
+				data.getCell(view.lineFromY(p.getY()), view.columnFromX(p.getX())).removePlant(p);
 			}
 		}
 	}
@@ -304,5 +304,10 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie 
 	@Override
 	public boolean canSpawn(int difficulty) {
 		return threat<=difficulty;
+	}
+	
+	@Override
+	public boolean isCommon() {
+		return true;
 	}
 }

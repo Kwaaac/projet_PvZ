@@ -51,8 +51,7 @@ public class DeadPool {
 			Le.remove(DPe);
 			if(dataBord.getCell(DPe.getCaseJ(), DPe.getCaseI()) != null) {
 				dataBord.getCell(DPe.getCaseJ(), DPe.getCaseI()).removeZombie(DPe);
-				}
-
+			}
 		}
 
 	}

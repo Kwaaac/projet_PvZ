@@ -9,6 +9,7 @@ import models.DeadPool;
 import models.Entities;
 import models.IEntite;
 import models.SimpleGameData;
+import models.cells.Cell;
 import models.plants.day.CherryBomb;
 import models.plants.day.Chomper;
 import models.plants.day.Peashooter;
@@ -30,6 +31,7 @@ import models.plants.pool.LilyPad;
 import models.plants.pool.SeaShroom;
 import models.plants.pool.TangleKelp;
 import models.zombies.Zombie;
+import views.BordView;
 
 public abstract class Plant extends Entities implements IPlant {
 	private final String type = "Plant";
@@ -77,6 +79,28 @@ public abstract class Plant extends Entities implements IPlant {
 			return pool;
 		}
 		return day;
+	}
+	
+	public void setCase(SimpleGameData data) {
+		int cX = BordView.caseXFromX(x);
+		int cY = BordView.caseYFromY(y);
+
+		Coordinates caseZ = new Coordinates(cX, cY);
+
+		if (!caseZ.equals(caseXY)) {
+
+			Cell actCell = data.getCell(cY, cX);
+			if (actCell != null) {
+
+				if (!(cX == data.getNbColumns() - 1)) {
+					data.getCell(caseXY.getJ(), caseXY.getI()).removePlant(this);
+				}
+
+				actCell.addPlant(this);
+
+				caseXY = caseZ;
+			}
+		}
 	}
 	
 	/**
@@ -136,7 +160,7 @@ public abstract class Plant extends Entities implements IPlant {
 		if (myZombies.size() == 0) {
 			for (Plant p : Mp) {
 				if (p.isDead()) {
-					data.getCell(p.getCaseJ(), p.getCaseI()).removePlant();
+					data.getCell(p.getCaseJ(), p.getCaseI()).removePlant(p);
 					DPe.add(p);
 				}
 			}

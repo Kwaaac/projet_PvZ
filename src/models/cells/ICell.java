@@ -11,7 +11,7 @@ public interface ICell {
 
 	boolean addPlant(Plant plant);
 	
-	void removePlant();
+	void removePlant(IEntite dPe);
 	
 	boolean isPlantedPlant();
 	

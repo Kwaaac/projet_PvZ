@@ -76,7 +76,7 @@ public class CherryBomb extends Plant {
 			}
 			
 			this.life = 0;
-			dataBord.getCell(getCaseJ(), getCaseI()).removePlant();
+			dataBord.getCell(getCaseJ(), getCaseI()).removePlant(this);
 		}
 
 		this.incAS();
