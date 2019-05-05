@@ -47,28 +47,21 @@ public abstract class Plant extends Entities implements IPlant {
 	private final static ArrayList<Plant> night = new ArrayList<>(Arrays.asList(new DoomShroom(), new FumeShroom(), new GraveBuster(), new HypnoShroom(), new IceShroom(), new PuffShroom(), new ScaredyShroom(), new SunShroom()));
 	private final static ArrayList<Plant> pool = new ArrayList<>(Arrays.asList(new Cattails(), new LilyPad(), new SeaShroom(), new TangleKelp()));
 	
-	private final HashMap<String, Long> mCooldown = new HashMap<String, Long>();
-	
-//	static {
-//		mCooldown.put("free", (long) 0);
-//		mCooldown.put("fast", (long) 5);
-//		mCooldown.put("medium", (long) 15);
-//		mCooldown.put("slow", (long) 20);
-//		mCooldown.put("verySlow", (long) 35);
-//		mCooldown.put("bigTime", (long) 60);
-//		
-//	}
+	private final HashMap<String, Long> mCooldown = new HashMap<String, Long>(){
+        {
+        put("free", (long) 0);
+        put("fast", (long) 5);
+        put("medium", (long) 15);
+        put("slow", (long) 20);
+        put("verySlow", (long) 35);
+        put("bigTime", (long) 60);
+        }
+        
+    };
 
 	
 	public Plant(int x, int y, int damage, int life, int shootBarMax, int cost, String cooldown) {
 		super(x, y, damage, life);
-		
-		mCooldown.put("free", (long) 0);
-		mCooldown.put("fast", (long) 5);
-		mCooldown.put("medium", (long) 15);
-		mCooldown.put("slow", (long) 20);
-		mCooldown.put("verySlow", (long) 35);
-		mCooldown.put("bigTime", (long) 60);
 		
 		this.shootBarMax = shootBarMax;
 		this.cost = cost;

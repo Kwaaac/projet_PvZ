@@ -304,7 +304,7 @@ public class SimpleGameData {
 
 	public void actionning(ArrayList<Projectile> myBullet, BordView view, ArrayList<Zombie> myZombies,
 			ArrayList<LawnMower> myLawnMower) {
-
+		
 		for (IPlant p : myPlants) {
 			p.action(myBullet, view, myZombies, this);
 		}

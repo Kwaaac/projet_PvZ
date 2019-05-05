@@ -323,7 +323,7 @@ public class SelectBordView extends SimpleGameView {
 	@Override
 	public void drawPotatoMine(Graphics2D graphics, int x, int y, String color) {
 		graphics.setColor(Color.decode(color));
-		graphics.fill(new Rectangle2D.Float(x - 10, y + sizeOfPlant / 2, sizeOfPlant - 15, sizeOfPlant - 15));
+		graphics.fill(new Rectangle2D.Float(x - 10, y + sizeOfPlant / 2 + 7, sizeOfPlant - 15, sizeOfPlant - 15));
 	}
 
 	@Override
@@ -357,7 +357,7 @@ public class SelectBordView extends SimpleGameView {
 	@Override
 	public void drawPuffShroom(Graphics2D graphics, int x, int y, String color) {
 		graphics.setColor(Color.decode(color));
-		graphics.fill(new Rectangle2D.Float(x - 15, y + sizeOfPlant / 2, sizeOfPlant, sizeOfPlant));
+		graphics.fill(new Rectangle2D.Float(x - 10, y + sizeOfPlant / 2 + 7, sizeOfPlant - 15, sizeOfPlant - 15));
 	}
 
 	@Override

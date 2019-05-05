@@ -441,6 +441,12 @@ public abstract class SimpleGameView implements GameView {
 		graphics.fill(new Ellipse2D.Float(x, y, sizeOfProjectile, sizeOfProjectile));
 	}
 	
+	@Override
+	public void drawSpore(Graphics2D graphics, float x, float y, String color) {
+		graphics.setColor(Color.decode(color));
+		graphics.fill(new Ellipse2D.Float(x - 3, y - 3, sizeOfProjectile - 6, sizeOfProjectile - 6));
+	}
+	
 	/*-----------------------------Miscellaneous------------------------------*/
 	int[] SizeOfLawnMower = LawnMower.getSizeOfLawnMower();
 	

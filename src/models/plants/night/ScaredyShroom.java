@@ -6,9 +6,11 @@ import java.util.ArrayList;
 import fr.umlv.zen5.ApplicationContext;
 import models.Entities;
 import models.SimpleGameData;
+import models.cells.Cell;
 import models.plants.Plant;
 import models.projectiles.Pea;
 import models.projectiles.Projectile;
+import models.projectiles.Spore;
 import models.zombies.Zombie;
 import views.BordView;
 import views.SimpleGameView;
@@ -44,11 +46,35 @@ public class ScaredyShroom extends Plant {
 	public void draw(SimpleGameView view, Graphics2D graphics, int x, int y) {
 		view.drawScaredyShroom(graphics, x, y, color);
 	}
+	
+	public boolean readyToshot(ArrayList<Cell> cells) {
+		for (Cell c : cells) {
+			if (c.isThereZombies()) {
+				return shootBar >= shootBarMax;
+			}
+		}
+
+		return false;
+	}
+	
+	public boolean hiding(ArrayList<Cell> cells) {
+		for (Cell c: cells) {
+			if(c.isThereZombies()) {
+				return true;
+			}
+		}
+		
+		return false;
+	}
 
 	@Override
 	public void action(ArrayList<Projectile> myBullet, BordView view, ArrayList<Zombie> myZombies, SimpleGameData dataBord) {
-		if(this.readyToshot()) {
-			myBullet.add(new Pea(super.getX() + super.getSizeOfPlant(), super.getY() + (super.getSizeOfPlant() / 2) - 10));
+		
+		// ajouter le hiding
+		// je dois changer le getLine Cell, je dois en rajouter un qui s'arrete
+		
+		if(this.readyToshot(dataBord.getLineCell( this.getCaseJ(), this.getCaseI()))) {
+			myBullet.add(new Spore(super.getX() + super.getSizeOfPlant(), super.getY() + (super.getSizeOfPlant() / 2) - 10, -1));
 			
 			this.resetAS();
 		}

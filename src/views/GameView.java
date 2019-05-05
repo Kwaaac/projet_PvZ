@@ -484,6 +484,12 @@ public interface GameView {
 		context.renderFrame(graphics -> drawFrozenPea(graphics, x, y, s));
 	}
 	
+	void drawSpore(Graphics2D graphics, float x, float y, String s);
+	
+	public default void drawSpore(ApplicationContext context, float x, float y, String s) {
+		context.renderFrame(graphics -> drawSpore(graphics, x, y, s));
+	}
+	
 	/*-----------------------------Miscellaneous------------------------------*/
 	
 	void drawLawnMower(Graphics2D graphics, float x, float y, String s);

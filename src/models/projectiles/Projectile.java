@@ -58,4 +58,6 @@ public abstract class Projectile extends Entities implements MovingElement, IPro
 	public void setSpeed(double speed) {
 		this.speed = speed;
 	}
+	
+	public void action() {}
 }

@@ -37,8 +37,13 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie 
 	public float getX() {
 		return super.getX();
 	}
-
+	
 	@Override
+	/**
+	 * give the zombie a case and add the zombie on the zombieList of the cell
+	 * 
+	 * @param data Data of the main Bord
+	 */
 	public void setCase(SimpleGameData data) {
 		int cX = BordView.caseXFromX(x);
 		int cY = BordView.caseYFromY(y);
@@ -161,6 +166,7 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie 
 
 	public void conflictBvZ(DeadPool DPe, ArrayList<Projectile> Le, SimpleGameData data) {
 		for (Projectile e : Le) {
+			e.action();
 			if (this.hit(e) && !(e.isInConflict())) {
 				this.slowed(e.isSlowing());
 				e.setConflictMode(true);

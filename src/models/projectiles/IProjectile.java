@@ -12,4 +12,6 @@ public interface IProjectile {
 	boolean isSlowing();
 	
 	String getColor();
+	
+	void action();
 }
