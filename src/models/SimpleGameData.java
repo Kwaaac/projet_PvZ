@@ -18,6 +18,7 @@ import models.plants.IPlant;
 import models.plants.Plant;
 import models.projectiles.LawnMower;
 import models.projectiles.Projectile;
+import models.zombies.IZombie;
 import models.zombies.Zombie;
 import views.BordView;
 import views.SelectBordView;
@@ -328,6 +329,14 @@ public class SimpleGameData {
 
 		for (IPlant p : myPlants) {
 			p.action(myBullet, view, myZombies, this);
+		}
+
+	}
+	
+	public void actionningZombie(ArrayList<Projectile> myBullet, BordView view, ArrayList<Zombie> myZombies, SimpleGameData dataBord) {
+
+		for (IZombie z : myZombies) {
+			z.action(view, dataBord, myZombies);
 		}
 
 	}

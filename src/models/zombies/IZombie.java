@@ -1,7 +1,11 @@
 package models.zombies;
 
+import java.util.ArrayList;
+
 import fr.umlv.zen5.ApplicationContext;
 import models.SimpleGameData;
+import models.plants.Plant;
+import views.BordView;
 import views.SimpleGameView;
  
 public interface IZombie {
@@ -14,7 +18,9 @@ public interface IZombie {
 	
 	int getThreat();
 	
+	Integer getProb(int difficulty); 
+	
 	boolean action(SimpleGameData dataBord);
-
-	Integer getProb(int difficulty);
+	
+	void action(BordView view, SimpleGameData dataBord, ArrayList<Zombie> myZombies);
 }

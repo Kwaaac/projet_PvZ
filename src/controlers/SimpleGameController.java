@@ -84,16 +84,7 @@ public class SimpleGameController {
 			plantSelectionView.checkCooldown();
 			/*--------------------------------DRAWS--------------------------------*/
 			
-			view.draw(context, dataBord);
-			debuglock = dataBord.movingZombiesAndBullets(context, view, myZombies, myBullet, myLawnMower, debug, debuglock);
-			plantSelectionView.draw(context, dataSelect);
-			view.drawRectangle(context, 250, 10, 160, 60, "#A77540");
-			view.drawRectangle(context, 255, 15, 150, 50, "#CF9456");
-			view.drawString(context, 260, 55, String.valueOf(money), "#FFFF00", 50); //SUN YOU HAVE
-			view.drawEllipse(context, 350, 15, 45, 45, "#FEFF33");
-			view.drawRectangle(context, 10, 10, 165, 55, "#A77540");
-			view.drawRectangle(context, 15, 15, 155, 45, "#CF9456");
-			view.drawString(context, 20, 55, "MENU", "#FFFF00", 50);//MENU BUTTON
+			view.drawAll(context, dataBord, view, myZombies, myBullet, myLawnMower, debug, debuglock, dataSelect, money, plantSelectionView);
 
 			/*---------------------------INITIALISATION-----------------------------*/
 			
@@ -118,6 +109,10 @@ public class SimpleGameController {
 			/*--------------------------------SHOOTING------------------------------------*/
 			
 			dataBord.actionning(myBullet, view, myZombies, myLawnMower);
+			
+			/*--------------------------------SHOOTING------------------------------------*/
+			
+			dataBord.actionningZombie(myBullet, view, myZombies, dataBord);
 			
 			/*------------------------------- WIN / LOOSE --------------------------------*/
 			SimpleGameData.timeEnd(myZombies, str, context, superWaveZombie,view, myLawnMower);

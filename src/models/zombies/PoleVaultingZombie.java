@@ -1,6 +1,7 @@
 package models.zombies;
 
 import java.awt.Graphics2D;
+import java.util.ArrayList;
 
 import fr.umlv.zen5.ApplicationContext;
 import models.SimpleGameData;
@@ -40,7 +41,6 @@ public class PoleVaultingZombie extends Zombie {
 		} else {
 			super.go((float) diffSpeed[1]);
 		}
-
 	}
 
 	@Override
@@ -74,6 +74,11 @@ public class PoleVaultingZombie extends Zombie {
 		}
 		
 		return true;
+	}
+
+	@Override
+	public void action(BordView view, SimpleGameData dataBord, ArrayList<Zombie> myZombies) {
+		
 	}
 
 }

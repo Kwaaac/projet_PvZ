@@ -1,8 +1,11 @@
 package models.zombies;
 
 import java.awt.Graphics2D;
+import java.util.ArrayList;
 
 import fr.umlv.zen5.ApplicationContext;
+import models.SimpleGameData;
+import views.BordView;
 import views.SimpleGameView;
 
 public class BackupDancerZombie extends Zombie {
@@ -11,7 +14,7 @@ public class BackupDancerZombie extends Zombie {
 	private final String color = "#000000";
 	
 	public BackupDancerZombie(int x, int y) {
-		super(x, y, 100, 200, 1, "reallyFast");
+		super(x, y, 100, 200, 4, "medium");
 	}
 
 	public BackupDancerZombie() {
@@ -44,5 +47,16 @@ public class BackupDancerZombie extends Zombie {
 		view.drawBackupDancerZombie(graphics, x, y, color);
 	}
 
-
+	@Override
+	public void action(BordView view, SimpleGameData dataBord, ArrayList<Zombie> myZombies) {
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
 }

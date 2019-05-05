@@ -1,6 +1,8 @@
 package models.zombies;
 
 import java.awt.Graphics2D;
+import java.util.ArrayList;
+
 import fr.umlv.zen5.ApplicationContext;
 import views.SimpleGameView;
 
