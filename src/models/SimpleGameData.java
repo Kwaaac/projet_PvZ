@@ -60,7 +60,7 @@ public class SimpleGameData {
 		spawnTime = System.currentTimeMillis();
 		timeLimit = 5_000;
 
-		// Temps pour augmenter la difficultï¿½
+		// Temps pour augmenter la difficulté
 		difficultyTime = System.currentTimeMillis();
 
 		// Temps du spawn des soleil
@@ -571,7 +571,43 @@ public class SimpleGameData {
 			view.drawLawnMower(context, staticX, BordView.getSquareSize() * i, "#B44A4A");
 		}
 	}
+	
+	
+	private static Zombie getRandomZombie(ArrayList<Zombie> Mz) {
+		Random rand = new Random();
+		return Mz.get(rand.nextInt(Mz.size()));
+	}
+	
+	private static void addInMap(HashMap<Zombie, Integer> zombiesMap,Zombie z) {
+		Integer count = zombiesMap.get(z);
+		
+		if (count == null) {
+			count = 0;
+		}
+		
+		zombiesMap.put(z, count + 1);
+		
+	}
 
+	
+	public static HashMap<Zombie, Integer> generateZombies(int type) {
+		
+		ArrayList<Zombie> allZombies = Zombie.getZombieList(getMap());
+		
+		HashMap<Zombie, Integer> zombiesMap = new HashMap<Zombie, Integer>();
+		int waveSize = 0;
+		int maxWaveSize = (type == 1 ? 15 : 35);
+		while(waveSize < maxWaveSize) {
+			Random rand = new Random();
+			Zombie choosenOne = getRandomZombie(allZombies);
+			if((choosenOne.getThreat()*100) < rand.nextInt(500)) {
+				addInMap(zombiesMap, choosenOne);
+				waveSize++;
+			}	
+		}
+		return zombiesMap;
+	}
+	
 	public static void spawnNormalWave(SimpleGameData dataBord, int squareSize, StringBuilder str,
 			ArrayList<Zombie> myZombies, BordView view, ApplicationContext context,
 			HashMap<Zombie, Integer> zombieList) {
@@ -581,7 +617,7 @@ public class SimpleGameData {
 			int sqrS = BordView.getSquareSize();
 
 			int endWave = 0;
-			int x = view.getXOrigin() + view.getWidth();
+			int x = view.getXOrigin() + view.getWidth();	
 			int y = view.getYOrigin() + dataBord.RandomPosGenerator(dataBord.getNbLines()) * sqrS + (sqrS / 2)
 					- (Zombie.getSizeOfZombie() / 2);
 			ArrayList<Zombie> zombieAvailable = new ArrayList<>();

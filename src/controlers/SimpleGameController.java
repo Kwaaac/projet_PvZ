@@ -42,14 +42,10 @@ public class SimpleGameController {
 		int width = (int)screenInfo.getWidth();
 		int height = (int)screenInfo.getHeight();
 		
-		HashMap<Zombie, Integer> normalWaveZombie = new HashMap<Zombie, Integer>();
-//		normalWaveZombie.put(new NewspaperZombie(), 1);
-//		normalWaveZombie.put(new PoleVaultingZombie(), 1);
+		HashMap<Zombie, Integer> normalWaveZombie = SimpleGameData.generateZombies(1);
 		
-		HashMap<Zombie, Integer> superWaveZombie = new HashMap<Zombie, Integer>();
-//		superWaveZombie.put(new ConeheadZombie(), 20);
-		superWaveZombie.put(new FlagZombie(), 5);
-		superWaveZombie.put(new NormalZombie(), 1);
+		HashMap<Zombie, Integer> superWaveZombie = SimpleGameData.generateZombies(2);
+		
 //		BordView menuView = new BordView(0, 0, width, height, 100);
 		SimpleGameData dataBord = Map.dataBord();
 		SimpleGameData dataSelect = new SimpleGameData(selectedPlant.size(), 1);
