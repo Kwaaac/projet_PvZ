@@ -36,19 +36,18 @@ public class SimpleGameController {
 	static void simpleGame(ApplicationContext context) {
 		ArrayList<Plant> selectedPlant = MenuController.startGame(context);
 		
-		System.out.println(selectedPlant);
-		
 		ScreenInfo screenInfo = context.getScreenInfo();
 		int width = (int)screenInfo.getWidth();
 		int height = (int)screenInfo.getHeight();
 		
-//		HashMap<Zombie, Integer> normalWaveZombie = SimpleGameData.generateZombies(1);
-		HashMap<Zombie, Integer> normalWaveZombie = new HashMap<Zombie, Integer>(){
-	        {
-	        	put(new JackintheBoxZombie(), 1);
-	        }
-		};
-//		normalWaveZombie.put(new DolphinRiderZombie(), 1);
+		HashMap<Zombie, Integer> normalWaveZombie = SimpleGameData.generateZombies(1);
+//		HashMap<Zombie, Integer> normalWaveZombie = new HashMap<Zombie, Integer>(){
+//	        {
+//	        	put(new SnorkelZombie(), 1);
+//				put(new DolphinRiderZombie(), 1);
+//	        }
+//		};
+//		
 		
 		HashMap<Zombie, Integer> superWaveZombie = SimpleGameData.generateZombies(2);
 		

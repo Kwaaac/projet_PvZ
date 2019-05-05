@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import fr.umlv.zen5.ApplicationContext;
 import models.DeadPool;
 import models.SimpleGameData;
+import models.cells.Cell;
 import models.projectiles.Projectile;
 import views.BordView;
 import views.SimpleGameView;
@@ -14,6 +15,7 @@ public class SnorkelZombie extends Zombie {
 
 	private final String name = "SnorkelZombie";
 	private final String color = "#000000";
+	private boolean outOfWater = false;
 	
 	public SnorkelZombie(int x, int y) {
 		super(x, y, 100, 200, 1, "slow");
@@ -51,7 +53,10 @@ public class SnorkelZombie extends Zombie {
 
 	@Override
 	public void action(BordView view, SimpleGameData dataBord, ArrayList<Zombie> myZombies) {
-		
+		Cell cell = dataBord.getCell(getCaseI(), getCaseJ());
+		if(dataBord.isCorrectBordLocation(view, getCaseI(), getCaseJ()) && cell != null) {
+		this.outOfWater = cell.isTherePlant();
+		}
 	}
 	
 	@Override
@@ -64,7 +69,7 @@ public class SnorkelZombie extends Zombie {
 		
 		for (Projectile e : Le) {
 			e.action();
-			if (this.hit(e) && !(e.isInConflict())) {
+			if (this.outOfWater == true && this.hit(e) && !(e.isInConflict())) {
 				this.slowed(e.isSlowing());
 				e.setConflictMode(true);
 				this.mortalKombat(e);

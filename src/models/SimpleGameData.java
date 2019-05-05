@@ -32,7 +32,7 @@ public class SimpleGameData {
 	private final ArrayList<Coordinates> placedPlant = new ArrayList<Coordinates>();
 	private final ArrayList<Plant> myPlants = new ArrayList<>();
 	private final static ArrayList<Soleil> mySun = new ArrayList<>();
-	private ArrayList<Zombie> zombieInQueu = new ArrayList<>();//Dancing Zombie
+	private ArrayList<Zombie> zombieInQueu = new ArrayList<>();// Dancing Zombie
 
 	private static boolean stop = false;
 
@@ -333,15 +333,15 @@ public class SimpleGameData {
 		}
 
 	}
-	
-	public void actionningZombie(ArrayList<Projectile> myBullet, BordView view, ArrayList<Zombie> myZombies, 
+
+	public void actionningZombie(ArrayList<Projectile> myBullet, BordView view, ArrayList<Zombie> myZombies,
 			SimpleGameData dataBord) {
 		System.out.println(myZombies);
 		for (IZombie z : myZombies) {
-			
+
 			z.action(view, dataBord, myZombies);
 		}
-		
+
 		if (zombieInQueu.size() > 0) {
 			myZombies.addAll(zombieInQueu);
 			zombieInQueu = new ArrayList<Zombie>();
@@ -362,7 +362,6 @@ public class SimpleGameData {
 			mySun.add(new Soleil(x, y, 0, sunny, size));
 		}
 	}
-
 
 	public void naturalSun(BordView view) {
 		if (sunSpawn.asReachTimer(5)) {
@@ -588,43 +587,41 @@ public class SimpleGameData {
 			view.drawLawnMower(context, staticX, BordView.getSquareSize() * i, "#B44A4A");
 		}
 	}
-	
-	
+
 	private static Zombie getRandomZombie(ArrayList<Zombie> Mz) {
 		Random rand = new Random();
 		return Mz.get(rand.nextInt(Mz.size()));
 	}
-	
-	private static void addInMap(HashMap<Zombie, Integer> zombiesMap,Zombie z) {
+
+	private static void addInMap(HashMap<Zombie, Integer> zombiesMap, Zombie z) {
 		Integer count = zombiesMap.get(z);
-		
+
 		if (count == null) {
 			count = 0;
 		}
-		
+
 		zombiesMap.put(z, count + 1);
-		
+
 	}
 
-	
 	public static HashMap<Zombie, Integer> generateZombies(int type) {
-		
+
 		ArrayList<Zombie> allZombies = Zombie.getZombieList(getMap());
-		
+
 		HashMap<Zombie, Integer> zombiesMap = new HashMap<Zombie, Integer>();
 		int waveSize = 0;
 		int maxWaveSize = (type == 1 ? 15 : 35);
-		while(waveSize < maxWaveSize) {
+		while (waveSize < maxWaveSize) {
 			Random rand = new Random();
 			Zombie choosenOne = getRandomZombie(allZombies);
-			if((choosenOne.getThreat()*100) < rand.nextInt(500)) {
+			if ((choosenOne.getThreat() * 100) < rand.nextInt(500)) {
 				addInMap(zombiesMap, choosenOne);
 				waveSize++;
-			}	
+			}
 		}
 		return zombiesMap;
 	}
-	
+
 	public static void spawnNormalWave(SimpleGameData dataBord, int squareSize, StringBuilder str,
 			ArrayList<Zombie> myZombies, BordView view, ApplicationContext context,
 			HashMap<Zombie, Integer> zombieList) {
@@ -634,7 +631,7 @@ public class SimpleGameData {
 			int sqrS = BordView.getSquareSize();
 
 			int endWave = 0;
-			int x = view.getXOrigin() + view.getWidth();	
+			int x = view.getXOrigin() + view.getWidth();
 			int y = view.getYOrigin() + dataBord.RandomPosGenerator(dataBord.getNbLines()) * sqrS + (sqrS / 2)
 					- (Zombie.getSizeOfZombie() / 2);
 			ArrayList<Zombie> zombieAvailable = new ArrayList<>();
@@ -669,13 +666,20 @@ public class SimpleGameData {
 				Zombie z = zombieAvailable.get(selecteur);
 
 				zombieList.put(z, zombieList.get(z) - 1);
+				if (map == "Pool") {
+					if (z.isCommon()) {
+						System.out.println(view.indexFromReaCoord(y, view.getYOrigin()));
+						while(view.indexFromReaCoord(y, view.getYOrigin()) == 2 || view.indexFromReaCoord(y, view.getYOrigin()) == 3) {
+							y = view.getYOrigin() + dataBord.RandomPosGenerator(dataBord.getNbLines()) * sqrS + (sqrS / 2);
+						}
+						myZombies.add(z.createAndDrawNewZombie(view, context, x, y));
 
-				if (z.isCommon()) {
-					myZombies.add(z.createAndDrawNewZombie(view, context, x, y));
+					} else {
+						y = view.getYOrigin() + SimpleGameData.RandomPosGenerator(2, 4) * sqrS + (sqrS / 2);
+						myZombies.add(z.createAndDrawNewZombie(view, context, x, y));
+					}
+				} else {
 					
-				}
-				else {
-					y = view.getYOrigin() + dataBord.RandomPosGenerator(2, 4) * sqrS + (sqrS / 2);
 					myZombies.add(z.createAndDrawNewZombie(view, context, x, y));
 				}
 				str.append("new " + zombieAvailable.get(selecteur) + new SimpleDateFormat("hh:mm:ss").format(new Date())
@@ -720,7 +724,21 @@ public class SimpleGameData {
 			}
 
 			if (spawn > 0) {
-				myZombies.add(z.createAndDrawNewZombie(view, context, x, y));
+				if (map == "Pool") {
+					if (z.isCommon()) {
+						while(view.indexFromReaCoord(y, view.getYOrigin()) == 2 || view.indexFromReaCoord(y, view.getYOrigin()) == 3) {
+							y = view.getYOrigin() + dataBord.RandomPosGenerator(dataBord.getNbLines()) * sqrS + (sqrS / 2);
+						}
+						myZombies.add(z.createAndDrawNewZombie(view, context, x, y));
+
+					} else {
+						y = view.getYOrigin() + SimpleGameData.RandomPosGenerator(2, 4) * sqrS + (sqrS / 2);
+						myZombies.add(z.createAndDrawNewZombie(view, context, x, y));
+					}
+				} else {
+					
+					myZombies.add(z.createAndDrawNewZombie(view, context, x, y));
+				}
 				str.append("new " + z + new SimpleDateFormat("hh:mm:ss").format(new Date()) + ")\n");
 
 				entry.setValue(spawn - 1);
@@ -758,7 +776,7 @@ public class SimpleGameData {
 	public static int getActualMoney() {
 		return actualMoney;
 	}
-	
+
 	public void setZombieInQueu(ArrayList<Zombie> zombieList) {
 		zombieInQueu = zombieList;
 	}
