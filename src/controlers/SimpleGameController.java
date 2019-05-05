@@ -37,20 +37,19 @@ public class SimpleGameController {
 	static void simpleGame(ApplicationContext context) {
 		ArrayList<Plant> selectedPlant = MenuController.startGame(context);
 		
-		System.out.println(selectedPlant);
-		
 		ScreenInfo screenInfo = context.getScreenInfo();
-		screenInfo.getWidth();
+		int width = (int)screenInfo.getWidth();
+		int height = (int)screenInfo.getHeight();
 		
 		HashMap<Zombie, Integer> normalWaveZombie = new HashMap<Zombie, Integer>();
-		normalWaveZombie.put(new NewspaperZombie(), 1);
-		normalWaveZombie.put(new PoleVaultingZombie(), 1);
+//		normalWaveZombie.put(new NewspaperZombie(), 1);
+//		normalWaveZombie.put(new PoleVaultingZombie(), 1);
 		
 		HashMap<Zombie, Integer> superWaveZombie = new HashMap<Zombie, Integer>();
-		superWaveZombie.put(new ConeheadZombie(), 20);
+//		superWaveZombie.put(new ConeheadZombie(), 20);
 		superWaveZombie.put(new FlagZombie(), 1);
-		superWaveZombie.put(new NormalZombie(), 30);
-		
+//		superWaveZombie.put(new NormalZombie(), 30);
+		BordView menuView = new BordView(0, 0, width, height, 100);
 		SimpleGameData dataBord = Map.dataBord();
 		SimpleGameData dataSelect = new SimpleGameData(selectedPlant.size(), 1);
 
@@ -59,10 +58,11 @@ public class SimpleGameController {
 
 		BordView view = Map.view();
 		
+		
 		int squareSize = BordView.getSquareSize();
 		SelectBordView plantSelectionView = SelectBordView.initGameGraphics(0, yOrigin, 900, dataSelect, selectedPlant);
 		
-
+		
 		view.draw(context, dataBord);
 		plantSelectionView.draw(context, dataSelect);
 
@@ -77,6 +77,8 @@ public class SimpleGameController {
 
 		boolean debug = false, debuglock = false;
 		
+		int money = 0;
+		
 		dataBord.spawnLawnMower(view, context,myLawnMower);
 		
 		while (true) {
@@ -88,6 +90,13 @@ public class SimpleGameController {
 			view.draw(context, dataBord);
 			debuglock = dataBord.movingZombiesAndBullets(context, view, myZombies, myBullet, myLawnMower, debug, debuglock);
 			plantSelectionView.draw(context, dataSelect);
+			menuView.drawRectangle(context, 250, 10, 160, 60, "#A77540");
+			menuView.drawRectangle(context, 255, 15, 150, 50, "#CF9456");
+			menuView.drawString(context, 260, 55, String.valueOf(money), "#FFFF00", 50); //SUN YOU HAVE
+			menuView.drawEllipse(context, 350, 15, 45, 45, "#FEFF33");
+			menuView.drawRectangle(context, width-300, 10, 165, 55, "#A77540");
+			menuView.drawRectangle(context, width-295, 15, 155, 45, "#CF9456");
+			menuView.drawString(context, width-290, 55, "MENU", "#FFFF00", 50);//MENU BUTTON
 
 			/*---------------------------INITIALISATION-----------------------------*/
 			
@@ -162,13 +171,12 @@ public class SimpleGameController {
 			
 			dataBord.selectingCellAndPlanting(context, dataSelect, view, plantSelectionView, x, y);
 			
+			money = SimpleGameData.getActualMoney();
 		}
 
 	}
 
 	public static void main(String[] args) {
-		
 		Application.run(Color.LIGHT_GRAY, SimpleGameController::simpleGame); // attention, utilisation d'une lambda.
-//		Application.run(Color.BLACK, SimpleGameController::endGame); // attention, utilisation d'une lambda.
 	}
 }

@@ -1,7 +1,10 @@
 package views;
 
 import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Font;
 import java.awt.Graphics2D;
+import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.RectangularShape;
 import java.util.ArrayList;
@@ -124,7 +127,6 @@ public class BordView extends SimpleGameView {
 	 */
 
 	public void draw(Graphics2D graphics, SimpleGameData data) {
-		String map = SimpleGameData.getMap();
 
 		// used to create a checkerboard with the cells
 		int checkerboard = 1;
@@ -191,14 +193,26 @@ public class BordView extends SimpleGameView {
 		super.moveAndDrawElement(graphics, data, moving);
 	}
 
-	public void drawString(Graphics2D graphics, SimpleGameData data, int i, int j, String string) {
-		graphics.setColor(Color.BLACK);
-		graphics.drawString(string, j, j);
-
+	public void drawString(Graphics graphics, int i, int j, String string, String color, int fontSize) {
+		graphics.setColor(Color.decode(color));
+		graphics.setFont(new Font("Afterglow", Font.PLAIN, fontSize));
+		graphics.drawString(string, i, j);
 	}
 
 	public void drawRectangle(Graphics2D graphics, int x, int y, int width, int height, String string) {
 		graphics.setColor(Color.decode(string));
 		graphics.fill(new Rectangle2D.Float(x, y, width, height));
 	}
+	
+	public void drawEllipse(Graphics2D graphics, int x, int y, int width, int height, String string) {
+		graphics.setColor(Color.decode(string));
+		graphics.fill(new Ellipse2D.Float(x, y, width, height));
+	}
+	
+	
+	
+	
+	
+	
+	
 }

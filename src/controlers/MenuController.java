@@ -1,6 +1,5 @@
 package controlers;
 
-import java.awt.Color;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 
@@ -79,7 +78,6 @@ public class MenuController {
 			float x = location.x;
 			float y = location.y;
 			int Y = view.indexFromReaCoord(y, 0);
-			int X = view.indexFromReaCoord(x, 0);
 
 			if (width - 65 <= x && x <= width - 15) { // quit
 				if (15 <= y && y <= 65) {

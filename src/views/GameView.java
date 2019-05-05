@@ -1,6 +1,6 @@
 package views;
 
-import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.Graphics2D;
 import fr.umlv.zen5.ApplicationContext;
 import models.MovingElement;
@@ -87,10 +87,22 @@ public interface GameView {
 	
 	
 	void drawRectangle(Graphics2D graphics, int x, int y, int width, int height, String color);
+	
 	public default void drawRectangle(ApplicationContext context, int x, int y, int width, int height, String color) {
 		context.renderFrame(graphics -> drawRectangle(graphics, x, y, width, height, color));
 	}
 	
+void drawEllipse(Graphics2D graphics, int x, int y, int width, int height, String color);
+	
+	public default void drawEllipse(ApplicationContext context, int x, int y, int width, int height, String color) {
+		context.renderFrame(graphics -> drawEllipse(graphics, x, y, width, height, color));
+	}
+	
+	void drawString(Graphics graphics, int x, int y, String s, String color, int font);
+
+	public default void drawString(ApplicationContext context, int x, int y, String s, String color, int fontSize) {
+		context.renderFrame(graphics -> drawString(graphics, x, y, s, color, fontSize));
+	}
 	/**
 	 * Draws only only the specified moving element in the game board from its data,
 	 * using an existing Graphics2D object.
@@ -122,11 +134,7 @@ public interface GameView {
 	}
 	
 
-	
-	void drawString(Graphics2D graphics, int x, int y, String s);
-	public default void drawString(ApplicationContext context, int x, int y, String s) {
-		context.renderFrame(graphics -> drawOnlyOneCell(graphics, x, y, s));
-	}
+
 	/*-----------------------------Plants------------------------------*/
 	/*------------------------------DAY--------------------------------*/
 
@@ -497,7 +505,6 @@ public interface GameView {
 	public default void drawLawnMower(ApplicationContext context, float x, float y, String s) {
 		context.renderFrame(graphics -> drawLawnMower(graphics, x, y, s));
 	}
-
 	
 
 	

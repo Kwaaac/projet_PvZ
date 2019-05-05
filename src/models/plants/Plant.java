@@ -158,5 +158,4 @@ public abstract class Plant extends Entities implements IPlant {
 	public boolean isLilyPad() {
 		return false;
 	}
-
 }

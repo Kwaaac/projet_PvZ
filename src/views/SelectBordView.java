@@ -1,6 +1,7 @@
 package views;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
@@ -35,7 +36,6 @@ public class SelectBordView extends SimpleGameView {
 		this.yOrigin = yOrigin;
 		this.length = length;
 		this.width = width;
-		this.squareSize = squareSize;
 		this.squareSize = squareSize;
 		
 		this.selectedPlants = selectedPlants;
@@ -306,6 +306,9 @@ public class SelectBordView extends SimpleGameView {
 	public void drawPeashooter(Graphics2D graphics, int x, int y, String color) {
 		graphics.setColor(Color.decode(color));
 		graphics.fill(new Rectangle2D.Float(x - 15, y + sizeOfPlant / 2, sizeOfPlant, sizeOfPlant));
+		graphics.setColor(Color.WHITE);
+		graphics.setFont(new Font("Afterglow", Font.PLAIN, 20));
+		graphics.drawString("100", x+15+sizeOfPlant/2, y+squareSize-5);
 	}
 
 	@Override

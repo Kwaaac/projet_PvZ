@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
+import controlers.EndController;
 import fr.umlv.zen5.ApplicationContext;
 import models.cells.Cell;
 import models.cells.WaterCell;
@@ -40,7 +41,7 @@ public class SimpleGameData {
 	private static int difficulty = 1;
 	private static int superWave = 0;
 
-	private int actualMoney = 0;
+	private static int actualMoney = 0;
 	private Chrono sunSpawn = new Chrono();
 
 	static Chrono time = new Chrono();
@@ -398,20 +399,22 @@ public class SimpleGameData {
 		case "Stop":
 			time.stop();
 			switch (finalChoice) {
-			case "Win":
-				str.append("-+-+-+-+-+-+-+-+-+-\nVous avez gagne!!!\n");
-				break;
 			case "Loose":
 				str.append("-+-+-+-+-+-+-+-+-+-\nVous avez perdu...\n");
+				SimpleGameData.setWL(0);
+				break;
+			case "Win":
+				str.append("-+-+-+-+-+-+-+-+-+-\nVous avez gagne!!!\n");
+				SimpleGameData.setWL(1);
 				break;
 			case "Stop":
 				str.append("-+-+-+-+-+-+-+-+-+-\nVous avez quitte la partie !\n");
+				SimpleGameData.setWL(2);
 				break;
 			}
 			str.append("La partie � dur�e: " + time.getDureeTxt());
 			System.out.println(str.toString());
-			SimpleGameData.setWL(0);
-			context.exit(0);
+			EndController.endGame(context);
 
 		}
 	}
@@ -668,6 +671,10 @@ public class SimpleGameData {
 
 	public static String getMap() {
 		return map;
+	}
+	
+	public static int getActualMoney() {
+		return actualMoney;
 	}
 
 }

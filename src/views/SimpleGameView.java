@@ -1,13 +1,13 @@
 package views;
 
 import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.geom.Arc2D;
 import java.awt.geom.Ellipse2D;
-import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.RoundRectangle2D;
-import java.awt.geom.Arc2D.Float;
 
 import models.MovingElement;
 import models.SimpleGameData;
@@ -50,9 +50,16 @@ public abstract class SimpleGameView implements GameView {
 	}
 	
 	@Override
-	public void drawString(Graphics2D graphics, int x, int y, String s) {
+	public void drawEllipse(Graphics2D graphics, int x, int y, int width, int height, String s) {
 		graphics.setColor(Color.decode(s));
-		graphics.drawString(s, x, y);
+		graphics.fill(new Ellipse2D.Float(x, y, width, height));
+	}
+	
+	@Override
+	public void drawString(Graphics graphics, int i, int j, String string, String color, int fontSize) {
+		graphics.setColor(Color.decode(color));
+		graphics.setFont(new Font("Afterglow", Font.PLAIN, fontSize));
+		graphics.drawString(string, i, j);
 	}
 	
 	@Override
