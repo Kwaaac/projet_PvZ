@@ -5,8 +5,10 @@ import java.util.ArrayList;
 
 import fr.umlv.zen5.ApplicationContext;
 import models.SimpleGameData;
+import models.cells.Cell;
 import models.plants.Plant;
 import models.projectiles.Projectile;
+import models.projectiles.Spore;
 import models.zombies.Zombie;
 import views.BordView;
 import views.SimpleGameView;
@@ -30,8 +32,27 @@ public class SeaShroom extends Plant {
 		return super.toString() + "--" + name;
 	}
 
+	public boolean readyToshot(ArrayList<Cell> cells) {
+		for (Cell c : cells) {
+			if (c.isThereZombies()) {
+				return shootBar >= shootBarMax;
+			}
+		}
+		return false;
+	}
+	
 	@Override
-	public void action(ArrayList<Projectile> myBullet, BordView view, ArrayList<Zombie> myZombies, SimpleGameData dataBord) {}
+	public void action(ArrayList<Projectile> myBullet, BordView view, ArrayList<Zombie> myZombies,
+			SimpleGameData dataBord) {
+		if (this.readyToshot(dataBord.getLineCell(this.getCaseJ(), this.getCaseI()))) {
+			myBullet.add(new Spore(super.getX() + super.getSizeOfPlant(),
+					super.getY() + (super.getSizeOfPlant() / 2) - 10, BordView.getSquareSize() * 3 - x));
+
+			this.resetAS();
+		}
+
+		this.incAS();
+	}
 
 	@Override
 	public Plant createAndDrawNewPlant(SimpleGameView view, ApplicationContext context, int x, int y) {

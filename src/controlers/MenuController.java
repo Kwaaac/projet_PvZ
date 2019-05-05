@@ -103,7 +103,7 @@ public class MenuController {
 					SimpleGameData.setMap("Night");
 					choice = "plantSelection";
 					break;
-
+					
 				case 2:
 					SimpleGameData.setMap("Pool");
 					choice = "plantSelection";
