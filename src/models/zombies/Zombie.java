@@ -11,6 +11,7 @@ import models.Entities;
 import models.MovingElement;
 import models.SimpleGameData;
 import models.cells.Cell;
+import models.nextzombie.DuckyTubeZombie;
 import models.plants.Plant;
 import models.projectiles.LawnMower;
 import models.projectiles.Projectile;
