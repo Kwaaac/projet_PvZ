@@ -12,11 +12,11 @@ public class PogoZombie extends Zombie {
 	private final int threat = 1;
 	
 	public PogoZombie(int x, int y) {
-		super(x, y, 100, 340, -0.93);//1.9 or 3.8
+		super(x, y, 100, 340, "ultraSlow");
 	}
 
 	public PogoZombie() {
-		super(50, 50, 100, 340, -0.93);
+		super(50, 50, 100, 340, "ultraSlow");
 	}
 
 	@Override
