@@ -228,6 +228,7 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie 
 			SimpleGameData data, StringBuilder str) {
 		LawnMower.hasToDie(myLawnMower, deadPoolE, data, view);
 		Plant.hasToDie(deadPoolE, myPlants, myZombies, data); // gere les mort si il n'y a aucun zombie sur le plateau
+		Projectile.hasToDie(deadPoolE, myBullet, data);
 		for (Zombie z : myZombies) {
 			z.go();
 

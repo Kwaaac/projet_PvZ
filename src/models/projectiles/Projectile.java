@@ -1,8 +1,14 @@
 package models.projectiles;
 
+import java.util.ArrayList;
+
 import models.Coordinates;
+import models.DeadPool;
 import models.Entities;
 import models.MovingElement;
+import models.SimpleGameData;
+import models.plants.Plant;
+import models.zombies.Zombie;
 
 public abstract class Projectile extends Entities implements MovingElement, IProjectile{
 	private final String type = "Projectile";
@@ -57,6 +63,14 @@ public abstract class Projectile extends Entities implements MovingElement, IPro
 
 	public void setSpeed(double speed) {
 		this.speed = speed;
+	}
+	
+	public static void hasToDie(DeadPool DPe, ArrayList<Projectile> Mp, SimpleGameData data) {
+		for(Projectile p : Mp) {
+			if (p.isDead()) {
+				DPe.add(p);
+			}
+		}
 	}
 	
 	public void action() {}
