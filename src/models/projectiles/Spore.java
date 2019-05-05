@@ -2,17 +2,14 @@ package models.projectiles;
 
 import java.awt.Graphics2D;
 
+import views.BordView;
 import views.SimpleGameView;
 
 public class Spore extends Projectile {
-	private float spawnX;
-	private float distance;
 	private String color = "#7714AD";
 
-	public Spore(float x, float y, float distance) {
-		super(x, y, 50, 1, 20.0);
-		this.spawnX = x;
-		this.distance = distance;
+	public Spore(float x, float y) {
+		super(x, y, 75, 1, 20.0);
 	}
 
 	@Override
@@ -28,14 +25,5 @@ public class Spore extends Projectile {
 	@Override
 	public boolean isSlowing() {
 		return false;
-	}
-
-	@Override
-	public void action() {
-		if (distance != -1) {
-			if ((spawnX + distance) < getX()) {
-				setLife(1);
-			}
-		}
 	}
 }

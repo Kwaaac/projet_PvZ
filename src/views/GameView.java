@@ -134,6 +134,13 @@ void drawEllipse(Graphics2D graphics, int x, int y, int width, int height, Strin
 	}
 	
 
+	void drawSmallSun(Graphics2D graphics, float x, float y, String s);
+
+	public default void drawSmallSun(ApplicationContext context, float x, float y, String s) {
+		context.renderFrame(graphics -> drawSun(graphics, x, y, s));
+	}
+	
+
 
 	/*-----------------------------Plants------------------------------*/
 	/*------------------------------DAY--------------------------------*/

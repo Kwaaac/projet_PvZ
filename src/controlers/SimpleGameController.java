@@ -36,6 +36,8 @@ public class SimpleGameController {
 	static void simpleGame(ApplicationContext context) {
 		ArrayList<Plant> selectedPlant = MenuController.startGame(context);
 		
+		System.out.println(selectedPlant);
+		
 		ScreenInfo screenInfo = context.getScreenInfo();
 		int width = (int)screenInfo.getWidth();
 		int height = (int)screenInfo.getHeight();

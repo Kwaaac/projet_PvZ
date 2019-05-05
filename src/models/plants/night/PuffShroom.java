@@ -10,7 +10,7 @@ import models.cells.Cell;
 import models.plants.Plant;
 import models.projectiles.Pea;
 import models.projectiles.Projectile;
-import models.projectiles.Spore;
+import models.projectiles.WeakSpore;
 import models.zombies.Zombie;
 import views.BordView;
 import views.SimpleGameView;
@@ -20,7 +20,7 @@ public class PuffShroom extends Plant {
 	private final String color = "#901bd1";
 
 	public PuffShroom(int x, int y) {
-		super(x, y, 0, 300, 2500, 0, "fast");
+		super(x, y, 0, 300, 3500, 0, "fast");
 		shootBar = shootBarMax; // La plante tire dès qu'elle est posée
 	}
 
@@ -60,15 +60,18 @@ public class PuffShroom extends Plant {
 	@Override
 	public void action(ArrayList<Projectile> myBullet, BordView view, ArrayList<Zombie> myZombies,
 			SimpleGameData dataBord) {
-		if (true) {
-			if (this.readyToshot(dataBord.getLineCell(this.getCaseJ(), this.getCaseI()))) {
-				myBullet.add(new Spore(super.getX() + super.getSizeOfPlant(),
-						super.getY() + (super.getSizeOfPlant() / 2) - 10, BordView.getSquareSize() * 3 - x));
 
-				this.resetAS();
+		if (SimpleGameData.getMap() == "Night") {
+			if (true) {
+				if (this.readyToshot(dataBord.getLineCell(this.getCaseJ(), this.getCaseI(), this.getCaseI() + 4))) {
+					myBullet.add(new WeakSpore(super.getX() + super.getSizeOfPlant(),
+							super.getY() + (super.getSizeOfPlant() / 2) - 10));
+
+					this.resetAS();
+				}
+
+				this.incAS();
 			}
-
-			this.incAS();
 		}
 	}
 

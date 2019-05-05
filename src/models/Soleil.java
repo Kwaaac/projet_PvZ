@@ -12,18 +12,20 @@ public class Soleil implements MovingElement {
 
 	private final int yTarget;
 
-	private final int size = 85;
+	private final int size;
 
 	private String color = "#FFFF00";
 
-	private final int sunny = 25;
+	private final int sunny;
 
 	private double speed;
 
-	public Soleil(float x, float y, double speed) {
+	public Soleil(float x, float y, double speed, int sunny, int size) {
 		this.x = x;
 		this.y = y;
 		this.speed = speed;
+		this.size = size;
+		this.sunny = sunny;
 		this.caseXY = new Coordinates(BordView.caseXFromX(x), BordView.caseYFromY(y));
 		this.yTarget = (150 + SimpleGameData.RandomPosGenerator(1, 6) * BordView.getSquareSize()) - 125;
 	}

@@ -89,7 +89,7 @@ public class SimpleGameData {
 			}
 		}
 	}
-	
+
 	private void NightBord() {
 		for (int i = 0; i < matrix.length; i++) {
 			for (int j = 0; j < matrix[0].length; j++) {
@@ -103,10 +103,10 @@ public class SimpleGameData {
 			dayBord();
 		} else if (map == "Pool") {
 			poolBord();
-		} else if(map == "Night") {
+		} else if (map == "Night") {
 			NightBord();
 		}
-		
+
 	}
 
 	/**
@@ -138,6 +138,26 @@ public class SimpleGameData {
 	public ArrayList<Cell> getLineCell(int y, int x) {
 		ArrayList<Cell> cells = new ArrayList<>();
 		for (int i = x; i < nbColumns; i++) {
+			cells.add(getCell(y, i));
+		}
+
+		return cells;
+	}
+
+	/**
+	 * Allow you to get the y line starting at the x column (start from the left
+	 * side to the max define)
+	 * 
+	 * @param x   The starting column
+	 * @param y   The line
+	 * @param max The
+	 * @return Return an ArrayList<Cell> of cells from the y line, starting at the x
+	 *         column and ending to the right side of the bord
+	 */
+
+	public ArrayList<Cell> getLineCell(int y, int x, int max) {
+		ArrayList<Cell> cells = new ArrayList<>();
+		for (int i = x; i < max; i++) {
 			cells.add(getCell(y, i));
 		}
 
@@ -305,28 +325,31 @@ public class SimpleGameData {
 
 	public void actionning(ArrayList<Projectile> myBullet, BordView view, ArrayList<Zombie> myZombies,
 			ArrayList<LawnMower> myLawnMower) {
-		
+
 		for (IPlant p : myPlants) {
 			p.action(myBullet, view, myZombies, this);
 		}
 
 	}
 
-	public static void spawnSun(BordView view, float x, float y) {
-		if (x == -1 && y == -1) {
-			int xOrigin = view.getXOrigin();
+	public static void spawnSun(BordView view, float x, float y, int sunny, int size) {
+		if (x == -1) {
+			if (SimpleGameData.getMap() != "Night") {
+				int xOrigin = view.getXOrigin();
 
-			float xRandom = RandomPosGenerator(xOrigin + view.getLength() - 5, xOrigin + view.getLength());
+				float xRandom = RandomPosGenerator(xOrigin + view.getLength() - 5, xOrigin + view.getLength());
 
-			mySun.add(new Soleil(xRandom, 0, 1.5));
+				mySun.add(new Soleil(xRandom, 0, 1.5, 25, 85));
+			}
 		} else {
-			mySun.add(new Soleil(x, y, 0));
+			mySun.add(new Soleil(x, y, 0, sunny, size));
 		}
 	}
 
+
 	public void naturalSun(BordView view) {
 		if (sunSpawn.asReachTimer(5)) {
-			spawnSun(view, -1, -1);
+			spawnSun(view, -1, -1, -1, -1);
 		}
 	}
 
@@ -438,10 +461,9 @@ public class SimpleGameData {
 			int y2 = Coordinates.CenteredY(view.realCoordFromIndex(i, view.getYOrigin()));
 
 			Cell actualCell = this.getCell(i, j);
-			
+
 			Plant actualPlant = psView.getSelectedPlants().get(p);
-			
-			
+
 			if (actualCell.addPlant(actualPlant)) {
 				myPlants.add(actualPlant.createAndDrawNewPlant(view, context, x2, y2));
 				actualMoney -= psView.getSelectedPlants().get(p).getCost();
@@ -578,7 +600,7 @@ public class SimpleGameData {
 					zombieAvailable.add(z);
 
 					System.out.println(z);
-					
+
 				}
 			}
 
@@ -592,7 +614,7 @@ public class SimpleGameData {
 					}
 				}
 				Zombie z = zombieAvailable.get(selecteur);
-				
+
 				zombieList.put(z, zombieList.get(z) - 1);
 
 				myZombies.add(z.createAndDrawNewZombie(view, context, x, y));
@@ -672,7 +694,7 @@ public class SimpleGameData {
 	public static String getMap() {
 		return map;
 	}
-	
+
 	public static int getActualMoney() {
 		return actualMoney;
 	}

@@ -213,7 +213,6 @@ public class SelectBordView extends SimpleGameView {
 			for (int j = 0; j < data.getNbColumns(); j++) {
 				if (caseChrono[i].isReset()) {
 					graphics.setColor(Color.GREEN.darker());
-					System.out.println(Color.GREEN.darker());
 					graphics.fill(drawCell(i, j));
 				} else {
 					graphics.setColor(Color.GREEN.darker().darker());
@@ -382,8 +381,12 @@ public class SelectBordView extends SimpleGameView {
 	/*-------------------------------NIGHT------------------------------*/
 	@Override
 	public void drawPuffShroom(Graphics2D graphics, int x, int y, String color) {
+		graphics.setColor(Color.decode("#bfbf00"));
+		graphics.fill(new Rectangle2D.Float(x , y + sizeOfPlant , sizeOfPlant - 35, sizeOfPlant - 35));
+		
 		graphics.setColor(Color.decode(color));
-		graphics.fill(new Rectangle2D.Float(x - 10, y + sizeOfPlant / 2 + 7, sizeOfPlant - 15, sizeOfPlant - 15));
+		graphics.fill(new Rectangle2D.Float(x - 10, y + sizeOfPlant / 2 + 15, sizeOfPlant - 15, sizeOfPlant - 25));
+		
 		graphics.setColor(Color.WHITE);
 		graphics.setFont(new Font("Afterglow", Font.PLAIN, 20));
 		graphics.drawString("0", x+15+sizeOfPlant/2, y+squareSize-5);
@@ -391,8 +394,12 @@ public class SelectBordView extends SimpleGameView {
 
 	@Override
 	public void drawSunShroom(Graphics2D graphics, int x, int y, String color) {
+		graphics.setColor(Color.decode("#bfbf00"));
+		graphics.fill(new Rectangle2D.Float(x , y + sizeOfPlant , sizeOfPlant - 35, sizeOfPlant - 35));
+		
 		graphics.setColor(Color.decode(color));
-		graphics.fill(new Rectangle2D.Float(x - 15, y + sizeOfPlant / 2, sizeOfPlant, sizeOfPlant));
+		graphics.fill(new Rectangle2D.Float(x - 10, y + sizeOfPlant / 2 + 15, sizeOfPlant - 15, sizeOfPlant - 25));
+		
 		graphics.setColor(Color.WHITE);
 		graphics.setFont(new Font("Afterglow", Font.PLAIN, 20));
 		graphics.drawString("25", x+15+sizeOfPlant/2, y+squareSize-5);
@@ -427,8 +434,11 @@ public class SelectBordView extends SimpleGameView {
 
 	@Override
 	public void drawScaredyShroom(Graphics2D graphics, int x, int y, String color) {
+		graphics.setColor(Color.decode("#bfbf00"));
+		graphics.fill(new Rectangle2D.Float(x , y + sizeOfPlant , sizeOfPlant - 25, sizeOfPlant - 15));
+		
 		graphics.setColor(Color.decode(color));
-		graphics.fill(new Rectangle2D.Float(x - 15, y + sizeOfPlant / 2, sizeOfPlant, sizeOfPlant));
+		graphics.fill(new Rectangle2D.Float(x - 10, y + sizeOfPlant / 2 , sizeOfPlant - 5, sizeOfPlant - 25));
 		graphics.setColor(Color.WHITE);
 		graphics.setFont(new Font("Afterglow", Font.PLAIN, 20));
 		graphics.drawString("25", x+15+sizeOfPlant/2, y+squareSize-5);
