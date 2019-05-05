@@ -316,7 +316,7 @@ public class SimpleGameData {
 		if (x == -1 && y == -1) {
 			int xOrigin = view.getXOrigin();
 
-			float xRandom = RandomPosGenerator(xOrigin, xOrigin * 2 + view.getLength());
+			float xRandom = RandomPosGenerator(xOrigin + view.getLength() - 5, xOrigin + view.getLength());
 
 			mySun.add(new Soleil(xRandom, 0, 1.5));
 		} else {

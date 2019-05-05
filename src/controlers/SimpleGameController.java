@@ -49,7 +49,7 @@ public class SimpleGameController {
 //		superWaveZombie.put(new ConeheadZombie(), 20);
 		superWaveZombie.put(new FlagZombie(), 1);
 //		superWaveZombie.put(new NormalZombie(), 30);
-		BordView menuView = new BordView(0, 0, width, height, 100);
+//		BordView menuView = new BordView(0, 0, width, height, 100);
 		SimpleGameData dataBord = Map.dataBord();
 		SimpleGameData dataSelect = new SimpleGameData(selectedPlant.size(), 1);
 
@@ -90,13 +90,13 @@ public class SimpleGameController {
 			view.draw(context, dataBord);
 			debuglock = dataBord.movingZombiesAndBullets(context, view, myZombies, myBullet, myLawnMower, debug, debuglock);
 			plantSelectionView.draw(context, dataSelect);
-			menuView.drawRectangle(context, 250, 10, 160, 60, "#A77540");
-			menuView.drawRectangle(context, 255, 15, 150, 50, "#CF9456");
-			menuView.drawString(context, 260, 55, String.valueOf(money), "#FFFF00", 50); //SUN YOU HAVE
-			menuView.drawEllipse(context, 350, 15, 45, 45, "#FEFF33");
-			menuView.drawRectangle(context, width-300, 10, 165, 55, "#A77540");
-			menuView.drawRectangle(context, width-295, 15, 155, 45, "#CF9456");
-			menuView.drawString(context, width-290, 55, "MENU", "#FFFF00", 50);//MENU BUTTON
+			view.drawRectangle(context, 250, 10, 160, 60, "#A77540");
+			view.drawRectangle(context, 255, 15, 150, 50, "#CF9456");
+			view.drawString(context, 260, 55, String.valueOf(money), "#FFFF00", 50); //SUN YOU HAVE
+			view.drawEllipse(context, 350, 15, 45, 45, "#FEFF33");
+			view.drawRectangle(context, width-300, 10, 165, 55, "#A77540");
+			view.drawRectangle(context, width-295, 15, 155, 45, "#CF9456");
+			view.drawString(context, width-290, 55, "MENU", "#FFFF00", 50);//MENU BUTTON
 
 			/*---------------------------INITIALISATION-----------------------------*/
 			

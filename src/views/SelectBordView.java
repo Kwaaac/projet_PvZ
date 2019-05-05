@@ -213,6 +213,7 @@ public class SelectBordView extends SimpleGameView {
 			for (int j = 0; j < data.getNbColumns(); j++) {
 				if (caseChrono[i].isReset()) {
 					graphics.setColor(Color.GREEN.darker());
+					System.out.println(Color.GREEN.darker());
 					graphics.fill(drawCell(i, j));
 				} else {
 					graphics.setColor(Color.GREEN.darker().darker());
