@@ -11,7 +11,7 @@ public class NormalZombie extends Zombie {
 	private final int threat = 1;
 	
 	public NormalZombie(int x, int y) {
-		super(x, y, 100, 200, -0.93);
+		super(x, y, 100, 200, "slow");
 	}
 
 	public NormalZombie() {

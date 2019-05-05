@@ -12,11 +12,11 @@ public class GigaFootballZombie extends Zombie {
 	private final int threat = 1;
 	
 	public GigaFootballZombie(int x, int y) {
-		super(x, y, 100, 3000, -0.93);//2.5
+		super(x, y, 100, 3000, "verySlow");//2.5
 	}
 
 	public GigaFootballZombie() {
-		super(50, 50, 100, 3000, -0.93);
+		super(50, 50, 100, 3000, "verySlow");
 	}
 
 	@Override

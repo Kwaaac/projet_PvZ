@@ -18,7 +18,7 @@ public class PoleVaultingZombie extends Zombie {
 	private boolean jump = true;
 
 	public PoleVaultingZombie(int x, int y) {
-		super(x, y, 100, 340, -0.93);
+		super(x, y, 100, 340, "slow");
 	}
 
 	public PoleVaultingZombie() {

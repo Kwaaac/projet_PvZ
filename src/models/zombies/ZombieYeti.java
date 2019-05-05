@@ -12,11 +12,11 @@ public class ZombieYeti extends Zombie {
 	private final int threat = 1;
 	
 	public ZombieYeti(int x, int y) {
-		super(x, y, 100, 920, -0.93);//5 or 2.1
+		super(x, y, 100, 920, "medium");//5 or 2.1
 	}
 
 	public ZombieYeti() {
-		super(50, 50, 100, 920, -0.93);
+		super(50, 50, 100, 920, "medium");
 	}
 
 	@Override

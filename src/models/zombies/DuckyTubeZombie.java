@@ -12,11 +12,11 @@ public class DuckyTubeZombie extends Zombie {
 	private final int threat = 1;
 	
 	public DuckyTubeZombie(int x, int y) {
-		super(x, y, 100, 1300, -0.93);//4.7
+		super(x, y, 100, 1300, "slow");
 	}
 
 	public DuckyTubeZombie() {
-		super(50, 50, 100, 1300, -0.93);
+		super(50, 50, 100, 1300, "slow");
 	}
 
 	@Override

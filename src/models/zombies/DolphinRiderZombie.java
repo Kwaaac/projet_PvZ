@@ -12,11 +12,11 @@ public class DolphinRiderZombie extends Zombie {
 	private final int threat = 1;
 	
 	public DolphinRiderZombie(int x, int y) {
-		super(x, y, 100, 340, -0.93);//0.8 or 4.7
+		super(x, y, 100, 340, "ultraSlow");
 	}
 
 	public DolphinRiderZombie() {
-		super(50, 50, 100, 340, -0.93);
+		super(50, 50, 100, 340, "ultraSlow");
 	}
 
 	@Override

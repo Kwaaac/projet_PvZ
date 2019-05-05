@@ -12,11 +12,11 @@ public class DiggerZombie extends Zombie {
 	private final int threat = 1;
 	
 	public DiggerZombie(int x, int y) {
-		super(x, y, 100, 300, -0.93);//2 or 7
+		super(x, y, 100, 300, "verySlow");//2 or 7
 	}
 
 	public DiggerZombie() {
-		super(50, 50, 100, 300, -0.93);
+		super(50, 50, 100, 300, "verySlow");
 	}
 
 	@Override

@@ -9,11 +9,11 @@ public class FlagZombie extends Zombie{
 	private final String color = "#FFFFFF";
 	private final int threat = 1;
 	public FlagZombie(int x, int y) {
-		super(x, y, 100, 200, -0.95);
+		super(x, y, 100, 200, "slow");
 	}
 
 	public FlagZombie() {
-		super(50, 50, 100, 200, -0.95);
+		super(50, 50, 100, 200, "slow");
 	}
 
 	@Override

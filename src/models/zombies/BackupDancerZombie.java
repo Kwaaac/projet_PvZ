@@ -12,11 +12,11 @@ public class BackupDancerZombie extends Zombie {
 	private final int threat = 1;
 	
 	public BackupDancerZombie(int x, int y) {
-		super(x, y, 100, 200, -1.73);
+		super(x, y, 100, 200, "reallyFast");
 	}
 
 	public BackupDancerZombie() {
-		super(50, 50, 100, 200, -1.73);
+		super(50, 50, 100, 200, "reallyFast");
 	}
 
 	@Override

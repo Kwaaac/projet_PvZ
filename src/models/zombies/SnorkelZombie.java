@@ -12,11 +12,11 @@ public class SnorkelZombie extends Zombie {
 	private final int threat = 1;
 	
 	public SnorkelZombie(int x, int y) {
-		super(x, y, 100, 200, -0.93);//4
+		super(x, y, 100, 200, "slow");
 	}
 
 	public SnorkelZombie() {
-		super(50, 50, 100, 200, -0.93);
+		super(50, 50, 100, 200, "slow");
 	}
 
 	@Override

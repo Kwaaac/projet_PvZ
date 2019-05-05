@@ -1,8 +1,7 @@
 package models.zombies;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Objects;
+import java.util.HashMap;
 
 import models.Chrono;
 import models.Coordinates;
@@ -26,9 +25,21 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie 
 
 	protected Chrono slowedTime = new Chrono();
 
-	public Zombie(int x, int y, int damage, int life, double speed) {
+	private final HashMap<String, Double> mSpeed = new HashMap<String, Double>(){
+        {
+        	put("fast", -1.5);//9+
+        	put("fast", -1.38);//7
+        	put("medium", -1.05);//5.5
+        	put("slow", -0.93);//4.7
+        	put("verySlow", -0.5);//2.5
+        	put("ultraSlow", -0.3);//1.5
+        }
+        
+    };
+	
+	public Zombie(int x, int y, int damage, int life, String s) {
 		super(x, y, damage, life);
-		speed = -1.7;
+		speed = mSpeed.get(s);
 		shootBarMax = (int) (speed * -7500);
 		shootTime = System.currentTimeMillis();
 		slowedTime.steady();

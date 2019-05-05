@@ -12,11 +12,11 @@ public class CatapultBaseballZombie extends Zombie {
 	private final int threat = 1;
 	
 	public CatapultBaseballZombie(int x, int y) {
-		super(x, y, 1000, 660, -1.27);
+		super(x, y, 1000, 660, "fast");
 	}
 
 	public CatapultBaseballZombie() {
-		super(50, 50, 1000, 660, -1.27);
+		super(50, 50, 1000, 660, "fast");
 	}
 
 	@Override

@@ -11,11 +11,11 @@ public class BucketheadZombie extends Zombie {
 	private final String color = "#CB5050";
 	private final int threat = 2;
 	public BucketheadZombie(int x, int y) {
-		super(x, y, 100, 1300, -0.95);
+		super(x, y, 100, 1300, "slow");
 	}
 
 	public BucketheadZombie() {
-		super(50, 50, 100, 1300, -0.95);
+		super(50, 50, 100, 1300, "slow");
 	}
 
 	@Override

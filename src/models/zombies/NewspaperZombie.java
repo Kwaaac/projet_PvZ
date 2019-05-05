@@ -13,11 +13,11 @@ public class NewspaperZombie extends Zombie {
 	private final int threat = 1;
 	
 	public NewspaperZombie(int x, int y) {
-		super(x, y, 100, 340, -0.93);
+		super(x, y, 100, 340, "slow");
 	}
 
 	public NewspaperZombie() {
-		super(50, 50, 100, 320, -0.93);
+		super(50, 50, 100, 320, "slow");
 	}
 
 	@Override

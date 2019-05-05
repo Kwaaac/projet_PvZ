@@ -12,11 +12,11 @@ public class Gigagargantuar extends Zombie {
 	private final int threat = 1;
 	
 	public Gigagargantuar(int x, int y) {
-		super(x, y, 300, 6000, -0.93);
+		super(x, y, 300, 6000, "slow");
 	}
 
 	public Gigagargantuar() {
-		super(50, 50, 300, 6000, -0.93);
+		super(50, 50, 300, 6000, "slow");
 	}
 
 	@Override

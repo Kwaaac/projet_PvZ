@@ -12,11 +12,11 @@ public class PeashooterZombie extends Zombie {
 	private final int threat = 1;
 	
 	public PeashooterZombie(int x, int y) {
-		super(x, y, 100, 200, -0.93);
+		super(x, y, 100, 200, "slow");
 	}
 
 	public PeashooterZombie() {
-		super(50, 50, 100, 200, -0.93);
+		super(50, 50, 100, 200, "slow");
 	}
 
 	@Override

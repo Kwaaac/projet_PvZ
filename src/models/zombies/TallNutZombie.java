@@ -12,11 +12,11 @@ public class TallNutZombie extends Zombie {
 	private final int threat = 1;
 	
 	public TallNutZombie(int x, int y) {
-		super(x, y, 100, 2400, -0.93);
+		super(x, y, 100, 2400, "slow");
 	}
 
 	public TallNutZombie() {
-		super(50, 50, 100, 2400, -0.93);
+		super(50, 50, 100, 2400, "slow");
 	}
 
 	@Override

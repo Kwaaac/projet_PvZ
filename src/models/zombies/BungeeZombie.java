@@ -12,11 +12,11 @@ public class BungeeZombie extends Zombie {
 	private final int threat = 1;
 	
 	public BungeeZombie(int x, int y) {
-		super(x, y, 100, 460, -0.93);
+		super(x, y, 100, 460, "slow");
 	}
 
 	public BungeeZombie() {
-		super(50, 50, 100, 460, -0.93);
+		super(50, 50, 100, 460, "slow");
 	}
 
 	@Override
