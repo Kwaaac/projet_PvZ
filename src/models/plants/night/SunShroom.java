@@ -52,7 +52,6 @@ public class SunShroom extends Plant {
 			SimpleGameData dataBord) {
 
 		
-		System.out.println(shootBar + "; " + shootBarMax);
 		if (this.readyToshot()) {
 
 			if (grow == true) {
