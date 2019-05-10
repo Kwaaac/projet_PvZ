@@ -4,7 +4,6 @@ import java.awt.geom.Point2D;
 
 import fr.umlv.zen5.ApplicationContext;
 import fr.umlv.zen5.Event;
-import fr.umlv.zen5.KeyboardKey;
 import fr.umlv.zen5.ScreenInfo;
 import fr.umlv.zen5.Event.Action;
 import models.SimpleGameData;

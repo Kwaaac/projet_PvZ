@@ -118,8 +118,8 @@ public class LawnMower extends Projectile {
 	}
 
 	@Override
-	public boolean isSlowing() {
-		return false;
+	public int isSlowing() {
+		return 0;
 	}
 
 	

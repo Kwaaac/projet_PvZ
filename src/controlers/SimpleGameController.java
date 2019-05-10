@@ -12,16 +12,11 @@ import fr.umlv.zen5.ApplicationContext;
 import fr.umlv.zen5.Event;
 import fr.umlv.zen5.Event.Action;
 import fr.umlv.zen5.KeyboardKey;
-import fr.umlv.zen5.ScreenInfo;
 
 import models.DeadPool;
 import models.SimpleGameData;
 import models.map.Map;
 import models.plants.*;
-import models.plants.day.*;
-import models.plants.night.*;
-import models.plants.pool.*;
-
 import models.projectiles.*;
 
 import models.zombies.*;
@@ -36,27 +31,13 @@ public class SimpleGameController {
 	static void simpleGame(ApplicationContext context) {
 		ArrayList<Plant> selectedPlant = MenuController.startGame(context);
 		
-		ScreenInfo screenInfo = context.getScreenInfo();
-		int width = (int)screenInfo.getWidth();
-		int height = (int)screenInfo.getHeight();
-		
 		HashMap<Zombie, Integer> normalWaveZombie = SimpleGameData.generateZombies(1);
-//		HashMap<Zombie, Integer> normalWaveZombie = new HashMap<Zombie, Integer>(){
-//	        {
-//	        	put(new SnorkelZombie(), 1);
-//				put(new DolphinRiderZombie(), 1);
-//	        }
-//		};
-//		
-		
 		HashMap<Zombie, Integer> superWaveZombie = SimpleGameData.generateZombies(2);
 		
-//		BordView menuView = new BordView(0, 0, width, height, 100);
 		SimpleGameData dataBord = Map.dataBord();
 		SimpleGameData dataSelect = new SimpleGameData(selectedPlant.size(), 1);
 
 		int yOrigin = 150;
-		int xOrigin = 450;
 
 		BordView view = Map.view();
 		

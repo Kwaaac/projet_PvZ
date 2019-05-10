@@ -354,7 +354,7 @@ public class SimpleGameData {
 			if (SimpleGameData.getMap() != "Night") {
 				int xOrigin = view.getXOrigin();
 
-				float xRandom = RandomPosGenerator(xOrigin + view.getLength() - 5, xOrigin + view.getLength());
+				float xRandom = RandomPosGenerator(xOrigin, xOrigin + view.getLength());
 
 				mySun.add(new Soleil(xRandom, 0, 1.5, 25, 85));
 			}

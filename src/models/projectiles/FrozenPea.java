@@ -23,8 +23,8 @@ public class FrozenPea extends Projectile {
 	}
 
 	@Override
-	public boolean isSlowing() {
-		return true;
+	public int isSlowing() {
+		return 6;
 	}
 
 	@Override

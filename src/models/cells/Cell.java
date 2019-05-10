@@ -1,6 +1,7 @@
 package models.cells;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import models.IEntite;
 import models.plants.Plant;
@@ -21,11 +22,11 @@ public abstract class Cell implements ICell {
 	 * Add a plant on the cell
 	 */
 	public boolean addPlant(Plant plant) {
-		if(plantedPlant) {
+		if (plantedPlant) {
 			return false;
 		}
-		
-		if(plant.canBePlantedOnGrass()) {
+
+		if (plant.canBePlantedOnGrass()) {
 			plantedPlant = true;
 			plantInCell.add(plant);
 			return true;
@@ -69,14 +70,18 @@ public abstract class Cell implements ICell {
 
 	/**
 	 * 
-	 * @return The list of zombie from the cell
+	 * @return The list of zombie on the cell
 	 */
 	public ArrayList<Zombie> getZombiesInCell() {
-		return zombiesInCell;
+		return new ArrayList<Zombie>(zombiesInCell);
 	}
-	
+
+	/**
+	 * 
+	 * @return The list of plant on the cell
+	 */
 	public ArrayList<Plant> getPlantInCell() {
-		return plantInCell;
+		return new ArrayList<Plant>(plantInCell);
 	}
 
 	/**
@@ -87,10 +92,23 @@ public abstract class Cell implements ICell {
 	public boolean isThereZombies() {
 		return !zombiesInCell.isEmpty();
 	}
-	
+
+	/**
+	 * 
+	 * @return False if the list of plants is empty, True otherwise
+	 */
 	public boolean isTherePlant() {
 		return !plantInCell.isEmpty();
 	}
+	
+	/**
+	 * 
+	 * @return True if a main plant is planted, False otherwise
+	 */
+	public boolean isThereAPlantedPlant() {
+		return plantedPlant;
+	}
+
 	/**
 	 * 
 	 * @return True if a Plant is on the cell OR if there is zombies on the cell,
@@ -107,5 +125,4 @@ public abstract class Cell implements ICell {
 						: "Il n'y a pas de zombie");
 	}
 
-	
 }

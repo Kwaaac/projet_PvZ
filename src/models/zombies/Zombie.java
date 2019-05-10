@@ -28,6 +28,7 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie 
 	private final int threat;
 
 	protected Chrono slowedTime = new Chrono();
+	protected int slowedLimit;
 
 	private final HashMap<String, Double> mSpeed = new HashMap<String, Double>(){
         {
@@ -266,8 +267,9 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie 
 
 	}
 
-	public void slowed(Boolean slowing) {
-		if (slowing) {
+	public void slowed(int slowing) {
+		if (slowing > 0) {
+			slowedLimit = slowing;
 			slowedTime.start();
 		}
 	}
