@@ -2,6 +2,7 @@ package models.plants.day;
 
 import java.awt.Graphics2D;
 import java.util.ArrayList;
+import java.util.Objects;
 
 import fr.umlv.zen5.ApplicationContext;
 import models.Coordinates;
@@ -44,37 +45,36 @@ public class CherryBomb extends Plant {
 		return zone;
 	}
 
-	
 	// Detection des zombies dans les cellules données
 	private ArrayList<Entities> detect(BordView view, SimpleGameData dataBord) {
 		ArrayList<Entities> Lz = new ArrayList<>();
 		for (Coordinates c : zone) {
 			Cell cell = dataBord.getCell(c.getJ(), c.getI());
-			
-			if(cell != null && cell.isThereZombies()) {
-				for(Entities e: cell.getZombiesInCell()) {
+
+			if (cell != null && cell.isThereZombies()) {
+				for (Entities e : cell.getZombiesInCell()) {
 					Lz.add(e);
 				}
 			}
 		}
-		
+
 		return Lz;
 	}
 
 	@Override
 	public String toString() {
-		return super.toString() + "--" + name;
+		return name;
 	}
 
 	@Override
 	public void action(ArrayList<Projectile> myBullet, BordView view, ArrayList<Zombie> myZombies,
 			SimpleGameData dataBord) {
-		
+
 		if (this.readyToshot()) {
 			for (Entities z : this.detect(view, dataBord)) {
 				z.takeDmg(1800);
 			}
-			
+
 			this.life = 0;
 			dataBord.getCell(getCaseJ(), getCaseI()).removePlant(this);
 		}

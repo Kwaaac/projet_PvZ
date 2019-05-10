@@ -3,6 +3,7 @@ package models.plants;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Objects;
 
 import models.Coordinates;
 import models.DeadPool;
@@ -34,7 +35,6 @@ import models.zombies.Zombie;
 import views.BordView;
 
 public abstract class Plant extends Entities implements IPlant {
-	private final String type = "Plant";
 	private final static int sizeOfPlant = 75;
 	protected final int shootBarMax;
 	protected long shootBar;
@@ -42,35 +42,38 @@ public abstract class Plant extends Entities implements IPlant {
 	protected final int cost;
 	protected final Long cooldown;
 	private Coordinates plantSelect;
-	
-	
-	
-	private final static ArrayList<Plant> day = new ArrayList<>(Arrays.asList(new CherryBomb(), new Chomper(), new Peashooter(), new PotatoMine(), new Repeater(), new SnowPea(), new SunFlower(), new WallNut()));
-	private final static ArrayList<Plant> night = new ArrayList<>(Arrays.asList(new DoomShroom(), new FumeShroom(), new GraveBuster(), new HypnoShroom(), new IceShroom(), new PuffShroom(), new ScaredyShroom(), new SunShroom()));
-	private final static ArrayList<Plant> pool = new ArrayList<>(Arrays.asList(new Cattails(), new LilyPad(), new SeaShroom(), new TangleKelp()));
-	
-	private final HashMap<String, Long> mCooldown = new HashMap<String, Long>(){
-        {
-        put("free", (long) 0);
-        put("fast", (long) 5);
-        put("medium", (long) 15);
-        put("slow", (long) 20);
-        put("verySlow", (long) 35);
-        put("bigTime", (long) 60);
-        }
-        
-    };
 
-	
+	private final static ArrayList<Plant> day = new ArrayList<>(Arrays.asList(new CherryBomb(), new Chomper(),
+			new Peashooter(), new PotatoMine(), new Repeater(), new SnowPea(), new SunFlower(), new WallNut()));
+	private final static ArrayList<Plant> night = new ArrayList<>(
+			Arrays.asList(new DoomShroom(), new FumeShroom(), new GraveBuster(), new HypnoShroom(), new IceShroom(),
+					new PuffShroom(), new ScaredyShroom(), new SunShroom()));
+	private final static ArrayList<Plant> pool = new ArrayList<>(
+			Arrays.asList(new Cattails(), new LilyPad(), new SeaShroom(), new TangleKelp()));
+
+	private final HashMap<String, Long> mCooldown = new HashMap<String, Long>() {
+		{
+			put("free", (long) 0);
+			put("fast", (long) 5);
+			put("medium", (long) 15);
+			put("slow", (long) 20);
+			put("verySlow", (long) 35);
+			put("bigTime", (long) 60);
+		}
+
+	};
+
 	public Plant(int x, int y, int damage, int life, int shootBarMax, int cost, String cooldown) {
 		super(x, y, damage, life);
-		
+
 		this.shootBarMax = shootBarMax;
 		this.cost = cost;
 		this.cooldown = mCooldown.get(cooldown);
+		
+		// Prevent the plant to shoot instantly
 		shootTime = 0;
 	}
-	
+
 	public static ArrayList<Plant> getPlantList(String s) {
 		if (s == "night") {
 			return night;
@@ -80,7 +83,7 @@ public abstract class Plant extends Entities implements IPlant {
 		}
 		return day;
 	}
-	
+
 	public void setCase(SimpleGameData data) {
 		int cX = BordView.caseXFromX(x);
 		int cY = BordView.caseYFromY(y);
@@ -102,7 +105,7 @@ public abstract class Plant extends Entities implements IPlant {
 			}
 		}
 	}
-	
+
 	/**
 	 * @return Coordinates for it's placement in the PlantSelection
 	 */
@@ -112,10 +115,6 @@ public abstract class Plant extends Entities implements IPlant {
 
 	public int getCost() {
 		return cost;
-	}
-
-	public String toString() {
-		return "Type: " + type;
 	}
 
 	public static int getSizeOfPlant() {
@@ -167,19 +166,34 @@ public abstract class Plant extends Entities implements IPlant {
 
 		}
 	}
-	
+
 	@Override
 	public boolean canBePlantedOnWater() {
 		return false;
 	}
-	
+
 	@Override
 	public boolean canBePlantedOnGrass() {
 		return true;
 	}
-	
-	@Override 
+
+	@Override
 	public boolean isLilyPad() {
 		return false;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (!(o instanceof Plant)) {
+			return false;
+		}
+		Plant p = (Plant) o;
+		return super.equals(p) && shootBarMax == p.shootBarMax && shootTime == p.shootTime && cost == p.cost
+				&& cooldown == p.cooldown;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(super.hashCode(), shootBarMax, shootTime, cost, cooldown);
 	}
 }

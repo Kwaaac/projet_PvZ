@@ -1,17 +1,15 @@
 package models.projectiles;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 import models.Coordinates;
 import models.DeadPool;
 import models.Entities;
 import models.MovingElement;
 import models.SimpleGameData;
-import models.plants.Plant;
-import models.zombies.Zombie;
 
 public abstract class Projectile extends Entities implements MovingElement, IProjectile{
-	private final String type = "Projectile";
 	private double speed;
 	private static final int sizeOfProjectile = 25;
 	
@@ -25,12 +23,7 @@ public abstract class Projectile extends Entities implements MovingElement, IPro
 	public void move() {
 		setX((int) (super.x + getSpeed()));
 	}
-	
-	@Override
-	public String toString() {
-		return "Type: " + type; 
-	}
-	
+		
 	@Override
 	public void incAS() {}
 
@@ -71,6 +64,20 @@ public abstract class Projectile extends Entities implements MovingElement, IPro
 				DPe.add(p);
 			}
 		}
+	}
+	
+	@Override
+	public boolean equals(Object o) {
+		if (!(o instanceof Projectile)) {
+			return false;
+		}
+		Projectile z = (Projectile) o;
+		return super.equals(z) && speed == z.speed;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(super.hashCode(), speed);
 	}
 	
 	public void action() {}

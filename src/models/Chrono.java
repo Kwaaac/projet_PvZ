@@ -1,17 +1,20 @@
 package models;
 
+import java.util.Objects;
+
+import models.plants.day.CherryBomb;
+
 public class Chrono {
 	private long tempsDepart = 0;
 	private long tempsFin = 0;
 	private long pauseDepart = 0;
 	private long pauseFin = 0;
 	private long duree = 0;
-	
-	
+
 	/**
 	 * get the chrono ready for launch
 	 */
-	
+
 	public void steady() {
 		tempsDepart = 0;
 		tempsFin = 0;
@@ -106,7 +109,7 @@ public class Chrono {
 	 */
 	public boolean asReachTimerAndStop(long tempsS) {
 		this.pause();
-		
+
 		if (this.getDureeSec() >= tempsS) {
 			this.stop();
 			return true;
@@ -114,7 +117,7 @@ public class Chrono {
 		this.resume();
 		return false;
 	}
-	
+
 	/**
 	 * 
 	 * @param tempsS temps a atteindre et relance le chrono
@@ -122,8 +125,8 @@ public class Chrono {
 	 */
 	public boolean asReachTimer(long tempsS) {
 		this.pause();
-		
-		if (this.getDureeSec() >= tempsS ) {
+
+		if (this.getDureeSec() >= tempsS) {
 			this.start();
 			return true;
 		}
@@ -136,7 +139,7 @@ public class Chrono {
 	 * 
 	 * @return Renvoie true si le chrono est en stand-by, false si il est lanc�
 	 */
-	
+
 	public boolean isReset() {
 		return (tempsDepart == 0 && tempsFin == 0 && pauseDepart == 0 && pauseFin == 0);
 	}
@@ -168,5 +171,20 @@ public class Chrono {
 		}
 
 		return r;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (!(o instanceof Chrono)) {
+			return false;
+		}
+		Chrono c = (Chrono) o;
+		return tempsDepart == c.tempsDepart && tempsFin == c.tempsFin && pauseDepart == c.pauseDepart
+				&& pauseFin == c.pauseFin && duree == c.duree;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(tempsDepart, tempsFin, pauseDepart, pauseFin, duree);
 	}
 }

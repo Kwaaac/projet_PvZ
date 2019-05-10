@@ -2,7 +2,6 @@ package models;
 
 import java.util.ArrayList;
 
-import models.plants.Plant;
 import models.projectiles.LawnMower;
 import models.projectiles.Projectile;
 import models.zombies.Zombie;

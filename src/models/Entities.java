@@ -1,6 +1,7 @@
 package models;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 import views.BordView;
 
@@ -121,6 +122,16 @@ public abstract class Entities implements IEntite {
 			}
 		}
 	}
-
 	
+	@Override
+	public boolean equals(Object o) {
+		if(!(o instanceof Entities)) { return false; }
+		Entities t = (Entities) o;
+		return x == t.x && y == t.y && caseXY.equals(t.caseXY) && damage == t.damage && life == t.life;
+	}
+	
+	@Override
+	public int hashCode() {
+		return Objects.hash(x, y, caseXY, damage, life);
+	}
 }

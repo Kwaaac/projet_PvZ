@@ -3,6 +3,7 @@ package models.zombies;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Objects;
 
 import models.Chrono;
 import models.Coordinates;
@@ -309,5 +310,19 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie 
 	@Override
 	public boolean isCommon() {
 		return true;
+	}
+	
+	@Override
+	public boolean equals(Object o) {
+		if (!(o instanceof Zombie)) {
+			return false;
+		}
+		Zombie z = (Zombie) o;
+		return super.equals(z) && speed == z.speed && shootTime == z.shootTime && threat == z.threat;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(super.hashCode(), speed, shootBarMax, shootTime, threat);
 	}
 }

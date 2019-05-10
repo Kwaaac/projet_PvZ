@@ -2,9 +2,9 @@ package models.plants.day;
 
 import java.awt.Graphics2D;
 import java.util.ArrayList;
+import java.util.Objects;
 
 import fr.umlv.zen5.ApplicationContext;
-import models.Coordinates;
 import models.SimpleGameData;
 import models.plants.Plant;
 import models.projectiles.Projectile;
@@ -15,8 +15,6 @@ import views.SimpleGameView;
 public class SunFlower extends Plant {
 	private final String name = "SunFlower";
 	private final String color = "#FEFF33";
-
-	private final Coordinates placeSelect = new Coordinates(0, 1);
 
 	public SunFlower(int x, int y) {
 		// x, y, damage, life, shootBarMax, cost, cooldown
@@ -56,6 +54,19 @@ public class SunFlower extends Plant {
 		}
 
 		this.incAS();
+	}
+	
+	
+	@Override
+	public boolean equals(Object o) {
+		if(!(o instanceof SunFlower)) { return false; }
+		SunFlower s = (SunFlower) o;
+		return name.equals(s.name) && color.equals(s.color);
+	}
+	
+	@Override
+	public int hashCode() {
+		return Objects.hash(name, color);
 	}
 
 }

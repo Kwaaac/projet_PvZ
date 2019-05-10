@@ -25,7 +25,7 @@ public class Chomper extends Plant {
 		super(x, y, 0, 350, 15_000, 0, "free");
 
 		delayAttack.steady();
-		shootBar = shootBarMax; // La plante tire d�s qu'elle est pos�e
+		shootBar = shootBarMax; // Allow the plant to fire instantly
 	}
 
 	public Chomper() {

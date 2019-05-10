@@ -2,6 +2,7 @@ package models.plants.pool;
 
 import java.awt.Graphics2D;
 import java.util.ArrayList;
+import java.util.Objects;
 
 import fr.umlv.zen5.ApplicationContext;
 import models.SimpleGameData;
@@ -61,5 +62,17 @@ public class LilyPad extends Plant {
 	@Override 
 	public boolean isLilyPad() {
 		return true;
+	}
+	
+	@Override
+	public boolean equals(Object o) {
+		if(!(o instanceof LilyPad)) { return false; }
+		LilyPad s = (LilyPad) o;
+		return name.equals(s.name) && color.equals(s.color);
+	}
+	
+	@Override
+	public int hashCode() {
+		return Objects.hash(name, color);
 	}
 }

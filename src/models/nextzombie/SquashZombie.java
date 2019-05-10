@@ -1,9 +1,12 @@
 package models.nextzombie;
 
 import java.awt.Graphics2D;
+import java.util.ArrayList;
 
 import fr.umlv.zen5.ApplicationContext;
+import views.BordView;
 import views.SimpleGameView;
+import models.SimpleGameData;
 import models.zombies.Zombie;
 public class SquashZombie extends Zombie {
 
@@ -50,6 +53,12 @@ public class SquashZombie extends Zombie {
 	@Override
 	public void draw(SimpleGameView view, Graphics2D graphics, float x, float y) {
 		view.drawSquashZombie(graphics, x, y, color);
+	}
+
+	@Override
+	public void action(BordView view, SimpleGameData dataBord, ArrayList<Zombie> myZombies) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }
