@@ -336,7 +336,6 @@ public class SimpleGameData {
 
 	public void actionningZombie(ArrayList<Projectile> myBullet, BordView view, ArrayList<Zombie> myZombies,
 			SimpleGameData dataBord) {
-		System.out.println(myZombies);
 		for (IZombie z : myZombies) {
 
 			z.action(view, dataBord, myZombies);
@@ -483,7 +482,6 @@ public class SimpleGameData {
 			if (actualCell.addPlant(actualPlant)) {
 				myPlants.add(actualPlant.createAndDrawNewPlant(view, context, x2, y2));
 				actualMoney -= psView.getSelectedPlants().get(p).getCost();
-				System.out.println("Vous avez " + actualMoney);
 				psView.startCooldown(p);
 			}
 
@@ -533,7 +531,6 @@ public class SimpleGameData {
 
 		if (res) {
 			actualMoney += mySun.remove(position).getSunny();
-			System.out.println("Vous avez " + actualMoney);
 		}
 
 		return res;
@@ -649,8 +646,6 @@ public class SimpleGameData {
 					probList.add(dataBord.RandomPosGenerator(z.getProb(difficulty)));
 					zombieAvailable.add(z);
 
-					System.out.println(z);
-
 				}
 			}
 
@@ -668,7 +663,6 @@ public class SimpleGameData {
 				zombieList.put(z, zombieList.get(z) - 1);
 				if (map == "Pool") {
 					if (z.isCommon()) {
-						System.out.println(view.indexFromReaCoord(y, view.getYOrigin()));
 						while(view.indexFromReaCoord(y, view.getYOrigin()) == 2 || view.indexFromReaCoord(y, view.getYOrigin()) == 3) {
 							y = view.getYOrigin() + dataBord.RandomPosGenerator(dataBord.getNbLines()) * sqrS + (sqrS / 2);
 						}
