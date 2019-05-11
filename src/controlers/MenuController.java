@@ -113,11 +113,6 @@ public class MenuController {
 
 			case "plantSelection":
 
-				view.drawRectangle(context, 0, 0, width, height, "#ffffff"); // background
-				viewContent.draw(context, dataBord);
-				plantSelectionView.draw(context, dataSelect);
-				view.drawRectangle(context, width - 65, 15, 50, 50, "#DE0000"); // quit
-
 				if (dataBord.isCorrectSelectLocation(viewContent, x, y)) {
 					viewContent.truc(x, y, plantSelectionView, dataBord, dataSelect);
 
@@ -126,6 +121,11 @@ public class MenuController {
 						plantSelectionView.truc(x, y, viewContent, dataSelect, dataBord);
 					}
 				}
+				
+				view.drawRectangle(context, 0, 0, width, height, "#ffffff"); // background
+				viewContent.draw(context, dataBord);
+				plantSelectionView.draw(context, dataSelect);
+				view.drawRectangle(context, width - 65, 15, 50, 50, "#DE0000"); // quit
 
 			}
 

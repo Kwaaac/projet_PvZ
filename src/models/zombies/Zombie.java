@@ -29,6 +29,7 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie 
 
 	protected Chrono slowedTime = new Chrono();
 	protected int slowedLimit;
+	protected boolean afflicted = false;
 
 	private final HashMap<String, Double> mSpeed = new HashMap<String, Double>(){
         {
@@ -104,14 +105,16 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie 
 	}
 	
 	public void go(float x) {
-		if (slowedTime.isReset()) {
+		if (!afflicted) { // zombie without affliction
 			setSpeed(x);
-		} else {
+			
+		} else { // slowed
 			setSpeed(x / 2);
 			shootBarMax = (int) (getSpeed() * -7500);
 
-			if (slowedTime.asReachTimer(6)) {
+			if (slowedTime.asReachTimer(6)) { // slowing effect stop
 				slowedTime.steady();
+				afflicted = false; // a upgrade avec le shockEffect
 			}
 		}
 
@@ -270,6 +273,7 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie 
 	public void slowed(int slowing) {
 		if (slowing > 0) {
 			slowedLimit = slowing;
+			afflicted = true;
 			slowedTime.start();
 		}
 	}
