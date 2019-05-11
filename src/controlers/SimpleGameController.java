@@ -15,6 +15,7 @@ import fr.umlv.zen5.KeyboardKey;
 
 import models.DeadPool;
 import models.SimpleGameData;
+import models.cells.Cell;
 import models.map.Map;
 import models.plants.*;
 import models.projectiles.*;
@@ -65,6 +66,15 @@ public class SimpleGameController {
 		dataBord.spawnLawnMower(view, context,myLawnMower);
 		
 		while (true) {
+			StringBuilder s = new StringBuilder();
+			for(Cell c : dataBord.getLineCell(0, 0)) {
+				
+				s.append(c.getProjectilesInCell() + "; ");
+			}
+			s.append("\n");
+			String stri = s.toString();
+			System.out.println(stri);
+			
 			
 			/*-----------------------------CHECK CHRONO----------------------------*/
 			plantSelectionView.checkCooldown();

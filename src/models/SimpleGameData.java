@@ -392,6 +392,7 @@ public class SimpleGameData {
 				b.SpeedBoostOFF();
 			}
 			view.moveAndDrawElement(context, this, b);
+			b.setCase(this);
 		}
 
 		for (LawnMower l : myLawnMower) {

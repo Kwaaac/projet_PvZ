@@ -48,8 +48,13 @@ public class DeadPool {
 
 		for(IEntite DPe: deadPool) {
 			Le.remove(DPe);
-			if(dataBord.getCell(DPe.getCaseJ(), DPe.getCaseI()) != null) {
-				dataBord.getCell(DPe.getCaseJ(), DPe.getCaseI()).removeZombie(DPe);
+			
+			int caseJ = DPe.getCaseJ();
+			int caseI = DPe.getCaseI();
+			
+			if(dataBord.getCell(caseJ, caseI) != null) {
+				dataBord.getCell(caseJ, caseI).removeZombie(DPe);
+				dataBord.getCell(caseJ, caseI).removeProjectile(DPe);
 			}
 		}
 

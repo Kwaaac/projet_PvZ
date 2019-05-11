@@ -52,7 +52,7 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie 
 		slowedTime.steady();
 	}
 	
-	private final static ArrayList<Zombie> common = new ArrayList<Zombie>(Arrays.asList(new NormalZombie(),new FlagZombie(),new BucketheadZombie(),new ConeheadZombie(),new NewspaperZombie() ));
+	private final static ArrayList<Zombie> common = new ArrayList<Zombie>(Arrays.asList(new NormalZombie(),new FlagZombie(),new BucketheadZombie(),new ConeheadZombie(),new NewspaperZombie(), new PoleVaultingZombie() ));
 	private final static ArrayList<Zombie> pool = new ArrayList<Zombie>(Arrays.asList(new DolphinRiderZombie(), new DuckyTubeZombie()));
 	
 	public float getX() {
@@ -76,7 +76,7 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie 
 			Cell actCell = data.getCell(cY, cX);
 			if (actCell != null) {
 
-				if (!(cX == data.getNbColumns() - 1)) {
+				if (!(cX == data.getNbColumns() - 1) || cX < 0) {
 					data.getCell(caseXY.getJ(), caseXY.getI()).removeZombie(this);
 				}
 

@@ -5,17 +5,32 @@ import java.util.Collections;
 
 import models.IEntite;
 import models.plants.Plant;
+import models.projectiles.Projectile;
 import models.zombies.Zombie;
 
 public abstract class Cell implements ICell {
 
 	private final ArrayList<Zombie> zombiesInCell;
 	private final ArrayList<Plant> plantInCell;
+	private final ArrayList<Projectile> projectileInCell;
 	private boolean plantedPlant = false;
 
 	public Cell() {
 		zombiesInCell = new ArrayList<>();
 		plantInCell = new ArrayList<>();
+		projectileInCell = new ArrayList<>();
+	}
+	/**
+	 * Add a projectile in it's array
+	 * 
+	 * @param The projectile added to the cell
+	 */
+	public void addProjectile(Projectile p) {
+		projectileInCell.add(p);
+	}
+	
+	public void removeProjectile(IEntite p) {
+		projectileInCell.remove(p);
 	}
 
 	/**
@@ -48,6 +63,10 @@ public abstract class Cell implements ICell {
 	 */
 	public boolean isPlantedPlant() {
 		return plantedPlant;
+	}
+	
+	public ArrayList<Projectile> getProjectilesInCell(){
+		return new ArrayList<Projectile>(projectileInCell);
 	}
 
 	/**
@@ -100,7 +119,7 @@ public abstract class Cell implements ICell {
 	public boolean isTherePlant() {
 		return !plantInCell.isEmpty();
 	}
-	
+
 	/**
 	 * 
 	 * @return True if a main plant is planted, False otherwise
