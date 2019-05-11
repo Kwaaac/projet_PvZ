@@ -34,8 +34,6 @@ public class WeakSpore extends Projectile {
 	@Override
 	public void action() {
 		if (distance != -1) {
-			System.out.println((spawnX + distance) + "; " + getX());
-			System.out.println((spawnX + distance) < getX());
 			if ((spawnX + distance) < getX()) {
 				setLife(1);
 			}
