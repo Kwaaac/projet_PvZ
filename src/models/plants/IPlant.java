@@ -28,6 +28,10 @@ public interface IPlant {
 	
 	boolean canBePlantedOnGrass();
 	
+	boolean canBePlantedOnRoof();
+	
 	boolean isLilyPad();
+	
+	boolean isPot();
 
 }

@@ -4,18 +4,15 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.geom.Ellipse2D;
-import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.RectangularShape;
 import java.util.ArrayList;
-import java.awt.geom.RoundRectangle2D;
 
 import models.Chrono;
 import models.Coordinates;
 import models.MovingElement;
 import models.SimpleGameData;
 import models.plants.Plant;
-import models.projectiles.LawnMower;
 
 public class SelectBordView extends SimpleGameView {
 	private final ArrayList<Plant> selectedPlants;
@@ -513,5 +510,18 @@ public class SelectBordView extends SimpleGameView {
 		graphics.drawString("25", x+15+sizeOfPlant/2, y+squareSize-5);
 	}
 	
+	/*-------------------------------ROOF-------------------------------*/
+	
+	@Override
+	public void drawPot(Graphics2D graphics, int x, int y, String color) {
+		graphics.setColor(Color.decode(color));
+		graphics.fill(new Ellipse2D.Float(x - 15, y + sizeOfPlant / 2, sizeOfPlant, sizeOfPlant));
+
+		graphics.setColor(Color.decode("#C98C79"));
+		graphics.fill(new Ellipse2D.Float(x - 7, y + sizeOfPlant / 2 + 8, sizeOfPlant - 15, sizeOfPlant - 15));
+		graphics.setColor(Color.WHITE);
+		graphics.setFont(new Font("Afterglow", Font.PLAIN, 20));
+		graphics.drawString("25", x+15+sizeOfPlant/2, y+squareSize-5);
+	}
 
 }

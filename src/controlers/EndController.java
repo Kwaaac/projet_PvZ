@@ -31,9 +31,10 @@ public class EndController {
 		else {
 			view.drawString(context, (int)((width/2)-150), (int)height/2, "YOU QUIT", "#000000", 50);
 		}
+		timer.start();
 		while (true) {
 			
-			if (timer.asReachTimer(2)) {
+			if (timer.asReachTimer(1)) {
 				System.exit(0);
 			}
 			

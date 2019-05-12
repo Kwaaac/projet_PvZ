@@ -8,12 +8,12 @@ import java.util.Objects;
 import models.Coordinates;
 import models.DeadPool;
 import models.Entities;
-import models.IEntite;
 import models.SimpleGameData;
 import models.cells.Cell;
 import models.plants.day.CherryBomb;
 import models.plants.day.Chomper;
 import models.plants.day.Peashooter;
+import models.plants.day.Pot;
 import models.plants.day.PotatoMine;
 import models.plants.day.Repeater;
 import models.plants.day.SnowPea;
@@ -44,7 +44,7 @@ public abstract class Plant extends Entities implements IPlant {
 	private Coordinates plantSelect;
 
 	private final static ArrayList<Plant> day = new ArrayList<>(Arrays.asList(new CherryBomb(), new Chomper(),
-			new Peashooter(), new PotatoMine(), new Repeater(), new SnowPea(), new SunFlower(), new WallNut()));
+			new Peashooter(), new PotatoMine(), new Repeater(), new SnowPea(), new SunFlower(), new WallNut(), new Pot()));
 	private final static ArrayList<Plant> night = new ArrayList<>(
 			Arrays.asList(new DoomShroom(), new FumeShroom(), new GraveBuster(), new HypnoShroom(), new IceShroom(),
 					new PuffShroom(), new ScaredyShroom(), new SunShroom()));
@@ -176,9 +176,19 @@ public abstract class Plant extends Entities implements IPlant {
 	public boolean canBePlantedOnGrass() {
 		return true;
 	}
+	
+	@Override
+	public boolean canBePlantedOnRoof() {
+		return false;
+	}
 
 	@Override
 	public boolean isLilyPad() {
+		return false;
+	}
+	
+	@Override
+	public boolean isPot() {
 		return false;
 	}
 

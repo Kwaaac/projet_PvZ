@@ -2,7 +2,6 @@ package models.plants.day;
 
 import java.awt.Graphics2D;
 import java.util.ArrayList;
-import java.util.Collections;
 
 import fr.umlv.zen5.ApplicationContext;
 import models.Chrono;

@@ -265,6 +265,13 @@ void drawEllipse(Graphics2D graphics, int x, int y, int width, int height, Strin
 		context.renderFrame(graphics -> drawLilyPad(graphics, x, y, s));
 	}
 	
+	/*------------------------------ROOF-------------------------------*/
+	void drawPot(Graphics2D graphics, int x, int y, String color);
+	
+	public default void drawPot(ApplicationContext context, int x, int y, String s) {
+		context.renderFrame(graphics -> drawPot(graphics, x, y, s));
+	}
+	
 	
 	/*-----------------------------Zombies------------------------------*/
 

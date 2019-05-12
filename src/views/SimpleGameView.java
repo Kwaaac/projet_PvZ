@@ -222,6 +222,13 @@ public abstract class SimpleGameView implements GameView {
 		graphics.fill(new Ellipse2D.Float(x - 15, y - 15, sizeOfPlant + 30, sizeOfPlant + 30));
 
 	}
+	
+	/*-------------------------------ROOF-------------------------------*/
+	
+	public void drawPot(Graphics2D graphics, int x, int y, String color) {
+		graphics.setColor(Color.decode(color));
+		graphics.fill(new Ellipse2D.Float(x - 15, y - 15, sizeOfPlant + 30, sizeOfPlant + 30));
+	}
 
 	/*-----------------------------Zombies------------------------------*/
 
@@ -504,5 +511,7 @@ public abstract class SimpleGameView implements GameView {
 
 	public void drawSelectedPlant(Graphics2D context, SimpleGameData data, BordView view, int p) {
 	}
+
+	
 
 }
