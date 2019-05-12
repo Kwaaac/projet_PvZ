@@ -12,7 +12,7 @@ import fr.umlv.zen5.ApplicationContext;
 import fr.umlv.zen5.Event;
 import fr.umlv.zen5.Event.Action;
 import fr.umlv.zen5.KeyboardKey;
-
+import fr.umlv.zen5.ScreenInfo;
 import models.DeadPool;
 import models.SimpleGameData;
 import models.cells.Cell;
@@ -30,6 +30,10 @@ import views.SelectBordView;
 public class SimpleGameController {
 	
 	static void simpleGame(ApplicationContext context) {
+		
+		ScreenInfo screenInfo = context.getScreenInfo();
+		int width = (int) screenInfo.getWidth();
+		int height = (int) screenInfo.getHeight();
 		ArrayList<Plant> selectedPlant = MenuController.startGame(context);
 		
 		HashMap<Zombie, Integer> normalWaveZombie = SimpleGameData.generateZombies(1);
@@ -59,107 +63,140 @@ public class SimpleGameController {
 
 		StringBuilder str = new StringBuilder("Journal de bord\n-+-+-+-+-+-+-+-+-+-\n");
 
-		boolean debug = false, debuglock = false;
+		boolean debug = false, debuglock = false, pause = false;
 		
 		int money = 0;
 		
 		dataBord.spawnLawnMower(view, context,myLawnMower);
 		
+		
 		while (true) {
-			StringBuilder s = new StringBuilder();
-			for(Cell c : dataBord.getLineCell(0, 0)) {
+			if (pause == true) {
+				while (pause == true) {
+					
+					view.drawRectangle(context, 0, 0, width, height , "#61DB5F");
+					view.drawRectangle(context, width - 65, 15, 50, 50, "#DE0000");
+					view.drawString(context, (int)((width/2)-100), (int)height/2, "PAUSE", "#000000", 50);
+					
+					Event event = context.pollOrWaitEvent(45); // modifier pour avoir un affichage fluide
+					if (event == null) { // no event
+						continue;
+					}
+					Action action = event.getAction();
+					KeyboardKey KB = event.getKey();
+					String mdp = null;
+					if (KB != null) {
+						mdp = KB.toString();
+					}
+					
+					if (action == Action.KEY_PRESSED || action == Action.KEY_RELEASED) {
+						if (mdp == "M") {
+							pause = false;
+						}
+					}
+				}
+			}
+			else {
+				StringBuilder s = new StringBuilder();
+				for(Cell c : dataBord.getLineCell(0, 0)) {
+					
+					s.append(c.getProjectilesInCell() + "; ");
+				}
+				s.append("\n");
+				String stri = s.toString();
+				System.out.println(stri);
 				
-				s.append(c.getProjectilesInCell() + "; ");
-			}
-			s.append("\n");
-			String stri = s.toString();
-			System.out.println(stri);
-			
-			
-			/*-----------------------------CHECK CHRONO----------------------------*/
-			plantSelectionView.checkCooldown();
-			/*--------------------------------DRAWS--------------------------------*/
-			
-			view.drawAll(context, dataBord, view, myZombies, myBullet, myLawnMower, debug, debuglock, dataSelect, money, plantSelectionView);
-
-			/*---------------------------INITIALISATION-----------------------------*/
-			
-			DeadPool deadPoolE = new DeadPool();
-			
-			/*--------------------------------SUN SPAWNERS----------------------------*/
-			
-			dataBord.naturalSun(view);
-
-			/*-------------------------------ZOMBIE SPAWNERS-----------------------------*/
-			
-			SimpleGameData.spawnZombies(dataBord, squareSize, str, myZombies, view, context, normalWaveZombie, superWaveZombie);
-
-			/*------------------------------- CONFLICTS ----------------------------------*/
-			
-			Zombie.ZCheckConflict(myZombies, myBullet, dataBord.getMyPlants(), myLawnMower, deadPoolE, view, dataBord, str);
-			
-			/*-------------------------------- DEATHS ------------------------------------*/
-			
-			deadPoolE.deletingEverything(myZombies, dataBord, myBullet, myLawnMower);
-			
-			/*--------------------------------SHOOTING------------------------------------*/
-			
-			dataBord.actionning(myBullet, view, myZombies, myLawnMower);
-			
-			/*--------------------------------SHOOTING------------------------------------*/
-			
-			dataBord.actionningZombie(myBullet, view, myZombies, dataBord);
-			
-			/*------------------------------- WIN / LOOSE --------------------------------*/
-			SimpleGameData.timeEnd(myZombies, str, context, superWaveZombie,view, myLawnMower);
-			/*---------------------------------DEBUG--------------------------------------*/
-			
-			if (debug == true) {
-				if (dataBord.spawnRandomPlant(context, dataSelect, view, plantSelectionView, selectedPlant)) {
-					str.append("new plant (" + new SimpleDateFormat("hh:mm:ss").format(new Date()) + ")\n");
+				
+				/*-----------------------------CHECK CHRONO----------------------------*/
+				
+				plantSelectionView.checkCooldown();
+				
+				/*--------------------------------DRAWS--------------------------------*/
+				
+				view.drawAll(context, dataBord, view, myZombies, myBullet, myLawnMower, debug, debuglock, dataSelect, money, plantSelectionView);
+	
+				/*---------------------------INITIALISATION-----------------------------*/
+				
+				DeadPool deadPoolE = new DeadPool();
+				
+				/*--------------------------------SUN SPAWNERS----------------------------*/
+				
+				dataBord.naturalSun(view);
+	
+				/*-------------------------------ZOMBIE SPAWNERS-----------------------------*/
+				
+				SimpleGameData.spawnZombies(dataBord, squareSize, str, myZombies, view, context, normalWaveZombie, superWaveZombie);
+	
+				/*------------------------------- CONFLICTS ----------------------------------*/
+				
+				Zombie.ZCheckConflict(myZombies, myBullet, dataBord.getMyPlants(), myLawnMower, deadPoolE, view, dataBord, str);
+				
+				/*-------------------------------- DEATHS ------------------------------------*/
+				
+				deadPoolE.deletingEverything(myZombies, dataBord, myBullet, myLawnMower);
+				
+				/*--------------------------------SHOOTING------------------------------------*/
+				
+				dataBord.actionning(myBullet, view, myZombies, myLawnMower);
+				
+				/*--------------------------------SHOOTING------------------------------------*/
+				
+				dataBord.actionningZombie(myBullet, view, myZombies, dataBord);
+				
+				/*------------------------------- WIN / LOOSE --------------------------------*/
+				SimpleGameData.timeEnd(myZombies, str, context, superWaveZombie,view, myLawnMower);
+				/*---------------------------------DEBUG--------------------------------------*/
+				
+				if (debug == true) {
+					if (dataBord.spawnRandomPlant(context, dataSelect, view, plantSelectionView, selectedPlant)) {
+						str.append("new plant (" + new SimpleDateFormat("hh:mm:ss").format(new Date()) + ")\n");
+					}
 				}
-			}
-			
-			/*------------------------------EVENTS----------------------------------*/
-
-			Event event = context.pollOrWaitEvent(45); // modifier pour avoir un affichage fluide
-			if (event == null) { // no event
-				continue;
-			}
-			
-			KeyboardKey KB = event.getKey();
-			String mdp = null;
-			if (KB != null) {
-				mdp = KB.toString();
-			}
-			
-			/*---------------------------------DEBUG 2--------------------------------------*/
-			Action action = event.getAction();
-			if (action == Action.KEY_PRESSED || action == Action.KEY_RELEASED) {
-				if (mdp == "Y" && debug == false) {
-					debug = true;
-				} // debug ON
-				else if (mdp == "N" && debug == true) {
-					debug = false;
-				} // debug OFF
-				else if (mdp == "SPACE") {
-					dataBord.gameStop();
+				
+				/*------------------------------EVENTS----------------------------------*/
+	
+				Event event = context.pollOrWaitEvent(45); // modifier pour avoir un affichage fluide
+				if (event == null) { // no event
+					continue;
 				}
+				
+				KeyboardKey KB = event.getKey();
+				String mdp = null;
+				if (KB != null) {
+					mdp = KB.toString();
+				}
+				
+				/*---------------------------------DEBUG 2--------------------------------------*/
+				Action action = event.getAction();
+				if (action == Action.KEY_PRESSED || action == Action.KEY_RELEASED) {
+					if (mdp == "Y" && debug == false) {
+						debug = true;
+					} // debug ON
+					else if (mdp == "N" && debug == true) {
+						debug = false;
+					} // debug OFF
+					else if (mdp == "SPACE") {
+						dataBord.gameStop();
+					}
+					else if (mdp == "P") {
+						pause = true;
+					}
+				}
+	
+				/*---Gestion de la selection de cellules et de la plante manuelle de plante---*/
+				
+				if (action != Action.POINTER_DOWN) {
+					continue;
+				}
+				
+				Point2D.Float location = event.getLocation();
+				float x = location.x;
+				float y = location.y;
+				
+				dataBord.selectingCellAndPlanting(context, dataSelect, view, plantSelectionView, x, y);
+				
+				money = SimpleGameData.getActualMoney();
 			}
-
-			/*---Gestion de la selection de cellules et de la plante manuelle de plante---*/
-			
-			if (action != Action.POINTER_DOWN) {
-				continue;
-			}
-			
-			Point2D.Float location = event.getLocation();
-			float x = location.x;
-			float y = location.y;
-			
-			dataBord.selectingCellAndPlanting(context, dataSelect, view, plantSelectionView, x, y);
-			
-			money = SimpleGameData.getActualMoney();
 		}
 
 	}

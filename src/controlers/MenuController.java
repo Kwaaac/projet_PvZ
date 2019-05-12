@@ -40,16 +40,29 @@ public class MenuController {
 
 		String choice = "mapSelection";
 
-		BordView view = new BordView(0, 0, width, height, height / 3);
+		BordView view = new BordView(0, 0, width, height, height / 5);
 
-		view.drawRectangle(context, 0, 0, width, height / 3, "#61DB5F");
-		view.drawString(context, (width / 2) - 100, 1 * (height / 6), "DAY", "000000", 50);
+		
+		view.drawRectangle(context, 0, 0, width, (height / 5), "#000000");
+		view.drawRectangle(context, 5, 10, width - 10, (height / 5) - 15, "#61DB5F");
+		view.drawString(context, (width / 2) - 100, 1 * (height / 10), "DAY", "000000", 50);
 
-		view.drawRectangle(context, 0, height / 3, width, height / 3, "#5F79DB");
-		view.drawString(context, (width / 2) - 100, 3 * (height / 6), "NIGHT", "000000", 50);
+		view.drawRectangle(context, 0, (height / 5), width, (height / 5), "#000000");
+		view.drawRectangle(context, 5, (height / 5) + 5, width - 10, (height / 5) -10, "#5F79DB");
+		view.drawString(context, (width / 2) - 100, 3 * (height / 10), "NIGHT", "000000", 50);
 
-		view.drawRectangle(context, 0, height / 3 + height / 3, width, height / 3, "#5FC1DB");
-		view.drawString(context, (width / 2) - 100, 5 * (height / 6), "POOL", "000000", 50);
+		view.drawRectangle(context, 0, 2*(height / 5), width, (height / 5), "#000000");
+		view.drawRectangle(context, 5, 2*(height / 5) + 5, width - 10, (height / 5) -10, "#5FC1DB");
+		view.drawString(context, (width / 2) - 100, 5 * (height / 10), "POOL", "000000", 50);
+		
+		view.drawRectangle(context, 0, 3*(height / 5), width, (height / 5), "#000000");
+		view.drawRectangle(context, 5, 3*(height / 5) + 5, (width/2)-5, (height / 5) -10, "#5F79DB");
+		view.drawRectangle(context, width/2, 3*(height / 5) + 5, (width/2) - 5, (height / 5) - 10, "#5FC1DB");
+		view.drawString(context, (width / 2) - 155, 7 * (height / 10), "NIGHTPOOL", "000000", 50);
+		
+		view.drawRectangle(context, 0, 4*(height / 5), width, (height / 5), "#000000");
+		view.drawRectangle(context, 5, 4*(height / 5) +5, width - 10, (height / 5) - 10, "#BC4C29");
+		view.drawString(context, (width / 2) - 100, 9 * (height / 10), "ROOF", "000000", 50);
 
 		view.drawRectangle(context, width - 65, 15, 50, 50, "#DE0000");
 
@@ -107,6 +120,16 @@ public class MenuController {
 					
 				case 2:
 					SimpleGameData.setMap("Pool");
+					choice = "plantSelection";
+					break;
+					
+				case 3:
+					SimpleGameData.setMap("NightPool");
+					choice = "plantSelection";
+					break;
+					
+				case 4:
+					SimpleGameData.setMap("Roof");
 					choice = "plantSelection";
 					break;
 				}
