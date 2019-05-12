@@ -23,33 +23,38 @@ public class MenuController {
 		
 		view.drawRectangle(context, 0, 200, width, (height/6), "#000000");
 		view.drawRectangle(context, 5, 205, width-10, (height/6)-10, "#22D398");
-		view.drawString(context, (width / 2) - 100, 150+(height / 6), "Resume", "000000", 50);
+		view.drawString(context, (width / 2) - 100, 150+(height / 6), "Continue", "000000", 50);
 		
 		view.drawRectangle(context, 0, 225+(height/6), width, (height/6), "#000000");
 		view.drawRectangle(context, 5, 230+(height/6), width-10, (height/6)-10, "#22D398");
+		view.drawString(context, (width / 2) - 100, 150+(height / 6)*2, "Resume", "000000", 50);
 		
 		view.drawRectangle(context, 0, 250+(height/6)*2, width, (height/6), "#000000");
 		view.drawRectangle(context, 5, 255+(height/6)*2, width-10, (height/6)-10, "#22D398");
+		view.drawString(context, (width / 2) - 100, 150+(height / 6)*3, "Save", "000000", 50);
 		
 		while (true) {
 			
 			
 			
-			Event event = context.pollOrWaitEvent(45); // modifier pour avoir un affichage fluide
-			if (event == null) { // no event
+			Event event = context.pollOrWaitEvent(45);
+			if (event == null) {
 				continue;
 			}
 			Action action = event.getAction();
+			
+			if (action != Action.POINTER_DOWN) {
+				continue;
+			}
 			
 			Point2D.Float location = event.getLocation();
 			float x = location.x;
 			float y = location.y;
 			
-			if (action == Action.KEY_PRESSED || action == Action.KEY_RELEASED) {
-				if (((x<=0 && x<=width) && y<=200 && y<=(height/6))) {
-					return false;
-				}
+			if (0<=x && x<=width && 200<=y && y<=200+(height/6)) {
+				return false;
 			}
+			
 			
 			
 			
