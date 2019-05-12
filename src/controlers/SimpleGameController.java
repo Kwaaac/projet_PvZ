@@ -34,7 +34,7 @@ public class SimpleGameController {
 		ScreenInfo screenInfo = context.getScreenInfo();
 		int width = (int) screenInfo.getWidth();
 		int height = (int) screenInfo.getHeight();
-		ArrayList<Plant> selectedPlant = MenuController.startGame(context);
+		ArrayList<Plant> selectedPlant = SelectionController.startGame(context);
 		
 		HashMap<Zombie, Integer> normalWaveZombie = SimpleGameData.generateZombies(1);
 		HashMap<Zombie, Integer> superWaveZombie = SimpleGameData.generateZombies(2);
@@ -72,29 +72,7 @@ public class SimpleGameController {
 		
 		while (true) {
 			if (pause == true) {
-				while (pause == true) {
-					
-					view.drawRectangle(context, 0, 0, width, height , "#61DB5F");
-					view.drawRectangle(context, width - 65, 15, 50, 50, "#DE0000");
-					view.drawString(context, (int)((width/2)-100), (int)height/2, "PAUSE", "#000000", 50);
-					
-					Event event = context.pollOrWaitEvent(45); // modifier pour avoir un affichage fluide
-					if (event == null) { // no event
-						continue;
-					}
-					Action action = event.getAction();
-					KeyboardKey KB = event.getKey();
-					String mdp = null;
-					if (KB != null) {
-						mdp = KB.toString();
-					}
-					
-					if (action == Action.KEY_PRESSED || action == Action.KEY_RELEASED) {
-						if (mdp == "M") {
-							pause = false;
-						}
-					}
-				}
+				pause = MenuController.menu(context, view);
 			}
 			else {
 				StringBuilder s = new StringBuilder();
