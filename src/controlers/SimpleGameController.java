@@ -82,7 +82,7 @@ public class SimpleGameController {
 				}
 				s.append("\n");
 				String stri = s.toString();
-				System.out.println(stri);
+//				System.out.println(stri);
 				
 				
 				/*-----------------------------CHECK CHRONO----------------------------*/
