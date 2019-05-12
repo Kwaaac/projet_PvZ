@@ -26,6 +26,14 @@ public abstract class Map {
 		case "Pool":
 			mapProperties = Pool.getMapProperties();
 			break;
+			
+		case "NightPool":
+			mapProperties = Pool.getMapProperties();
+			break;
+			
+		case "Roof":
+			mapProperties = Pool.getMapProperties();
+			break;
 		}
 
 		return new SimpleGameData(mapProperties.get(0), mapProperties.get(1));
@@ -38,10 +46,20 @@ public abstract class Map {
 		case "Day":
 			mapProperties = Day.getMapProperties();
 			break;
+			
 		case "Night":
 			mapProperties = Night.getMapProperties();
 			break;
+			
 		case "Pool":
+			mapProperties = Pool.getMapProperties();
+			break;
+			
+		case "NightPool":
+			mapProperties = Pool.getMapProperties();
+			break;
+			
+		case "Roof":
 			mapProperties = Pool.getMapProperties();
 			break;
 		}

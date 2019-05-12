@@ -14,6 +14,7 @@ import models.cells.Cell;
 import models.cells.WaterCell;
 import models.cells.GrassCell;
 import models.cells.NightCell;
+import models.cells.TileCell;
 import models.plants.IPlant;
 import models.plants.Plant;
 import models.projectiles.LawnMower;
@@ -99,6 +100,26 @@ public class SimpleGameData {
 			}
 		}
 	}
+	
+	private void NightPoolBord() {
+		for (int i = 0; i < matrix.length; i++) {
+			for (int j = 0; j < matrix[0].length; j++) {
+				if (i == 2 || i == 3) {
+					matrix[i][j] = new WaterCell();
+				} else {
+					matrix[i][j] = new NightCell();
+				}
+			}
+		}
+	}
+	
+	private void RoofBord() {
+		for (int i = 0; i < matrix.length; i++) {
+			for (int j = 0; j < matrix[0].length; j++) {
+				matrix[i][j] = new TileCell();
+			}
+		}
+	}
 
 	private void createBord(String map) {
 		if (map == "Day") {
@@ -107,7 +128,12 @@ public class SimpleGameData {
 			poolBord();
 		} else if (map == "Night") {
 			NightBord();
+		} else if (map == "NightPool") {
+			NightPoolBord();
+		} else if (map == "Roof") {
+			RoofBord();
 		}
+		
 
 	}
 
@@ -414,6 +440,7 @@ public class SimpleGameData {
 		int xOrigin = view.getXOrigin();
 		int squareSize = BordView.getSquareSize();
 		String choice = "Continue", finalChoice = null;
+		
 
 		for (Zombie z : myZombies) {
 			if (z.isEatingBrain(xOrigin, squareSize)) {
@@ -437,6 +464,7 @@ public class SimpleGameData {
 			break;
 		case "Stop":
 			time.stop();
+			
 			switch (finalChoice) {
 			case "Loose":
 				str.append("-+-+-+-+-+-+-+-+-+-\nVous avez perdu...\n");
