@@ -3,7 +3,6 @@ package controlers;
 
 import java.awt.geom.Point2D;
 import java.io.IOException;
-import java.nio.file.Path;
 
 import fr.umlv.zen5.ApplicationContext;
 import fr.umlv.zen5.Event;
@@ -37,8 +36,7 @@ public class MenuController {
 		view.drawString(context, (width / 2) - 100, 150+(height / 6)*3, "Save", "000000", 50);
 		
 		while (true) {
-			
-			
+
 			
 			Event event = context.pollOrWaitEvent(45);
 			if (event == null) {
@@ -57,6 +55,7 @@ public class MenuController {
 			if (0<=x && x<=width && 200<=y && y<=200+(height/6)) {
 				return false;
 			}  else if (0<=x && x<=width && 250+(height/6)*2<=y && y<=250+(height/6)*3) {
+				
 				try {
 					file.save();
 				} catch (IOException e) {
