@@ -32,6 +32,13 @@ public class BordView extends SimpleGameView {
 		BordView.width = width;
 		BordView.squareSize = squareSize;
 	}
+	
+	public BordView(int xOrigin, int yOrigin, int width, int length) {
+		BordView.xOrigin = xOrigin;
+		BordView.yOrigin = yOrigin;
+		BordView.width = width;
+		BordView.length = length;
+	}
 
 	public static BordView initGameGraphics(int xOrigin, int yOrigin, int length, SimpleGameData data) {
 		int squareSize = (int) (length * 1.0 / data.getNbLines());
