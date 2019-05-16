@@ -10,16 +10,124 @@ import models.zombies.Zombie;
 
 public abstract class Cell implements ICell {
 
+	private Plant groundPlant;
+	private Plant mainPlant;
+	private Plant supportPlant;
+
 	private final ArrayList<Zombie> zombiesInCell;
-	private final ArrayList<Plant> plantInCell;
 	private final ArrayList<Projectile> projectileInCell;
-	private boolean plantedPlant = false;
+
+	private boolean plantedGroundPlant = false;
+	private boolean plantedMainPlant = false;
+	private boolean plantedSupportPlant = false;
 
 	public Cell() {
+		groundPlant = null;
+		mainPlant = null;
+		supportPlant = null;
+
 		zombiesInCell = new ArrayList<>();
-		plantInCell = new ArrayList<>();
 		projectileInCell = new ArrayList<>();
 	}
+	
+	/**
+	 * Add a main plant on the cell, wont add it if a plant is already planted
+	 */
+	private boolean addMainPlant(Plant plant) {
+		if (plantedMainPlant) {
+			return false;
+		}
+
+		plantedMainPlant = true;
+		mainPlant = plant;
+		return true;
+	}
+
+	/**
+	 * Remove the main plant from the cell
+	 */
+	private void removeMainPlant(IEntite dPe) {
+		plantedMainPlant = false;
+		mainPlant = null;
+	}
+	
+	/**
+	 * Add a ground plant on the cell, wont add it if a plant is already planted
+	 */
+	private boolean addGroundPlant(Plant plant) {
+		if (plantedGroundPlant) {
+			return false;
+		}
+
+		plantedGroundPlant = true;
+		groundPlant = plant;
+		return true;
+	}
+
+	/**
+	 * Remove the ground plant from the cell
+	 */
+	private void removeGroundPlant(IEntite dPe) {
+		plantedGroundPlant = false;
+		groundPlant = null;
+	}
+	
+	/**
+	 * Add a support plant on the cell, wont add it if a plant is already planted
+	 */
+	private boolean addSupportPlant(Plant plant) {
+		if (plantedSupportPlant) {
+			return false;
+		}
+
+		plantedSupportPlant = true;
+		supportPlant = plant;
+		return true;
+	}
+
+	/**
+	 * Remove the support plant from the cell
+	 */
+	private void removeSupportPlant(IEntite dPe) {
+		plantedSupportPlant = false;
+		supportPlant = null;
+	}
+	
+	/**
+	 * Return true if a plant is planted, false otherwise
+	 */
+	public boolean addPlant(Plant plant) {
+		switch(plant.getTypeOfPlant()) {
+		case 0:
+			return(addGroundPlant(plant));
+			
+		case 1:
+			return(addMainPlant(plant));
+			
+		case 2:
+			return(addSupportPlant(plant));
+		}
+		
+		// On veut que la plante soit l'un des 3 types
+		throw new IllegalStateException("La plante est d'un type inconnue");
+	}
+	
+	public void removePlant(Plant plant) {
+		switch(plant.getTypeOfPlant()) {
+		case 0:
+			removeGroundPlant(plant);
+			break;
+			
+		case 1:
+			removeMainPlant(plant);
+			break;
+			
+		case 2:
+			removeSupportPlant(plant);
+			break;
+		}
+	}
+	
 	/**
 	 * Add a projectile in it's array
 	 * 
@@ -28,44 +136,36 @@ public abstract class Cell implements ICell {
 	public void addProjectile(Projectile p) {
 		projectileInCell.add(p);
 	}
-	
+
 	public void removeProjectile(IEntite p) {
 		projectileInCell.remove(p);
 	}
 
 	/**
-	 * Add a plant on the cell
+	 * 
+	 * @return True is a groundPlant is on the cell, False otherwise
 	 */
-	public boolean addPlant(Plant plant) {
-		if (plantedPlant) {
-			return false;
-		}
-
-		if (plant.canBePlantedOnGrass()) {
-			plantedPlant = true;
-			plantInCell.add(plant);
-			return true;
-		}
-		return false;
-	}
-
-	/**
-	 * Remove the plant from the cell
-	 */
-	public void removePlant(IEntite dPe) {
-		plantedPlant = false;
-		plantInCell.remove(dPe);
+	public boolean isGroundPlantPlanted() {
+		return plantedMainPlant;
 	}
 
 	/**
 	 * 
-	 * @return True is a Plant is on the cell, False otherwise
+	 * @return True is a mainPlant is on the cell, False otherwise
 	 */
-	public boolean isPlantedPlant() {
-		return plantedPlant;
+	public boolean isMainPlantPlanted() {
+		return plantedMainPlant;
 	}
-	
-	public ArrayList<Projectile> getProjectilesInCell(){
+
+	/**
+	 * 
+	 * @return True is a supportPlant is on the cell, False otherwise
+	 */
+	public boolean isSupportPlantPlanted() {
+		return plantedSupportPlant;
+	}
+
+	public ArrayList<Projectile> getProjectilesInCell() {
 		return new ArrayList<Projectile>(projectileInCell);
 	}
 
@@ -97,10 +197,42 @@ public abstract class Cell implements ICell {
 
 	/**
 	 * 
-	 * @return The list of plant on the cell
+	 * @return A plant to attack or null if there is no plant
 	 */
-	public ArrayList<Plant> getPlantInCell() {
-		return new ArrayList<Plant>(plantInCell);
+	public Plant getPlantToAttack() {
+
+		if (plantedSupportPlant) {
+			return supportPlant;
+
+		} else if (plantedMainPlant) {
+			return mainPlant;
+
+		} else {
+			return groundPlant;
+		}
+
+	}
+
+	/**
+	 * 
+	 * @return An array of all plants in the Cell
+	 */
+	public ArrayList<Plant> getPlantsInCell() {
+		ArrayList<Plant> lstP = new ArrayList<>();
+
+		if (plantedSupportPlant) {
+			lstP.add(supportPlant);
+		}
+
+		if (plantedMainPlant) {
+			lstP.add(mainPlant);
+		}
+
+		if (plantedGroundPlant) {
+			lstP.add(groundPlant);
+		}
+
+		return lstP;
 	}
 
 	/**
@@ -114,18 +246,10 @@ public abstract class Cell implements ICell {
 
 	/**
 	 * 
-	 * @return False if the list of plants is empty, True otherwise
+	 * @return True if a plant is planted, False otherwise
 	 */
-	public boolean isTherePlant() {
-		return !plantInCell.isEmpty();
-	}
-
-	/**
-	 * 
-	 * @return True if a main plant is planted, False otherwise
-	 */
-	public boolean isThereAPlantedPlant() {
-		return plantedPlant;
+	public boolean isPlantedPlant() {
+		return plantedGroundPlant || plantedSupportPlant || plantedMainPlant;
 	}
 
 	/**
@@ -139,7 +263,7 @@ public abstract class Cell implements ICell {
 
 	@Override
 	public String toString() {
-		return (plantedPlant == true ? "Il y a une plante, " : "Il n'y a pas de plante, ")
+		return (isPlantedPlant() == true ? "Il y des plantes, " : "Il n'y a pas de plante, ")
 				+ (!zombiesInCell.isEmpty() ? "Voici les zombies présents \n" + zombiesInCell + ", "
 						: "Il n'y a pas de zombie");
 	}

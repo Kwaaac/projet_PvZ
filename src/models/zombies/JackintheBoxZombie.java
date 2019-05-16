@@ -9,11 +9,22 @@ import models.Entities;
 import models.IEntite;
 import models.SimpleGameData;
 import models.cells.Cell;
+import models.plants.Plant;
 import views.BordView;
 import views.SimpleGameView;
 
 public class JackintheBoxZombie extends Zombie {
 
+	/*
+	 * 
+	 * 
+	 * Le fonctionnement de ce Zombie n'a pas été compris, maxime le referra
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 */
 	private final String name = "JackintheBoxZombie";
 	private final String color = "#000000";
 	
@@ -64,14 +75,14 @@ public class JackintheBoxZombie extends Zombie {
 	}
 
 	
-	private ArrayList<Entities> detect(BordView view, SimpleGameData dataBord, ArrayList<Coordinates> zone) {
-		ArrayList<Entities> Lz = new ArrayList<>();
+	private ArrayList<Plant> detect(BordView view, SimpleGameData dataBord, ArrayList<Coordinates> zone) {
+		ArrayList<Plant> Lz = new ArrayList<>();
 		for (Coordinates c : zone) {
 			Cell cell = dataBord.getCell(c.getJ(), c.getI());
 			
-			if(cell != null && cell.isTherePlant()) {
-				for(Entities e: cell.getPlantInCell()) {
-					Lz.add(e);
+			if(cell != null && cell.isPlantedPlant()) {
+				for(Plant p: cell.getPlantsInCell()) {
+					Lz.add(p);
 				}
 			}
 		}
@@ -93,11 +104,10 @@ public class JackintheBoxZombie extends Zombie {
 			
 			if (this.readyToExplosed(cell)) {
 				ArrayList<Coordinates> zone = zone();
-				System.out.println(detect(view, dataBord, zone));
 				
-				for (Entities z : detect(view, dataBord, zone)) {
-					System.out.println(z.getCase());
-					dataBord.getCell(z.getCaseJ(), z.getCaseI()).removePlant(z);
+				for (Plant p : detect(view, dataBord, zone)) {
+					Cell zCell = dataBord.getCell(p.getCaseJ(), p.getCaseI());
+					
 				}
 				
 				this.life = 0;

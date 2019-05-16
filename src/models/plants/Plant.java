@@ -191,6 +191,11 @@ public abstract class Plant extends Entities implements IPlant {
 	public boolean isPot() {
 		return false;
 	}
+	
+	@Override
+	public int getTypeOfPlant() {
+		return 1;
+	}
 
 	@Override
 	public boolean equals(Object o) {

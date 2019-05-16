@@ -24,6 +24,13 @@ public interface IPlant {
 
 	void draw(SimpleGameView view, Graphics2D graphics, int x, int y);
 	
+	/*
+	 * 0 -> GroundPlant
+	 * 1 -> MainPlant
+	 * 2 -> SupportPlant
+	 */
+	int getTypeOfPlant();
+	
 	boolean canBePlantedOnWater();
 	
 	boolean canBePlantedOnGrass();

@@ -53,24 +53,31 @@ public class LilyPad extends Plant {
 	public boolean canBePlantedOnWater() {
 		return true;
 	}
-	
+
 	@Override
 	public boolean canBePlantedOnGrass() {
 		return false;
 	}
-	
-	@Override 
+
+	@Override
 	public boolean isLilyPad() {
 		return true;
 	}
-	
+
+	@Override
+	public int getTypeOfPlant() {
+		return 0;
+	}
+
 	@Override
 	public boolean equals(Object o) {
-		if(!(o instanceof LilyPad)) { return false; }
+		if (!(o instanceof LilyPad)) {
+			return false;
+		}
 		LilyPad s = (LilyPad) o;
 		return name.equals(s.name) && color.equals(s.color);
 	}
-	
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(name, color);

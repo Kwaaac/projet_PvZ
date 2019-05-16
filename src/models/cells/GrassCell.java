@@ -35,5 +35,4 @@ public class GrassCell extends Cell {
 	public int hashCode() {
 		return Objects.hash(type);
 	}
-
 }

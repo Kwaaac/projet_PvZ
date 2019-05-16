@@ -55,7 +55,7 @@ public class SnorkelZombie extends Zombie {
 	public void action(BordView view, SimpleGameData dataBord, ArrayList<Zombie> myZombies) {
 		Cell cell = dataBord.getCell(getCaseI(), getCaseJ());
 		if(dataBord.isCorrectBordLocation(view, getCaseI(), getCaseJ()) && cell != null) {
-		this.outOfWater = cell.isTherePlant();
+		this.outOfWater = cell.isPlantedPlant();
 		}
 	}
 	

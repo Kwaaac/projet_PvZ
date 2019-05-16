@@ -66,9 +66,9 @@ public class Chomper extends Plant {
 	public String toString() {
 		return super.toString() + "--" + name;
 	}
-	
+
 	private void startDelay() {
-		if(delayAttack.isReset()) {
+		if (delayAttack.isReset()) {
 			delayAttack.start();
 		}
 	}
@@ -80,10 +80,10 @@ public class Chomper extends Plant {
 		if (this.readyToshot()) {
 			eating = false;
 			ArrayList<Zombie> zombie = this.detect(this.zone(dataBord));
-			
+
 			if (!zombie.isEmpty()) {
 				startDelay();
-				
+
 				if (delayAttack.asReachTimer(1)) {
 
 					zombie.get(0).setLife(1800);

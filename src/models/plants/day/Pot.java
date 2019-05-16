@@ -53,26 +53,33 @@ public class Pot extends Plant {
 	public boolean canBePlantedOnRoof() {
 		return true;
 	}
-	
+
 	@Override
 	public boolean canBePlantedOnGrass() {
 		return false;
 	}
-	
-	@Override 
+
+	@Override
 	public boolean isPot() {
 		return true;
 	}
-	
+
 	@Override
 	public boolean equals(Object o) {
-		if(!(o instanceof Pot)) { return false; }
+		if (!(o instanceof Pot)) {
+			return false;
+		}
 		Pot p = (Pot) o;
 		return name.equals(p.name) && color.equals(p.color);
 	}
-	
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(name, color);
+	}
+
+	@Override
+	public int getTypeOfPlant() {
+		return 0;
 	}
 }
