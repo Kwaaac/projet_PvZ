@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import fr.umlv.zen5.ApplicationContext;
 import models.SimpleGameData;
+import models.cells.Cell;
 import models.projectiles.Projectile;
 import models.zombies.Zombie;
 import views.BordView;
@@ -23,22 +24,14 @@ public interface IPlant {
 	Plant createAndDrawNewPlant(SimpleGameView view, ApplicationContext context, int x, int y);
 
 	void draw(SimpleGameView view, Graphics2D graphics, int x, int y);
-	
+
 	/*
-	 * 0 -> GroundPlant
-	 * 1 -> MainPlant
+	 * 0 -> GroundPlant 
+	 * 1 -> MainPlant 
 	 * 2 -> SupportPlant
 	 */
 	int getTypeOfPlant();
 	
-	boolean canBePlantedOnWater();
-	
-	boolean canBePlantedOnGrass();
-	
-	boolean canBePlantedOnRoof();
-	
-	boolean isLilyPad();
-	
-	boolean isPot();
+	boolean plantingCondition(Cell cell);
 
 }

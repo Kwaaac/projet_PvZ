@@ -10,6 +10,7 @@ import models.DeadPool;
 import models.Entities;
 import models.SimpleGameData;
 import models.cells.Cell;
+import models.cells.GrassCell;
 import models.plants.day.CherryBomb;
 import models.plants.day.Chomper;
 import models.plants.day.Peashooter;
@@ -43,8 +44,9 @@ public abstract class Plant extends Entities implements IPlant {
 	protected final Long cooldown;
 	private Coordinates plantSelect;
 
-	private final static ArrayList<Plant> day = new ArrayList<>(Arrays.asList(new CherryBomb(), new Chomper(),
-			new Peashooter(), new PotatoMine(), new Repeater(), new SnowPea(), new SunFlower(), new WallNut(), new Pot()));
+	private final static ArrayList<Plant> day = new ArrayList<>(
+			Arrays.asList(new CherryBomb(), new Chomper(), new Peashooter(), new PotatoMine(), new Repeater(),
+					new SnowPea(), new SunFlower(), new WallNut(), new Pot()));
 	private final static ArrayList<Plant> night = new ArrayList<>(
 			Arrays.asList(new DoomShroom(), new FumeShroom(), new GraveBuster(), new HypnoShroom(), new IceShroom(),
 					new PuffShroom(), new ScaredyShroom(), new SunShroom()));
@@ -69,7 +71,7 @@ public abstract class Plant extends Entities implements IPlant {
 		this.shootBarMax = shootBarMax;
 		this.cost = cost;
 		this.cooldown = mCooldown.get(cooldown);
-		
+
 		// Prevent the plant to shoot instantly
 		shootTime = 0;
 	}
@@ -168,33 +170,35 @@ public abstract class Plant extends Entities implements IPlant {
 	}
 
 	@Override
-	public boolean canBePlantedOnWater() {
-		return false;
-	}
-
-	@Override
-	public boolean canBePlantedOnGrass() {
-		return true;
-	}
-	
-	@Override
-	public boolean canBePlantedOnRoof() {
-		return false;
-	}
-
-	@Override
-	public boolean isLilyPad() {
-		return false;
-	}
-	
-	@Override
-	public boolean isPot() {
-		return false;
-	}
-	
-	@Override
 	public int getTypeOfPlant() {
 		return 1;
+	}
+
+	/**
+	 * For every plants, it can be placed on grass or any ground Plant and we asumme
+	 * that they are main plants (Override the plant to change it)
+	 * 
+	 * @param the cell where the plant will be planted
+	 * @return True if the cell is a correct location for the plant, false otherwise
+	 */
+	@Override
+	public boolean plantingCondition(Cell cell) {
+
+		
+		if (cell.equals(new GrassCell())) {
+			return cell.addPlant(this);
+			
+		} else if (cell.isGroundPlantPlanted()) {
+
+			Plant gp = cell.getGroundPlant();
+			
+			if (gp.equals(new LilyPad()) || gp.equals(new Pot())) {
+				return cell.addPlant(this);
+			}
+				
+		}
+
+		return false;
 	}
 
 	@Override

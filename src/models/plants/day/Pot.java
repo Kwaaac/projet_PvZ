@@ -49,20 +49,6 @@ public class Pot extends Plant {
 		view.drawPot(graphics, x, y, color);
 	}
 
-	@Override
-	public boolean canBePlantedOnRoof() {
-		return true;
-	}
-
-	@Override
-	public boolean canBePlantedOnGrass() {
-		return false;
-	}
-
-	@Override
-	public boolean isPot() {
-		return true;
-	}
 
 	@Override
 	public boolean equals(Object o) {

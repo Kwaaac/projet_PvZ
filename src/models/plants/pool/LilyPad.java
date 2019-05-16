@@ -6,7 +6,11 @@ import java.util.Objects;
 
 import fr.umlv.zen5.ApplicationContext;
 import models.SimpleGameData;
+import models.cells.Cell;
+import models.cells.GrassCell;
+import models.cells.WaterCell;
 import models.plants.Plant;
+import models.plants.day.Pot;
 import models.projectiles.Projectile;
 import models.zombies.Zombie;
 import views.BordView;
@@ -50,23 +54,26 @@ public class LilyPad extends Plant {
 	}
 
 	@Override
-	public boolean canBePlantedOnWater() {
-		return true;
-	}
-
-	@Override
-	public boolean canBePlantedOnGrass() {
-		return false;
-	}
-
-	@Override
-	public boolean isLilyPad() {
-		return true;
-	}
-
-	@Override
 	public int getTypeOfPlant() {
 		return 0;
+	}
+
+	/**
+	 * Can be planted on Water
+	 * 
+	 * @param the cell where the plant will be planted
+	 * @return True if the cell is a correct location for the plant, false otherwise
+	 */
+	@Override
+	public boolean plantingCondition(Cell cell) {
+		if (cell.equals(new WaterCell())) {
+			return cell.addPlant(this);
+
+		} else if (cell.isGroundPlantPlanted() && cell.isMainPlantPlanted()) {
+			return cell.addPlant(this);
+		}
+
+		return false;
 	}
 
 	@Override

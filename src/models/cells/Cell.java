@@ -58,9 +58,9 @@ public abstract class Cell implements ICell {
 		if (plantedGroundPlant) {
 			return false;
 		}
-
 		plantedGroundPlant = true;
 		groundPlant = plant;
+		
 		return true;
 	}
 
@@ -70,6 +70,10 @@ public abstract class Cell implements ICell {
 	private void removeGroundPlant(IEntite dPe) {
 		plantedGroundPlant = false;
 		groundPlant = null;
+	}
+	
+	public Plant getGroundPlant() {
+		return groundPlant;
 	}
 	
 	/**
@@ -146,7 +150,7 @@ public abstract class Cell implements ICell {
 	 * @return True is a groundPlant is on the cell, False otherwise
 	 */
 	public boolean isGroundPlantPlanted() {
-		return plantedMainPlant;
+		return plantedGroundPlant;
 	}
 
 	/**

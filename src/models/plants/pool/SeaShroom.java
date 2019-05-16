@@ -68,14 +68,4 @@ public class SeaShroom extends Plant {
 		view.drawSeaShroom(graphics, x, y, color);
 	}
 
-	@Override
-	public boolean canBePlantedOnWater() {
-		return true;
-	}
-
-	@Override
-	public boolean canBePlantedOnGrass() {
-		return false;
-	}
-
 }

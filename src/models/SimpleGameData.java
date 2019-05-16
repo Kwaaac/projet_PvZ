@@ -44,7 +44,7 @@ public class SimpleGameData {
 	private static int difficulty = 1;
 	private static int superWave = 0;
 
-	private static int actualMoney = 0;
+	private static int actualMoney = 25;
 	private Chrono sunSpawn = new Chrono();
 
 	static Chrono time = new Chrono();
@@ -505,10 +505,11 @@ public class SimpleGameData {
 			int y2 = Coordinates.CenteredY(view.realCoordFromIndex(i, view.getYOrigin()));
 
 			Cell actualCell = this.getCell(i, j);
+			
 
 			Plant actualPlant = psView.getSelectedPlants().get(p);
 
-			if (actualCell.addPlant(actualPlant)) {
+			if (actualPlant.plantingCondition(actualCell)) {
 				myPlants.add(actualPlant.createAndDrawNewPlant(view, context, x2, y2));
 				actualMoney -= psView.getSelectedPlants().get(p).getCost();
 				psView.startCooldown(p);

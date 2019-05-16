@@ -5,6 +5,8 @@ import java.util.ArrayList;
 
 import fr.umlv.zen5.ApplicationContext;
 import models.SimpleGameData;
+import models.cells.Cell;
+import models.cells.WaterCell;
 import models.plants.Plant;
 import models.projectiles.Projectile;
 import models.zombies.Zombie;
@@ -16,7 +18,7 @@ public class Cattails extends Plant {
 	private final String color = "#8FD916";
 
 	public Cattails(int x, int y) {
-		super(x, y, 0, 300, 1500, 250, "verySlow");
+		super(x, y, 0, 300, 1500, 0, "verySlow");
 	}
 	
 	public Cattails() {
@@ -39,6 +41,16 @@ public class Cattails extends Plant {
 		
 		return new Cattails(x, y);
 		
+	}
+	
+	@Override
+	public boolean plantingCondition(Cell cell) {
+
+		if (cell.isGroundPlantPlanted() && cell.getGroundPlant().equals(new LilyPad())) {
+			return cell.addPlant(this);
+		}
+
+		return false;
 	}
 
 	@Override

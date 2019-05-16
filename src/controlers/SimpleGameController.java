@@ -71,15 +71,6 @@ public class SimpleGameController {
 				pause = MenuController.menu(context, view);
 			}
 			else {
-				StringBuilder s = new StringBuilder();
-				for(Cell c : dataBord.getLineCell(0, 0)) {
-					
-					s.append(c.getProjectilesInCell() + "; ");
-				}
-				s.append("\n");
-				String stri = s.toString();
-				System.out.println(stri);
-				
 				
 				/*-----------------------------CHECK CHRONO----------------------------*/
 				
