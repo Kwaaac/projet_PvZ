@@ -14,7 +14,6 @@ import fr.umlv.zen5.Event.Action;
 import fr.umlv.zen5.KeyboardKey;
 import models.DeadPool;
 import models.SimpleGameData;
-import models.cells.Cell;
 import models.map.Map;
 import models.plants.*;
 import models.projectiles.*;
