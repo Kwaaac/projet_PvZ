@@ -8,6 +8,7 @@ import models.Chrono;
 import models.Entities;
 import models.SimpleGameData;
 import models.cells.Cell;
+import models.cells.WaterCell;
 import models.plants.Plant;
 import models.projectiles.Projectile;
 import models.zombies.Zombie;
@@ -107,5 +108,14 @@ public class TangleKelp extends Plant {
 	@Override
 	public void draw(SimpleGameView view, Graphics2D graphics, int x, int y) {
 		view.drawTangleKelp(graphics, x, y, color);
+	}
+	
+	@Override
+	public boolean plantingCondition(Cell cell) {
+		if(cell.equals(new WaterCell()) && !cell.isGroundPlantPlanted()) {
+			return cell.addPlant(this);
+		}
+		
+		return false;
 	}
 }
