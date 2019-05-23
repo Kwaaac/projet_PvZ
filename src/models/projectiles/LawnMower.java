@@ -142,6 +142,33 @@ public class LawnMower extends Projectile {
 		return 0;
 	}
 
+	@Override
+	/**
+	 * give the zombie a case and add the zombie on the zombieList of the cell
+	 * 
+	 * @param data Data of the main Bord
+	 */
+	public void setCase(SimpleGameData data) {
+		int cX = BordView.caseXFromX(x);
+		int cY = BordView.caseYFromY(y);
+
+		Coordinates caseZ = new Coordinates(cX, cY);
+
+		if (!caseZ.equals(caseXY)) {
+
+			Cell actCell = data.getCell(cY, cX);
+			if (actCell != null) {
+
+				if (!(cX == data.getNbColumns()) && cX > 0) {
+					data.getCell(caseXY.getJ(), caseXY.getI()).removeProjectile(this);
+				}
+				
+				actCell.addProjectile(this);
+
+				caseXY = caseZ;
+			}
+		}
+	}
 	
 
 }

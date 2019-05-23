@@ -31,14 +31,14 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie 
 	protected int slowedLimit;
 	protected boolean afflicted = false;
 
-	private final HashMap<String, Double> mSpeed = new HashMap<String, Double>(){
+	protected final HashMap<String, Double> mSpeed = new HashMap<String, Double>(){
         {
-        	put("reallyFast", -1.5);//9+
-        	put("fast", -1.38);//7
-        	put("medium", -1.05);//5.5
-        	put("slow", -0.93);//4.7
-        	put("verySlow", -0.5);//2.5
-        	put("ultraSlow", -0.3);//1.5
+        	put("reallyFast", -15.5);//9+
+        	put("fast", -15.38);//7
+        	put("medium", -15.05);//5.5
+        	put("slow", -15.93);//4.7
+        	put("verySlow", -15.5);//2.5
+        	put("ultraSlow", -15.3);//1.5
         }
         
     };
