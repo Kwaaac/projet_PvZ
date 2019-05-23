@@ -226,8 +226,6 @@ public class BordView extends SimpleGameView {
 	public void drawAll(ApplicationContext context, SimpleGameData dataBord, BordView view, ArrayList<Zombie> myZombies, 
 			ArrayList<Projectile> myBullet, ArrayList<LawnMower> myLawnMower, boolean debug, boolean debuglock, SimpleGameData dataSelect, int money, SelectBordView plantSelectionView) {
 		
-		view.drawRectangle(context, 0, 0, xOrigin+width, yOrigin+length+100, "#cbd9ef");
-		
 		view.draw(context, dataBord);
 		debuglock = dataBord.movingZombiesAndBullets(context, view, myZombies, myBullet, myLawnMower, debug, debuglock);
 		

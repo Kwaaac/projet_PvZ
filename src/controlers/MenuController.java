@@ -53,6 +53,8 @@ public class MenuController {
 			float y = location.y;
 			
 			if (0<=x && x<=width && 200<=y && y<=200+(height/6)) {
+				//redraw background
+				view.drawRectangle(context, 0, 0, 1200, 1200, "#cbd9ef");
 				return false;
 			}  else if (0<=x && x<=width && 250+(height/6)*2<=y && y<=250+(height/6)*3) {
 				
