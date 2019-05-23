@@ -457,41 +457,7 @@ public abstract class SimpleGameView implements GameView {
 		graphics.fill(new Ellipse2D.Float(x, y, sizeOfZombie, sizeOfZombie));
 	}
 
-	/*-----------------------------Projectiles------------------------------*/
-
-	int sizeOfProjectile = Projectile.getSizeOfProjectile();
-
-	@Override
-	public void drawPea(Graphics2D graphics, float x, float y, String color) {
-		graphics.setColor(Color.decode(color));
-		graphics.fill(new Ellipse2D.Float(x, y, sizeOfProjectile, sizeOfProjectile));
-	}
-
-	@Override
-	public void drawFrozenPea(Graphics2D graphics, float x, float y, String color) {
-		graphics.setColor(Color.decode(color));
-		graphics.fill(new Ellipse2D.Float(x, y, sizeOfProjectile, sizeOfProjectile));
-	}
-
-	@Override
-	public void drawSpore(Graphics2D graphics, float x, float y, String color) {
-		graphics.setColor(Color.decode(color));
-		graphics.fill(new Ellipse2D.Float(x - 3, y - 3, sizeOfProjectile - 6, sizeOfProjectile - 6));
-	}
-
 	/*-----------------------------Miscellaneous------------------------------*/
-	int[] SizeOfLawnMower = LawnMower.getSizeOfLawnMower();
-
-	@Override
-	public void drawLawnMower(Graphics2D graphics, float x, float y, String color) {
-		graphics.setColor(Color.decode(color));
-		graphics.fill(new RoundRectangle2D.Float(x, y + (SizeOfLawnMower[1] / 3), SizeOfLawnMower[0],
-				SizeOfLawnMower[1], 10, 10));
-		graphics.setColor(Color.BLACK);
-		graphics.fill(new Ellipse2D.Float(x + SizeOfLawnMower[0] / 4,
-				y + SizeOfLawnMower[1] / 4 + (SizeOfLawnMower[1] / 3), SizeOfLawnMower[0] / 2, SizeOfLawnMower[1] / 2));
-		graphics.fill(new Rectangle2D.Float(x + 10, y + 3 + (SizeOfLawnMower[1] / 3), 3, SizeOfLawnMower[1] - 5));
-	}
 
 	/**
 	 * Draws only the cell specified by the given coordinates in the game board from
@@ -506,7 +472,7 @@ public abstract class SimpleGameView implements GameView {
 	public void moveAndDrawElement(Graphics2D graphics, SimpleGameData data, MovingElement moving) {
 
 		moving.move();
-		moving.draw(this, graphics, moving.getX(), moving.getY());
+		moving.draw(this, graphics);
 	}
 
 	public void drawSelectedPlant(Graphics2D context, SimpleGameData data, BordView view, int p) {

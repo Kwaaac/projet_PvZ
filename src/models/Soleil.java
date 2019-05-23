@@ -83,7 +83,7 @@ public class Soleil implements MovingElement {
 	}
 
 	@Override
-	public void draw(SimpleGameView view, Graphics2D graphics, float x, float y) {
+	public void draw(SimpleGameView view, Graphics2D graphics) {
 		view.drawSun(graphics, x, y, color);
 	}
 

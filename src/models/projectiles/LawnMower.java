@@ -1,8 +1,13 @@
 package models.projectiles;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.geom.Ellipse2D;
+import java.awt.geom.Rectangle2D;
+import java.awt.geom.RoundRectangle2D;
 import java.util.ArrayList;
 
+import fr.umlv.zen5.ApplicationContext;
 import models.Coordinates;
 import models.DeadPool;
 import models.Entities;
@@ -107,12 +112,27 @@ public class LawnMower extends Projectile {
 	}
 	
 	@Override
-	public void draw(SimpleGameView view, Graphics2D graphics, float x, float y) {
+	public void draw(SimpleGameView view, Graphics2D graphics) {
 		if (SimpleGameData.getMap() == "Pool") {
-			view.drawLawnMower(graphics, x, y, color2);
+			
+			graphics.setColor(Color.decode(color2));
+			graphics.fill(new RoundRectangle2D.Float(x, y + (SizeOfLawnMower[1] / 3), SizeOfLawnMower[0],
+					SizeOfLawnMower[1], 10, 10));
+			graphics.setColor(Color.BLACK);
+			graphics.fill(new Ellipse2D.Float(x + SizeOfLawnMower[0] / 4,
+					y + SizeOfLawnMower[1] / 4 + (SizeOfLawnMower[1] / 3), SizeOfLawnMower[0] / 2, SizeOfLawnMower[1] / 2));
+			graphics.fill(new Rectangle2D.Float(x + 10, y + 3 + (SizeOfLawnMower[1] / 3), 3, SizeOfLawnMower[1] - 5));
+			
 		}
 		else {
-			view.drawLawnMower(graphics, x, y, color);
+			
+			graphics.setColor(Color.decode(color));
+			graphics.fill(new RoundRectangle2D.Float(x, y + (SizeOfLawnMower[1] / 3), SizeOfLawnMower[0],
+					SizeOfLawnMower[1], 10, 10));
+			graphics.setColor(Color.BLACK);
+			graphics.fill(new Ellipse2D.Float(x + SizeOfLawnMower[0] / 4,
+					y + SizeOfLawnMower[1] / 4 + (SizeOfLawnMower[1] / 3), SizeOfLawnMower[0] / 2, SizeOfLawnMower[1] / 2));
+			graphics.fill(new Rectangle2D.Float(x + 10, y + 3 + (SizeOfLawnMower[1] / 3), 3, SizeOfLawnMower[1] - 5));
 		}
 		
 	}

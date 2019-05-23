@@ -11,6 +11,9 @@ import models.Entities;
 import models.SimpleGameData;
 import models.cells.Cell;
 import models.cells.GrassCell;
+import models.cells.TileCell;
+import models.cells.WaterCell;
+import models.map.Roof;
 import models.plants.day.CherryBomb;
 import models.plants.day.Chomper;
 import models.plants.day.Peashooter;
@@ -175,7 +178,7 @@ public abstract class Plant extends Entities implements IPlant {
 	}
 
 	/**
-	 * For every plants, it can be placed on grass or any ground Plant and we asumme
+	 * For every plants, it can not be placed on water or roof and with any ground Plant and we asumme
 	 * that they are main plants (Override the plant to change it)
 	 * 
 	 * @param the cell where the plant will be planted
@@ -185,7 +188,7 @@ public abstract class Plant extends Entities implements IPlant {
 	public boolean plantingCondition(Cell cell) {
 
 		
-		if (cell.equals(new GrassCell())) {
+		if (!(cell.equals(new WaterCell()) || cell.equals(new TileCell()))) {
 			return cell.addPlant(this);
 			
 		} else if (cell.isGroundPlantPlanted()) {

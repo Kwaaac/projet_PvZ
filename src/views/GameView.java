@@ -490,42 +490,4 @@ void drawEllipse(Graphics2D graphics, int x, int y, int width, int height, Strin
 	public default void drawZombieYeti(ApplicationContext context, float x, float y, String s) {
 		context.renderFrame(graphics -> drawZombieYeti(graphics, x, y, s));
 	}
-	
-	
-	/*-----------------------------Bullets------------------------------*/
-
-	void drawPea(Graphics2D graphics, float x, float y, String s);
-	
-	public default void drawPea(ApplicationContext context, float x, float y, String s) {
-		context.renderFrame(graphics -> drawPea(graphics, x, y, s));
-	}
-	
-	void drawFrozenPea(Graphics2D graphics, float x, float y, String s);
-	
-	public default void drawFrozenPea(ApplicationContext context, float x, float y, String s) {
-		context.renderFrame(graphics -> drawFrozenPea(graphics, x, y, s));
-	}
-	
-	void drawSpore(Graphics2D graphics, float x, float y, String s);
-	
-	public default void drawSpore(ApplicationContext context, float x, float y, String s) {
-		context.renderFrame(graphics -> drawSpore(graphics, x, y, s));
-	}
-	
-	/*-----------------------------Miscellaneous------------------------------*/
-	
-	void drawLawnMower(Graphics2D graphics, float x, float y, String s);
-	
-	public default void drawLawnMower(ApplicationContext context, float x, float y, String s) {
-		context.renderFrame(graphics -> drawLawnMower(graphics, x, y, s));
-	}
-	
-
-	
-
-	
-
-	
-
-	
 }

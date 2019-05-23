@@ -100,7 +100,7 @@ public class SimpleGameData {
 			}
 		}
 	}
-	
+
 	private void NightPoolBord() {
 		for (int i = 0; i < matrix.length; i++) {
 			for (int j = 0; j < matrix[0].length; j++) {
@@ -112,7 +112,7 @@ public class SimpleGameData {
 			}
 		}
 	}
-	
+
 	private void RoofBord() {
 		for (int i = 0; i < matrix.length; i++) {
 			for (int j = 0; j < matrix[0].length; j++) {
@@ -133,7 +133,6 @@ public class SimpleGameData {
 		} else if (map == "Roof") {
 			RoofBord();
 		}
-		
 
 	}
 
@@ -440,7 +439,6 @@ public class SimpleGameData {
 		int xOrigin = view.getXOrigin();
 		int squareSize = BordView.getSquareSize();
 		String choice = "Continue", finalChoice = null;
-		
 
 		for (Zombie z : myZombies) {
 			if (z.isEatingBrain(xOrigin, squareSize)) {
@@ -464,7 +462,7 @@ public class SimpleGameData {
 			break;
 		case "Stop":
 			time.stop();
-			
+
 			switch (finalChoice) {
 			case "Loose":
 				str.append("-+-+-+-+-+-+-+-+-+-\nVous avez perdu...\n");
@@ -505,7 +503,6 @@ public class SimpleGameData {
 			int y2 = Coordinates.CenteredY(view.realCoordFromIndex(i, view.getYOrigin()));
 
 			Cell actualCell = this.getCell(i, j);
-			
 
 			Plant actualPlant = psView.getSelectedPlants().get(p);
 
@@ -611,7 +608,6 @@ public class SimpleGameData {
 		int staticX = view.getXOrigin() - BordView.getSquareSize();
 		for (int i = 1; i <= nbLines; i++) {
 			myLawnMower.add(new LawnMower(staticX, BordView.getSquareSize() * i, i - 1));
-			view.drawLawnMower(context, staticX, BordView.getSquareSize() * i, "#B44A4A");
 		}
 	}
 
@@ -693,8 +689,10 @@ public class SimpleGameData {
 				zombieList.put(z, zombieList.get(z) - 1);
 				if (map == "Pool") {
 					if (z.isCommon()) {
-						while(view.indexFromReaCoord(y, view.getYOrigin()) == 2 || view.indexFromReaCoord(y, view.getYOrigin()) == 3) {
-							y = view.getYOrigin() + dataBord.RandomPosGenerator(dataBord.getNbLines()) * sqrS + (sqrS / 2);
+						while (view.indexFromReaCoord(y, view.getYOrigin()) == 2
+								|| view.indexFromReaCoord(y, view.getYOrigin()) == 3) {
+							y = view.getYOrigin() + dataBord.RandomPosGenerator(dataBord.getNbLines()) * sqrS
+									+ (sqrS / 2);
 						}
 						myZombies.add(z.createAndDrawNewZombie(view, context, x, y));
 
@@ -703,7 +701,7 @@ public class SimpleGameData {
 						myZombies.add(z.createAndDrawNewZombie(view, context, x, y));
 					}
 				} else {
-					
+
 					myZombies.add(z.createAndDrawNewZombie(view, context, x, y));
 				}
 				str.append("new " + zombieAvailable.get(selecteur) + new SimpleDateFormat("hh:mm:ss").format(new Date())
@@ -750,8 +748,10 @@ public class SimpleGameData {
 			if (spawn > 0) {
 				if (map == "Pool") {
 					if (z.isCommon()) {
-						while(view.indexFromReaCoord(y, view.getYOrigin()) == 2 || view.indexFromReaCoord(y, view.getYOrigin()) == 3) {
-							y = view.getYOrigin() + dataBord.RandomPosGenerator(dataBord.getNbLines()) * sqrS + (sqrS / 2);
+						while (view.indexFromReaCoord(y, view.getYOrigin()) == 2
+								|| view.indexFromReaCoord(y, view.getYOrigin()) == 3) {
+							y = view.getYOrigin() + dataBord.RandomPosGenerator(dataBord.getNbLines()) * sqrS
+									+ (sqrS / 2);
 						}
 						myZombies.add(z.createAndDrawNewZombie(view, context, x, y));
 
@@ -760,7 +760,7 @@ public class SimpleGameData {
 						myZombies.add(z.createAndDrawNewZombie(view, context, x, y));
 					}
 				} else {
-					
+
 					myZombies.add(z.createAndDrawNewZombie(view, context, x, y));
 				}
 				str.append("new " + z + new SimpleDateFormat("hh:mm:ss").format(new Date()) + ")\n");

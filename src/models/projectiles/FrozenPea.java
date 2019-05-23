@@ -1,6 +1,8 @@
 package models.projectiles;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.geom.Ellipse2D;
 
 import views.SimpleGameView;
 
@@ -16,10 +18,13 @@ public class FrozenPea extends Projectile {
 	public String getColor() {
 		return null;
 	}
-
+	
+	int sizeofP = getSizeOfProjectile();
+	
 	@Override
-	public void draw(SimpleGameView view, Graphics2D graphics, float x, float y) {
-		view.drawFrozenPea(graphics, x, y, color);
+	public void draw(SimpleGameView view, Graphics2D graphics) {
+		graphics.setColor(Color.decode(color));
+		graphics.fill(new Ellipse2D.Float(x, y, sizeofP, sizeofP));
 	}
 
 	@Override
@@ -31,5 +36,4 @@ public class FrozenPea extends Projectile {
 	public String toString() {
 		return name;
 	}
-
 }

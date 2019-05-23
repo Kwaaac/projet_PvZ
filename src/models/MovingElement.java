@@ -12,5 +12,5 @@ public interface MovingElement {
 	
 	float getY();
 
-	void draw(SimpleGameView view, Graphics2D graphics, float x, float y);
+	void draw(SimpleGameView view, Graphics2D graphics);
 }

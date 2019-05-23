@@ -1,6 +1,9 @@
 package models.projectiles;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.geom.Ellipse2D;
+
 import views.SimpleGameView;
 
 
@@ -23,9 +26,12 @@ public class Pea extends Projectile {
 		return super.toString() + "--" + name; 
 	}
 
+	int  sizeofP = getSizeOfProjectile();
+	
 	@Override
-	public void draw(SimpleGameView view, Graphics2D graphics, float x, float y) {
-		view.drawPea(graphics, x, y, color);
+	public void draw(SimpleGameView view, Graphics2D graphics) {
+		graphics.setColor(Color.decode(color));
+		graphics.fill(new Ellipse2D.Float(x, y, sizeofP, sizeofP));
 	}
 
 	@Override

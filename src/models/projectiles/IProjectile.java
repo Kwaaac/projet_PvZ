@@ -6,7 +6,7 @@ import views.SimpleGameView;
 
 public interface IProjectile {
 
-	void draw(SimpleGameView view, Graphics2D graphics, float x, float y);
+	void draw(SimpleGameView view, Graphics2D graphics);
 
 	/**
 	 * @return How many seconds the pea will freeze a Zombie

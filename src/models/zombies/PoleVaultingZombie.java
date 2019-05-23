@@ -51,7 +51,7 @@ public class PoleVaultingZombie extends Zombie {
 	}
 
 	@Override
-	public void draw(SimpleGameView view, Graphics2D graphics, float x, float y) {
+	public void draw(SimpleGameView view, Graphics2D graphics) {
 		view.drawPoleVaultingZombie(graphics, x, y, color);
 	}
 
