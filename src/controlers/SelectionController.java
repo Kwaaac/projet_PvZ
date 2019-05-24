@@ -38,37 +38,28 @@ public class SelectionController {
 		SelectBordView plantSelectionView = SelectBordView.initGameGraphics(30, yOrigin, 900, dataSelect,
 				selectedPlant);
 
-		String choice = "mapSelection";
+		String choice = "menu";
 
 		BordView view = new BordView(0, 0, width, height, height / 5);
-
-		
-		view.drawRectangle(context, 0, 0, width, (height / 5), "#000000");
-		view.drawRectangle(context, 5, 10, width - 10, (height / 5) - 15, "#61DB5F");
-		view.drawString(context, (width / 2) - 100, 1 * (height / 10), "DAY", "000000", 50);
-
-		view.drawRectangle(context, 0, (height / 5), width, (height / 5), "#000000");
-		view.drawRectangle(context, 5, (height / 5) + 5, width - 10, (height / 5) -10, "#5F79DB");
-		view.drawString(context, (width / 2) - 100, 3 * (height / 10), "NIGHT", "000000", 50);
-
-		view.drawRectangle(context, 0, 2*(height / 5), width, (height / 5), "#000000");
-		view.drawRectangle(context, 5, 2*(height / 5) + 5, width - 10, (height / 5) -10, "#5FC1DB");
-		view.drawString(context, (width / 2) - 100, 5 * (height / 10), "POOL", "000000", 50);
-		
-		view.drawRectangle(context, 0, 3*(height / 5), width, (height / 5), "#000000");
-		view.drawRectangle(context, 5, 3*(height / 5) + 5, (width/2)-5, (height / 5) -10, "#5F79DB");
-		view.drawRectangle(context, width/2, 3*(height / 5) + 5, (width/2) - 5, (height / 5) - 10, "#5FC1DB");
-		view.drawString(context, (width / 2) - 155, 7 * (height / 10), "NIGHTPOOL", "000000", 50);
-		
-		view.drawRectangle(context, 0, 4*(height / 5), width, (height / 5), "#000000");
-		view.drawRectangle(context, 5, 4*(height / 5) +5, width - 10, (height / 5) - 10, "#BC4C29");
-		view.drawString(context, (width / 2) - 100, 9 * (height / 10), "ROOF", "000000", 50);
 
 		view.drawRectangle(context, width - 65, 15, 50, 50, "#DE0000");
 
 		while (true) {
-
-			Event event = context.pollOrWaitEvent(20);
+			switch (choice) {//draws in BordView
+				case "menu":
+					view.drawMenu(context, view, width, height);
+					break;
+					
+				case "mapSelection":
+					view.drawMapSelection(context, view, width, height);
+					break;
+					
+				case "plantSelection":
+					view.drawPlantSelection(context, view, viewContent, plantSelectionView, dataBord, dataSelect, width, height);
+					break;
+			}
+			
+			Event event = context.pollOrWaitEvent(45);
 
 			if (event == null) {
 				continue;
@@ -83,7 +74,7 @@ public class SelectionController {
 			Action action = event.getAction();
 			if (action == Action.KEY_PRESSED || action == Action.KEY_RELEASED) {
 				if (mdp == "A" && plantSelectionView.getSelectedPlants().size() == 7) {
-					view.drawRectangle(context, 0, 0, width, height, "#cbd9ef");
+					//view.drawRectangle(context, 0, 0, width, height, "#cbd9ef");
 					return plantSelectionView.getSelectedPlants();
 				} else {
 					continue;
@@ -106,50 +97,59 @@ public class SelectionController {
 			}
 
 			switch (choice) {
-			case "mapSelection":
-				switch (Y) {
-				case 0:
-					SimpleGameData.setMap("Day");
-					choice = "plantSelection";
-					break;
-
-				case 1:
-					SimpleGameData.setMap("Night");
-					choice = "plantSelection";
-					break;
-					
-				case 2:
-					SimpleGameData.setMap("Pool");
-					choice = "plantSelection";
-					break;
-					
-				case 3:
-					SimpleGameData.setMap("NightPool");
-					choice = "plantSelection";
-					break;
-					
-				case 4:
-					SimpleGameData.setMap("Roof");
-					choice = "plantSelection";
-					break;
-				}
-
-			case "plantSelection":
-
-				if (dataBord.isCorrectSelectLocation(viewContent, x, y)) {
-					viewContent.truc(x, y, plantSelectionView, dataBord, dataSelect);
-
-				} else {
-					if (dataSelect.isCorrectSelectLocation(plantSelectionView, x, y)) {
-						plantSelectionView.truc(x, y, viewContent, dataSelect, dataBord);
+				case "menu":
+					switch (Y) {
+						case 1:
+							choice = "mapSelection";
+							break;
+						case 2:
+							System.out.println("2");
+							break;
+						case 3:
+							System.out.println("3");
+							break;
 					}
-				}
-				
-				view.drawRectangle(context, 0, 0, width, height, "#ffffff"); // background
-				viewContent.draw(context, dataBord);
-				plantSelectionView.draw(context, dataSelect);
-				view.drawRectangle(context, width - 65, 15, 50, 50, "#DE0000"); // quit
-
+					break;
+					
+				case "mapSelection":
+					
+					switch (Y) {
+					case 0:
+						SimpleGameData.setMap("Day");
+						choice = "plantSelection";
+						break;
+	
+					case 1:
+						SimpleGameData.setMap("Night");
+						choice = "plantSelection";
+						break;
+						
+					case 2:
+						SimpleGameData.setMap("Pool");
+						choice = "plantSelection";
+						break;
+						
+					case 3:
+						SimpleGameData.setMap("NightPool");
+						choice = "plantSelection";
+						break;
+						
+					case 4:
+						SimpleGameData.setMap("Roof");
+						choice = "plantSelection";
+						break;
+					}
+	
+				case "plantSelection":
+	
+					if (dataBord.isCorrectSelectLocation(viewContent, x, y)) {
+						viewContent.truc(x, y, plantSelectionView, dataBord, dataSelect);
+	
+					} else {
+						if (dataSelect.isCorrectSelectLocation(plantSelectionView, x, y)) {
+							plantSelectionView.truc(x, y, viewContent, dataSelect, dataBord);
+						}
+					}
 			}
 
 		}

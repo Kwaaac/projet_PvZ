@@ -63,6 +63,7 @@ public class MenuController {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+				view.drawRectangle(context, 0, 0, width, height, "#cbd9ef");
 				return false;
 			} else if (0<=x && x<=width && 225+(height/6)<=y && y<=(height/6)*2+225) {
 				try {
@@ -70,6 +71,7 @@ public class MenuController {
 				} catch (ClassNotFoundException e) {
 					e.printStackTrace();
 				}
+				view.drawRectangle(context, 0, 0, width, height, "#cbd9ef");
 				return false;
 			}
 			

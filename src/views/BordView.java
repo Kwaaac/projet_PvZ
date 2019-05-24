@@ -248,5 +248,53 @@ public class BordView extends SimpleGameView {
 		view.drawString(context, 20, 55, "MENU", "#FFFF00", 50);//MENU BUTTON
 	}
 	
+	public void drawMenu(ApplicationContext context, BordView view, int width, int height) {
+		view.drawRectangle(context, 0, 0, width, height, "#61DB5F");
+		view.drawString(context, (width/2)-125, (height/6)-50, "MENU", "#000000", 85);
+		
+		view.drawRectangle(context, 0, 200, width, (height/6), "#000000");
+		view.drawRectangle(context, 5, 205, width-10, (height/6)-10, "#22D398");
+		view.drawString(context, (width / 2) - 100, 150+(height / 6), "Play", "000000", 50);
+		
+		view.drawRectangle(context, 0, 225+(height/6), width, (height/6), "#000000");
+		view.drawRectangle(context, 5, 230+(height/6), width-10, (height/6)-10, "#22D398");
+		view.drawString(context, (width / 2) - 100, 150+(height / 6)*2, "Resume", "000000", 50);
+		
+		view.drawRectangle(context, 0, 250+(height/6)*2, width, (height/6), "#000000");
+		view.drawRectangle(context, 5, 255+(height/6)*2, width-10, (height/6)-10, "#22D398");
+		view.drawString(context, (width / 2) - 100, 150+(height / 6)*3, "Editor", "000000", 50);
+	}
+	
+	public void drawMapSelection(ApplicationContext context, BordView view, int width, int height) {
+		view.drawRectangle(context, 0, 0, width, (height / 5), "#000000");
+		view.drawRectangle(context, 5, 10, width - 10, (height / 5) - 15, "#61DB5F");
+		view.drawString(context, (width / 2) - 100, 1 * (height / 10), "DAY", "000000", 50);
+
+		view.drawRectangle(context, 0, (height / 5), width, (height / 5), "#000000");
+		view.drawRectangle(context, 5, (height / 5) + 5, width - 10, (height / 5) -10, "#5F79DB");
+		view.drawString(context, (width / 2) - 100, 3 * (height / 10), "NIGHT", "000000", 50);
+
+		view.drawRectangle(context, 0, 2*(height / 5), width, (height / 5), "#000000");
+		view.drawRectangle(context, 5, 2*(height / 5) + 5, width - 10, (height / 5) -10, "#5FC1DB");
+		view.drawString(context, (width / 2) - 100, 5 * (height / 10), "POOL", "000000", 50);
+		
+		view.drawRectangle(context, 0, 3*(height / 5), width, (height / 5), "#000000");
+		view.drawRectangle(context, 5, 3*(height / 5) + 5, (width/2)-5, (height / 5) -10, "#5F79DB");
+		view.drawRectangle(context, width/2, 3*(height / 5) + 5, (width/2) - 5, (height / 5) - 10, "#5FC1DB");
+		view.drawString(context, (width / 2) - 155, 7 * (height / 10), "NIGHTPOOL", "000000", 50);
+		
+		view.drawRectangle(context, 0, 4*(height / 5), width, (height / 5), "#000000");
+		view.drawRectangle(context, 5, 4*(height / 5) +5, width - 10, (height / 5) - 10, "#BC4C29");
+		view.drawString(context, (width / 2) - 100, 9 * (height / 10), "ROOF", "000000", 50);
+	}
+	
+	public void drawPlantSelection(ApplicationContext context, BordView view, SelectBordView viewContent, SelectBordView plantSelectionView, SimpleGameData dataBord,
+			SimpleGameData dataSelect, int width, int height) {
+		view.drawRectangle(context, 0, 0, width, height, "#ffffff"); // background
+		viewContent.draw(context, dataBord);
+		plantSelectionView.draw(context, dataSelect);
+		view.drawRectangle(context, width - 65, 15, 50, 50, "#DE0000"); // quit
+	}
+	
 	
 }
