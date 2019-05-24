@@ -41,7 +41,7 @@ public class BordView extends SimpleGameView {
 	}
 
 	public static BordView initGameGraphics(int xOrigin, int yOrigin, int height, SimpleGameData data) {
-		int squareSize = (int) (height * 1.0 / data.getNbLines());
+		int squareSize = (int) (width-xOrigin)/data.getNbColumns();
 		return new BordView(xOrigin, yOrigin, height, data.getNbColumns() * squareSize, squareSize);
 	}
 	

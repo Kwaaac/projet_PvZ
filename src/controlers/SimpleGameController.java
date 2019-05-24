@@ -35,10 +35,10 @@ public class SimpleGameController {
 		int height = (int) screenInfo.getHeight();
 		System.out.println("Ma résolution : "+width+"x"+height);
 		
-		BordView.setWidth(width/2);
-		BordView.setHeight(height/2);
-		
 		ArrayList<Plant> selectedPlant = SelectionController.startGame(context);
+		
+		BordView.setWidth(width);
+		BordView.setHeight(height);
 		
 		HashMap<Zombie, Integer> normalWaveZombie = SimpleGameData.generateZombies(1);
 		HashMap<Zombie, Integer> superWaveZombie = SimpleGameData.generateZombies(2);
