@@ -83,9 +83,7 @@ public class CherryBomb extends Plant {
 	}
 
 	@Override
-	public Plant createAndDrawNewPlant(SimpleGameView view, ApplicationContext context, int x, int y) {
-		view.drawCherryBomb(context, x, y, color);
-
+	public Plant createNewPlant(int x, int y) {
 		return new CherryBomb(x, y);
 
 	}
@@ -93,6 +91,11 @@ public class CherryBomb extends Plant {
 	@Override
 	public void draw(SimpleGameView view, Graphics2D graphics, int x, int y) {
 		view.drawCherryBomb(graphics, x, y, color);
+	}
+	
+	@Override
+	public void draw(SimpleGameView view, Graphics2D graphics) {
+		
 	}
 
 }

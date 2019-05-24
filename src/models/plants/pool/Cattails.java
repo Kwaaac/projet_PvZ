@@ -36,7 +36,7 @@ public class Cattails extends Plant {
 	public void action(ArrayList<Projectile> myBullet, BordView view, ArrayList<Zombie> myZombies, SimpleGameData dataBord) {}
 
 	@Override
-	public Plant createAndDrawNewPlant(SimpleGameView view, ApplicationContext context, int x, int y) {
+	public Plant createNewPlant(SimpleGameView view, ApplicationContext context, int x, int y) {
 		view.drawCattails(context, x,  y, color);
 		
 		return new Cattails(x, y);

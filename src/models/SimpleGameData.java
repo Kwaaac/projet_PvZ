@@ -507,7 +507,7 @@ public class SimpleGameData {
 			Plant actualPlant = psView.getSelectedPlants().get(p);
 
 			if (actualPlant.plantingCondition(actualCell)) {
-				myPlants.add(actualPlant.createAndDrawNewPlant(view, context, x2, y2));
+				myPlants.add(actualPlant.createNewPlant(x2, y2));
 				actualMoney -= psView.getSelectedPlants().get(p).getCost();
 				psView.startCooldown(p);
 			}

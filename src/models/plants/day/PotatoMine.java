@@ -80,9 +80,7 @@ public class PotatoMine extends Plant {
 	}
 
 	@Override
-	public Plant createAndDrawNewPlant(SimpleGameView view, ApplicationContext context, int x, int y) {
-		view.drawPotatoMine(context, x, y, color2);
-
+	public Plant createNewPlant(int x, int y) {
 		return new PotatoMine(x, y);
 
 	}
@@ -99,5 +97,11 @@ public class PotatoMine extends Plant {
 	@Override
 	public Coordinates hitBox() {
 		return new Coordinates((int) x, (int) x + Plant.getSizeOfPlant() - 10);
+	}
+
+	@Override
+	public void draw(SimpleGameView view, Graphics2D graphics) {
+		// TODO Auto-generated method stub
+		
 	}
 }

@@ -45,9 +45,7 @@ public class Repeater extends Plant {
 	}
 
 	@Override
-	public Plant createAndDrawNewPlant(SimpleGameView view, ApplicationContext context, int x, int y) {
-		view.drawRepeater(context, x, y, color);
-
+	public Plant createNewPlant(int x, int y) {
 		return new Repeater(x, y);
 	}
 
@@ -116,6 +114,12 @@ public class Repeater extends Plant {
 
 		incAS();
 
+	}
+
+	@Override
+	public void draw(SimpleGameView view, Graphics2D graphics) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

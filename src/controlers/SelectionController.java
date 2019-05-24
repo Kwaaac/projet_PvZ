@@ -28,8 +28,8 @@ public class SelectionController {
 		ArrayList<Plant> allPlants = new ArrayList<>();
 
 		allPlants.addAll(Plant.getPlantList("day"));
-		allPlants.addAll(Plant.getPlantList("night"));
-		allPlants.addAll(Plant.getPlantList("pool"));
+//		allPlants.addAll(Plant.getPlantList("night"));
+//		allPlants.addAll(Plant.getPlantList("pool"));
 
 		SimpleGameData dataBord = new SimpleGameData(7, 7);
 		SimpleGameData dataSelect = new SimpleGameData(7, 1);

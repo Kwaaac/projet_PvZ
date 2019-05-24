@@ -170,7 +170,7 @@ public class BordView extends SimpleGameView {
 		ArrayList<Plant> myPlants = data.getMyPlants();
 
 		for (Plant p : myPlants) {
-			p.draw(this, graphics, (int) p.getX(), (int) p.getY());
+			p.draw(this, graphics);
 		}
 
 	}

@@ -169,12 +169,6 @@ void drawEllipse(Graphics2D graphics, int x, int y, int width, int height, Strin
 		context.renderFrame(graphics -> drawPotatoMine(graphics, x, y, s));
 	}
 	
-	void drawSnowPea(Graphics2D graphics, int x, int y, String color);
-	
-	public default void drawSnowPea(ApplicationContext context, int x, int y, String s) {
-		context.renderFrame(graphics -> drawSnowPea(graphics, x, y, s));
-	}
-	
 	void drawSunFlower(Graphics2D graphics, int x, int y, String color);
 	
 	public default void drawSunFlower(ApplicationContext context, int x, int y, String s) {

@@ -36,9 +36,7 @@ public class WallNut extends Plant {
 	}
 
 	@Override
-	public Plant createAndDrawNewPlant(SimpleGameView view, ApplicationContext context, int x, int y) {
-		view.drawWallNut(context, x, y, color);
-
+	public Plant createNewPlant(int x, int y) {
 		return new WallNut(x, y);
 
 	}
@@ -46,6 +44,12 @@ public class WallNut extends Plant {
 	@Override
 	public void draw(SimpleGameView view, Graphics2D graphics, int x, int y) {
 		view.drawWallNut(graphics, x, y, color);
+	}
+
+	@Override
+	public void draw(SimpleGameView view, Graphics2D graphics) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

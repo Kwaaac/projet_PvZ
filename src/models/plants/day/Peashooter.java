@@ -48,9 +48,7 @@ public class Peashooter extends Plant {
 	}
 	
 	@Override
-	public Plant createAndDrawNewPlant(SimpleGameView view, ApplicationContext context, int x, int y) {
-		view.drawPeashooter(context, x,  y, color);
-		
+	public Plant createNewPlant(int x, int y) {
 		return new Peashooter(x, y);
 	}
 	
@@ -68,6 +66,12 @@ public class Peashooter extends Plant {
 		}
 		
 		this.incAS();
+	}
+
+	@Override
+	public void draw(SimpleGameView view, Graphics2D graphics) {
+		// TODO Auto-generated method stub
+		
 	}
 
 

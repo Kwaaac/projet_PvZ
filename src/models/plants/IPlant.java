@@ -21,8 +21,10 @@ public interface IPlant {
 
 	boolean readyToshot();
 
-	Plant createAndDrawNewPlant(SimpleGameView view, ApplicationContext context, int x, int y);
+	Plant createNewPlant(int x, int y);
 
+	void draw(SimpleGameView view, Graphics2D graphics);
+	
 	void draw(SimpleGameView view, Graphics2D graphics, int x, int y);
 
 	/*

@@ -98,9 +98,7 @@ public class Chomper extends Plant {
 	}
 
 	@Override
-	public Plant createAndDrawNewPlant(SimpleGameView view, ApplicationContext context, int x, int y) {
-		view.drawChomper(context, x, y, eatingColor);
-
+	public Plant createNewPlant(int x, int y) {
 		return new Chomper(x, y);
 
 	}
@@ -112,6 +110,12 @@ public class Chomper extends Plant {
 		} else {
 			view.drawChomper(graphics, x, y, notEatingColor);
 		}
+	}
+
+	@Override
+	public void draw(SimpleGameView view, Graphics2D graphics) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

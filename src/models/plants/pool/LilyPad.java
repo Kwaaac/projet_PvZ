@@ -41,7 +41,7 @@ public class LilyPad extends Plant {
 	}
 
 	@Override
-	public Plant createAndDrawNewPlant(SimpleGameView view, ApplicationContext context, int x, int y) {
+	public Plant createNewPlant(SimpleGameView view, ApplicationContext context, int x, int y) {
 		view.drawLilyPad(context, x, y, color);
 
 		return new LilyPad(x, y);

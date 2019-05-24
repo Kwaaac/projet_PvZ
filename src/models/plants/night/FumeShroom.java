@@ -34,7 +34,7 @@ public class FumeShroom extends Plant {
 	int sizeOfPlant = super.getSizeOfPlant();
 
 	@Override
-	public Plant createAndDrawNewPlant(SimpleGameView view, ApplicationContext context, int x, int y) {
+	public Plant createNewPlant(SimpleGameView view, ApplicationContext context, int x, int y) {
 		view.drawFumeShroom(context, x, y, color);
 
 		return new FumeShroom(x, y);

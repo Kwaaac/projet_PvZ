@@ -334,16 +334,6 @@ public class SelectBordView extends SimpleGameView {
 		graphics.setFont(new Font("Afterglow", Font.PLAIN, 20));
 		graphics.drawString("25", x+15+sizeOfPlant/2, y+squareSize-5);
 	}
-
-	@Override
-	public void drawSnowPea(Graphics2D graphics, int x, int y, String color) {
-		graphics.setColor(Color.decode(color));
-		graphics.fill(new Rectangle2D.Float(x - 15, y + sizeOfPlant / 2, sizeOfPlant, sizeOfPlant));
-		graphics.setColor(Color.WHITE);
-		graphics.setFont(new Font("Afterglow", Font.PLAIN, 20));
-		graphics.drawString("175", x+15+sizeOfPlant/2, y+squareSize-5);
-	}
-
 	@Override
 	public void drawSunFlower(Graphics2D graphics, int x, int y, String color) {
 		graphics.setColor(Color.decode(color));

@@ -34,9 +34,7 @@ public class SunFlower extends Plant {
 	int sizeOfPlant = super.getSizeOfPlant();
 
 	@Override
-	public Plant createAndDrawNewPlant(SimpleGameView view, ApplicationContext context, int x, int y) {
-		view.drawSunFlower(context, x, y, color);
-
+	public Plant createNewPlant(int x, int y) {
 		return new SunFlower(x, y);
 	}
 
@@ -67,6 +65,12 @@ public class SunFlower extends Plant {
 	@Override
 	public int hashCode() {
 		return Objects.hash(name, color);
+	}
+
+	@Override
+	public void draw(SimpleGameView view, Graphics2D graphics) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

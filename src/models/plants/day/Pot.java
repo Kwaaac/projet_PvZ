@@ -37,9 +37,7 @@ public class Pot extends Plant {
 	}
 
 	@Override
-	public Plant createAndDrawNewPlant(SimpleGameView view, ApplicationContext context, int x, int y) {
-		view.drawPot(context, x, y, color);
-
+	public Plant createNewPlant(int x, int y) {
 		return new Pot(x, y);
 
 	}
@@ -67,5 +65,11 @@ public class Pot extends Plant {
 	@Override
 	public int getTypeOfPlant() {
 		return 0;
+	}
+
+	@Override
+	public void draw(SimpleGameView view, Graphics2D graphics) {
+		// TODO Auto-generated method stub
+		
 	}
 }
