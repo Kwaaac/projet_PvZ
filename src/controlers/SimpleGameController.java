@@ -33,7 +33,7 @@ public class SimpleGameController {
 		ScreenInfo screenInfo = context.getScreenInfo();
 		int width = (int) screenInfo.getWidth();
 		int height = (int) screenInfo.getHeight();
-		System.out.println(width+" "+height);
+		System.out.println("Ma résolution : "+width+"x"+height);
 		
 		BordView.setWidth(width/2);
 		BordView.setHeight(height/2);
