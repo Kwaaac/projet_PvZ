@@ -12,6 +12,7 @@ import fr.umlv.zen5.ApplicationContext;
 import fr.umlv.zen5.Event;
 import fr.umlv.zen5.Event.Action;
 import fr.umlv.zen5.KeyboardKey;
+import fr.umlv.zen5.ScreenInfo;
 import models.DeadPool;
 import models.SimpleGameData;
 import models.map.Map;
@@ -29,6 +30,14 @@ public class SimpleGameController {
 	
 	static void simpleGame(ApplicationContext context) {
 
+		ScreenInfo screenInfo = context.getScreenInfo();
+		int width = (int) screenInfo.getWidth();
+		int height = (int) screenInfo.getHeight();
+		System.out.println(width+" "+height);
+		
+		BordView.setWidth(width/2);
+		BordView.setHeight(height/2);
+		
 		ArrayList<Plant> selectedPlant = SelectionController.startGame(context);
 		
 		HashMap<Zombie, Integer> normalWaveZombie = SimpleGameData.generateZombies(1);
@@ -67,7 +76,7 @@ public class SimpleGameController {
 		
 		while (true) {
 			if (pause == true) {
-				pause = MenuController.menu(context, view);
+				pause = MenuController.menu(context, view, dataBord);
 			}
 			else {
 				
@@ -166,6 +175,7 @@ public class SimpleGameController {
 	}
 
 	public static void main(String[] args) {
+		
 		Application.run(Color.LIGHT_GRAY, SimpleGameController::simpleGame); // attention, utilisation d'une lambda.
 	}
 }

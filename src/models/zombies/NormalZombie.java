@@ -33,7 +33,7 @@ public class NormalZombie extends Zombie {
 
 	
 	public void go() {
-		super.go((float) -.93);
+		super.go((float) -15);
 	}
 	
 	@Override

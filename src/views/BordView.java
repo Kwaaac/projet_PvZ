@@ -22,27 +22,27 @@ public class BordView extends SimpleGameView {
 	private static int squareSize;
 	private static int xOrigin;
 	private static int yOrigin;
-	private static int length;
+	private static int height;
 	private static int width;
 
-	public BordView(int xOrigin, int yOrigin, int length, int width, int squareSize) {
+	public BordView(int xOrigin, int yOrigin, int height, int width, int squareSize) {
 		BordView.xOrigin = xOrigin;
 		BordView.yOrigin = yOrigin;
-		BordView.length = length;
+		BordView.height = height;
 		BordView.width = width;
 		BordView.squareSize = squareSize;
 	}
 	
-	public BordView(int xOrigin, int yOrigin, int width, int length) {
+	public BordView(int xOrigin, int yOrigin, int width, int height) {
 		BordView.xOrigin = xOrigin;
 		BordView.yOrigin = yOrigin;
 		BordView.width = width;
-		BordView.length = length;
+		BordView.height = height;
 	}
 
-	public static BordView initGameGraphics(int xOrigin, int yOrigin, int length, SimpleGameData data) {
-		int squareSize = (int) (length * 1.0 / data.getNbLines());
-		return new BordView(xOrigin, yOrigin, length, data.getNbColumns() * squareSize, squareSize);
+	public static BordView initGameGraphics(int xOrigin, int yOrigin, int height, SimpleGameData data) {
+		int squareSize = (int) (height * 1.0 / data.getNbLines());
+		return new BordView(xOrigin, yOrigin, height, data.getNbColumns() * squareSize, squareSize);
 	}
 	
 	public int getXOrigin() {
@@ -53,12 +53,20 @@ public class BordView extends SimpleGameView {
 		return yOrigin;
 	}
 
-	public int getWidth() {
+	public static int getWidth() {
 		return width;
 	}
+	
+	public static void setWidth(int x) {
+		BordView.width = x;
+	}
 
-	public int getLength() {
-		return length;
+	public static int getHeight() {
+		return height;
+	}
+	
+	public static void setHeight(int x) {
+		BordView.height = x;
 	}
 
 	public int indexFromReaCoord(float coord, int origin) { // attention, il manque des test de validité des
@@ -163,7 +171,7 @@ public class BordView extends SimpleGameView {
 
 		graphics.setColor(Color.decode("#cbd9ef"));
 		graphics.fill(new Rectangle2D.Float(xOrigin + width, 150,
-				xOrigin + width, 150 + length));
+				xOrigin + width, 150 + height));
 
 		graphics.fill(new Rectangle2D.Float(xOrigin, 0, xOrigin + width, 150));
 

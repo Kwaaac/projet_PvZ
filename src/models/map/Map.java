@@ -7,6 +7,7 @@ import views.BordView;
 
 public abstract class Map {
 	private final int column = 8;
+	
 
 	public int getColumn() {
 		return column;

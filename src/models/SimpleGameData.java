@@ -1,6 +1,12 @@
 package models;
 
 import java.awt.Color;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -24,7 +30,7 @@ import models.zombies.Zombie;
 import views.BordView;
 import views.SelectBordView;
 
-public class SimpleGameData {
+public class SimpleGameData  implements Serializable{
 	private static int WL = 0;
 	private final Cell[][] matrix;
 	private final int nbLines;
@@ -63,7 +69,7 @@ public class SimpleGameData {
 		spawnTime = System.currentTimeMillis();
 		timeLimit = 5_000;
 
-		// Temps pour augmenter la difficulté
+		// Temps pour augmenter la difficultï¿½
 		difficultyTime = System.currentTimeMillis();
 
 		// Temps du spawn des soleil
@@ -73,6 +79,25 @@ public class SimpleGameData {
 		time.start();
 	}
 
+	public void save() {
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("test.ser"))) {
+            oos.writeObject(actualMoney+"\n"+actualMoney);
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+	
+	public void read() throws ClassNotFoundException {
+        try (ObjectInputStream oos = new ObjectInputStream(new FileInputStream("test.ser"))) {
+        	Object x = oos.readObject();
+        	System.out.println(x);
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+	
 	private void dayBord() {
 		for (int i = 0; i < matrix.length; i++) {
 			for (int j = 0; j < matrix[0].length; j++) {
@@ -378,7 +403,7 @@ public class SimpleGameData {
 			if (SimpleGameData.getMap() != "Night") {
 				int xOrigin = view.getXOrigin();
 
-				float xRandom = RandomPosGenerator(xOrigin, xOrigin + view.getLength());
+				float xRandom = RandomPosGenerator(xOrigin, xOrigin + view.getHeight());
 
 				mySun.add(new Soleil(xRandom, 0, 1.5, 25, 85));
 			}
@@ -569,7 +594,7 @@ public class SimpleGameData {
 		boolean result = false;
 
 		int target = this.RandomPosGenerator(15); // 1 chance sur x
-		int xRandomPosition = SimpleGameData.RandomPosGenerator(view.getXOrigin(), view.getLength()); // random position
+		int xRandomPosition = SimpleGameData.RandomPosGenerator(view.getXOrigin(), view.getHeight()); // random position
 																										// x dans
 		// matrice
 		int yRandomPosition = SimpleGameData.RandomPosGenerator(view.getYOrigin(), view.getWidth()); // random position

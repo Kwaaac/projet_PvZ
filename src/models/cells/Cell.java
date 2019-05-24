@@ -1,5 +1,6 @@
 package models.cells;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -8,7 +9,7 @@ import models.plants.Plant;
 import models.projectiles.Projectile;
 import models.zombies.Zombie;
 
-public abstract class Cell implements ICell {
+public abstract class Cell implements ICell, Serializable {
 
 	private Plant groundPlant;
 	private Plant mainPlant;

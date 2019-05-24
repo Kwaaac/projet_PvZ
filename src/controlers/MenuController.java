@@ -7,18 +7,18 @@ import java.io.IOException;
 import fr.umlv.zen5.ApplicationContext;
 import fr.umlv.zen5.Event;
 import fr.umlv.zen5.ScreenInfo;
+import models.SimpleGameData;
 import models.SystemFile;
 import fr.umlv.zen5.Event.Action;
 import views.BordView;
 
 public class MenuController {
-	public static boolean menu(ApplicationContext context, BordView view) {
+	public static boolean menu(ApplicationContext context, BordView view, SimpleGameData data) {
 
 		
 		ScreenInfo screenInfo = context.getScreenInfo();
 		int width = (int) screenInfo.getWidth();
 		int height = (int) screenInfo.getHeight();
-		SystemFile file = new SystemFile();
 		
 		view.drawRectangle(context, 0, 0, width, height, "#61DB5F");
 		view.drawString(context, (width/2)-125, (height/6)-50, "PAUSE", "#000000", 85);
@@ -57,18 +57,20 @@ public class MenuController {
 				view.drawRectangle(context, 0, 0, 1200, 1200, "#cbd9ef");
 				return false;
 			}  else if (0<=x && x<=width && 250+(height/6)*2<=y && y<=250+(height/6)*3) {
-				
 				try {
-					file.save();
+					SystemFile.save(data);
 				} catch (IOException e) {
+					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+				return false;
 			} else if (0<=x && x<=width && 225+(height/6)<=y && y<=(height/6)*2+225) {
 				try {
-					file.load();
-				} catch (IOException e) {
+					SystemFile.read();
+				} catch (ClassNotFoundException e) {
 					e.printStackTrace();
 				}
+				return false;
 			}
 			
 			

@@ -1,10 +1,11 @@
 package models;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 import models.plants.day.CherryBomb;
 
-public class Chrono {
+public class Chrono implements Serializable{
 	private long tempsDepart = 0;
 	private long tempsFin = 0;
 	private long pauseDepart = 0;
