@@ -13,7 +13,7 @@ import models.plants.Plant;
 import views.BordView;
 import views.SelectBordView;
 
-public class SelectionController {
+public class PrincipalMenuController {
 	public static ArrayList<Plant> startGame(ApplicationContext context) {
 
 		ScreenInfo screenInfo = context.getScreenInfo();
@@ -76,6 +76,9 @@ public class SelectionController {
 				if (mdp == "A" && plantSelectionView.getSelectedPlants().size() == 7) {
 					//view.drawRectangle(context, 0, 0, width, height, "#cbd9ef");
 					return plantSelectionView.getSelectedPlants();
+				} else if (choice == "resume"){
+					SimpleGameData.setLoadChoice("resume");
+					return dataBord.getMyPlants();
 				} else {
 					continue;
 				}
@@ -103,10 +106,11 @@ public class SelectionController {
 							choice = "mapSelection";
 							break;
 						case 2:
-							System.out.println("2");
+							choice = "resume";
+							System.out.println("ok menu resum");
 							break;
 						case 3:
-							System.out.println("3");
+							choice = "editor";
 							break;
 					}
 					break;
@@ -150,6 +154,11 @@ public class SelectionController {
 							plantSelectionView.truc(x, y, viewContent, dataSelect, dataBord);
 						}
 					}
+					break;
+				
+				case "resume":
+					System.out.println("ok case resume");
+					break;
 			}
 
 		}

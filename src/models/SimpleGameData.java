@@ -30,7 +30,7 @@ import models.zombies.Zombie;
 import views.BordView;
 import views.SelectBordView;
 
-public class SimpleGameData  implements Serializable{
+public class SimpleGameData implements Serializable{
 	private static int WL = 0;
 	private final Cell[][] matrix;
 	private final int nbLines;
@@ -56,6 +56,7 @@ public class SimpleGameData  implements Serializable{
 	static Chrono time = new Chrono();
 
 	private static String map = "";
+	private static String loadChoice = "start";
 
 	public SimpleGameData(int nbLines, int nbColumns) {
 		this.nbLines = nbLines;
@@ -78,25 +79,6 @@ public class SimpleGameData  implements Serializable{
 		// Temps du jeu
 		time.start();
 	}
-
-	public void save() {
-        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("test.ser"))) {
-            oos.writeObject(actualMoney+"\n"+actualMoney);
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-	
-	public void read() throws ClassNotFoundException {
-        try (ObjectInputStream oos = new ObjectInputStream(new FileInputStream("test.ser"))) {
-        	Object x = oos.readObject();
-        	System.out.println(x);
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 	
 	private void dayBord() {
 		for (int i = 0; i < matrix.length; i++) {
@@ -820,6 +802,14 @@ public class SimpleGameData  implements Serializable{
 
 	public static String getMap() {
 		return map;
+	}
+
+	public static void setLoadChoice(String choice) {
+		loadChoice = choice;
+	}
+
+	public static String getLoadChoice() {
+		return loadChoice;
 	}
 
 	public static int getActualMoney() {

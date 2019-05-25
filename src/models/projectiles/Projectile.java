@@ -1,5 +1,6 @@
 package models.projectiles;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -11,7 +12,7 @@ import models.SimpleGameData;
 import models.cells.Cell;
 import views.BordView;
 
-public abstract class Projectile extends Entities implements MovingElement, IProjectile{
+public abstract class Projectile extends Entities implements MovingElement, IProjectile, Serializable{
 	private double speed;
 	private static final int sizeOfProjectile = 25;
 	

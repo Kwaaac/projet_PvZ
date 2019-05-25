@@ -1,5 +1,6 @@
 package models.plants;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -10,10 +11,8 @@ import models.DeadPool;
 import models.Entities;
 import models.SimpleGameData;
 import models.cells.Cell;
-import models.cells.GrassCell;
 import models.cells.TileCell;
 import models.cells.WaterCell;
-import models.map.Roof;
 import models.plants.day.CherryBomb;
 import models.plants.day.Chomper;
 import models.plants.day.Peashooter;
@@ -38,7 +37,7 @@ import models.plants.pool.TangleKelp;
 import models.zombies.Zombie;
 import views.BordView;
 
-public abstract class Plant extends Entities implements IPlant {
+public abstract class Plant extends Entities implements IPlant, Serializable {
 	private final static int sizeOfPlant = 75;
 	protected final int shootBarMax;
 	protected long shootBar;

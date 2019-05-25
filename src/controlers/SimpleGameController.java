@@ -15,6 +15,7 @@ import fr.umlv.zen5.KeyboardKey;
 import fr.umlv.zen5.ScreenInfo;
 import models.DeadPool;
 import models.SimpleGameData;
+import models.SystemFile;
 import models.map.Map;
 import models.plants.*;
 import models.projectiles.*;
@@ -35,15 +36,24 @@ public class SimpleGameController {
 		int height = (int) screenInfo.getHeight();
 		System.out.println("Ma résolution : "+width+"x"+height);
 		
-		ArrayList<Plant> selectedPlant = SelectionController.startGame(context);
-		
+		ArrayList<Plant> selectedPlant = PrincipalMenuController.startGame(context);
 		BordView.setWidth(width);
 		BordView.setHeight(height);
-		
+		SimpleGameData dataBord = Map.dataBord();
 		HashMap<Zombie, Integer> normalWaveZombie = SimpleGameData.generateZombies(1);
 		HashMap<Zombie, Integer> superWaveZombie = SimpleGameData.generateZombies(2);
 		
-		SimpleGameData dataBord = Map.dataBord();
+		if (SimpleGameData.getLoadChoice() == "resume") {
+			try {
+				dataBord = (SimpleGameData) SystemFile.read();
+				System.out.println("ok");
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+			selectedPlant = dataBord.getMyPlants();
+			
+		}
+		
 		SimpleGameData dataSelect = new SimpleGameData(selectedPlant.size(), 1);
 
 		int yOrigin = 150;
@@ -76,7 +86,7 @@ public class SimpleGameController {
 		
 		while (true) {
 			if (pause == true) {
-				pause = MenuController.menu(context, view, dataBord);
+				pause = SecondaryMenuController.menu(context, view, dataBord);
 			}
 			else {
 				
