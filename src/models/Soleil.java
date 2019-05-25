@@ -1,11 +1,12 @@
 package models;
 
 import java.awt.Graphics2D;
+import java.io.Serializable;
 
 import views.BordView;
 import views.SimpleGameView;
 
-public class Soleil implements MovingElement {
+public class Soleil implements MovingElement, Serializable {
 	private float x;
 	private float y;
 	private Coordinates caseXY;

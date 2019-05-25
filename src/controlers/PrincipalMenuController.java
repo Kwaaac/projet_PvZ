@@ -1,6 +1,7 @@
 package controlers;
 
 import java.awt.geom.Point2D;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import fr.umlv.zen5.ApplicationContext;
@@ -9,6 +10,7 @@ import fr.umlv.zen5.KeyboardKey;
 import fr.umlv.zen5.ScreenInfo;
 import fr.umlv.zen5.Event.Action;
 import models.SimpleGameData;
+import models.SystemFile;
 import models.plants.Plant;
 import views.BordView;
 import views.SelectBordView;
@@ -76,10 +78,17 @@ public class PrincipalMenuController {
 				if (mdp == "A" && plantSelectionView.getSelectedPlants().size() == 7) {
 					view.drawRectangle(context, 0, 0, width, height, "#cbd9ef");
 					return plantSelectionView.getSelectedPlants();
-				} else if (choice == "resume"){
-					System.out.println("YES");
+				} else if (choice == "resume") {
 					SimpleGameData.setLoadChoice("resume");
-					return dataBord.getMyPlants();
+					try {
+						return (ArrayList<Plant>) SystemFile.read("view");
+					} catch (ClassNotFoundException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				} else {
 					continue;
 				}
@@ -108,7 +117,6 @@ public class PrincipalMenuController {
 							break;
 						case 2:
 							choice = "resume";
-							System.out.println("ok menu resum");
 							break;
 						case 3:
 							choice = "editor";
@@ -155,10 +163,6 @@ public class PrincipalMenuController {
 							plantSelectionView.truc(x, y, viewContent, dataSelect, dataBord);
 						}
 					}
-					break;
-				
-				case "resume":
-					System.out.println("ok case resume");
 					break;
 			}
 

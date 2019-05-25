@@ -1,11 +1,12 @@
 package models;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Objects;
 
 import views.BordView;
 
-public abstract class Entities implements IEntite {
+public abstract class Entities implements IEntite, Serializable{
 
 	protected float x;
 	protected float y;

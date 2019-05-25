@@ -1,11 +1,6 @@
 package models;
 
 import java.awt.Color;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -32,7 +27,7 @@ import views.SelectBordView;
 
 public class SimpleGameData implements Serializable{
 	private static int WL = 0;
-	private final Cell[][] matrix;
+	private Cell[][] matrix;
 	private final int nbLines;
 	private final int nbColumns;
 	private Coordinates selected;
@@ -55,7 +50,7 @@ public class SimpleGameData implements Serializable{
 
 	static Chrono time = new Chrono();
 
-	private static String map = "";
+	private static String map;
 	private static String loadChoice = "start";
 
 	public SimpleGameData(int nbLines, int nbColumns) {
@@ -78,6 +73,13 @@ public class SimpleGameData implements Serializable{
 
 		// Temps du jeu
 		time.start();
+	}
+	
+	@Override
+	public String toString() {
+		return "SimpleGameData [nbLines=" + nbLines + ", nbColumns=" + nbColumns
+				+ ", selected=" + selected + ", placedPlant=" + placedPlant + ", myPlants=" + myPlants
+				+ ", zombieInQueu=" + zombieInQueu + ", sunSpawn=" + sunSpawn + ", map = "+ map +"]";
 	}
 	
 	private void dayBord() {
@@ -818,6 +820,18 @@ public class SimpleGameData implements Serializable{
 
 	public void setZombieInQueu(ArrayList<Zombie> zombieList) {
 		zombieInQueu = zombieList;
+	}
+	
+	public void setMatrix(Cell[][] x) {
+		for (int i = 0; i < matrix.length; i++) {
+			for (int j = 0; j < matrix[0].length; j++) {
+				matrix[i][j] = x[i][j];
+			}
+		}
+	}
+	
+	public Cell[][] getMatrix() {
+		return matrix;
 	}
 
 }

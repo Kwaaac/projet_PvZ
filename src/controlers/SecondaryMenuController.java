@@ -11,9 +11,10 @@ import models.SimpleGameData;
 import models.SystemFile;
 import fr.umlv.zen5.Event.Action;
 import views.BordView;
+import views.SelectBordView;
 
 public class SecondaryMenuController {
-	public static boolean menu(ApplicationContext context, BordView view, SimpleGameData data) {
+	public static boolean menu(ApplicationContext context, BordView view, SimpleGameData data, SelectBordView plantSelectionView) {
 
 		
 		ScreenInfo screenInfo = context.getScreenInfo();
@@ -58,7 +59,7 @@ public class SecondaryMenuController {
 				return false;
 			}  else if (0<=x && x<=width && 250+(height/6)*2<=y && y<=250+(height/6)*3) {
 				try {
-					SystemFile.save(data);
+					SystemFile.save(data, plantSelectionView);
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -66,11 +67,7 @@ public class SecondaryMenuController {
 				view.drawRectangle(context, 0, 0, width, height, "#cbd9ef");
 				return false;
 			} else if (0<=x && x<=width && 225+(height/6)<=y && y<=(height/6)*2+225) {
-				try {
-					SystemFile.read();
-				} catch (ClassNotFoundException e) {
-					e.printStackTrace();
-				}
+				
 				view.drawRectangle(context, 0, 0, width, height, "#cbd9ef");
 				return false;
 			}

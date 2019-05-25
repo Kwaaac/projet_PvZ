@@ -16,8 +16,7 @@ public abstract class Map implements Serializable{
 
 	public static SimpleGameData dataBord() {
 		ArrayList<Integer> mapProperties = null;
-
-		System.out.println("map = "+SimpleGameData.getMap());
+		
 		String x = SimpleGameData.getMap();
 		switch (x) {
 		case "Day":

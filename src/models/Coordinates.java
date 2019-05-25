@@ -1,5 +1,6 @@
 package models;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 import models.plants.Plant;
@@ -8,7 +9,7 @@ import views.BordView;
 /**
  * The Coordinates class defines a couple of integers.
  */
-public class Coordinates {
+public class Coordinates implements Serializable{
 	private final int i;
 	private final int j;
 

@@ -2,6 +2,7 @@ package controlers;
 
 import java.awt.Color;
 import java.awt.geom.Point2D;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -37,35 +38,37 @@ public class SimpleGameController {
 		System.out.println("Ma résolution : "+width+"x"+height);
 		
 		ArrayList<Plant> selectedPlant = PrincipalMenuController.startGame(context);
-		SimpleGameData dataBord = new SimpleGameData(0,0);
+		SimpleGameData dataBord = new SimpleGameData(1,1);//no care but important
 		HashMap<Zombie, Integer> normalWaveZombie = SimpleGameData.generateZombies(1);
 		HashMap<Zombie, Integer> superWaveZombie = SimpleGameData.generateZombies(2);
+		
+		SelectBordView plantSelectionView = SelectBordView.initGameGraphics(0, 0, 900, dataBord, selectedPlant);//no care but important
+		SimpleGameData dataSelect = new SimpleGameData(selectedPlant.size(), 1);
+
+		int yOrigin = 150;
 		
 		if (SimpleGameData.getLoadChoice() == "start") {
 			BordView.setWidth(width);
 			BordView.setHeight(height);
 			dataBord = Map.dataBord();
+			plantSelectionView = SelectBordView.initGameGraphics(0, yOrigin, 900, dataSelect, selectedPlant);
 		}
 		else {
 			try {
-				dataBord = (SimpleGameData) SystemFile.read();
-				System.out.println("ok");
+				dataBord = (SimpleGameData) SystemFile.read("data");
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
 			}
-			
+			System.out.println(dataBord);
 		}
 		
-		SimpleGameData dataSelect = new SimpleGameData(selectedPlant.size(), 1);
-
-		int yOrigin = 150;
-
+		
+		
 		BordView view = Map.view();
 		
-		
 		int squareSize = BordView.getSquareSize();
-		SelectBordView plantSelectionView = SelectBordView.initGameGraphics(0, yOrigin, 900, dataSelect, selectedPlant);
-		
 		
 		view.draw(context, dataBord);
 		plantSelectionView.draw(context, dataSelect);
@@ -83,12 +86,12 @@ public class SimpleGameController {
 		
 		int money = 0;
 		
-		dataBord.spawnLawnMower(view, context,myLawnMower);
+		dataBord.spawnLawnMower(view, context, myLawnMower);
 		
 		
 		while (true) {
 			if (pause == true) {
-				pause = SecondaryMenuController.menu(context, view, dataBord);
+				pause = SecondaryMenuController.menu(context, view, dataBord, plantSelectionView);
 			}
 			else {
 				
