@@ -37,20 +37,22 @@ public class SimpleGameController {
 		System.out.println("Ma résolution : "+width+"x"+height);
 		
 		ArrayList<Plant> selectedPlant = PrincipalMenuController.startGame(context);
-		BordView.setWidth(width);
-		BordView.setHeight(height);
-		SimpleGameData dataBord = Map.dataBord();
+		SimpleGameData dataBord = new SimpleGameData(0,0);
 		HashMap<Zombie, Integer> normalWaveZombie = SimpleGameData.generateZombies(1);
 		HashMap<Zombie, Integer> superWaveZombie = SimpleGameData.generateZombies(2);
 		
-		if (SimpleGameData.getLoadChoice() == "resume") {
+		if (SimpleGameData.getLoadChoice() == "start") {
+			BordView.setWidth(width);
+			BordView.setHeight(height);
+			dataBord = Map.dataBord();
+		}
+		else {
 			try {
 				dataBord = (SimpleGameData) SystemFile.read();
 				System.out.println("ok");
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
 			}
-			selectedPlant = dataBord.getMyPlants();
 			
 		}
 		

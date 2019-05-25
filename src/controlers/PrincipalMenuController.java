@@ -77,6 +77,7 @@ public class PrincipalMenuController {
 					//view.drawRectangle(context, 0, 0, width, height, "#cbd9ef");
 					return plantSelectionView.getSelectedPlants();
 				} else if (choice == "resume"){
+					System.out.println("YES");
 					SimpleGameData.setLoadChoice("resume");
 					return dataBord.getMyPlants();
 				} else {
