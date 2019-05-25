@@ -1,5 +1,7 @@
 package models.cells;
 
+import java.awt.Graphics2D;
+import java.awt.geom.Rectangle2D;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -8,6 +10,8 @@ import models.IEntite;
 import models.plants.Plant;
 import models.projectiles.Projectile;
 import models.zombies.Zombie;
+import views.BordView;
+import views.SimpleGameView;
 
 public abstract class Cell implements ICell, Serializable {
 
@@ -21,7 +25,7 @@ public abstract class Cell implements ICell, Serializable {
 	private boolean plantedGroundPlant = false;
 	private boolean plantedMainPlant = false;
 	private boolean plantedSupportPlant = false;
-
+	
 	public Cell() {
 		groundPlant = null;
 		mainPlant = null;
@@ -29,6 +33,13 @@ public abstract class Cell implements ICell, Serializable {
 
 		zombiesInCell = new ArrayList<>();
 		projectileInCell = new ArrayList<>();
+	}
+	
+	int squareSize = BordView.getSquareSize();
+	
+	@Override
+	public void drawBoardCell(Graphics2D graphics, float i, float j, int darker) {
+		graphics.fill(new Rectangle2D.Float(j, i, squareSize, squareSize));
 	}
 	
 	/**

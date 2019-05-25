@@ -12,6 +12,8 @@ import views.BordView;
 import views.SimpleGameView;
 
 public interface IPlant {
+	
+	int getLife();
 
 	void incAS();
 

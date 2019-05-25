@@ -1,6 +1,7 @@
 package models.cells;
 
 import java.awt.Color;
+import java.awt.Graphics2D;
 import java.util.Objects;
 
 import models.plants.Plant;
@@ -12,6 +13,17 @@ public class TileCell extends Cell {
 
 	public TileCell() {
 		super();
+	}
+
+	@Override
+	public void drawBoardCell(Graphics2D graphics, float i, float j, int darker) {
+		if (darker == 0) {
+			graphics.setColor(color);
+		} else {
+			graphics.setColor(colorDarker);
+		}
+
+		super.drawBoardCell(graphics, i, j, darker);
 	}
 
 	public Color getColor() {

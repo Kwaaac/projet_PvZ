@@ -69,27 +69,13 @@ public abstract class Plant extends Entities implements IPlant, Serializable {
 		}
 		return day;
 	}
+	
+	public int getLife() {
+		return super.life;
+	}
 
 	public void setCase(SimpleGameData data) {
-		int cX = BordView.caseXFromX(x);
-		int cY = BordView.caseYFromY(y);
-
-		Coordinates caseZ = new Coordinates(cX, cY);
-
-		if (!caseZ.equals(caseXY)) {
-
-			Cell actCell = data.getCell(cY, cX);
-			if (actCell != null) {
-
-				if (!(cX == data.getNbColumns() - 1)) {
-					data.getCell(caseXY.getJ(), caseXY.getI()).removePlant(this);
-				}
-
-				actCell.addPlant(this);
-
-				caseXY = caseZ;
-			}
-		}
+	
 	}
 
 	/**
@@ -141,16 +127,13 @@ public abstract class Plant extends Entities implements IPlant, Serializable {
 		return new Coordinates((int) x, (int) x + sizeOfPlant);
 	}
 
-	public static void hasToDie(DeadPool DPe, ArrayList<Plant> Mp, ArrayList<Zombie> myZombies, SimpleGameData data) {
-		if (myZombies.size() == 0) {
+	public static void hasToDie(DeadPool DPe, ArrayList<Plant> Mp, SimpleGameData data) {
 			for (Plant p : Mp) {
 				if (p.isDead()) {
 					data.getCell(p.getCaseJ(), p.getCaseI()).removePlant(p);
 					DPe.add(p);
 				}
 			}
-
-		}
 	}
 
 	@Override

@@ -35,11 +35,12 @@ public class SimpleGameController {
 		ScreenInfo screenInfo = context.getScreenInfo();
 		int width = (int) screenInfo.getWidth();
 		int height = (int) screenInfo.getHeight();
-		System.out.println("Ma résolution : "+width+"x"+height);
 		
 		ArrayList<Plant> selectedPlant = PrincipalMenuController.startGame(context);
 		SimpleGameData dataBord = new SimpleGameData(1,1);//no care but important
-		HashMap<Zombie, Integer> normalWaveZombie = SimpleGameData.generateZombies(1);
+		HashMap<Zombie, Integer> normalWaveZombie = new HashMap<>();
+		normalWaveZombie.put(new NormalZombie(), 1);
+		//SimpleGameData.generateZombies(1);
 		HashMap<Zombie, Integer> superWaveZombie = SimpleGameData.generateZombies(2);
 		
 		SelectBordView plantSelectionView = SelectBordView.initGameGraphics(0, 0, 900, dataBord, selectedPlant);//no care but important
@@ -61,7 +62,6 @@ public class SimpleGameController {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			System.out.println(dataBord);
 		}
 		
 		

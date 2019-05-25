@@ -34,12 +34,12 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie,
 
 	protected final HashMap<String, Double> mSpeed = new HashMap<String, Double>() {
 		{
-			put("reallyFast", -15.5);// 9+
-			put("fast", -15.38);// 7
-			put("medium", -15.05);// 5.5
-			put("slow", -15.93);// 4.7
-			put("verySlow", -15.5);// 2.5
-			put("ultraSlow", -15.3);// 1.5
+			put("reallyFast", -1.5);// 9+
+			put("fast", -1.38);// 7
+			put("medium", -1.05);// 5.5
+			put("slow", -0.93);// 4.7
+			put("verySlow", -0.5);// 2.5
+			put("ultraSlow", -0.3);// 1.5
 		}
 
 	};
@@ -222,13 +222,17 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie,
 
 	public void conflictPvZ(DeadPool deadPoolE, BordView view, SimpleGameData data, StringBuilder str) {
 		Plant p;
-		if (data.getCell(view.lineFromY(this.getY()), view.columnFromX(this.getX())) != null
-				&& data.getCell(view.lineFromY(this.getY()), view.columnFromX(this.getX())).isPlantedPlant()) {
-			
-			p = data.getCell(view.lineFromY(this.getY()), view.columnFromX(this.getX())).getPlantToAttack();
+		if (data.getCell(view.lineFromY(y), view.columnFromX(x)) != null
+				&& data.getCell(view.lineFromY(y), view.columnFromX(x)).isPlantedPlant()) {
+
+			p = data.getCell(view.lineFromY(y), view.columnFromX(x)).getPlantToAttack();
 			if (this.hit(p)) {
 				this.stop();
+				System.out.println(this.shootBar + "==" + shootBarMax);
 				if (this.readyToshot()) {
+					
+					
+					
 					(p).mortalKombat(this);
 
 					this.resetAS();
@@ -268,14 +272,16 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie,
 
 	public void conflictLvZ(DeadPool deadPoolE, ArrayList<LawnMower> myLawnMower, BordView view, SimpleGameData data,
 			StringBuilder str) {
-		for (LawnMower l : myLawnMower) {
-			if (this.hit(l)) {
-				if (!(l.isMoving())) {
-					l.go();
+		if (x < view.getXOrigin()) {
+			for (LawnMower l : myLawnMower) {
+				if (this.hit(l)) {
+					if (!(l.isMoving())) {
+						l.go();
+					}
+					life = 0;
+					str.append(this + " meurt tué par une tondeuse\n");
+					l.setLife(100000);
 				}
-				life = 0;
-				str.append(this + " meurt tué par une tondeuse\n");
-				l.setLife(100000);
 			}
 		}
 	}
@@ -284,11 +290,10 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie,
 			ArrayList<Plant> myPlants, ArrayList<LawnMower> myLawnMower, DeadPool deadPoolE, BordView view,
 			SimpleGameData data, StringBuilder str) {
 		LawnMower.hasToDie(myLawnMower, deadPoolE, data, view);
-		Plant.hasToDie(deadPoolE, myPlants, myZombies, data); // gere les mort si il n'y a aucun zombie sur le plateau
+		Plant.hasToDie(deadPoolE, myPlants, data); // gere les mort si il n'y a aucun zombie sur le plateau
 		Projectile.hasToDie(deadPoolE, myBullet, data);
 		for (Zombie z : myZombies) {
 			z.go();
-
 			z.incAS();
 			z.conflictBvZ(deadPoolE, view, data);
 			if (z.action(data)) {

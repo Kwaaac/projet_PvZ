@@ -75,6 +75,8 @@ public class SimpleGameData implements Serializable{
 		time.start();
 	}
 	
+	
+	//Testing
 	@Override
 	public String toString() {
 		return "SimpleGameData [nbLines=" + nbLines + ", nbColumns=" + nbColumns
@@ -128,6 +130,14 @@ public class SimpleGameData implements Serializable{
 				matrix[i][j] = new TileCell();
 			}
 		}
+	}
+	
+	
+	/*
+	 * @return the matrix of cell
+	 */
+	public Cell[][] getMatrix() {
+		return matrix;
 	}
 
 	private void createBord(String map) {
@@ -516,7 +526,7 @@ public class SimpleGameData implements Serializable{
 			Plant actualPlant = psView.getSelectedPlants().get(p).createNewPlant(x2, y2);
 
 			if (actualPlant.plantingCondition(actualCell)) {
-				myPlants.add(actualPlant.createNewPlant(x2, y2));
+				myPlants.add(actualPlant);
 				actualMoney -= psView.getSelectedPlants().get(p).getCost();
 				psView.startCooldown(p);
 			}
@@ -829,9 +839,4 @@ public class SimpleGameData implements Serializable{
 			}
 		}
 	}
-	
-	public Cell[][] getMatrix() {
-		return matrix;
-	}
-
 }

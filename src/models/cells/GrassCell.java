@@ -1,6 +1,7 @@
 package models.cells;
 
 import java.awt.Color;
+import java.awt.Graphics2D;
 import java.util.Objects;
 
 public class GrassCell extends Cell {
@@ -12,7 +13,16 @@ public class GrassCell extends Cell {
 		super();
 	}
 
-	
+	@Override
+	public void drawBoardCell(Graphics2D graphics, float i, float j, int darker) {
+		if (darker == 0) {
+			graphics.setColor(color);
+		} else {
+			graphics.setColor(colorDarker);
+		}
+
+		super.drawBoardCell(graphics, i, j, darker);
+	}
 
 	@Override
 	public Color getColor() {
@@ -37,9 +47,9 @@ public class GrassCell extends Cell {
 	public int hashCode() {
 		return Objects.hash(type);
 	}
-	
+
 	@Override
-    public String toString() {
-        return type + ": " + super.toString();
-    }
+	public String toString() {
+		return type + ": " + super.toString();
+	}
 }

@@ -146,25 +146,25 @@ public class BordView extends SimpleGameView {
 	 */
 
 	public void draw(Graphics2D graphics, SimpleGameData data) {
-
+		
+		Cell[][] matrix = data.getMatrix();
+		
+		int m = matrix.length;
+		
+		int p = matrix[0].length;
+		
 		// used to create a checkerboard with the cells
 		int checkerboard = 1;
 
 		// Draw cells
-		for (int i = 0; i < data.getNbLines(); i++) {
+		for (int i = 0; i < m; i++) {
 
 			if (i % 2 == 0) { checkerboard = 1; } else { checkerboard = 0; }
 
-			ArrayList<Cell> cells = data.getLineCell(i, 0);
-			for (int j = 0; j < cells.size(); j++) {
+			for (int j = 0; j < p; j++) {
 
-				if (checkerboard % 2 == 0) {
-					graphics.setColor(cells.get(j).getColor());
-				} else {
-					graphics.setColor(cells.get(j).getColorDarker());
-				}
+				matrix[i][j].drawBoardCell(graphics, yFromJ(i), xFromI(j), checkerboard%2);
 
-				graphics.fill(drawCell(i, j));
 				checkerboard += 1;
 			}
 		}
@@ -177,8 +177,8 @@ public class BordView extends SimpleGameView {
 
 		ArrayList<Plant> myPlants = data.getMyPlants();
 
-		for (Plant p : myPlants) {
-			p.draw(this, graphics);
+		for (Plant plant : myPlants) {
+			plant.draw(this, graphics);
 		}
 
 	}
