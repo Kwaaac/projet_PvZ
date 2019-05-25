@@ -1,10 +1,10 @@
 package models.plants.day;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
-import fr.umlv.zen5.ApplicationContext;
-import models.Entities;
 import models.SimpleGameData;
 import models.cells.Cell;
 import models.plants.Plant;
@@ -17,7 +17,6 @@ import views.SimpleGameView;
 public class Peashooter extends Plant {
 	private final String name = "Peashooter";
 	private final String color = "#90D322";
-	
 	
 	public Peashooter(int x, int y) {
 		super(x, y, 0, 300, 5000, 100, "fast");
@@ -51,12 +50,6 @@ public class Peashooter extends Plant {
 	public Plant createNewPlant(int x, int y) {
 		return new Peashooter(x, y);
 	}
-	
-	@Override
-	public void draw(SimpleGameView view, Graphics2D graphics, int x, int y) {
-		view.drawPeashooter(graphics, x, y, color);
-	}
-
 	@Override
 	public void action(ArrayList<Projectile> myBullet, BordView view, ArrayList<Zombie> myZombies, SimpleGameData dataBord) {
 		if(this.readyToshot(dataBord.getLineCell( this.getCaseJ(), this.getCaseI()))) {
@@ -67,11 +60,22 @@ public class Peashooter extends Plant {
 		
 		this.incAS();
 	}
-
+	
 	@Override
 	public void draw(SimpleGameView view, Graphics2D graphics) {
-		// TODO Auto-generated method stub
+		graphics.setColor(Color.decode(color));
+		graphics.fill(new Rectangle2D.Float(x, y, sizeOfPlant, sizeOfPlant));
+	}
+	
+	
+	int sizeOfSPlant = super.getSizeOfPlant() - 10;
+	
+	@Override
+	public void draw(SimpleGameView view, Graphics2D graphics, int x, int y) {
+		graphics.setColor(Color.decode(color));
+		graphics.fill(new Rectangle2D.Float(x - 15, y + sizeOfSPlant / 2, sizeOfSPlant, sizeOfSPlant));
 		
+		view.drawCost(graphics, x, y, cost.toString());
 	}
 
 

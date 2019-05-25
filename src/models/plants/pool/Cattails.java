@@ -1,6 +1,9 @@
 package models.plants.pool;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.geom.Ellipse2D;
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
 import fr.umlv.zen5.ApplicationContext;
@@ -36,11 +39,8 @@ public class Cattails extends Plant {
 	public void action(ArrayList<Projectile> myBullet, BordView view, ArrayList<Zombie> myZombies, SimpleGameData dataBord) {}
 
 	@Override
-	public Plant createNewPlant(SimpleGameView view, ApplicationContext context, int x, int y) {
-		view.drawCattails(context, x,  y, color);
-		
+	public Plant createNewPlant(int x, int y) {
 		return new Cattails(x, y);
-		
 	}
 	
 	@Override
@@ -54,7 +54,26 @@ public class Cattails extends Plant {
 	}
 
 	@Override
-	public void draw(SimpleGameView view, Graphics2D graphics, int x, int y) {
-		view.drawCattails(graphics, x,  y, color);
+	public void draw(SimpleGameView view, Graphics2D graphics) {
+		graphics.setColor(Color.decode(color));
+		graphics.fill(new Rectangle2D.Float(x, y, sizeOfPlant, sizeOfPlant));
+
+		graphics.setColor(Color.decode("#DB5FBD"));
+		graphics.fill(new Ellipse2D.Float(x + 8, y + 8, sizeOfPlant - 16, sizeOfPlant - 16));
+		
 	}
+	
+	int sizeOfSPlant = super.getSizeOfPlant() - 10;
+
+	@Override
+	public void draw(SimpleGameView view, Graphics2D graphics, int x, int y) {
+		graphics.setColor(Color.decode(color));
+		graphics.fill(new Ellipse2D.Float(x - 15, y + sizeOfSPlant / 2, sizeOfSPlant, sizeOfSPlant));
+
+		graphics.setColor(Color.decode("#DB5FBD"));
+		graphics.fill(new Ellipse2D.Float(x - 7, y + sizeOfSPlant / 2 + 8, sizeOfSPlant - 15, sizeOfSPlant - 15));
+		
+		view.drawCost(graphics, x, y, cost.toString());
+	}
+
 }

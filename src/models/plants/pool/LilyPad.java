@@ -1,6 +1,8 @@
 package models.plants.pool;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.geom.Ellipse2D;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -41,16 +43,9 @@ public class LilyPad extends Plant {
 	}
 
 	@Override
-	public Plant createNewPlant(SimpleGameView view, ApplicationContext context, int x, int y) {
-		view.drawLilyPad(context, x, y, color);
-
+	public Plant createNewPlant(int x, int y) {
 		return new LilyPad(x, y);
 
-	}
-
-	@Override
-	public void draw(SimpleGameView view, Graphics2D graphics, int x, int y) {
-		view.drawLilyPad(graphics, x, y, color);
 	}
 
 	@Override
@@ -88,5 +83,22 @@ public class LilyPad extends Plant {
 	@Override
 	public int hashCode() {
 		return Objects.hash(name, color);
+	}
+
+	@Override
+	public void draw(SimpleGameView view, Graphics2D graphics) {
+		graphics.setColor(Color.decode(color));
+		graphics.fill(new Ellipse2D.Float(x - 15, y - 15, sizeOfPlant + 30, sizeOfPlant + 30));
+		
+	}
+	
+	int sizeOfSPlant = super.getSizeOfPlant() - 10;
+
+	@Override
+	public void draw(SimpleGameView view, Graphics2D graphics, int x, int y) {
+		graphics.setColor(Color.decode(color));
+		graphics.fill(new Ellipse2D.Float(x - 15, y + sizeOfSPlant / 2, sizeOfSPlant, sizeOfSPlant));
+		
+		view.drawCost(graphics, x, y, cost.toString());
 	}
 }

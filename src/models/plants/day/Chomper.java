@@ -1,6 +1,9 @@
 package models.plants.day;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics2D;
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
 import fr.umlv.zen5.ApplicationContext;
@@ -11,6 +14,7 @@ import models.plants.Plant;
 import models.projectiles.Projectile;
 import models.zombies.Zombie;
 import views.BordView;
+import views.SelectBordView;
 import views.SimpleGameView;
 
 public class Chomper extends Plant {
@@ -21,7 +25,7 @@ public class Chomper extends Plant {
 	private boolean eating = false;
 
 	public Chomper(int x, int y) {
-		super(x, y, 0, 350, 15_000, 0, "free");
+		super(x, y, 0, 350, 15_000, 150, "free");
 
 		delayAttack.steady();
 		shootBar = shootBarMax; // Allow the plant to fire instantly
@@ -104,18 +108,23 @@ public class Chomper extends Plant {
 	}
 
 	@Override
-	public void draw(SimpleGameView view, Graphics2D graphics, int x, int y) {
-		if (eating) {
-			view.drawChomper(graphics, x, y, eatingColor);
-		} else {
-			view.drawChomper(graphics, x, y, notEatingColor);
-		}
-	}
-
-	@Override
 	public void draw(SimpleGameView view, Graphics2D graphics) {
-		// TODO Auto-generated method stub
+		if (eating) {
+			graphics.setColor(Color.decode(eatingColor));
+		} else {
+			graphics.setColor(Color.decode(notEatingColor));
+		}
+		graphics.fill(new Rectangle2D.Float(x - 10, y - 10, sizeOfPlant + 20, sizeOfPlant + 20));
 		
 	}
+	
+	int sizeOfSPlant = super.getSizeOfPlant() - 10;
 
+	@Override
+	public void draw(SimpleGameView view, Graphics2D graphics, int x, int y) {
+		graphics.setColor(Color.decode(notEatingColor));
+		graphics.fill(new Rectangle2D.Float(x - 25, y + sizeOfSPlant / 2 - 10, sizeOfSPlant + 20, sizeOfSPlant + 20));
+
+		view.drawCost(graphics, x, y, cost.toString());
+	}
 }

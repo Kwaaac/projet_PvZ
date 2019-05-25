@@ -1,6 +1,9 @@
 package models.plants.pool;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.geom.Ellipse2D;
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
 import fr.umlv.zen5.ApplicationContext;
@@ -20,6 +23,7 @@ public class TangleKelp extends Plant {
 	private final String color = "#517614";
 	private Chrono delayAttack = new Chrono();
 	private boolean eating = false;
+	
 
 	public TangleKelp(int x, int y) {
 		super(x, y, 0, 2400, 90, 25, "slow");
@@ -98,16 +102,9 @@ public class TangleKelp extends Plant {
 	}
 
 	@Override
-	public Plant createNewPlant(SimpleGameView view, ApplicationContext context, int x, int y) {
-		view.drawTangleKelp(context, x, y, color);
-
+	public Plant createNewPlant(int x, int y) {
 		return new TangleKelp(x, y);
 
-	}
-
-	@Override
-	public void draw(SimpleGameView view, Graphics2D graphics, int x, int y) {
-		view.drawTangleKelp(graphics, x, y, color);
 	}
 	
 	@Override
@@ -117,5 +114,27 @@ public class TangleKelp extends Plant {
 		}
 		
 		return false;
+	}
+
+	@Override
+	public void draw(SimpleGameView view, Graphics2D graphics) {
+		graphics.setColor(Color.decode(color));
+		graphics.fill(new Rectangle2D.Float(x, y, sizeOfPlant, sizeOfPlant));
+
+		graphics.setColor(Color.decode("#16D9B6"));
+		graphics.fill(new Ellipse2D.Float(x + 8, y + 8, sizeOfPlant - 16, sizeOfPlant - 16));
+	}
+	
+	int sizeOfSPlant = super.getSizeOfPlant() - 10;
+
+	@Override
+	public void draw(SimpleGameView view, Graphics2D graphics, int x, int y) {
+		graphics.setColor(Color.decode(color));
+		graphics.fill(new Ellipse2D.Float(x - 15, y + sizeOfSPlant / 2, sizeOfSPlant, sizeOfSPlant));
+
+		graphics.setColor(Color.decode("#16D9B6"));
+		graphics.fill(new Ellipse2D.Float(x - 7, y + sizeOfSPlant / 2 + 8, sizeOfSPlant - 15, sizeOfSPlant - 15));
+		
+		view.drawCost(graphics, x, y, cost.toString());
 	}
 }

@@ -1,12 +1,10 @@
 package models.plants.day;
 
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
-import fr.umlv.zen5.ApplicationContext;
 import models.SimpleGameData;
 import models.cells.Cell;
 import models.plants.Plant;
@@ -14,7 +12,6 @@ import models.projectiles.FrozenPea;
 import models.projectiles.Projectile;
 import models.zombies.Zombie;
 import views.BordView;
-import views.SelectBordView;
 import views.SimpleGameView;
 
 public class SnowPea extends Plant {
@@ -49,14 +46,14 @@ public class SnowPea extends Plant {
 		graphics.fill(new Rectangle2D.Float(x, y, sizeOfPlant, sizeOfPlant));
 	}
 	
+	int sizeOfSPlant = super.getSizeOfPlant() - 10;
+	
 	@Override
 	public void draw(SimpleGameView view, Graphics2D graphics, int x, int y) {
 		graphics.setColor(Color.decode(color));
-		graphics.fill(new Rectangle2D.Float(x - 15, y + sizeOfPlant / 2, sizeOfPlant - 10, sizeOfPlant - 10));
+		graphics.fill(new Rectangle2D.Float(x - 15, y + sizeOfSPlant / 2, sizeOfSPlant, sizeOfSPlant));
 		
-		graphics.setColor(Color.WHITE);
-		graphics.setFont(new Font("Afterglow", Font.PLAIN, 20));
-		graphics.drawString(cost, x+10+sizeOfPlant/2, y+SelectBordView.getSquareSize()-5);
+		view.drawCost(graphics, x, y, cost.toString());
 	}
 
 	public boolean readyToshot(ArrayList<Cell> cells) {

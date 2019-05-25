@@ -1,6 +1,8 @@
 package models.plants.night;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
 import fr.umlv.zen5.ApplicationContext;
@@ -33,16 +35,10 @@ public class FumeShroom extends Plant {
 
 	int sizeOfPlant = super.getSizeOfPlant();
 
+	
 	@Override
-	public Plant createNewPlant(SimpleGameView view, ApplicationContext context, int x, int y) {
-		view.drawFumeShroom(context, x, y, color);
-
+	public Plant createNewPlant(int x, int y) {
 		return new FumeShroom(x, y);
-	}
-
-	@Override
-	public void draw(SimpleGameView view, Graphics2D graphics, int x, int y) {
-		view.drawFumeShroom(graphics, x, y, color);
 	}
 
 	@Override
@@ -56,6 +52,21 @@ public class FumeShroom extends Plant {
 		}
 
 		this.incAS();
+	}
+	
+
+	@Override
+	public void draw(SimpleGameView view, Graphics2D graphics) {
+		graphics.setColor(Color.decode(color));
+		graphics.fill(new Rectangle2D.Float(x, y, sizeOfPlant, sizeOfPlant));
+	}	
+	
+	int sizeOfSPlant = super.getSizeOfPlant() - 10;
+	
+	@Override
+	public void draw(SimpleGameView view, Graphics2D graphics, int x, int y) {
+		graphics.setColor(Color.decode(color));
+		graphics.fill(new Rectangle2D.Float(x - 15, y + sizeOfSPlant / 2, sizeOfSPlant, sizeOfSPlant));
 	}
 
 }

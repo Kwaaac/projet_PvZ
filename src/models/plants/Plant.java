@@ -19,7 +19,7 @@ import models.plants.day.Chomper;
 import models.plants.day.Peashooter;
 import models.plants.day.Pot;
 import models.plants.day.PotatoMine;
-import models.plants.day.Repeater;
+import models.plants.day.Squash;
 import models.plants.day.SnowPea;
 import models.plants.day.SunFlower;
 import models.plants.day.WallNut;
@@ -43,12 +43,12 @@ public abstract class Plant extends Entities implements IPlant {
 	protected final int shootBarMax;
 	protected long shootBar;
 	protected long shootTime;
-	protected final int cost;
+	protected final Integer cost;
 	protected final Long cooldown;
 	private Coordinates plantSelect;
 
 	private final static ArrayList<Plant> day = new ArrayList<>(
-			Arrays.asList(new CherryBomb(), new Chomper(), new Peashooter(), new PotatoMine(), new Repeater(),
+			Arrays.asList(new CherryBomb(), new Chomper(), new Peashooter(), new PotatoMine(), new Squash(),
 					new SnowPea(), new SunFlower(), new WallNut(), new Pot()));
 	private final static ArrayList<Plant> night = new ArrayList<>(
 			Arrays.asList(new DoomShroom(), new FumeShroom(), new GraveBuster(), new HypnoShroom(), new IceShroom(),

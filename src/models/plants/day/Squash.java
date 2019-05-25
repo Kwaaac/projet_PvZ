@@ -1,6 +1,8 @@
 package models.plants.day;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -16,19 +18,19 @@ import models.zombies.Zombie;
 import views.BordView;
 import views.SimpleGameView;
 
-public class Repeater extends Plant {
+public class Squash extends Plant {
 	private final String name = "Repeater";
 	private final String color = "#FFFFFF";
 	private Chrono delayAttack = new Chrono();
 
-	public Repeater(int x, int y) {
+	public Squash(int x, int y) {
 		super(x, y, 0, 300, 5100, 0, "free");
 
 		delayAttack.steady();
 		shootBar = shootBarMax; // La plante tire dès qu'elle est posée
 	}
 
-	public Repeater() {
+	public Squash() {
 		this(-10, -10);
 	}
 
@@ -46,12 +48,7 @@ public class Repeater extends Plant {
 
 	@Override
 	public Plant createNewPlant(int x, int y) {
-		return new Repeater(x, y);
-	}
-
-	@Override
-	public void draw(SimpleGameView view, Graphics2D graphics, int x, int y) {
-		view.drawRepeater(graphics, x, y, color);
+		return new Squash(x, y);
 	}
 
 	private ArrayList<Cell> zone(SimpleGameData dataBord) {
@@ -118,8 +115,18 @@ public class Repeater extends Plant {
 
 	@Override
 	public void draw(SimpleGameView view, Graphics2D graphics) {
-		// TODO Auto-generated method stub
+		graphics.setColor(Color.decode(color));
+		graphics.fill(new Rectangle2D.Float(x, y, sizeOfPlant, sizeOfPlant));
+	}
+	
+	int sizeOfSPlant = super.getSizeOfPlant() - 10;
+	
+	@Override
+	public void draw(SimpleGameView view, Graphics2D graphics, int x, int y) {
+		graphics.setColor(Color.decode(color));
+		graphics.fill(new Rectangle2D.Float(x - 15, y + sizeOfSPlant / 2, sizeOfSPlant, sizeOfSPlant));
 		
+		view.drawCost(graphics, x, y, cost.toString());
 	}
 
 }

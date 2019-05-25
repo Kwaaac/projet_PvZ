@@ -1,6 +1,9 @@
 package models.plants.day;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.geom.Ellipse2D;
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -17,7 +20,7 @@ public class Pot extends Plant {
 	private final String color = "#C98C79";
 
 	public Pot(int x, int y) {
-		super(x, y, 0, 300, 0, 0, "free");
+		super(x, y, 0, 300, 0, 25, "free");
 	}
 
 	public Pot() {
@@ -41,10 +44,21 @@ public class Pot extends Plant {
 		return new Pot(x, y);
 
 	}
+	
+	@Override
+	public void draw(SimpleGameView view, Graphics2D graphics) {
+		graphics.setColor(Color.decode(color));
+		graphics.fill(new Ellipse2D.Float(x - 15, y - 15, sizeOfPlant + 30, sizeOfPlant + 30));
+	}
+	
+	int sizeOfSPlant = super.getSizeOfPlant() - 10;
 
 	@Override
 	public void draw(SimpleGameView view, Graphics2D graphics, int x, int y) {
-		view.drawPot(graphics, x, y, color);
+		graphics.setColor(Color.decode(color));
+		graphics.fill(new Ellipse2D.Float(x - 15, y + sizeOfSPlant / 2, sizeOfSPlant, sizeOfSPlant));
+
+		view.drawCost(graphics, x, y, cost.toString());
 	}
 
 
@@ -67,9 +81,4 @@ public class Pot extends Plant {
 		return 0;
 	}
 
-	@Override
-	public void draw(SimpleGameView view, Graphics2D graphics) {
-		// TODO Auto-generated method stub
-		
-	}
 }

@@ -1,6 +1,8 @@
 package models.plants.day;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
 import fr.umlv.zen5.ApplicationContext;
@@ -42,14 +44,22 @@ public class WallNut extends Plant {
 	}
 
 	@Override
-	public void draw(SimpleGameView view, Graphics2D graphics, int x, int y) {
-		view.drawWallNut(graphics, x, y, color);
-	}
-
-	@Override
 	public void draw(SimpleGameView view, Graphics2D graphics) {
-		// TODO Auto-generated method stub
+		graphics.setColor(Color.decode(color));
+		graphics.fill(new Rectangle2D.Float(x, y, sizeOfPlant, sizeOfPlant));
 		
+	}
+	
+	int sizeOfSPlant = super.getSizeOfPlant() - 10;
+	
+	@Override
+	public void draw(SimpleGameView view, Graphics2D graphics, int x, int y) {
+		
+
+		graphics.setColor(Color.decode(color));
+		graphics.fill(new Rectangle2D.Float(x - 15, y + sizeOfSPlant / 2, sizeOfSPlant, sizeOfSPlant));
+		
+		view.drawCost(graphics, x, y, cost.toString());
 	}
 
 }

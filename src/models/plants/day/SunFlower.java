@@ -1,6 +1,8 @@
 package models.plants.day;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.geom.Ellipse2D;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -37,12 +39,7 @@ public class SunFlower extends Plant {
 	public Plant createNewPlant(int x, int y) {
 		return new SunFlower(x, y);
 	}
-
-	@Override
-	public void draw(SimpleGameView view, Graphics2D graphics, int x, int y) {
-		view.drawSunFlower(graphics, x, y, color);
-	}
-
+	
 	@Override
 	public void action(ArrayList<Projectile> myBullet, BordView view, ArrayList<Zombie> myZombies,
 			SimpleGameData dataBord) {
@@ -69,8 +66,23 @@ public class SunFlower extends Plant {
 
 	@Override
 	public void draw(SimpleGameView view, Graphics2D graphics) {
-		// TODO Auto-generated method stub
-		
+		graphics.setColor(Color.decode(color));
+		graphics.fill(new Ellipse2D.Float(x - 4, y - 4, sizeOfPlant + 16, sizeOfPlant + 16));
+
+		graphics.setColor(Color.decode("#AF6907"));
+		graphics.fill(new Ellipse2D.Float(x + 4, y + 4, sizeOfPlant, sizeOfPlant));
 	}
+	
+	@Override
+	public void draw(SimpleGameView view, Graphics2D graphics, int x, int y) {
+		graphics.setColor(Color.decode(color));
+		graphics.fill(new Ellipse2D.Float(x - 20, y + sizeOfPlant / 2 - 12, sizeOfPlant, sizeOfPlant));
+
+		graphics.setColor(Color.decode("#AF6907"));
+		graphics.fill(new Ellipse2D.Float(x - 12, y + sizeOfPlant / 2 - 5, sizeOfPlant - 15, sizeOfPlant - 15));
+		
+		view.drawCost(graphics, x, y, cost.toString());
+	}
+
 
 }

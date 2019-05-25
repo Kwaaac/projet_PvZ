@@ -1,9 +1,10 @@
 package models.plants.day;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
-import fr.umlv.zen5.ApplicationContext;
 import models.Coordinates;
 import models.Entities;
 import models.SimpleGameData;
@@ -23,7 +24,7 @@ public class PotatoMine extends Plant {
 
 	public PotatoMine(int x, int y) {
 		super(x, y, 0, 120, 14_000, 25, "slow");
-
+		this.shootTime = System.currentTimeMillis();
 	}
 
 	public PotatoMine() {
@@ -79,6 +80,10 @@ public class PotatoMine extends Plant {
 		return Lz;
 	}
 
+	
+	int sizeOfPlant = super.getSizeOfPlant();
+	
+	
 	@Override
 	public Plant createNewPlant(int x, int y) {
 		return new PotatoMine(x, y);
@@ -86,22 +91,28 @@ public class PotatoMine extends Plant {
 	}
 
 	@Override
-	public void draw(SimpleGameView view, Graphics2D graphics, int x, int y) {
+	public void draw(SimpleGameView view, Graphics2D graphics) {
 		if (activate) {
-			view.drawPotatoMine(graphics, x, y, color2);
+			graphics.setColor(Color.decode(color2));
 		} else {
-			view.drawPotatoMine(graphics, x, y, color1);
+			graphics.setColor(Color.decode(color1));
 		}
+		
+		graphics.fill(new Rectangle2D.Float(x + 10, y + 10, sizeOfPlant - 20, sizeOfPlant - 20));
+	}
+	
+	int sizeOfSPlant = super.getSizeOfPlant() - 10;
+	
+	@Override
+	public void draw(SimpleGameView view, Graphics2D graphics, int x, int y) {
+		graphics.setColor(Color.decode(color2));
+		graphics.fill(new Rectangle2D.Float(x - 10, y + sizeOfSPlant / 2 + 7, sizeOfSPlant - 15, sizeOfSPlant - 15));
+		
+		view.drawCost(graphics, x, y, cost.toString());
 	}
 
 	@Override
 	public Coordinates hitBox() {
 		return new Coordinates((int) x, (int) x + Plant.getSizeOfPlant() - 10);
-	}
-
-	@Override
-	public void draw(SimpleGameView view, Graphics2D graphics) {
-		// TODO Auto-generated method stub
-		
 	}
 }

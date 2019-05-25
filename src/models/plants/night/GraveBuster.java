@@ -1,6 +1,8 @@
 package models.plants.night;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
 import fr.umlv.zen5.ApplicationContext;
@@ -32,15 +34,24 @@ public class GraveBuster extends Plant{
 	
 	
 	@Override
-	public Plant createNewPlant(SimpleGameView view, ApplicationContext context, int x, int y) {
-		view.drawGraveBuster(context, x,  y, color);
-		
+	public Plant createNewPlant(int x, int y) {
 		return new GraveBuster(x, y);
 	}
 	
 	@Override
+	public void draw(SimpleGameView view, Graphics2D graphics) {
+		graphics.setColor(Color.decode(color));
+		graphics.fill(new Rectangle2D.Float(x, y, sizeOfPlant, sizeOfPlant));
+	}
+	
+	int sizeOfSPlant = super.getSizeOfPlant() - 10;
+	
+	@Override
 	public void draw(SimpleGameView view, Graphics2D graphics, int x, int y) {
-		view.drawGraveBuster(graphics, x, y, color);
+		graphics.setColor(Color.decode(color));
+		graphics.fill(new Rectangle2D.Float(x - 15, y + sizeOfSPlant / 2, sizeOfSPlant, sizeOfSPlant));
+		
+		view.drawCost(graphics, x, y, cost.toString());
 	}
 
 	@Override

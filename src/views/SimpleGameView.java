@@ -61,6 +61,12 @@ public abstract class SimpleGameView implements GameView {
 		graphics.setFont(new Font("Afterglow", Font.PLAIN, fontSize));
 		graphics.drawString(string, i, j);
 	}
+	
+	public void drawCost(Graphics graphics, int i, int j, String cost) {
+		graphics.setColor(Color.WHITE);
+		graphics.setFont(new Font("Afterglow", Font.PLAIN, 20));
+		graphics.drawString(cost, i+5+sizeOfPlant/2, j+SelectBordView.getSquareSize()-5);
+	}
 
 	@Override
 	public void drawSun(Graphics2D graphics, float x, float y, String s) {
@@ -72,156 +78,6 @@ public abstract class SimpleGameView implements GameView {
 	public void drawSmallSun(Graphics2D graphics, float x, float y, String s) {
 		graphics.setColor(Color.decode(s));
 		graphics.fill(new Ellipse2D.Float(x, y, 85, 85));
-	}
-
-	/*-----------------------------Plants------------------------------*/
-	/*-------------------------------DAY-------------------------------*/
-	@Override
-	public void drawPeashooter(Graphics2D graphics, int x, int y, String color) {
-		graphics.setColor(Color.decode(color));
-		graphics.fill(new Rectangle2D.Float(x, y, sizeOfPlant, sizeOfPlant));
-	}
-
-	@Override
-	public void drawCherryBomb(Graphics2D graphics, int x, int y, String color) {
-		graphics.setColor(Color.decode(color));
-		graphics.fill(new Rectangle2D.Float(x, y, sizeOfPlant, sizeOfPlant));
-	}
-
-	@Override
-	public void drawWallNut(Graphics2D graphics, int x, int y, String color) {
-		graphics.setColor(Color.decode(color));
-		graphics.fill(new Rectangle2D.Float(x, y, sizeOfPlant, sizeOfPlant));
-	}
-
-	@Override
-	public void drawPotatoMine(Graphics2D graphics, int x, int y, String color) {
-		graphics.setColor(Color.decode(color));
-		graphics.fill(new Rectangle2D.Float(x + 10, y + 10, sizeOfPlant - 20, sizeOfPlant - 20));
-	}
-
-	@Override
-	public void drawSunFlower(Graphics2D graphics, int x, int y, String color) {
-		graphics.setColor(Color.decode(color));
-		graphics.fill(new Ellipse2D.Float(x, y, sizeOfPlant, sizeOfPlant));
-
-		graphics.setColor(Color.decode("#AF6907"));
-		graphics.fill(new Ellipse2D.Float(x + 8, y + 8, sizeOfPlant - 16, sizeOfPlant - 16));
-	}
-
-	@Override
-	public void drawChomper(Graphics2D graphics, int x, int y, String color) {
-		graphics.setColor(Color.decode(color));
-		graphics.fill(new Rectangle2D.Float(x - 10, y - 10, sizeOfPlant + 20, sizeOfPlant + 20));
-	}
-
-	@Override
-	public void drawRepeater(Graphics2D graphics, int x, int y, String color) {
-		graphics.setColor(Color.decode(color));
-		graphics.fill(new Rectangle2D.Float(x, y, sizeOfPlant, sizeOfPlant));
-	}
-
-	/*-------------------------------NIGHT------------------------------*/
-	@Override
-	public void drawPuffShroom(Graphics2D graphics, int x, int y, String color) {
-		
-		graphics.setColor(Color.decode("#bfbf00"));
-		graphics.fill(new Rectangle2D.Float(x + 10, y , sizeOfPlant - 25, sizeOfPlant - 15));
-
-		graphics.setColor(Color.decode(color));
-		graphics.fill(new Rectangle2D.Float(x, y - 5, sizeOfPlant - 5, sizeOfPlant - 25));
-
-	}
-
-	@Override
-	public void drawSunShroom(Graphics2D graphics, int x, int y, String color) {
-		graphics.setColor(Color.decode("#bfbf00"));
-		graphics.fill(new Rectangle2D.Float(x + 10, y , sizeOfPlant - 25, sizeOfPlant - 15));
-
-		graphics.setColor(Color.decode(color));
-		graphics.fill(new Rectangle2D.Float(x, y - 5, sizeOfPlant - 5, sizeOfPlant - 25));
-
-	}
-
-	@Override
-	public void drawFumeShroom(Graphics2D graphics, int x, int y, String color) {
-		graphics.setColor(Color.decode(color));
-		graphics.fill(new Rectangle2D.Float(x, y, sizeOfPlant, sizeOfPlant));
-	}
-
-	@Override
-	public void drawGraveBuster(Graphics2D graphics, int x, int y, String color) {
-		graphics.setColor(Color.decode(color));
-		graphics.fill(new Rectangle2D.Float(x, y, sizeOfPlant, sizeOfPlant));
-	}
-
-	@Override
-	public void drawHypnoShroom(Graphics2D graphics, int x, int y, String color) {
-		graphics.setColor(Color.decode(color));
-		graphics.fill(new Rectangle2D.Float(x, y, sizeOfPlant, sizeOfPlant));
-	}
-
-	@Override
-	public void drawScaredyShroom(Graphics2D graphics, int x, int y, String color) {
-		graphics.setColor(Color.decode("#bfbf00"));
-		graphics.fill(new Rectangle2D.Float(x + 10, y + sizeOfPlant / 2, sizeOfPlant - 25, sizeOfPlant - 15));
-
-		graphics.setColor(Color.decode(color));
-		graphics.fill(new Rectangle2D.Float(x, y - 5, sizeOfPlant - 5, sizeOfPlant - 25));
-	}
-
-	@Override
-	public void drawIceShroom(Graphics2D graphics, int x, int y, String color) {
-		graphics.setColor(Color.decode(color));
-		graphics.fill(new Rectangle2D.Float(x, y, sizeOfPlant, sizeOfPlant));
-	}
-
-	@Override
-	public void drawDoomShroom(Graphics2D graphics, int x, int y, String color) {
-		graphics.setColor(Color.decode(color));
-		graphics.fill(new Rectangle2D.Float(x, y, sizeOfPlant, sizeOfPlant));
-	}
-	/*-------------------------------POOL-------------------------------*/
-
-	@Override
-	public void drawCattails(Graphics2D graphics, int x, int y, String color) {
-		graphics.setColor(Color.decode(color));
-		graphics.fill(new Rectangle2D.Float(x, y, sizeOfPlant, sizeOfPlant));
-
-		graphics.setColor(Color.decode("#DB5FBD"));
-		graphics.fill(new Ellipse2D.Float(x + 8, y + 8, sizeOfPlant - 16, sizeOfPlant - 16));
-	}
-
-	@Override
-	public void drawSeaShroom(Graphics2D graphics, int x, int y, String color) {
-		graphics.setColor(Color.decode(color));
-		graphics.fill(new Rectangle2D.Float(x, y, sizeOfPlant, sizeOfPlant));
-
-		graphics.setColor(Color.decode("#16D9B6"));
-		graphics.fill(new Ellipse2D.Float(x + 8, y + 8, sizeOfPlant - 16, sizeOfPlant - 16));
-	}
-
-	@Override
-	public void drawTangleKelp(Graphics2D graphics, int x, int y, String color) {
-		graphics.setColor(Color.decode(color));
-		graphics.fill(new Rectangle2D.Float(x, y, sizeOfPlant, sizeOfPlant));
-
-		graphics.setColor(Color.decode("#000000"));
-		graphics.fill(new Ellipse2D.Float(x + 8, y + 8, sizeOfPlant - 16, sizeOfPlant - 16));
-	}
-
-	@Override
-	public void drawLilyPad(Graphics2D graphics, int x, int y, String color) {
-		graphics.setColor(Color.decode(color));
-		graphics.fill(new Ellipse2D.Float(x - 15, y - 15, sizeOfPlant + 30, sizeOfPlant + 30));
-
-	}
-	
-	/*-------------------------------ROOF-------------------------------*/
-	
-	public void drawPot(Graphics2D graphics, int x, int y, String color) {
-		graphics.setColor(Color.decode(color));
-		graphics.fill(new Ellipse2D.Float(x - 15, y - 15, sizeOfPlant + 30, sizeOfPlant + 30));
 	}
 
 	/*-----------------------------Zombies------------------------------*/

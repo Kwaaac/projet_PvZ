@@ -1,6 +1,9 @@
 package models.plants.pool;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.geom.Ellipse2D;
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
 import fr.umlv.zen5.ApplicationContext;
@@ -57,25 +60,40 @@ public class SeaShroom extends Plant {
 	}
 
 	@Override
-	public Plant createNewPlant(SimpleGameView view, ApplicationContext context, int x, int y) {
-		view.drawSeaShroom(context, x, y, color);
-
+	public Plant createNewPlant(int x, int y) {
 		return new SeaShroom(x, y);
 
 	}
 
 	@Override
-	public void draw(SimpleGameView view, Graphics2D graphics, int x, int y) {
-		view.drawSeaShroom(graphics, x, y, color);
-	}
-	
-	@Override
 	public boolean plantingCondition(Cell cell) {
-		if(cell.equals(new WaterCell()) && !cell.isGroundPlantPlanted()) {
+		if (cell.equals(new WaterCell()) && !cell.isGroundPlantPlanted()) {
 			return cell.addPlant(this);
 		}
-		
+
 		return false;
+	}
+
+	@Override
+	public void draw(SimpleGameView view, Graphics2D graphics) {
+		graphics.setColor(Color.decode("#bfbf00"));
+		graphics.fill(new Rectangle2D.Float(x + 10, y , sizeOfPlant - 25, sizeOfPlant - 15));
+
+		graphics.setColor(Color.decode(color));
+		graphics.fill(new Rectangle2D.Float(x, y - 5, sizeOfPlant - 5, sizeOfPlant - 25));
+	}
+
+	int sizeOfSPlant = super.getSizeOfPlant() - 10;
+
+	@Override
+	public void draw(SimpleGameView view, Graphics2D graphics, int x, int y) {
+		graphics.setColor(Color.decode("#bfbf00"));
+		graphics.fill(new Rectangle2D.Float(x , y + sizeOfSPlant , sizeOfSPlant - 35, sizeOfSPlant - 35));
+		
+		graphics.setColor(Color.decode(color));
+		graphics.fill(new Rectangle2D.Float(x - 10, y + sizeOfSPlant / 2 + 15, sizeOfSPlant - 15, sizeOfSPlant - 25));
+		
+		view.drawCost(graphics, x, y, cost.toString());
 	}
 
 }
