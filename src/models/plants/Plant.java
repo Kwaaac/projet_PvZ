@@ -13,27 +13,9 @@ import models.SimpleGameData;
 import models.cells.Cell;
 import models.cells.TileCell;
 import models.cells.WaterCell;
-import models.plants.day.CherryBomb;
-import models.plants.day.Chomper;
-import models.plants.day.Peashooter;
-import models.plants.day.Pot;
-import models.plants.day.PotatoMine;
-import models.plants.day.Squash;
-import models.plants.day.SnowPea;
-import models.plants.day.SunFlower;
-import models.plants.day.WallNut;
-import models.plants.night.DoomShroom;
-import models.plants.night.FumeShroom;
-import models.plants.night.GraveBuster;
-import models.plants.night.HypnoShroom;
-import models.plants.night.IceShroom;
-import models.plants.night.PuffShroom;
-import models.plants.night.ScaredyShroom;
-import models.plants.night.SunShroom;
-import models.plants.pool.Cattails;
-import models.plants.pool.LilyPad;
-import models.plants.pool.SeaShroom;
-import models.plants.pool.TangleKelp;
+import models.plants.day.*;
+import models.plants.night.*;
+import models.plants.pool.*;
 import models.zombies.Zombie;
 import views.BordView;
 
@@ -47,7 +29,7 @@ public abstract class Plant extends Entities implements IPlant, Serializable {
 	private Coordinates plantSelect;
 
 	private final static ArrayList<Plant> day = new ArrayList<>(
-			Arrays.asList(new CherryBomb(), new Chomper(), new Peashooter(), new PotatoMine(), new Squash(),
+			Arrays.asList(new CherryBomb(), new Chomper(), new Peashooter(), new Repeater(), new PotatoMine(), new Squash(),
 					new SnowPea(), new SunFlower(), new WallNut(), new Pot()));
 	private final static ArrayList<Plant> night = new ArrayList<>(
 			Arrays.asList(new DoomShroom(), new FumeShroom(), new GraveBuster(), new HypnoShroom(), new IceShroom(),
