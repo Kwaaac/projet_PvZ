@@ -84,35 +84,6 @@ public abstract class SimpleGameView implements GameView {
 
 	int sizeOfZombie = Zombie.getSizeOfZombie();
 
-	@Override
-	public void drawNormalZombie(Graphics2D graphics, float x, float y, String color) {
-		graphics.setColor(Color.decode(color));
-		graphics.fill(new Ellipse2D.Float(x, y, sizeOfZombie, sizeOfZombie));
-	}
-
-	@Override
-	public void drawConeheadZombie(Graphics2D graphics, float x, float y, String color) {
-		graphics.setColor(Color.decode(color));
-		graphics.fill(new Ellipse2D.Float(x, y, sizeOfZombie, sizeOfZombie));
-	}
-
-	@Override
-	public void drawFlagZombie(Graphics2D graphics, float x, float y, String color) {
-		graphics.setColor(Color.decode(color));
-		graphics.fill(new Ellipse2D.Float(x, y, sizeOfZombie, sizeOfZombie));
-	}
-
-	@Override
-	public void drawBucketheadZombie(Graphics2D graphics, float x, float y, String color) {
-		graphics.setColor(Color.decode(color));
-		graphics.fill(new Ellipse2D.Float(x, y, sizeOfZombie, sizeOfZombie));
-	}
-
-	@Override
-	public void drawBackupDancerZombie(Graphics2D graphics, float x, float y, String color) {
-		graphics.setColor(Color.decode(color));
-		graphics.fill(new Ellipse2D.Float(x, y, sizeOfZombie, sizeOfZombie));
-	}
 
 	@Override
 	public void drawBalloonZombie(Graphics2D graphics, float x, float y, String color) {
@@ -145,19 +116,7 @@ public abstract class SimpleGameView implements GameView {
 	}
 
 	@Override
-	public void drawDancingZombie(Graphics2D graphics, float x, float y, String color) {
-		graphics.setColor(Color.decode(color));
-		graphics.fill(new Ellipse2D.Float(x, y, sizeOfZombie, sizeOfZombie));
-	}
-
-	@Override
 	public void drawDiggerZombie(Graphics2D graphics, float x, float y, String color) {
-		graphics.setColor(Color.decode(color));
-		graphics.fill(new Ellipse2D.Float(x, y, sizeOfZombie, sizeOfZombie));
-	}
-
-	@Override
-	public void drawDolphinRiderZombie(Graphics2D graphics, float x, float y, String color) {
 		graphics.setColor(Color.decode(color));
 		graphics.fill(new Ellipse2D.Float(x, y, sizeOfZombie, sizeOfZombie));
 	}
@@ -211,12 +170,6 @@ public abstract class SimpleGameView implements GameView {
 	}
 
 	@Override
-	public void drawJackintheBoxZombie(Graphics2D graphics, float x, float y, String color) {
-		graphics.setColor(Color.decode(color));
-		graphics.fill(new Ellipse2D.Float(x, y, sizeOfZombie, sizeOfZombie));
-	}
-
-	@Override
 	public void drawJalapenoZombie(Graphics2D graphics, float x, float y, String color) {
 		graphics.setColor(Color.decode(color));
 		graphics.fill(new Ellipse2D.Float(x, y, sizeOfZombie, sizeOfZombie));
@@ -228,14 +181,6 @@ public abstract class SimpleGameView implements GameView {
 		graphics.fill(new Ellipse2D.Float(x, y, sizeOfZombie, sizeOfZombie));
 	}
 
-	@Override
-	public void drawNewspaperZombie(Graphics2D graphics, float x, float y, String color) {
-		graphics.setColor(Color.decode(color));
-		graphics.fill(new Arc2D.Float(x, y, sizeOfZombie, sizeOfZombie, 90, 180, 2));
-
-		graphics.setColor(Color.decode("#000000"));
-		graphics.fill(new Arc2D.Float(x, y, sizeOfZombie, sizeOfZombie, 90, -180, 2));
-	}
 
 	@Override
 	public void drawPeashooterZombie(Graphics2D graphics, float x, float y, String color) {
@@ -250,27 +195,10 @@ public abstract class SimpleGameView implements GameView {
 	}
 
 	@Override
-	public void drawPoleVaultingZombie(Graphics2D graphics, float x, float y, String color) {
-		graphics.setColor(Color.decode(color));
-		graphics.fill(new Arc2D.Float(x, y, sizeOfZombie, sizeOfZombie, 0, 180, 2));
-
-		graphics.setColor(Color.red);
-		graphics.fill(new Arc2D.Float(x, y, sizeOfZombie, sizeOfZombie, 0, -180, 2));
-
-	}
-
-	@Override
 	public void drawScreenDoorZombie(Graphics2D graphics, float x, float y, String color) {
 		graphics.setColor(Color.decode(color));
 		graphics.fill(new Ellipse2D.Float(x, y, sizeOfZombie, sizeOfZombie));
 	}
-
-	@Override
-	public void drawSnorkelZombie(Graphics2D graphics, float x, float y, String color) {
-		graphics.setColor(Color.decode(color));
-		graphics.fill(new Ellipse2D.Float(x, y, sizeOfZombie, sizeOfZombie));
-	}
-
 	@Override
 	public void drawTrashCanZombie(Graphics2D graphics, float x, float y, String color) {
 		graphics.setColor(Color.decode(color));

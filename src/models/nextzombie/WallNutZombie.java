@@ -36,7 +36,7 @@ public class WallNutZombie extends Zombie {
 	}
 	
 	@Override
-	public Zombie createAndDrawNewZombie(SimpleGameView view, ApplicationContext context, int x, int y) {
+	public Zombie createNewZombie(SimpleGameView view, ApplicationContext context, int x, int y) {
 		view.drawWallNutZombie(context, x, y, color);
 		
 		return new WallNutZombie(x, y);

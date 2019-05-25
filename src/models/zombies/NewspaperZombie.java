@@ -1,6 +1,8 @@
 package models.zombies;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.geom.Arc2D;
 import java.util.ArrayList;
 
 import fr.umlv.zen5.ApplicationContext;
@@ -36,15 +38,19 @@ public class NewspaperZombie extends Zombie {
 	}
 	
 	@Override
-	public Zombie createAndDrawNewZombie(SimpleGameView view, ApplicationContext context, int x, int y) {
-		view.drawNewspaperZombie(context, x, y, color);
-		
+	public Zombie createNewZombie(int x, int y) {
 		return new NewspaperZombie(x, y);
 	}
 	
+	int sizeOfZombie = super.getSizeOfZombie();
+	
 	@Override
 	public void draw(SimpleGameView view, Graphics2D graphics) {
-		view.drawNewspaperZombie(graphics, x, y, color);
+		graphics.setColor(Color.decode(color));
+		graphics.fill(new Arc2D.Float(x, y, sizeOfZombie, sizeOfZombie, 90, 180, 2));
+
+		graphics.setColor(Color.decode("#000000"));
+		graphics.fill(new Arc2D.Float(x, y, sizeOfZombie, sizeOfZombie, 90, -180, 2));
 	}
 	
 	@Override

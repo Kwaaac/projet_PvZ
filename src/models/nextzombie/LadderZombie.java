@@ -37,7 +37,7 @@ public class LadderZombie extends Zombie {
 	}
 	
 	@Override
-	public Zombie createAndDrawNewZombie(SimpleGameView view, ApplicationContext context, int x, int y) {
+	public Zombie createNewZombie(SimpleGameView view, ApplicationContext context, int x, int y) {
 		view.drawLadderZombie(context, x, y, color);
 		
 		return new LadderZombie(x, y);

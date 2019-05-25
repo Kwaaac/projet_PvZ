@@ -1,6 +1,8 @@
 package models.zombies;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.geom.Ellipse2D;
 import java.util.ArrayList;
 
 import fr.umlv.zen5.ApplicationContext;
@@ -40,16 +42,17 @@ public class SnorkelZombie extends Zombie {
 	}
 	
 	@Override
-	public Zombie createAndDrawNewZombie(SimpleGameView view, ApplicationContext context, int x, int y) {
-		view.drawSnorkelZombie(context, x, y, color);
-		
+	public Zombie createNewZombie(int x, int y) {
 		return new SnorkelZombie(x, y);
 	}
 	
 	@Override
 	public void draw(SimpleGameView view, Graphics2D graphics) {
-		view.drawSnorkelZombie(graphics, x, y, color);
+		graphics.setColor(Color.decode(color));
+		graphics.fill(new Ellipse2D.Float(x, y, sizeOfZombie, sizeOfZombie));
 	}
+	
+	int sizeOfZombie = super.getSizeOfZombie();
 
 	@Override
 	public void action(BordView view, SimpleGameData dataBord, ArrayList<Zombie> myZombies) {

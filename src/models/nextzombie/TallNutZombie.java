@@ -37,7 +37,7 @@ public class TallNutZombie extends Zombie {
 	}
 	
 	@Override
-	public Zombie createAndDrawNewZombie(SimpleGameView view, ApplicationContext context, int x, int y) {
+	public Zombie createNewZombie(SimpleGameView view, ApplicationContext context, int x, int y) {
 		view.drawTallNutZombie(context, x, y, color);
 		
 		return new TallNutZombie(x, y);

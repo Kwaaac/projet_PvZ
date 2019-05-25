@@ -297,10 +297,4 @@ public class SelectBordView extends SimpleGameView {
 		graphics.setColor(Color.decode(s));
 		graphics.fill(new Rectangle2D.Float(x, y, sizeOfPlant, sizeOfPlant));
 	}
-
-
-
-	
-	/*-------------------------------ROOF-------------------------------*/
-
 }

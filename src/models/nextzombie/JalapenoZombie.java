@@ -36,7 +36,7 @@ public class JalapenoZombie extends Zombie {
 	}
 
 	@Override
-	public Zombie createAndDrawNewZombie(SimpleGameView view, ApplicationContext context, int x, int y) {
+	public Zombie createNewZombie(SimpleGameView view, ApplicationContext context, int x, int y) {
 		view.drawJalapenoZombie(context, x, y, color);
 
 		return new JalapenoZombie(x, y);

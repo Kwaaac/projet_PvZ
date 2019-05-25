@@ -701,15 +701,15 @@ public class SimpleGameData implements Serializable{
 							y = view.getYOrigin() + dataBord.RandomPosGenerator(dataBord.getNbLines()) * sqrS
 									+ (sqrS / 2);
 						}
-						myZombies.add(z.createAndDrawNewZombie(view, context, x, y));
+						myZombies.add(z.createNewZombie(x, y));
 
 					} else {
 						y = view.getYOrigin() + SimpleGameData.RandomPosGenerator(2, 4) * sqrS + (sqrS / 2);
-						myZombies.add(z.createAndDrawNewZombie(view, context, x, y));
+						myZombies.add(z.createNewZombie(x, y));
 					}
 				} else {
 
-					myZombies.add(z.createAndDrawNewZombie(view, context, x, y));
+					myZombies.add(z.createNewZombie(x, y));
 				}
 				str.append("new " + zombieAvailable.get(selecteur) + new SimpleDateFormat("hh:mm:ss").format(new Date())
 						+ ")\n");
@@ -760,15 +760,15 @@ public class SimpleGameData implements Serializable{
 							y = view.getYOrigin() + dataBord.RandomPosGenerator(dataBord.getNbLines()) * sqrS
 									+ (sqrS / 2);
 						}
-						myZombies.add(z.createAndDrawNewZombie(view, context, x, y));
+						myZombies.add(z.createNewZombie(x, y));
 
 					} else {
 						y = view.getYOrigin() + SimpleGameData.RandomPosGenerator(2, 4) * sqrS + (sqrS / 2);
-						myZombies.add(z.createAndDrawNewZombie(view, context, x, y));
+						myZombies.add(z.createNewZombie(x, y));
 					}
 				} else {
 
-					myZombies.add(z.createAndDrawNewZombie(view, context, x, y));
+					myZombies.add(z.createNewZombie(x, y));
 				}
 				str.append("new " + z + new SimpleDateFormat("hh:mm:ss").format(new Date()) + ")\n");
 

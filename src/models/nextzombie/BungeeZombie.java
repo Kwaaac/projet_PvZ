@@ -37,7 +37,7 @@ public class BungeeZombie extends Zombie {
 	}
 	
 	@Override
-	public Zombie createAndDrawNewZombie(SimpleGameView view, ApplicationContext context, int x, int y) {
+	public Zombie createNewZombie(SimpleGameView view, ApplicationContext context, int x, int y) {
 		view.drawBungeeZombie(context, x, y, color);
 		
 		return new BungeeZombie(x, y);
