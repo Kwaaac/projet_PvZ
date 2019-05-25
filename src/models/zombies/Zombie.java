@@ -33,7 +33,7 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie,
 	protected boolean afflicted = false;
 
 	protected final HashMap<String, Double> mSpeed = new HashMap<String, Double>(){
-        {
+		{
         	put("reallyFast", -15.5);//9+
         	put("fast", -15.38);//7
         	put("medium", -15.05);//5.5

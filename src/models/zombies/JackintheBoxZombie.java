@@ -6,6 +6,7 @@ import java.awt.geom.Ellipse2D;
 import java.util.ArrayList;
 
 import fr.umlv.zen5.ApplicationContext;
+import models.Chrono;
 import models.Coordinates;
 import models.Entities;
 import models.IEntite;
@@ -16,22 +17,13 @@ import views.BordView;
 import views.SimpleGameView;
 
 public class JackintheBoxZombie extends Zombie {
-
-	/*
-	 * 
-	 * 
-	 * Le fonctionnement de ce Zombie n'a pas été compris, maxime le referra
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 */
 	private final String name = "JackintheBoxZombie";
 	private final String color = "#000000";
+	private final Chrono explosion = new Chrono();
 	
 	public JackintheBoxZombie(int x, int y) {
-		super(x, y, 100, 340, 1, "verySlow");//2.2
+		super(x, y, 100, 340, 1, "fast");
+		explosion.start();
 	}
 
 	public JackintheBoxZombie() {
@@ -93,8 +85,8 @@ public class JackintheBoxZombie extends Zombie {
 		return Lz;
 	}
 	
-	public boolean readyToExplosed(Cell cell) {
-		return cell.isPlantedPlant();
+	public boolean readyToDetonate() {
+		return explosion.asReachTimerMs(13500);
 	}
 	
 	@Override
@@ -105,7 +97,7 @@ public class JackintheBoxZombie extends Zombie {
 		
 		if (dataBord.isCorrectBordLocation(view,  x, y) && cell != null) {
 			
-			if (this.readyToExplosed(cell)) {
+			if (this.readyToDetonate()) {
 				ArrayList<Coordinates> zone = zone();
 				
 				for (Plant p : detect(view, dataBord, zone)) {
