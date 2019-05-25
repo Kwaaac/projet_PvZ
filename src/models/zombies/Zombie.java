@@ -193,8 +193,7 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie,
 
 	public void conflictBvZ(DeadPool DPe, BordView view, SimpleGameData data) {
 		ArrayList<Projectile> Le;
-		if (data.getCell(view.lineFromY(this.getY()), view.columnFromX(this.getX())) != null
-				&& data.getCell(view.lineFromY(this.getY()), view.columnFromX(this.getX())).isPlantedPlant()) {
+		if (data.getCell(view.lineFromY(this.getY()), view.columnFromX(this.getX())) != null) {
 			Le = data.getCell(view.lineFromY(this.getY()), view.columnFromX(this.getX())).getProjectilesInCell();
 			for (Projectile e : Le) {
 				e.action();
@@ -225,6 +224,7 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie,
 		Plant p;
 		if (data.getCell(view.lineFromY(this.getY()), view.columnFromX(this.getX())) != null
 				&& data.getCell(view.lineFromY(this.getY()), view.columnFromX(this.getX())).isPlantedPlant()) {
+			
 			p = data.getCell(view.lineFromY(this.getY()), view.columnFromX(this.getX())).getPlantToAttack();
 			if (this.hit(p)) {
 				this.stop();

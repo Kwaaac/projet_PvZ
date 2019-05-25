@@ -45,7 +45,7 @@ public class SimpleGameData implements Serializable{
 	private static int difficulty = 1;
 	private static int superWave = 0;
 
-	private static int actualMoney = 25;
+	private static int actualMoney = 2500;
 	private Chrono sunSpawn = new Chrono();
 
 	static Chrono time = new Chrono();
