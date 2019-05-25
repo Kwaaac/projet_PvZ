@@ -40,7 +40,7 @@ public class DoomShroom extends Plant {
 		ArrayList<Coordinates> zone = new ArrayList<>();
 		for (int i = -1; i <= 1; i++) {
 			for (int j = -1; j <= 1; j++) {
-				if (caseXDoom + i >= 0 && caseXDoom + i <= view.getLength() && caseYDoom + j >= 0
+				if (caseXDoom + i >= 0 && caseXDoom + i <= view.getHeight() && caseYDoom + j >= 0
 						&& caseYDoom + j <= view.getWidth()) {
 					zone.add(new Coordinates(caseXDoom + i, caseYDoom + j));
 				}

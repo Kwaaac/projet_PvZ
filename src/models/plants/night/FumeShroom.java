@@ -67,6 +67,8 @@ public class FumeShroom extends Plant {
 	public void draw(SimpleGameView view, Graphics2D graphics, int x, int y) {
 		graphics.setColor(Color.decode(color));
 		graphics.fill(new Rectangle2D.Float(x - 15, y + sizeOfSPlant / 2, sizeOfSPlant, sizeOfSPlant));
+		
+		view.drawCost(graphics, x, y, cost.toString());
 	}
 
 }
