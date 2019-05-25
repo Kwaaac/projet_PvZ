@@ -32,34 +32,37 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie,
 	protected int slowedLimit;
 	protected boolean afflicted = false;
 
-	protected final HashMap<String, Double> mSpeed = new HashMap<String, Double>(){
+	protected final HashMap<String, Double> mSpeed = new HashMap<String, Double>() {
 		{
-        	put("reallyFast", -15.5);//9+
-        	put("fast", -15.38);//7
-        	put("medium", -15.05);//5.5
-        	put("slow", -15.93);//4.7
-        	put("verySlow", -15.5);//2.5
-        	put("ultraSlow", -15.3);//1.5
-        }
-        
-    };
-	
+			put("reallyFast", -15.5);// 9+
+			put("fast", -15.38);// 7
+			put("medium", -15.05);// 5.5
+			put("slow", -15.93);// 4.7
+			put("verySlow", -15.5);// 2.5
+			put("ultraSlow", -15.3);// 1.5
+		}
+
+	};
+
 	public Zombie(int x, int y, int damage, int life, int threat, String s) {
-		super(x, y, damage, life);
+		super(x, y, damage, life, false);
 		speed = mSpeed.get(s);
 		shootBarMax = (int) (speed * -7500);
 		shootTime = System.currentTimeMillis();
-		this.threat= threat;
+		this.threat = threat;
 		slowedTime.steady();
 	}
-	
-	private final static ArrayList<Zombie> common = new ArrayList<Zombie>(Arrays.asList(new NormalZombie(),new FlagZombie(),new BucketheadZombie(),new ConeheadZombie(),new NewspaperZombie(), new PoleVaultingZombie() ));
-	private final static ArrayList<Zombie> pool = new ArrayList<Zombie>(Arrays.asList(new DolphinRiderZombie(), new DuckyTubeZombie()));
-	
+
+	private final static ArrayList<Zombie> common = new ArrayList<Zombie>(
+			Arrays.asList(new NormalZombie(), new FlagZombie(), new BucketheadZombie(), new ConeheadZombie(),
+					new NewspaperZombie(), new PoleVaultingZombie()));
+	private final static ArrayList<Zombie> pool = new ArrayList<Zombie>(
+			Arrays.asList(new DolphinRiderZombie(), new DuckyTubeZombie()));
+
 	public float getX() {
 		return super.getX();
 	}
-	
+
 	@Override
 	/**
 	 * give the zombie a case and add the zombie on the zombieList of the cell
@@ -102,13 +105,13 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie,
 	}
 
 	public void setSpeed(double d) {
-		speed=d;
+		speed = d;
 	}
-	
+
 	public void go(float x) {
 		if (!afflicted) { // zombie without affliction
 			setSpeed(x);
-			
+
 		} else { // slowed
 			setSpeed(x / 2);
 			shootBarMax = (int) (getSpeed() * -7500);
@@ -188,35 +191,41 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie,
 	 *                 entitï¿½es tous ensemble
 	 */
 
-	public void conflictBvZ(DeadPool DPe, ArrayList<Projectile> Le, SimpleGameData data) {
-		for (Projectile e : Le) {
-			e.action();
-			if (this.hit(e) && !(e.isInConflict())) {
-				this.slowed(e.isSlowing());
-				e.setConflictMode(true);
-				this.mortalKombat(e);
-				if (e.isDead()) {
-					DPe.addInDP(e);
+	public void conflictBvZ(DeadPool DPe, BordView view, SimpleGameData data) {
+		ArrayList<Projectile> Le;
+		if (data.getCell(view.lineFromY(this.getY()), view.columnFromX(this.getX())) != null
+				&& data.getCell(view.lineFromY(this.getY()), view.columnFromX(this.getX())).isPlantedPlant()) {
+			Le = data.getCell(view.lineFromY(this.getY()), view.columnFromX(this.getX())).getProjectilesInCell();
+			for (Projectile e : Le) {
+				e.action();
+				if (this.hit(e) && !(e.isInConflict()) && this.isBad()) {
+					this.slowed(e.isSlowing());
+					e.setConflictMode(true);
+					this.mortalKombat(e);
+					if (e.isDead()) {
+						DPe.addInDP(e);
+					}
+					/*
+					 * si ils sont plusieur a le taper et que sa vie tombe a zero avant que les
+					 * attaquant ne sois mort on empeche des echange de dï¿½gats(on en a besoin pour
+					 * pas qu'une plante morte soit capable de tuï¿½ aprï¿½s sa mort)
+					 */
+					else if (this.isDead()) {
+						e.setConflictMode(false);
+						DPe.addInDP(this);
+						break;
+					}
 				}
-				/*
-				 * si ils sont plusieur a le taper et que sa vie tombe a zero avant que les
-				 * attaquant ne sois mort on empeche des echange de dï¿½gats(on en a besoin pour
-				 * pas qu'une plante morte soit capable de tuï¿½ aprï¿½s sa mort)
-				 */
-				else if (this.isDead()) {
-					e.setConflictMode(false);
-					DPe.addInDP(this);
-					break;
-				}
-			}
 
+			}
 		}
 	}
 
-	public void conflictPvZ(DeadPool deadPoolE, ArrayList<Plant> myPlants, BordView view, SimpleGameData data,
-			StringBuilder str) {
-		for (Plant p : myPlants) {
-
+	public void conflictPvZ(DeadPool deadPoolE, BordView view, SimpleGameData data, StringBuilder str) {
+		Plant p;
+		if (data.getCell(view.lineFromY(this.getY()), view.columnFromX(this.getX())) != null
+				&& data.getCell(view.lineFromY(this.getY()), view.columnFromX(this.getX())).isPlantedPlant()) {
+			p = data.getCell(view.lineFromY(this.getY()), view.columnFromX(this.getX())).getPlantToAttack();
 			if (this.hit(p)) {
 				this.stop();
 				if (this.readyToshot()) {
@@ -234,6 +243,29 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie,
 		}
 	}
 
+	public void conflictZvZ(DeadPool deadPoolE, BordView view, SimpleGameData data, StringBuilder str) {
+		ArrayList<Zombie> zombies;
+		if (data.getCell(view.lineFromY(this.getY()), view.columnFromX(this.getX())) != null
+				&& data.getCell(view.lineFromY(this.getY()), view.columnFromX(this.getX())).isThereZombies()) {
+			zombies = data.getCell(view.lineFromY(this.getY()), view.columnFromX(this.getX())).getZombiesInCell();
+			for (Zombie z : zombies) {
+				if (z.isGood() && this.hit(z)) {
+					this.stop();
+					z.stop();
+					if (this.readyToshot()) {
+						(z).mortalKombat(this);
+						this.resetAS();
+					}
+				}
+				if (z.isDead()) {
+					str.append(z + "meurt\n");
+					deadPoolE.add(z);
+					data.getCell(view.lineFromY(z.getY()), view.columnFromX(z.getX())).removeZombie(z);
+				}
+			}
+		}
+	}
+
 	public void conflictLvZ(DeadPool deadPoolE, ArrayList<LawnMower> myLawnMower, BordView view, SimpleGameData data,
 			StringBuilder str) {
 		for (LawnMower l : myLawnMower) {
@@ -242,6 +274,7 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie,
 					l.go();
 				}
 				life = 0;
+				str.append(this + " meurt tué par une tondeuse\n");
 				l.setLife(100000);
 			}
 		}
@@ -257,9 +290,10 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie,
 			z.go();
 
 			z.incAS();
-			z.conflictBvZ(deadPoolE, myBullet, data);
+			z.conflictBvZ(deadPoolE, view, data);
 			if (z.action(data)) {
-				z.conflictPvZ(deadPoolE, myPlants, view, data, str);
+				z.conflictPvZ(deadPoolE, view, data, str);
+				z.conflictZvZ(deadPoolE, view, data, str);
 			}
 			z.conflictLvZ(deadPoolE, myLawnMower, view, data, str);
 			if (z.isDead()) {
@@ -279,7 +313,6 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie,
 		}
 	}
 
-
 	/*
 	 * For zombies that don't have actions
 	 * 
@@ -290,35 +323,35 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie,
 	}
 
 	public static ArrayList<Zombie> getZombieList(String map) {
-		if(map == "pool") {
-			ArrayList<Zombie> res =new ArrayList<Zombie>();
+		if (map == "pool") {
+			ArrayList<Zombie> res = new ArrayList<Zombie>();
 			res.addAll(common);
 			res.addAll(pool);
 			return res;
 		}
 		return common;
 	}
-	
+
 	@Override
 	public int getThreat() {
 		return threat;
 	}
-	
+
 	@Override
 	public Integer getProb(int difficulty) {
-		return (int) (((100/threat)*(difficulty))*0.55+0.10*threat);
+		return (int) (((100 / threat) * (difficulty)) * 0.55 + 0.10 * threat);
 	}
-	
+
 	@Override
 	public boolean canSpawn(int difficulty) {
-		return threat<=difficulty;
+		return threat <= difficulty;
 	}
-	
+
 	@Override
 	public boolean isCommon() {
 		return true;
 	}
-	
+
 	@Override
 	public boolean equals(Object o) {
 		if (!(o instanceof Zombie)) {

@@ -23,4 +23,10 @@ public interface IEntite {
 	int getCaseJ();
 
 	int getCaseI();
+	
+	void reverseTeam();
+	
+	boolean isGood();
+	
+	boolean isBad();
 }

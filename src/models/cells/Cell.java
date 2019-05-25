@@ -272,5 +272,6 @@ public abstract class Cell implements ICell, Serializable {
 				+ (!zombiesInCell.isEmpty() ? "Voici les zombies présents \n" + zombiesInCell + ", "
 						: "Il n'y a pas de zombie");
 	}
+	
 
 }

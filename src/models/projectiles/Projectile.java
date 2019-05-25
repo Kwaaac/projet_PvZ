@@ -17,7 +17,7 @@ public abstract class Projectile extends Entities implements MovingElement, IPro
 	private static final int sizeOfProjectile = 25;
 	
 	public Projectile(float x, float y, int damage, int life, double speed) {
-		super(x, y, damage, life);
+		super(x, y, damage, life, true);
 		this.setSpeed(speed);
 	}
 	

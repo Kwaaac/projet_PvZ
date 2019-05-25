@@ -14,13 +14,15 @@ public abstract class Entities implements IEntite, Serializable{
 	protected int damage;
 	protected Integer life;
 	protected boolean inConflict;
+	protected boolean Team;
 
-	public Entities(float x, float y, int damage, int life) {
+	public Entities(float x, float y, int damage, int life,boolean Team) {
 		this.x = x;
 		this.y = y;
 		this.caseXY = new Coordinates(BordView.caseXFromX(x), BordView.caseYFromY(y));
 		this.damage = damage;
 		this.life = life;
+		this.Team = Team;
 	}
 	
 	public void setCase(SimpleGameData data) {
@@ -134,5 +136,20 @@ public abstract class Entities implements IEntite, Serializable{
 	@Override
 	public int hashCode() {
 		return Objects.hash(x, y, caseXY, damage, life);
+	}
+	
+	@Override
+	public void reverseTeam() {
+		this.Team = !(Team);
+	}
+	
+	@Override
+	public boolean isGood() {
+		return Team == true;
+	}
+	
+	@Override
+	public boolean isBad() {
+		return Team ==false;
 	}
 }

@@ -10,14 +10,9 @@ import java.util.ArrayList;
 import fr.umlv.zen5.ApplicationContext;
 import models.Coordinates;
 import models.DeadPool;
-import models.Entities;
-import models.IEntite;
 import models.SimpleGameData;
 import models.cells.Cell;
-import models.plants.Plant;
-import models.zombies.Zombie;
 import views.BordView;
-import views.SelectBordView;
 import views.SimpleGameView;
 
 public class LawnMower extends Projectile {
@@ -86,20 +81,6 @@ public class LawnMower extends Projectile {
 				DPe.add(l);
 			}
 		}
-	}
-	
-	private ArrayList<Entities> detect(SimpleGameData dataBord) {
-		ArrayList<Entities> Lz = new ArrayList<>();
-
-		Cell cell = dataBord.getCell(this.getCaseJ(), this.getCaseI());
-
-		if (cell != null && cell.isThereZombies()) {
-			for (Entities z : cell.getZombiesInCell()) {
-				Lz.add(z);
-			}
-		}
-		
-		return Lz;
 	}
 	
 	public boolean isMoving() {

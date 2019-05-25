@@ -28,5 +28,5 @@ public interface IZombie {
 	
 	boolean isCommon();
 	
-	public void conflictBvZ(DeadPool DPe, ArrayList<Projectile> Le, SimpleGameData data);
+	public void conflictBvZ(DeadPool DPe, BordView view, SimpleGameData data);
 }

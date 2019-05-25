@@ -50,7 +50,7 @@ public abstract class Plant extends Entities implements IPlant, Serializable {
 	};
 
 	public Plant(int x, int y, int damage, int life, int shootBarMax, int cost, String cooldown) {
-		super(x, y, damage, life);
+		super(x, y, damage, life, true);
 
 		this.shootBarMax = shootBarMax;
 		this.cost = cost;
