@@ -513,7 +513,7 @@ public class SimpleGameData implements Serializable{
 
 			Cell actualCell = this.getCell(i, j);
 
-			Plant actualPlant = psView.getSelectedPlants().get(p);
+			Plant actualPlant = psView.getSelectedPlants().get(p).createNewPlant(x2, y2);
 
 			if (actualPlant.plantingCondition(actualCell)) {
 				myPlants.add(actualPlant.createNewPlant(x2, y2));
