@@ -38,7 +38,7 @@ public class Imp extends Zombie {
 	}
 	
 	@Override
-	public Zombie createAndDrawNewZombie(SimpleGameView view, ApplicationContext context, int x, int y) {
+	public Zombie createNewZombie(SimpleGameView view, ApplicationContext context, int x, int y) {
 		view.drawImp(context, x, y, color);
 		
 		return new Imp(x, y);

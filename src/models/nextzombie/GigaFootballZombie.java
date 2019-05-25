@@ -37,7 +37,7 @@ public class GigaFootballZombie extends Zombie {
 	}
 	
 	@Override
-	public Zombie createAndDrawNewZombie(SimpleGameView view, ApplicationContext context, int x, int y) {
+	public Zombie createNewZombie(SimpleGameView view, ApplicationContext context, int x, int y) {
 		view.drawGigaFootballZombie(context, x, y, color);
 		
 		return new GigaFootballZombie(x, y);

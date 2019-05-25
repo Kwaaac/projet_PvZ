@@ -12,6 +12,8 @@ public class GrassCell extends Cell {
 		super();
 	}
 
+	
+
 	@Override
 	public Color getColor() {
 		return color;

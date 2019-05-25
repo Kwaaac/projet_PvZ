@@ -74,7 +74,7 @@ public class PrincipalMenuController {
 			Action action = event.getAction();
 			if (action == Action.KEY_PRESSED || action == Action.KEY_RELEASED) {
 				if (mdp == "A" && plantSelectionView.getSelectedPlants().size() == 7) {
-					//view.drawRectangle(context, 0, 0, width, height, "#cbd9ef");
+					view.drawRectangle(context, 0, 0, width, height, "#cbd9ef");
 					return plantSelectionView.getSelectedPlants();
 				} else if (choice == "resume"){
 					System.out.println("YES");

@@ -36,7 +36,7 @@ public class ZombieYeti extends Zombie {
 	}
 	
 	@Override
-	public Zombie createAndDrawNewZombie(SimpleGameView view, ApplicationContext context, int x, int y) {
+	public Zombie createNewZombie(SimpleGameView view, ApplicationContext context, int x, int y) {
 		view.drawZombieYeti(context, x, y, color);
 		
 		return new ZombieYeti(x, y);

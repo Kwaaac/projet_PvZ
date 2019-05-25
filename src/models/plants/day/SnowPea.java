@@ -17,7 +17,6 @@ import views.SimpleGameView;
 public class SnowPea extends Plant {
 	private final String name = "SnowPea";
 	private final String color = "#33FFEA";
-	private final String cost = "175"; 
 
 	public SnowPea(int x, int y) {
 		super(x, y, 0, 300, 5000, 0, "free");

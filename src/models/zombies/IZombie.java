@@ -12,7 +12,7 @@ import views.SimpleGameView;
  
 public interface IZombie {
 
-	Zombie createAndDrawNewZombie(SimpleGameView view, ApplicationContext context, int x, int y);
+	Zombie createNewZombie(int x, int y);
 	
 	boolean canSpawn(int difficulty);
 	

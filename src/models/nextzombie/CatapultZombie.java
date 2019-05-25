@@ -37,7 +37,7 @@ public class CatapultZombie extends Zombie {
 	}
 	
 	@Override
-	public Zombie createAndDrawNewZombie(SimpleGameView view, ApplicationContext context, int x, int y) {
+	public Zombie createNewZombie(SimpleGameView view, ApplicationContext context, int x, int y) {
 		view.drawCatapultZombie(context, x, y, color);
 		
 		return new CatapultZombie(x, y);

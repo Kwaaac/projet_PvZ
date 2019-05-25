@@ -37,7 +37,7 @@ public class Gigagargantuar extends Zombie {
 	}
 	
 	@Override
-	public Zombie createAndDrawNewZombie(SimpleGameView view, ApplicationContext context, int x, int y) {
+	public Zombie createNewZombie(SimpleGameView view, ApplicationContext context, int x, int y) {
 		view.drawGigagargantuar(context, x, y, color);
 		
 		return new Gigagargantuar(x, y);
