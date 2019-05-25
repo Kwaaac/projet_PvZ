@@ -18,13 +18,14 @@ public class SystemFile implements Serializable{
         }
 	}
 	
-	public static void read() throws ClassNotFoundException {
+	public static Object read() throws ClassNotFoundException {
 		try (ObjectInputStream oos = new ObjectInputStream(new FileInputStream("test.ser"))) {
-        	Object x = oos.readObject();
-        	System.out.println(x);
+			System.out.println("ok read");
+			return oos.readObject();
         }
         catch (IOException e) {
             e.printStackTrace();
         }
+		return null;
 	}
 }

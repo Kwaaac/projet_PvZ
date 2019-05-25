@@ -12,7 +12,7 @@ import models.SystemFile;
 import fr.umlv.zen5.Event.Action;
 import views.BordView;
 
-public class MenuController {
+public class SecondaryMenuController {
 	public static boolean menu(ApplicationContext context, BordView view, SimpleGameData data) {
 
 		

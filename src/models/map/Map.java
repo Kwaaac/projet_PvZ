@@ -1,11 +1,12 @@
 package models.map;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import models.SimpleGameData;
 import views.BordView;
 
-public abstract class Map {
+public abstract class Map implements Serializable{
 	private final int column = 8;
 	
 

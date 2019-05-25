@@ -1,5 +1,6 @@
 package models.zombies;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -18,7 +19,7 @@ import models.projectiles.LawnMower;
 import models.projectiles.Projectile;
 import views.BordView;
 
-public abstract class Zombie extends Entities implements MovingElement, IZombie {
+public abstract class Zombie extends Entities implements MovingElement, IZombie, Serializable {
 	private double speed;
 	private final static int sizeOfZombie = 75;
 
