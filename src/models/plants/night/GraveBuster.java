@@ -16,7 +16,7 @@ import views.SimpleGameView;
 
 public class GraveBuster extends Plant{
 	private final String name = "GraveBuster";
-	private final String color = "#90D322";
+	private final String color = "#000000";
 	
 	public GraveBuster(int x, int y) {
 		super(x, y, 0, 300, 0, 75, "fast");

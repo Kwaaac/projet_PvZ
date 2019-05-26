@@ -21,7 +21,7 @@ public class JackintheBoxZombie extends Zombie {
 	private final String name = "JackintheBoxZombie";
 	private final String color = "#000000";
 	private final Chrono explosion = new Chrono();
-	
+
 	public JackintheBoxZombie(int x, int y) {
 		super(x, y, 100, 340, 1, "fast",false);
 		explosion.start();
@@ -46,22 +46,24 @@ public class JackintheBoxZombie extends Zombie {
 	public String toString() {
 		return name;
 	}
-	
+
 	public void go() {
 		super.go((float) -0.93);
 	}
-	
+
 	@Override
 	public Zombie createNewZombie(int x, int y,boolean gift) {
 		return new JackintheBoxZombie(x, y, gift);
 	}
-	
+
 	int sizeOfZombie = super.getSizeOfZombie();
-	
+
 	@Override
 	public void draw(SimpleGameView view, Graphics2D graphics) {
 		graphics.setColor(Color.decode(color));
 		graphics.fill(new Ellipse2D.Float(x, y, sizeOfZombie, sizeOfZombie));
+
+		super.draw(view, graphics);
 	}
 
 	private ArrayList<Coordinates> zone() {
@@ -76,42 +78,40 @@ public class JackintheBoxZombie extends Zombie {
 		return zone;
 	}
 
-	
 	private ArrayList<Plant> detect(BordView view, SimpleGameData dataBord, ArrayList<Coordinates> zone) {
 		ArrayList<Plant> Lz = new ArrayList<>();
 		for (Coordinates c : zone) {
 			Cell cell = dataBord.getCell(c.getJ(), c.getI());
-			
-			if(cell != null && cell.isPlantedPlant()) {
-				for(Plant p: cell.getPlantsInCell()) {
+
+			if (cell != null && cell.isPlantedPlant()) {
+				for (Plant p : cell.getPlantsInCell()) {
 					Lz.add(p);
 				}
 			}
 		}
-		
+
 		return Lz;
 	}
-	
+
 	public boolean readyToDetonate() {
 		return explosion.asReachTimerMs(13500);
 	}
-	
+
 	@Override
 	public void action(BordView view, SimpleGameData dataBord, List<Zombie> myZombies) {
-		
+
 		Cell cell = dataBord.getCell(this.getCaseJ(), this.getCaseI());
-		
-		
-		if (dataBord.isCorrectBordLocation(view,  x, y) && cell != null) {
-			
+
+		if (dataBord.isCorrectBordLocation(view, x, y) && cell != null) {
+
 			if (this.readyToDetonate()) {
 				ArrayList<Coordinates> zone = zone();
-				
+
 				for (Plant p : detect(view, dataBord, zone)) {
 					Cell zCell = dataBord.getCell(p.getCaseJ(), p.getCaseI());
-					
+
 				}
-				
+
 				this.life = 0;
 				cell.removeZombie(this);
 			}
@@ -119,5 +119,5 @@ public class JackintheBoxZombie extends Zombie {
 
 		this.incAS();
 	}
-	
+
 }

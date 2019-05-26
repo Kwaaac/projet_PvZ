@@ -54,6 +54,10 @@ public class NormalZombie extends Zombie {
 	public void draw(SimpleGameView view, Graphics2D graphics) {
 		graphics.setColor(Color.decode(color));
 		graphics.fill(new Ellipse2D.Float(x, y, sizeOfZombie, sizeOfZombie));
+		
+		if(this.afflicted) {
+			super.draw(view, graphics);
+		}
 	}
 
 	@Override

@@ -55,6 +55,8 @@ public class SnorkelZombie extends Zombie {
 	public void draw(SimpleGameView view, Graphics2D graphics) {
 		graphics.setColor(Color.decode(color));
 		graphics.fill(new Ellipse2D.Float(x, y, sizeOfZombie, sizeOfZombie));
+
+		super.draw(view, graphics);
 	}
 
 	int sizeOfZombie = super.getSizeOfZombie();

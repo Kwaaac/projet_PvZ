@@ -3,6 +3,7 @@ package models.plants.night;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
+import java.awt.geom.RoundRectangle2D;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -66,7 +67,7 @@ public class IceShroom extends Plant {
 		graphics.fill(new Rectangle2D.Float(x + 15, y + sizeOfSPlant / 2, sizeOfPlant - 25, sizeOfPlant - 15));
 
 		graphics.setColor(Color.decode(color));
-		graphics.fill(new Rectangle2D.Float(x - 9, y, sizeOfPlant + 25, sizeOfPlant - 25));
+		graphics.fill(new RoundRectangle2D.Float(x - 9, y, sizeOfPlant + 25, sizeOfPlant - 25, 10, 10));
 	}
 
 	int sizeOfSPlant = super.getSizeOfPlant() - 10;
@@ -77,7 +78,7 @@ public class IceShroom extends Plant {
 		graphics.fill(new Rectangle2D.Float(x, y + sizeOfSPlant, sizeOfSPlant - 35, sizeOfSPlant - 35));
 
 		graphics.setColor(Color.decode(color));
-		graphics.fill(new Rectangle2D.Float(x - 18, y + sizeOfSPlant / 2, sizeOfSPlant, sizeOfSPlant - 25));
+		graphics.fill(new RoundRectangle2D.Float(x - 18, y + sizeOfSPlant / 2, sizeOfSPlant, sizeOfSPlant - 25, 10, 10));
 
 		view.drawCost(graphics, x, y, cost.toString());
 	}

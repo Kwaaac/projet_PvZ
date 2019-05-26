@@ -15,7 +15,7 @@ public class BucketheadZombie extends Zombie {
 
 	private final String name = "BucketheadZombie";
 	private final String color = "#CB5050";
-	
+
 	public BucketheadZombie(int x, int y) {
 		super(x, y, 100, 1300, 2, "slow",false);
 	}
@@ -38,7 +38,7 @@ public class BucketheadZombie extends Zombie {
 	public String toString() {
 		return name;
 	}
-	
+
 	public void go() {
 		super.go((float) -0.7);
 	}
@@ -47,17 +47,19 @@ public class BucketheadZombie extends Zombie {
 	public Zombie createNewZombie(int x, int y,boolean gift) {
 		return new BucketheadZombie(x, y, gift);
 	}
-	
+
 	int sizeOfZombie = super.getSizeOfZombie();
-	
+
 	@Override
 	public void draw(SimpleGameView view, Graphics2D graphics) {
 		graphics.setColor(Color.decode(color));
 		graphics.fill(new Ellipse2D.Float(x, y, sizeOfZombie, sizeOfZombie));
+
+		super.draw(view, graphics);
 	}
 
 	@Override
 	public void action(BordView view, SimpleGameData dataBord, List<Zombie> myZombies) {
-		
+
 	}
 }

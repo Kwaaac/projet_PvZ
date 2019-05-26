@@ -1,5 +1,8 @@
 package models.zombies;
 
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.geom.Ellipse2D;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -19,6 +22,7 @@ import models.plants.Plant;
 import models.projectiles.LawnMower;
 import models.projectiles.Projectile;
 import views.BordView;
+import views.SimpleGameView;
 
 public abstract class Zombie extends Entities implements MovingElement, IZombie, Serializable {
 	private double speed;
@@ -32,6 +36,8 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie,
 	protected Chrono slowedTime = new Chrono();
 	protected int slowedLimit;
 	protected boolean afflicted = false;
+	
+	protected boolean fertilizer = true;
 
 	protected boolean fertilizer;
 
@@ -175,6 +181,28 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie,
 			return view.indexFromReaCoord(y, Yorigin);
 		}
 		return -1;
+	}
+	
+	
+	/**
+	 * Used to draw if a zombie as any fertilizer or when it is slowed
+	 * 
+	 * Draw for a normal zombie size, if the zombie has a different way to be drawed
+	 * please refer theses two condition directly into their draw method.
+	 */
+	@Override
+	public void draw(SimpleGameView view, Graphics2D graphics) {
+		
+		if(fertilizer) {
+			graphics.setColor(new Color(38, 198, 35, 70));
+			graphics.fill(new Ellipse2D.Float(x, y, sizeOfZombie, sizeOfZombie));
+		}
+		
+		if(this.afflicted) {
+			graphics.setColor(new Color(99, 197, 255, 100));
+			graphics.fill(new Ellipse2D.Float(x, y, sizeOfZombie, sizeOfZombie));
+		}
+	
 	}
 
 	/**
@@ -379,6 +407,12 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie,
 	@Override
 	public boolean isCommon() {
 		return true;
+	}
+	
+	@Override
+	public void reverseTeam() {
+		speed *= -1;
+		super.reverseTeam();
 	}
 
 	@Override

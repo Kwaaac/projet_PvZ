@@ -18,7 +18,7 @@ public class DancingZombie extends Zombie {
 	private final String color = "#000000";
 	private Chrono dance = new Chrono();
 	private boolean lock = false;
-	
+
 	public DancingZombie(int x, int y) {
 		super(x, y, 100, 340, 1, "ultraSlow",false);
 		dance.start();
@@ -43,51 +43,51 @@ public class DancingZombie extends Zombie {
 		return name;
 	}
 
-	
 	public void go() {
 		super.go((float) -0.93);
 	}
-	
+
 	@Override
 	public Zombie createNewZombie(int x, int y,boolean gift) {
 		return new DancingZombie(x, y, gift);
 	}
-	
+
 	int sizeOfZombie = super.getSizeOfZombie();
-	
+
 	@Override
 	public void draw(SimpleGameView view, Graphics2D graphics) {
 		graphics.setColor(Color.decode(color));
 		graphics.fill(new Ellipse2D.Float(x, y, sizeOfZombie, sizeOfZombie));
+
+		super.draw(view, graphics);
 	}
-	
+
 	@Override
-	public void action(BordView view,SimpleGameData dataBord, List<Zombie> myZombies) {
+	public void action(BordView view, SimpleGameData dataBord, List<Zombie> myZombies) {
 		int scareSize = BordView.getSquareSize();
 		ArrayList<Zombie> zombieInQueu = new ArrayList<Zombie>();
-		
-		
+
 		if (dance.asReachTimer(10) && lock == false) {
-			if (dataBord.isCorrectBordLocation(view, (float)super.getX()+scareSize,(float)super.getY())) {
-				zombieInQueu.add(new BackupDancerZombie((int)super.getX()+scareSize,(int)super.getY()));//avant
+			if (dataBord.isCorrectBordLocation(view, (float) super.getX() + scareSize, (float) super.getY())) {
+				zombieInQueu.add(new BackupDancerZombie((int) super.getX() + scareSize, (int) super.getY()));// avant
 			}
-			
-			if (dataBord.isCorrectBordLocation(view, (float)super.getX(),(float)super.getY()+scareSize)) {
-				zombieInQueu.add(new BackupDancerZombie((int)super.getX(),(int)super.getY()+scareSize));//haut
+
+			if (dataBord.isCorrectBordLocation(view, (float) super.getX(), (float) super.getY() + scareSize)) {
+				zombieInQueu.add(new BackupDancerZombie((int) super.getX(), (int) super.getY() + scareSize));// haut
 			}
-			
-			if (dataBord.isCorrectBordLocation(view, (float)super.getX()+scareSize,(float)super.getY())) {
-				zombieInQueu.add(new BackupDancerZombie((int)super.getX()-scareSize,(int)super.getY()));//arriere
+
+			if (dataBord.isCorrectBordLocation(view, (float) super.getX() + scareSize, (float) super.getY())) {
+				zombieInQueu.add(new BackupDancerZombie((int) super.getX() - scareSize, (int) super.getY()));// arriere
 			}
-			
-			if (dataBord.isCorrectBordLocation(view, (float)super.getX(),(float)super.getY()-scareSize)) {
-				zombieInQueu.add(new BackupDancerZombie((int)super.getX(),(int)super.getY()-scareSize));//bas
+
+			if (dataBord.isCorrectBordLocation(view, (float) super.getX(), (float) super.getY() - scareSize)) {
+				zombieInQueu.add(new BackupDancerZombie((int) super.getX(), (int) super.getY() - scareSize));// bas
 			}
 			lock = true;
 			dataBord.setZombieInQueu(zombieInQueu);
 			this.resetAS();
 		}
-		
+
 		this.incAS();
 	}
 }

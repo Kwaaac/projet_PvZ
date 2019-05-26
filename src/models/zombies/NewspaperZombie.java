@@ -15,7 +15,7 @@ public class NewspaperZombie extends Zombie {
 
 	private final String name = "NewspaperZombie";
 	private String color = "#FFFFFF";
-	
+
 	public NewspaperZombie(int x, int y) {
 		super(x, y, 100, 340, 1, "slow",false);
 	}
@@ -37,18 +37,18 @@ public class NewspaperZombie extends Zombie {
 	public String toString() {
 		return name;
 	}
-	
+
 	public void go() {
 		super.go((float) -0.93);
 	}
-	
+
 	@Override
 	public Zombie createNewZombie(int x, int y,boolean gift) {
 		return new NewspaperZombie(x, y, gift);
 	}
-	
+
 	int sizeOfZombie = super.getSizeOfZombie();
-	
+
 	@Override
 	public void draw(SimpleGameView view, Graphics2D graphics) {
 		graphics.setColor(Color.decode(color));
@@ -56,8 +56,10 @@ public class NewspaperZombie extends Zombie {
 
 		graphics.setColor(Color.decode("#000000"));
 		graphics.fill(new Arc2D.Float(x, y, sizeOfZombie, sizeOfZombie, 90, -180, 2));
+
+		super.draw(view, graphics);
 	}
-	
+
 	@Override
 	public boolean action(SimpleGameData dataBord) {
 		if (this.life <= 200) {
@@ -70,8 +72,7 @@ public class NewspaperZombie extends Zombie {
 
 	@Override
 	public void action(BordView view, SimpleGameData dataBord, List<Zombie> myZombies) {
-		
+
 	}
-	
-	
+
 }

@@ -3,6 +3,7 @@ package models.plants.night;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
+import java.awt.geom.RoundRectangle2D;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,11 +46,11 @@ public class PuffShroom extends Plant {
 	
 	@Override
 	public void draw(SimpleGameView view, Graphics2D graphics) {
-		graphics.setColor(Color.decode("#bfbf00"));
+		graphics.setColor(Color.decode("#ffffff"));
 		graphics.fill(new Rectangle2D.Float(x + 10, y , sizeOfPlant - 25, sizeOfPlant - 15));
 
 		graphics.setColor(Color.decode(color));
-		graphics.fill(new Rectangle2D.Float(x, y - 5, sizeOfPlant - 5, sizeOfPlant - 25));
+		graphics.fill(new RoundRectangle2D.Float(x, y - 5, sizeOfPlant - 5, sizeOfPlant - 25, 10, 10));
 		
 	}
 	
@@ -58,11 +59,11 @@ public class PuffShroom extends Plant {
 
 	@Override
 	public void draw(SimpleGameView view, Graphics2D graphics, int x, int y) {
-		graphics.setColor(Color.decode("#bfbf00"));
+		graphics.setColor(Color.decode("#ffffff"));
 		graphics.fill(new Rectangle2D.Float(x , y + sizeOfSPlant , sizeOfSPlant - 35, sizeOfSPlant - 35));
 		
 		graphics.setColor(Color.decode(color));
-		graphics.fill(new Rectangle2D.Float(x - 10, y + sizeOfSPlant / 2 + 15, sizeOfSPlant - 15, sizeOfSPlant - 25));
+		graphics.fill(new RoundRectangle2D.Float(x - 10, y + sizeOfSPlant / 2 + 15, sizeOfSPlant - 15, sizeOfSPlant - 25, 10, 10));
 		
 		view.drawCost(graphics, x, y, cost.toString());
 	}

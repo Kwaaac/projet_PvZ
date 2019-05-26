@@ -17,9 +17,9 @@ public class DolphinRiderZombie extends Zombie {
 	private final String name = "DolphinRiderZombie";
 	private final String color = "#000000";
 	private final double[] diffSpeed = { -2, -0.93 };
-	
+
 	private boolean swim = true;
-	
+
 	public DolphinRiderZombie(int x, int y) {
 		super(x, y, 100, 340, 1, "ultraSlow",false);
 	}
@@ -42,7 +42,7 @@ public class DolphinRiderZombie extends Zombie {
 	public String toString() {
 		return name;
 	}
-	
+
 	public void go() {
 		if (swim) {
 			super.go((float) diffSpeed[0]);
@@ -50,26 +50,28 @@ public class DolphinRiderZombie extends Zombie {
 			super.go((float) diffSpeed[1]);
 		}
 	}
-	
+
 	@Override
 	public Zombie createNewZombie(int x, int y,boolean gift) {
 		return new DolphinRiderZombie(x, y, gift);
 	}
 
 	int sizeOfZombie = super.getSizeOfZombie();
-	
+
 	@Override
 	public void draw(SimpleGameView view, Graphics2D graphics) {
 		graphics.setColor(Color.decode(color));
 		graphics.fill(new Ellipse2D.Float(x, y, sizeOfZombie, sizeOfZombie));
+
+		super.draw(view, graphics);
 	}
-	
+
 	private boolean detect(SimpleGameData dataBord) {
 		Cell cell = dataBord.getCell(getCaseJ(), getCaseI());
 		if (cell != null) {
 			return cell.isPlantedPlant();
 		}
-		
+
 		return false;
 	}
 
@@ -78,21 +80,21 @@ public class DolphinRiderZombie extends Zombie {
 		if (detect(dataBord) && swim) {
 			swim = false;
 			setX(x - BordView.getSquareSize() - 50);
-			
+
 			return false;
 		}
-		
+
 		return true;
 	}
 
 	@Override
 	public void action(BordView view, SimpleGameData dataBord, List<Zombie> myZombies) {
-		
+
 	}
-	
+
 	@Override
 	public boolean isCommon() {
 		return false;
 	}
-	
+
 }

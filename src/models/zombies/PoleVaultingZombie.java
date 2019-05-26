@@ -54,7 +54,7 @@ public class PoleVaultingZombie extends Zombie {
 	public Zombie createNewZombie(int x, int y,boolean gift) {
 		return new PoleVaultingZombie(x, y, gift);
 	}
-	
+
 	int sizeOfZombie = super.getSizeOfZombie();
 
 	@Override
@@ -64,6 +64,8 @@ public class PoleVaultingZombie extends Zombie {
 
 		graphics.setColor(Color.red);
 		graphics.fill(new Arc2D.Float(x, y, sizeOfZombie, sizeOfZombie, 0, -180, 2));
+		
+		super.draw(view, graphics);
 	}
 
 	private boolean detect(SimpleGameData dataBord) {
@@ -71,7 +73,7 @@ public class PoleVaultingZombie extends Zombie {
 		if (cell != null) {
 			return cell.isPlantedPlant();
 		}
-		
+
 		return false;
 	}
 
@@ -80,16 +82,16 @@ public class PoleVaultingZombie extends Zombie {
 		if (detect(dataBord) && jump) {
 			jump = false;
 			setX(x - BordView.getSquareSize() - 50);
-			
+
 			return false;
 		}
-		
+
 		return true;
 	}
 
 	@Override
 	public void action(BordView view, SimpleGameData dataBord, List<Zombie> myZombies) {
-		
+
 	}
 
 }
