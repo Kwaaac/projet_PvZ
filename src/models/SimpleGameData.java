@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Random;
 
 import controlers.EndController;
@@ -37,9 +38,9 @@ public class SimpleGameData implements Serializable{
 	private final ArrayList<Plant> myPlants = new ArrayList<>();
 	private final ArrayList<Soleil> mySun = new ArrayList<>();
 	private ArrayList<Zombie> zombieInQueu = new ArrayList<>();// Dancing Zombie
-	ArrayList<Zombie> myZombies = new ArrayList<>();
-	ArrayList<Projectile> myBullet = new ArrayList<>();
-	ArrayList<LawnMower> myLawnMower = new ArrayList<>();
+	private final ArrayList<Zombie> myZombies = new ArrayList<>();
+	private final ArrayList<Projectile> myBullet = new ArrayList<>();
+	private final ArrayList<LawnMower> myLawnMower = new ArrayList<>();
 
 	private boolean stop = false;
 
@@ -51,12 +52,15 @@ public class SimpleGameData implements Serializable{
 	private int superWave = 0;
 
 	private int actualMoney = 2500;
+	private int actualfertilizer = 0;
+	private int fertilizerChance = 10;
 	private Chrono sunSpawn = new Chrono();
 
 	static Chrono time = new Chrono();
 
 	private static String map;
 	private String loadChoice = "start";
+	
 
 	public SimpleGameData(int nbLines, int nbColumns) {
 		this.nbLines = nbLines;
@@ -661,27 +665,40 @@ public class SimpleGameData implements Serializable{
 		zombiesMap.put(z, count + 1);
 
 	}
+	
+	private static int getMaximumThreat(ArrayList<Zombie> Zombies) {
+		int max = 0;
+		for(Zombie z : Zombies) {
+			max = (z.getThreat() >= max ? z.getThreat() : max);
+		}
+		return max * 100;
+	}
 
 	public HashMap<Zombie, Integer> generateZombies(int type) {
 
 		ArrayList<Zombie> allZombies = Zombie.getZombieList(SimpleGameData.getMap());
+		Random rand = new Random();
 
 		HashMap<Zombie, Integer> zombiesMap = new HashMap<Zombie, Integer>();
 		int waveSize = 0;
 		int maxWaveSize = (type == 1 ? 15 : 35);
+		int MaximumThreat = SimpleGameData.getMaximumThreat(allZombies);
 		while (waveSize < maxWaveSize) {
-			Random rand = new Random();
 			Zombie choosenOne = getRandomZombie(allZombies);
-			if ((choosenOne.getThreat() * 100) < rand.nextInt(500)) {
+			if ((choosenOne.getThreat() * 100) <= rand.nextInt(MaximumThreat)) {
+				
+
 				addInMap(zombiesMap, choosenOne);
 				waveSize++;
 			}
 		}
+           
 		return zombiesMap;
 	}
 
 	public void spawnNormalWave(int squareSize, StringBuilder str, BordView view, ApplicationContext context,
 			HashMap<Zombie, Integer> zombieList) {
+		Random rand2 = new Random();
 
 		if (System.currentTimeMillis() - spawnTime >= timeLimit) {
 
@@ -728,15 +745,25 @@ public class SimpleGameData implements Serializable{
 							y = view.getYOrigin() + this.RandomPosGenerator(this.getNbLines()) * sqrS
 									+ (sqrS / 2);
 						}
-						myZombies.add(z.createNewZombie(x, y));
+						
+						if(rand2.nextInt(100) <= fertilizerChance) {
+							myZombies.add(z.createNewZombie(x, y, true));
+						}
+						myZombies.add(z.createNewZombie(x, y, false));
 
 					} else {
 						y = view.getYOrigin() + SimpleGameData.RandomPosGenerator(2, 4) * sqrS + (sqrS / 2);
-						myZombies.add(z.createNewZombie(x, y));
+						if(rand2.nextInt(100) <= fertilizerChance) {
+							myZombies.add(z.createNewZombie(x, y,true));
+						}
+						myZombies.add(z.createNewZombie(x, y , false));
 					}
 				} else {
 
-					myZombies.add(z.createNewZombie(x, y));
+					if(rand2.nextInt(100) <= fertilizerChance) {
+						myZombies.add(z.createNewZombie(x, y, true));
+					}
+					myZombies.add(z.createNewZombie(x, y, false));
 				}
 				str.append("new " + zombieAvailable.get(selecteur) + new SimpleDateFormat("hh:mm:ss").format(new Date())
 						+ ")\n");
@@ -763,7 +790,8 @@ public class SimpleGameData implements Serializable{
 	public void spawnSuperWave(int squareSize, StringBuilder str,
 			BordView view, ApplicationContext context,
 			HashMap<Zombie, Integer> zombieList) {
-
+		
+		Random rand2 = new Random();
 		int sqrS = BordView.getSquareSize();
 		int endWave = 0;
 		int x = view.getXOrigin() + BordView.getWidth();
@@ -787,15 +815,24 @@ public class SimpleGameData implements Serializable{
 							y = view.getYOrigin() + this.RandomPosGenerator(this.getNbLines()) * sqrS
 									+ (sqrS / 2);
 						}
-						myZombies.add(z.createNewZombie(x, y));
+						if(rand2.nextInt(100) <= fertilizerChance) {
+							myZombies.add(z.createNewZombie(x, y, true));
+						}
+						myZombies.add(z.createNewZombie(x, y, false));
 
 					} else {
 						y = view.getYOrigin() + SimpleGameData.RandomPosGenerator(2, 4) * sqrS + (sqrS / 2);
-						myZombies.add(z.createNewZombie(x, y));
+						if(rand2.nextInt(100) <= fertilizerChance) {
+							myZombies.add(z.createNewZombie(x, y, true));
+						}
+						myZombies.add(z.createNewZombie(x, y, false));
 					}
 				} else {
 
-					myZombies.add(z.createNewZombie(x, y));
+					if(rand2.nextInt(100) <= fertilizerChance) {
+						myZombies.add(z.createNewZombie(x, y, true));
+					}
+					myZombies.add(z.createNewZombie(x, y, false));
 				}
 				str.append("new " + z + new SimpleDateFormat("hh:mm:ss").format(new Date()) + ")\n");
 
@@ -874,13 +911,13 @@ public class SimpleGameData implements Serializable{
 	public void removeLM(IEntite dPe) {
 		myLawnMower.remove(dPe);
 	}
-
-
-
-
-
 	
-
-
+	public Integer getFertilizer() {
+		return (Integer) actualfertilizer;
+	}
+	
+	public void addFertilizer() {
+		actualfertilizer = (actualfertilizer < 3 ? actualfertilizer +=1 : actualfertilizer) ;
+	}
 	
 }

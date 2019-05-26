@@ -17,7 +17,11 @@ public class NewspaperZombie extends Zombie {
 	private String color = "#FFFFFF";
 	
 	public NewspaperZombie(int x, int y) {
-		super(x, y, 100, 340, 1, "slow");
+		super(x, y, 100, 340, 1, "slow",false);
+	}
+
+	public NewspaperZombie(int x, int y, boolean gifted) {
+		super(x, y, 100, 340, 1, "slow", gifted);
 	}
 
 	public NewspaperZombie() {
@@ -39,8 +43,8 @@ public class NewspaperZombie extends Zombie {
 	}
 	
 	@Override
-	public Zombie createNewZombie(int x, int y) {
-		return new NewspaperZombie(x, y);
+	public Zombie createNewZombie(int x, int y,boolean gift) {
+		return new NewspaperZombie(x, y, gift);
 	}
 	
 	int sizeOfZombie = super.getSizeOfZombie();

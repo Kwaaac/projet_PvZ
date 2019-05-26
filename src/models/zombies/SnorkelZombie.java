@@ -21,7 +21,11 @@ public class SnorkelZombie extends Zombie {
 	private boolean outOfWater = false;
 
 	public SnorkelZombie(int x, int y) {
-		super(x, y, 100, 200, 1, "slow");
+		super(x, y, 100, 200, 1, "slow", false);
+	}
+	
+	public SnorkelZombie(int x, int y, boolean gifted) {
+		super(x, y, 100, 200, 1, "slow", gifted);
 	}
 
 	public SnorkelZombie() {
@@ -43,8 +47,8 @@ public class SnorkelZombie extends Zombie {
 	}
 
 	@Override
-	public Zombie createNewZombie(int x, int y) {
-		return new SnorkelZombie(x, y);
+	public Zombie createNewZombie(int x, int y,boolean gift) {
+		return new SnorkelZombie(x, y, gift);
 	}
 
 	@Override

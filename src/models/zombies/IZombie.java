@@ -13,7 +13,7 @@ import views.SimpleGameView;
  
 public interface IZombie {
 
-	Zombie createNewZombie(int x, int y);
+	Zombie createNewZombie(int x, int y, boolean b);
 	
 	boolean canSpawn(int difficulty);
 	
@@ -30,4 +30,6 @@ public interface IZombie {
 	boolean isCommon();
 	
 	public void conflictBvZ(DeadPool DPe, BordView view, SimpleGameData data);
+	
+	public void giftZombie();
 }

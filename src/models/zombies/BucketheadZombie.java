@@ -17,7 +17,12 @@ public class BucketheadZombie extends Zombie {
 	private final String color = "#CB5050";
 	
 	public BucketheadZombie(int x, int y) {
-		super(x, y, 100, 1300, 2, "slow");
+		super(x, y, 100, 1300, 2, "slow",false);
+	}
+	
+
+	public BucketheadZombie(int x, int y, boolean gifted) {
+		super(x, y, 100, 1300, 2, "slow", gifted);
 	}
 
 	public BucketheadZombie() {
@@ -39,8 +44,8 @@ public class BucketheadZombie extends Zombie {
 	}
 
 	@Override
-	public Zombie createNewZombie(int x, int y) {
-		return new BucketheadZombie(x, y);
+	public Zombie createNewZombie(int x, int y,boolean gift) {
+		return new BucketheadZombie(x, y, gift);
 	}
 	
 	int sizeOfZombie = super.getSizeOfZombie();

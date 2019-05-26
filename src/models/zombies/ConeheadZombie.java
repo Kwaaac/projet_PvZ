@@ -17,7 +17,12 @@ public class ConeheadZombie extends Zombie {
 	private final String color = "#CB5050";
 
 	public ConeheadZombie(int x, int y) {
-		super(x, y, 100, 560, 2, "slow");
+		super(x, y, 100, 560, 2, "slow",false);
+	}
+	
+
+	public ConeheadZombie(int x, int y, boolean gifted) {
+		super(x, y, 100, 560, 2, "slow", gifted);
 	}
 
 	public ConeheadZombie() {
@@ -40,8 +45,8 @@ public class ConeheadZombie extends Zombie {
 	}
 
 	@Override
-	public Zombie createNewZombie(int x, int y) {
-		return new ConeheadZombie(x, y);
+	public Zombie createNewZombie(int x, int y,boolean gift) {
+		return new ConeheadZombie(x, y, gift);
 	}
 	
 	int sizeOfZombie = super.getSizeOfZombie();

@@ -33,6 +33,8 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie,
 	protected int slowedLimit;
 	protected boolean afflicted = false;
 
+	protected boolean fertilizer;
+
 	protected final HashMap<String, Double> mSpeed = new HashMap<String, Double>() {
 		{
 			put("reallyFast", -1.5);// 9+
@@ -45,12 +47,13 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie,
 
 	};
 
-	public Zombie(int x, int y, int damage, int life, int threat, String s) {
+	public Zombie(int x, int y, int damage, int life, int threat, String s, boolean fertilizer) {
 		super(x, y, damage, life, false);
 		speed = mSpeed.get(s);
 		shootBarMax = (int) (speed * -7500);
 		shootTime = System.currentTimeMillis();
 		this.threat = threat;
+		this.fertilizer = fertilizer;
 		slowedTime.steady();
 	}
 
@@ -210,6 +213,12 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie,
 					 * pas qu'une plante morte soit capable de tuï¿½ aprï¿½s sa mort)
 					 */
 					else if (this.isDead()) {
+						if (fertilizer) {
+							System.out.println("check");
+							data.addFertilizer();
+							System.out.println("il semblerait que ce zombie était spécial\n\tvous avez "
+									+ data.getFertilizer() + " engrais");
+						}
 						e.setConflictMode(false);
 						DPe.addInDP(this);
 						break;
@@ -246,15 +255,15 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie,
 		ArrayList<Zombie> zombies;
 		int thisY = view.lineFromY(y);
 		int thisX = view.columnFromX(x);
-		
-		if(this.isBad()) {
+
+		if (this.isBad()) {
 			Cell actualCell = data.getCell(thisY, thisX);
-			
+
 			if (actualCell != null && actualCell.isThereGoodZombies()) {
-				
+
 				zombies = actualCell.getZombiesToAttack(this);
 				for (Zombie z : zombies) {
-					if(this.hit(z)) {
+					if (this.hit(z)) {
 						this.stop();
 						z.stop();
 						if (this.readyToshot()) {
@@ -280,6 +289,12 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie,
 					if (!(l.isMoving())) {
 						l.go();
 					}
+					if (fertilizer) {
+						System.out.println("check");
+						data.addFertilizer();
+						System.out.println("il semblerait que ce zombie était spécial\n\tvous avez "
+								+ data.getFertilizer() + " engrais");
+					}
 					life = 0;
 					str.append(this + " meurt tuï¿½ par une tondeuse\n");
 					l.setLife(100000);
@@ -288,9 +303,8 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie,
 		}
 	}
 
-	public static void ZCheckConflict(List<Zombie> myZombies, List<Projectile> myBullet,
-			List<Plant> list, List<LawnMower> myLawnMower, DeadPool deadPoolE, BordView view,
-			SimpleGameData data, StringBuilder str) {
+	public static void ZCheckConflict(List<Zombie> myZombies, List<Projectile> myBullet, List<Plant> list,
+			List<LawnMower> myLawnMower, DeadPool deadPoolE, BordView view, SimpleGameData data, StringBuilder str) {
 		LawnMower.hasToDie(myLawnMower, deadPoolE, data, view);
 		Plant.hasToDie(deadPoolE, list, data); // gere les mort si il n'y a aucun zombie sur le plateau
 		Projectile.hasToDie(deadPoolE, myBullet, data);
@@ -304,8 +318,16 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie,
 			}
 			z.conflictLvZ(deadPoolE, myLawnMower, view, data, str);
 			if (z.isDead()) {
-				deadPoolE.add(z);
 				str.append(z + " meurt\n");
+				System.out.println(z.isGifted());
+				if (z.isGifted()) {
+					System.out.println("check");
+					data.addFertilizer();
+					System.out.println("il semblerait que ce zombie était spécial\n\tvous avez " + data.getFertilizer()
+							+ " engrais");
+				}
+				deadPoolE.add(z);
+
 			}
 
 		}
@@ -360,6 +382,15 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie,
 	}
 
 	@Override
+	public void giftZombie() {
+		this.fertilizer = true;
+	}
+
+	private Boolean isGifted() {
+		return (Boolean) fertilizer;
+	}
+
+	@Override
 	public boolean equals(Object o) {
 		if (!(o instanceof Zombie)) {
 			return false;
@@ -372,4 +403,5 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie,
 	public int hashCode() {
 		return Objects.hash(super.hashCode(), speed, shootBarMax, shootTime, threat);
 	}
+
 }

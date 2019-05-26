@@ -131,9 +131,6 @@ public class SimpleGameController {
 				
 				dataBord.actionning(view);
 				
-				/*--------------------------------SHOOTING------------------------------------*/
-				
-				dataBord.actionningZombie(view, dataBord);
 				
 				/*------------------------------- WIN / LOOSE --------------------------------*/
 				dataBord.timeEnd(myZombies, str, context, superWaveZombie,view);

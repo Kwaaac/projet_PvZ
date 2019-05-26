@@ -2,6 +2,7 @@ package models.nextzombie;
 
 import java.awt.Graphics2D;
 import java.util.ArrayList;
+import java.util.List;
 
 import fr.umlv.zen5.ApplicationContext;
 import models.SimpleGameData;
@@ -15,7 +16,12 @@ public class DuckyTubeZombie extends Zombie {
 	private final String color = "#000000";
 	
 	public DuckyTubeZombie(int x, int y) {
-		super(x, y, 100, 1300, 1, "slow");
+		super(x, y, 100, 1300, 1, "slow",false);
+	}
+	
+
+	public DuckyTubeZombie(int x, int y, boolean gifted) {
+		super(x, y, 100, 1300, 1, "slow", gifted);
 	}
 
 	public DuckyTubeZombie() {
@@ -50,7 +56,7 @@ public class DuckyTubeZombie extends Zombie {
 	}
 
 	@Override
-	public void action(BordView view, SimpleGameData dataBord, ArrayList<Zombie> myZombies) {
+	public void action(BordView view, SimpleGameData dataBord, List<Zombie> myZombies) {
 		// TODO Auto-generated method stub
 		
 	}

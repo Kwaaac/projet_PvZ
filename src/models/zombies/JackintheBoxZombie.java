@@ -23,7 +23,13 @@ public class JackintheBoxZombie extends Zombie {
 	private final Chrono explosion = new Chrono();
 	
 	public JackintheBoxZombie(int x, int y) {
-		super(x, y, 100, 340, 1, "fast");
+		super(x, y, 100, 340, 1, "fast",false);
+		explosion.start();
+	}
+		
+
+	public JackintheBoxZombie(int x, int y, boolean gifted) {
+		super(x, y, 100, 340, 1, "fast", gifted);
 		explosion.start();
 	}
 
@@ -46,8 +52,8 @@ public class JackintheBoxZombie extends Zombie {
 	}
 	
 	@Override
-	public Zombie createNewZombie(int x, int y) {
-		return new JackintheBoxZombie(x, y);
+	public Zombie createNewZombie(int x, int y,boolean gift) {
+		return new JackintheBoxZombie(x, y, gift);
 	}
 	
 	int sizeOfZombie = super.getSizeOfZombie();

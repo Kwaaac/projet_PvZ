@@ -20,8 +20,13 @@ public class DancingZombie extends Zombie {
 	private boolean lock = false;
 	
 	public DancingZombie(int x, int y) {
-		super(x, y, 100, 340, 1, "ultraSlow");
+		super(x, y, 100, 340, 1, "ultraSlow",false);
 		dance.start();
+	}
+
+		public DancingZombie(int x, int y, boolean gifted) {
+			super(x, y, 100, 340, 1, "ultraSlow", gifted);
+			dance.start();
 	}
 
 	public DancingZombie() {
@@ -44,8 +49,8 @@ public class DancingZombie extends Zombie {
 	}
 	
 	@Override
-	public Zombie createNewZombie(int x, int y) {
-		return new DancingZombie(x, y);
+	public Zombie createNewZombie(int x, int y,boolean gift) {
+		return new DancingZombie(x, y, gift);
 	}
 	
 	int sizeOfZombie = super.getSizeOfZombie();

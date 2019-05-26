@@ -21,7 +21,11 @@ public class PoleVaultingZombie extends Zombie {
 	private boolean jump = true;
 
 	public PoleVaultingZombie(int x, int y) {
-		super(x, y, 100, 340, 1, "slow");
+		super(x, y, 100, 340, 1, "slow" , false);
+	}
+	
+	public PoleVaultingZombie(int x, int y , boolean gifted) {
+		super(x, y, 100, 340, 1, "slow" , gifted);
 	}
 
 	public PoleVaultingZombie() {
@@ -47,8 +51,8 @@ public class PoleVaultingZombie extends Zombie {
 	}
 
 	@Override
-	public Zombie createNewZombie(int x, int y) {
-		return new PoleVaultingZombie(x, y);
+	public Zombie createNewZombie(int x, int y,boolean gift) {
+		return new PoleVaultingZombie(x, y, gift);
 	}
 	
 	int sizeOfZombie = super.getSizeOfZombie();

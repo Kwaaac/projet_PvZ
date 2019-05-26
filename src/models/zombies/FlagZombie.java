@@ -16,7 +16,12 @@ public class FlagZombie extends Zombie{
 	private final String color = "#FFFFFF";
 
 	public FlagZombie(int x, int y) {
-		super(x, y, 100, 200, 1, "slow");
+		super(x, y, 100, 200, 1, "slow",false);
+	}
+	
+
+	public FlagZombie(int x, int y, boolean gifted) {
+		super(x, y, 100, 200, 1, "slow", gifted);
 	}
 
 	public FlagZombie() {
@@ -39,8 +44,8 @@ public class FlagZombie extends Zombie{
 	}
 
 	@Override
-	public Zombie createNewZombie(int x, int y) {
-		return new FlagZombie(x, y);
+	public Zombie createNewZombie(int x, int y,boolean gift) {
+		return new FlagZombie(x, y, gift);
 	}
 	
 	int sizeOfZombie = super.getSizeOfZombie();

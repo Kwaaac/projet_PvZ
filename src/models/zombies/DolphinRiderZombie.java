@@ -21,7 +21,12 @@ public class DolphinRiderZombie extends Zombie {
 	private boolean swim = true;
 	
 	public DolphinRiderZombie(int x, int y) {
-		super(x, y, 100, 340, 1, "ultraSlow");
+		super(x, y, 100, 340, 1, "ultraSlow",false);
+	}
+	
+
+	public DolphinRiderZombie(int x, int y, boolean gifted) {
+		super(x, y, 100, 340, 1, "ultraSlow", gifted);
 	}
 
 	public DolphinRiderZombie() {
@@ -47,8 +52,8 @@ public class DolphinRiderZombie extends Zombie {
 	}
 	
 	@Override
-	public Zombie createNewZombie(int x, int y) {
-		return new DolphinRiderZombie(x, y);
+	public Zombie createNewZombie(int x, int y,boolean gift) {
+		return new DolphinRiderZombie(x, y, gift);
 	}
 
 	int sizeOfZombie = super.getSizeOfZombie();

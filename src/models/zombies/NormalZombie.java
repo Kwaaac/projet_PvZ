@@ -17,7 +17,11 @@ public class NormalZombie extends Zombie {
 	private final String color = "#000000";
 	
 	public NormalZombie(int x, int y) {
-		super(x, y, 100, 200, 1 , "slow");
+		super(x, y, 100, 200, 1 , "slow" , false);
+	}
+	
+	public NormalZombie(int x, int y, boolean gifted) {
+		super(x, y, 100, 200, 1 , "slow" , gifted);
 	}
 
 	public NormalZombie() {
@@ -40,8 +44,8 @@ public class NormalZombie extends Zombie {
 	}
 	
 	@Override
-	public Zombie createNewZombie(int x, int y) {
-		return new NormalZombie(x, y);
+	public Zombie createNewZombie(int x, int y,boolean gift) {
+		return new NormalZombie(x, y, gift);
 	}
 	
 	int sizeOfZombie = super.getSizeOfZombie();

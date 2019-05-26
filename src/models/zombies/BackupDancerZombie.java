@@ -17,7 +17,11 @@ public class BackupDancerZombie extends Zombie {
 	private final String color = "#000000";
 	
 	public BackupDancerZombie(int x, int y) {
-		super(x, y, 100, 200, 4, "medium");
+		super(x, y, 100, 200, 4, "medium",false);
+	}
+	
+	public BackupDancerZombie(int x, int y, boolean gifted) {
+		super(x, y, 100, 200, 4, "medium", gifted);
 	}
 
 	public BackupDancerZombie() {
@@ -39,8 +43,8 @@ public class BackupDancerZombie extends Zombie {
 	}
 	
 	@Override
-	public Zombie createNewZombie(int x, int y) {
-		return new BackupDancerZombie(x, y);
+	public Zombie createNewZombie(int x, int y,boolean gift) {
+		return new BackupDancerZombie(x, y, gift);
 	}
 	
 	int sizeOfZombie = super.getSizeOfZombie();
