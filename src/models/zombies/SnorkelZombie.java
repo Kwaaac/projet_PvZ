@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Ellipse2D;
 import java.util.ArrayList;
+import java.util.List;
 
 import fr.umlv.zen5.ApplicationContext;
 import models.DeadPool;
@@ -55,7 +56,7 @@ public class SnorkelZombie extends Zombie {
 	int sizeOfZombie = super.getSizeOfZombie();
 
 	@Override
-	public void action(BordView view, SimpleGameData dataBord, ArrayList<Zombie> myZombies) {
+	public void action(BordView view, SimpleGameData dataBord, List<Zombie> myZombies) {
 		Cell cell = dataBord.getCell(getCaseI(), getCaseJ());
 		if (dataBord.isCorrectBordLocation(view, getCaseI(), getCaseJ()) && cell != null) {
 			this.outOfWater = cell.isPlantedPlant();

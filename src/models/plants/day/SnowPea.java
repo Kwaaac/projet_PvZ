@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
+import java.util.List;
 
 import models.SimpleGameData;
 import models.cells.Cell;
@@ -66,7 +67,7 @@ public class SnowPea extends Plant {
 	}
 
 	@Override
-	public void action(ArrayList<Projectile> myBullet, BordView view, ArrayList<Zombie> myZombies,
+	public void action(List<Projectile> myBullet, BordView view, List<Zombie> myZombies,
 			SimpleGameData dataBord) {
 		
 		if (this.readyToshot(dataBord.getLineCell(this.getCaseJ(), this.getCaseI()))) {

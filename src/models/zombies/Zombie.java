@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Objects;
 
 import models.Chrono;
@@ -271,7 +272,7 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie,
 		}
 	}
 
-	public void conflictLvZ(DeadPool deadPoolE, ArrayList<LawnMower> myLawnMower, BordView view, SimpleGameData data,
+	public void conflictLvZ(DeadPool deadPoolE, List<LawnMower> myLawnMower, BordView view, SimpleGameData data,
 			StringBuilder str) {
 		if (x < view.getXOrigin()) {
 			for (LawnMower l : myLawnMower) {
@@ -287,11 +288,11 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie,
 		}
 	}
 
-	public static void ZCheckConflict(ArrayList<Zombie> myZombies, ArrayList<Projectile> myBullet,
-			ArrayList<Plant> myPlants, ArrayList<LawnMower> myLawnMower, DeadPool deadPoolE, BordView view,
+	public static void ZCheckConflict(List<Zombie> myZombies, List<Projectile> myBullet,
+			List<Plant> list, List<LawnMower> myLawnMower, DeadPool deadPoolE, BordView view,
 			SimpleGameData data, StringBuilder str) {
 		LawnMower.hasToDie(myLawnMower, deadPoolE, data, view);
-		Plant.hasToDie(deadPoolE, myPlants, data); // gere les mort si il n'y a aucun zombie sur le plateau
+		Plant.hasToDie(deadPoolE, list, data); // gere les mort si il n'y a aucun zombie sur le plateau
 		Projectile.hasToDie(deadPoolE, myBullet, data);
 		for (Zombie z : myZombies) {
 			z.go();

@@ -7,6 +7,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 
 import fr.umlv.zen5.Application;
 import fr.umlv.zen5.ApplicationContext;
@@ -71,9 +72,7 @@ public class SimpleGameController {
 		view.draw(context, dataBord);
 		plantSelectionView.draw(context, dataSelect);
 
-		ArrayList<Zombie> myZombies = new ArrayList<>();
-		ArrayList<Projectile> myBullet = new ArrayList<>();
-		ArrayList<LawnMower> myLawnMower = new ArrayList<>();
+		
 
 		Zombie.getSizeOfZombie();
 		Pea.getSizeOfProjectile();
@@ -84,10 +83,17 @@ public class SimpleGameController {
 		
 		int money = 0;
 		
-		dataBord.spawnLawnMower(view, context, myLawnMower);
+		List<Zombie> myZombies = dataBord.getMyZombies();
+		List<Projectile> myBullet = dataBord.getMyBullet();
+		List<LawnMower> myLawnMower = dataBord.getMyLawnMower();
+		
+		dataBord.spawnLawnMower(view, context);
 		
 		
 		while (true) {
+			myZombies = dataBord.getMyZombies();
+			myBullet = dataBord.getMyBullet();
+			myLawnMower = dataBord.getMyLawnMower();
 			if (pause == true) {
 				pause = SecondaryMenuController.menu(context, view, dataBord, plantSelectionView);
 			}
@@ -119,18 +125,18 @@ public class SimpleGameController {
 				
 				/*-------------------------------- DEATHS ------------------------------------*/
 				
-				deadPoolE.deletingEverything(myZombies, dataBord, myBullet, myLawnMower);
+				deadPoolE.deletingEverything(dataBord);
 				
 				/*--------------------------------SHOOTING------------------------------------*/
 				
-				dataBord.actionning(myBullet, view, myZombies, myLawnMower);
+				dataBord.actionning(view);
 				
 				/*--------------------------------SHOOTING------------------------------------*/
 				
-				dataBord.actionningZombie(myBullet, view, myZombies, dataBord);
+				dataBord.actionningZombie(view, dataBord);
 				
 				/*------------------------------- WIN / LOOSE --------------------------------*/
-				dataBord.timeEnd(myZombies, str, context, superWaveZombie,view, myLawnMower);
+				dataBord.timeEnd(myZombies, str, context, superWaveZombie,view);
 				/*---------------------------------DEBUG--------------------------------------*/
 				
 				if (debug == true) {

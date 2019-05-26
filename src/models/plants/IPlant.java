@@ -2,6 +2,7 @@ package models.plants;
 
 import java.awt.Graphics2D;
 import java.util.ArrayList;
+import java.util.List;
 
 import fr.umlv.zen5.ApplicationContext;
 import models.SimpleGameData;
@@ -19,7 +20,7 @@ public interface IPlant {
 
 	void resetAS();
 
-	void action(ArrayList<Projectile> myBullet, BordView view, ArrayList<Zombie> myZombies, SimpleGameData dataBord);
+	void action(List<Projectile> myBullet, BordView view, List<Zombie> myZombies, SimpleGameData dataBord);
 
 	boolean readyToshot();
 

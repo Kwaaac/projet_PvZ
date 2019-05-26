@@ -2,6 +2,7 @@ package models.projectiles;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import models.Coordinates;
@@ -88,8 +89,8 @@ public abstract class Projectile extends Entities implements MovingElement, IPro
 		this.speed = speed;
 	}
 	
-	public static void hasToDie(DeadPool DPe, ArrayList<Projectile> Mp, SimpleGameData data) {
-		for(Projectile p : Mp) {
+	public static void hasToDie(DeadPool DPe, List<Projectile> myBullet, SimpleGameData data) {
+		for(Projectile p : myBullet) {
 			if (p.isDead()) {
 				DPe.add(p);
 			}

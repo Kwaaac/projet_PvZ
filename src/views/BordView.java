@@ -8,6 +8,7 @@ import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.RectangularShape;
 import java.util.ArrayList;
+import java.util.List;
 
 import fr.umlv.zen5.ApplicationContext;
 import models.MovingElement;
@@ -175,7 +176,7 @@ public class BordView extends SimpleGameView {
 
 		graphics.fill(new Rectangle2D.Float(xOrigin, 0, xOrigin + width, 150));
 
-		ArrayList<Plant> myPlants = data.getMyPlants();
+		List<Plant> myPlants = data.getMyPlants();
 
 		for (Plant plant : myPlants) {
 			plant.draw(this, graphics);
@@ -231,11 +232,11 @@ public class BordView extends SimpleGameView {
 	
 	
 	
-	public void drawAll(ApplicationContext context, SimpleGameData dataBord, BordView view, ArrayList<Zombie> myZombies, 
-			ArrayList<Projectile> myBullet, ArrayList<LawnMower> myLawnMower, boolean debug, boolean debuglock, SimpleGameData dataSelect, int money, SelectBordView plantSelectionView) {
+	public void drawAll(ApplicationContext context, SimpleGameData dataBord, BordView view, List<Zombie> myZombies, 
+			List<Projectile> myBullet, List<LawnMower> myLawnMower, boolean debug, boolean debuglock, SimpleGameData dataSelect, int money, SelectBordView plantSelectionView) {
 		
 		view.draw(context, dataBord);
-		debuglock = dataBord.movingZombiesAndBullets(context, view, myZombies, myBullet, myLawnMower, debug, debuglock);
+		debuglock = dataBord.movingZombiesAndBullets(context, view, debug, debuglock);
 		
 		
 		plantSelectionView.draw(context, dataSelect);

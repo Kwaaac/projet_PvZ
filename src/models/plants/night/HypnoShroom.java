@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
+import java.util.List;
 
 import models.SimpleGameData;
 import models.plants.Plant;
@@ -38,7 +39,7 @@ public class HypnoShroom extends Plant {
 	}
 	
 	@Override
-	public void action(ArrayList<Projectile> myBullet, BordView view, ArrayList<Zombie> myZombies, SimpleGameData dataBord) {}
+	public void action(List<Projectile> myBullet, BordView view, List<Zombie> myZombies, SimpleGameData dataBord) {}
 
 	@Override
 	public void draw(SimpleGameView view, Graphics2D graphics) {

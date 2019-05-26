@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
+import java.util.List;
 
 import models.Coordinates;
 import models.Entities;
@@ -44,7 +45,7 @@ public class PotatoMine extends Plant {
 	}
 
 	@Override
-	public void action(ArrayList<Projectile> myBullet, BordView view, ArrayList<Zombie> myZombies,
+	public void action(List<Projectile> myBullet, BordView view, List<Zombie> myZombies,
 			SimpleGameData dataBord) {
 
 		if (this.readyToshot()) {

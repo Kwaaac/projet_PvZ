@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
+import java.util.List;
 
 import models.SimpleGameData;
 import models.cells.Cell;
@@ -51,7 +52,7 @@ public class Peashooter extends Plant {
 		return new Peashooter(x, y);
 	}
 	@Override
-	public void action(ArrayList<Projectile> myBullet, BordView view, ArrayList<Zombie> myZombies, SimpleGameData dataBord) {
+	public void action(List<Projectile> myBullet, BordView view, List<Zombie> myZombies, SimpleGameData dataBord) {
 		if(this.readyToshot(dataBord.getLineCell( this.getCaseJ(), this.getCaseI()))) {
 			myBullet.add(new Pea(super.getX() + super.getSizeOfPlant(), super.getY() + (super.getSizeOfPlant() / 2) - 10));
 			

@@ -4,8 +4,10 @@ import java.awt.Color;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
@@ -35,6 +37,9 @@ public class SimpleGameData implements Serializable{
 	private final ArrayList<Plant> myPlants = new ArrayList<>();
 	private final ArrayList<Soleil> mySun = new ArrayList<>();
 	private ArrayList<Zombie> zombieInQueu = new ArrayList<>();// Dancing Zombie
+	ArrayList<Zombie> myZombies = new ArrayList<>();
+	ArrayList<Projectile> myBullet = new ArrayList<>();
+	ArrayList<LawnMower> myLawnMower = new ArrayList<>();
 
 	private boolean stop = false;
 
@@ -210,10 +215,22 @@ public class SimpleGameData implements Serializable{
 		return cells;
 	}
 
-	public ArrayList<Plant> getMyPlants() {
-		return myPlants;
+	public List<Plant> getMyPlants() {
+		return Collections.unmodifiableList(myPlants);
 	}
-
+	
+	public List<Zombie> getMyZombies() {
+		return Collections.unmodifiableList(myZombies);
+	}
+	
+	public List<Projectile> getMyBullet() {
+		return Collections.unmodifiableList(myBullet);
+	}
+	
+	public List<LawnMower> getMyLawnMower() {
+		return Collections.unmodifiableList(myLawnMower);
+	}
+	
 	/**
 	 * Genere un nombre al�atoire entre 0 et x
 	 * 
@@ -351,7 +368,7 @@ public class SimpleGameData implements Serializable{
 		return false;
 	}
 
-	public boolean win(HashMap<Zombie, Integer> superWaveZombie, ArrayList<Zombie> myZombies) {
+	public boolean win(HashMap<Zombie, Integer> superWaveZombie) {
 		for (int nbrZ : superWaveZombie.values()) {
 			if (nbrZ != 0) {
 				return false;
@@ -369,8 +386,7 @@ public class SimpleGameData implements Serializable{
 		return WL;
 	}
 
-	public void actionning(ArrayList<Projectile> myBullet, BordView view, ArrayList<Zombie> myZombies,
-			ArrayList<LawnMower> myLawnMower) {
+	public void actionning(BordView view) {
 
 		for (IPlant p : myPlants) {
 			p.action(myBullet, view, myZombies, this);
@@ -378,7 +394,7 @@ public class SimpleGameData implements Serializable{
 
 	}
 
-	public void actionningZombie(ArrayList<Projectile> myBullet, BordView view, ArrayList<Zombie> myZombies,
+	public void actionningZombie(BordView view,
 			SimpleGameData dataBord) {
 		for (IZombie z : myZombies) {
 
@@ -394,7 +410,7 @@ public class SimpleGameData implements Serializable{
 
 	public void spawnSun(BordView view, float x, float y, int sunny, int size) {
 		if (x == -1) {
-			if (this.getMap() != "Night") {
+			if (SimpleGameData.getMap() != "Night") {
 				int xOrigin = view.getXOrigin();
 
 				float xRandom = RandomPosGenerator(xOrigin, xOrigin + BordView.getHeight());
@@ -412,8 +428,7 @@ public class SimpleGameData implements Serializable{
 		}
 	}
 
-	public boolean movingZombiesAndBullets(ApplicationContext context, BordView view, ArrayList<Zombie> myZombies,
-			ArrayList<Projectile> myBullet, ArrayList<LawnMower> myLawnMower, boolean debug, boolean debuglock) {
+	public boolean movingZombiesAndBullets(ApplicationContext context, BordView view, boolean debug, boolean debuglock) {
 
 		for (Zombie z : myZombies) {
 			if (debug == true) {
@@ -453,8 +468,8 @@ public class SimpleGameData implements Serializable{
 		return debuglock = false;
 	}
 
-	public void timeEnd(ArrayList<Zombie> myZombies, StringBuilder str, ApplicationContext context,
-			HashMap<Zombie, Integer> superWaveZombie, BordView view, ArrayList<LawnMower> myLawnMower) {
+	public void timeEnd(List<Zombie> myZombies, StringBuilder str, ApplicationContext context,
+			HashMap<Zombie, Integer> superWaveZombie, BordView view) {
 
 		int xOrigin = view.getXOrigin();
 		int squareSize = BordView.getSquareSize();
@@ -467,7 +482,7 @@ public class SimpleGameData implements Serializable{
 			}
 		}
 
-		if (this.win(superWaveZombie, myZombies)) {
+		if (this.win(superWaveZombie)) {
 			choice = "Stop";
 			finalChoice = "Win";
 		}
@@ -624,7 +639,7 @@ public class SimpleGameData implements Serializable{
 		}
 	}
 
-	public void spawnLawnMower(BordView view, ApplicationContext context, ArrayList<LawnMower> myLawnMower) {
+	public void spawnLawnMower(BordView view, ApplicationContext context) {
 		int staticX = view.getXOrigin() - BordView.getSquareSize();
 		for (int i = 1; i <= nbLines; i++) {
 			myLawnMower.add(new LawnMower(staticX, BordView.getSquareSize() * i, i - 1));
@@ -649,7 +664,7 @@ public class SimpleGameData implements Serializable{
 
 	public HashMap<Zombie, Integer> generateZombies(int type) {
 
-		ArrayList<Zombie> allZombies = Zombie.getZombieList(this.getMap());
+		ArrayList<Zombie> allZombies = Zombie.getZombieList(SimpleGameData.getMap());
 
 		HashMap<Zombie, Integer> zombiesMap = new HashMap<Zombie, Integer>();
 		int waveSize = 0;
@@ -665,8 +680,7 @@ public class SimpleGameData implements Serializable{
 		return zombiesMap;
 	}
 
-	public void spawnNormalWave(int squareSize, StringBuilder str,
-			ArrayList<Zombie> myZombies, BordView view, ApplicationContext context,
+	public void spawnNormalWave(int squareSize, StringBuilder str, BordView view, ApplicationContext context,
 			HashMap<Zombie, Integer> zombieList) {
 
 		if (System.currentTimeMillis() - spawnTime >= timeLimit) {
@@ -747,7 +761,7 @@ public class SimpleGameData implements Serializable{
 	}
 
 	public void spawnSuperWave(int squareSize, StringBuilder str,
-			ArrayList<Zombie> myZombies, BordView view, ApplicationContext context,
+			BordView view, ApplicationContext context,
 			HashMap<Zombie, Integer> zombieList) {
 
 		int sqrS = BordView.getSquareSize();
@@ -796,14 +810,14 @@ public class SimpleGameData implements Serializable{
 	}
 
 	public void spawnZombies(int squareSize, StringBuilder str,
-			ArrayList<Zombie> myZombies, BordView view, ApplicationContext context, HashMap<Zombie, Integer> zombieList,
+			List<Zombie> myZombies, BordView view, ApplicationContext context, HashMap<Zombie, Integer> zombieList,
 			HashMap<Zombie, Integer> superZombieList) {
 
 		if (superWave == 0) {
-			spawnNormalWave(squareSize, str, myZombies, view, context, zombieList);
+			spawnNormalWave(squareSize, str, view, context, zombieList);
 		} else if (superWave == 1) {
 
-			spawnSuperWave(squareSize, str, myZombies, view, context, superZombieList);
+			spawnSuperWave(squareSize, str, view, context, superZombieList);
 
 		}
 
@@ -840,4 +854,33 @@ public class SimpleGameData implements Serializable{
 			}
 		}
 	}
+
+
+	public void removeB(IEntite dPe) {
+		myBullet.remove(dPe);
+	}
+
+
+	public void removeP(IEntite dPe) {
+		myPlants.remove(dPe);
+	}
+
+
+	public void removeZ(IEntite dPe) {
+		myZombies.remove(dPe);
+	}
+
+
+	public void removeLM(IEntite dPe) {
+		myLawnMower.remove(dPe);
+	}
+
+
+
+
+
+	
+
+
+	
 }

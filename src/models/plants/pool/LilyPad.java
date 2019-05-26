@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Ellipse2D;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import fr.umlv.zen5.ApplicationContext;
@@ -38,7 +39,7 @@ public class LilyPad extends Plant {
 	}
 
 	@Override
-	public void action(ArrayList<Projectile> myBullet, BordView view, ArrayList<Zombie> myZombies,
+	public void action(List<Projectile> myBullet, BordView view, List<Zombie> myZombies,
 			SimpleGameData dataBord) {
 	}
 

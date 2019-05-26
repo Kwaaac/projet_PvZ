@@ -6,6 +6,7 @@ import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.RoundRectangle2D;
 import java.util.ArrayList;
+import java.util.List;
 
 import fr.umlv.zen5.ApplicationContext;
 import models.Coordinates;
@@ -72,8 +73,8 @@ public class LawnMower extends Projectile {
 		return x > (xOrigin + (squareSize * dataBord.getNbColumns()));
 	}
 	
-	public static void hasToDie(ArrayList<LawnMower> lm,DeadPool DPe, SimpleGameData data,BordView view) {
-		for(LawnMower l : lm) {
+	public static void hasToDie(List<LawnMower> myLawnMower,DeadPool DPe, SimpleGameData data,BordView view) {
+		for(LawnMower l : myLawnMower) {
 			if (l.outBoard(view, data)) {
 				if(data.getCell(l.getCaseJ(), l.getCaseI()) != null) {
 				data.getCell(l.getCaseJ(), l.getCaseI()).removeZombie(l);

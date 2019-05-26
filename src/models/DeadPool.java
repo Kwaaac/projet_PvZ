@@ -2,6 +2,7 @@ package models;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 import models.projectiles.LawnMower;
 import models.projectiles.Projectile;
@@ -45,10 +46,10 @@ public class DeadPool implements Serializable{
 		return bs.toString();
 	}
 	
-	public void clearEntity(ArrayList<?> Le, SimpleGameData dataBord) {
+	public void clearEntityBullet(SimpleGameData dataBord) {
 
 		for(IEntite DPe: deadPool) {
-			Le.remove(DPe);
+			dataBord.removeB(DPe);
 			
 			int caseJ = DPe.getCaseJ();
 			int caseI = DPe.getCaseI();
@@ -60,13 +61,63 @@ public class DeadPool implements Serializable{
 		}
 
 	}
+	
+	public void clearEntityPlants(SimpleGameData dataBord) {
+
+		for(IEntite DPe: deadPool) {
+			dataBord.removeP(DPe);
+			
+			int caseJ = DPe.getCaseJ();
+			int caseI = DPe.getCaseI();
+			
+			if(dataBord.getCell(caseJ, caseI) != null) {
+				dataBord.getCell(caseJ, caseI).removeZombie(DPe);
+				dataBord.getCell(caseJ, caseI).removeProjectile(DPe);
+			}
+		}
+
+	}
+	
+	public void clearEntityZombies(SimpleGameData dataBord) {
+
+		for(IEntite DPe: deadPool) {
+			dataBord.removeZ(DPe);
+			
+			int caseJ = DPe.getCaseJ();
+			int caseI = DPe.getCaseI();
+			
+			if(dataBord.getCell(caseJ, caseI) != null) {
+				dataBord.getCell(caseJ, caseI).removeZombie(DPe);
+				dataBord.getCell(caseJ, caseI).removeProjectile(DPe);
+			}
+		}
+
+	}
+	
+	public void clearEntityLawnMower(SimpleGameData dataBord) {
+
+		for(IEntite DPe: deadPool) {
+			dataBord.removeLM(DPe);
+			
+			int caseJ = DPe.getCaseJ();
+			int caseI = DPe.getCaseI();
+			
+			if(dataBord.getCell(caseJ, caseI) != null) {
+				dataBord.getCell(caseJ, caseI).removeZombie(DPe);
+				dataBord.getCell(caseJ, caseI).removeProjectile(DPe);
+			}
+		}
+
+	}
+	
+
 
 	
-	public void deletingEverything(ArrayList<Zombie> MyZombies, SimpleGameData dataBord, ArrayList<Projectile> MyBullet,ArrayList<LawnMower> MyLawnMower) {
-		this.clearEntity(MyBullet, dataBord);
-		this.clearEntity(dataBord.getMyPlants(), dataBord);
-		this.clearEntity(MyZombies, dataBord);
-		this.clearEntity(MyLawnMower, dataBord);
+	public void deletingEverything(SimpleGameData dataBord) {
+		this.clearEntityBullet(dataBord);
+		this.clearEntityPlants(dataBord);
+		this.clearEntityZombies(dataBord);
+		this.clearEntityLawnMower(dataBord);
 		deadPool.clear();
 	}
 

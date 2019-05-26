@@ -1,6 +1,7 @@
 package models.zombies;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import fr.umlv.zen5.ApplicationContext;
 import models.DeadPool;
@@ -24,7 +25,7 @@ public interface IZombie {
 	
 	boolean action(SimpleGameData dataBord);
 	
-	void action(BordView view, SimpleGameData dataBord, ArrayList<Zombie> myZombies);
+	void action(BordView view, SimpleGameData dataBord, List<Zombie> myZombies);
 	
 	boolean isCommon();
 	

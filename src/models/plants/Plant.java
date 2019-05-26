@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Objects;
 
 import models.Coordinates;
@@ -127,8 +128,8 @@ public abstract class Plant extends Entities implements IPlant, Serializable {
 		return new Coordinates((int) x, (int) x + sizeOfPlant);
 	}
 
-	public static void hasToDie(DeadPool DPe, ArrayList<Plant> Mp, SimpleGameData data) {
-			for (Plant p : Mp) {
+	public static void hasToDie(DeadPool DPe, List<Plant> list, SimpleGameData data) {
+			for (Plant p : list) {
 				if (p.isDead()) {
 					data.getCell(p.getCaseJ(), p.getCaseI()).removePlant(p);
 					DPe.add(p);
