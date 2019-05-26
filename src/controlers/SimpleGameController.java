@@ -38,25 +38,23 @@ public class SimpleGameController {
 		
 		ArrayList<Plant> selectedPlant = PrincipalMenuController.startGame(context);
 		SimpleGameData dataBord = new SimpleGameData(1,1);//no care but important
-		HashMap<Zombie, Integer> normalWaveZombie = new HashMap<>();
-		normalWaveZombie.put(new NormalZombie(), 4);
-		//SimpleGameData.generateZombies(1);
-		HashMap<Zombie, Integer> superWaveZombie = SimpleGameData.generateZombies(2);
+		HashMap<Zombie, Integer> normalWaveZombie = dataBord.generateZombies(1);
+		HashMap<Zombie, Integer> superWaveZombie = dataBord.generateZombies(2);
 		
 		SelectBordView plantSelectionView = SelectBordView.initGameGraphics(0, 0, 900, dataBord, selectedPlant);//no care but important
 		SimpleGameData dataSelect = new SimpleGameData(selectedPlant.size(), 1);
 
 		int yOrigin = 150;
 		
-		if (SimpleGameData.getLoadChoice() == "start") {
+		if (dataBord.getLoadChoice() == "start") {
 			BordView.setWidth(width);
 			BordView.setHeight(height);
-			dataBord = Map.dataBord();
+			dataBord = Map.dataBord(dataBord);
 			plantSelectionView = SelectBordView.initGameGraphics(0, yOrigin, 900, dataSelect, selectedPlant);
 		}
 		else {
 			try {
-				dataBord = (SimpleGameData) SystemFile.read("data");
+				dataBord = (SimpleGameData) SystemFile.read("data", dataBord);
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
 			} catch (IOException e) {
@@ -66,7 +64,7 @@ public class SimpleGameController {
 		
 		
 		
-		BordView view = Map.view();
+		BordView view = Map.view(dataBord);
 		
 		int squareSize = BordView.getSquareSize();
 		
@@ -113,7 +111,7 @@ public class SimpleGameController {
 	
 				/*-------------------------------ZOMBIE SPAWNERS-----------------------------*/
 				
-				SimpleGameData.spawnZombies(dataBord, squareSize, str, myZombies, view, context, normalWaveZombie, superWaveZombie);
+				dataBord.spawnZombies( squareSize, str, myZombies, view, context, normalWaveZombie, superWaveZombie);
 	
 				/*------------------------------- CONFLICTS ----------------------------------*/
 				
@@ -132,7 +130,7 @@ public class SimpleGameController {
 				dataBord.actionningZombie(myBullet, view, myZombies, dataBord);
 				
 				/*------------------------------- WIN / LOOSE --------------------------------*/
-				SimpleGameData.timeEnd(myZombies, str, context, superWaveZombie,view, myLawnMower);
+				dataBord.timeEnd(myZombies, str, context, superWaveZombie,view, myLawnMower);
 				/*---------------------------------DEBUG--------------------------------------*/
 				
 				if (debug == true) {
@@ -183,7 +181,7 @@ public class SimpleGameController {
 				
 				dataBord.selectingCellAndPlanting(context, dataSelect, view, plantSelectionView, x, y);
 				
-				money = SimpleGameData.getActualMoney();
+				money = dataBord.getActualMoney();
 			}
 		}
 

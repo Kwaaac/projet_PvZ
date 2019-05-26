@@ -230,9 +230,7 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie,
 				this.stop();
 				if (this.readyToshot()) {
 					
-					System.out.println("Le zombie: " + this + " ,attaque la plante " + p + " qui à " + p.getLife());
 					this.mortalKombat(p);
-					System.out.println("La plante souffre et à maintenant " + p.getLife());
 					this.resetAS();
 				}
 			}

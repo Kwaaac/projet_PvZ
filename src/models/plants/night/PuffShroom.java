@@ -80,7 +80,7 @@ public class PuffShroom extends Plant {
 	public void action(ArrayList<Projectile> myBullet, BordView view, ArrayList<Zombie> myZombies,
 			SimpleGameData dataBord) {
 
-		if (SimpleGameData.getMap() == "Night") {
+		if (dataBord.getMap() == "Night") {
 			if (true) {
 				if (this.readyToshot(dataBord.getLineCell(this.getCaseJ(), this.getCaseI(), this.getCaseI() + 4))) {
 					myBullet.add(new WeakSpore(super.getX() + super.getSizeOfPlant(),

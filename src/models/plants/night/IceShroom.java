@@ -45,7 +45,7 @@ public class IceShroom extends Plant {
 	public void action(ArrayList<Projectile> myBullet, BordView view, ArrayList<Zombie> myZombies,
 			SimpleGameData dataBord) {
 
-		if (SimpleGameData.getMap() == "Night") {
+		if (dataBord.getMap() == "Night") {
 			if (this.readyToshot()) {
 				for (Zombie z : myZombies) {
 					z.slowed(16);

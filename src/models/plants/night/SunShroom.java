@@ -50,11 +50,11 @@ public class SunShroom extends Plant {
 
 			if (grow == true) {
 
-				SimpleGameData.spawnSun(view, x + 20, y + 20, 25, 85);
+				dataBord.spawnSun(view, x + 20, y + 20, 25, 85);
 				this.resetAS();
 			} else {
 
-				SimpleGameData.spawnSun(view, x + 20, y + 20, 15, 55);
+				dataBord.spawnSun(view, x + 20, y + 20, 15, 55);
 				this.resetAS();
 			}
 		}

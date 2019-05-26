@@ -68,7 +68,7 @@ public class ScaredyShroom extends Plant {
 	public void action(ArrayList<Projectile> myBullet, BordView view, ArrayList<Zombie> myZombies,
 			SimpleGameData dataBord) {
 
-		if (SimpleGameData.getMap() == "Night") {
+		if (dataBord.getMap() == "Night") {
 
 			int y = this.getCaseJ();
 			int x = this.getCaseI();

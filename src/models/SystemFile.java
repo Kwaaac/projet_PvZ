@@ -46,17 +46,17 @@ public class SystemFile implements Serializable{
 		
 		Charset charset = StandardCharsets.UTF_8;
 		try (BufferedWriter writer = Files.newBufferedWriter(Paths.get("map.txt"), charset)){
-			writer.write(SimpleGameData.getMap());
+			writer.write(data.getMap());
 		}
 	}
 	
-	public static Object read(String s) throws ClassNotFoundException, IOException {
+	public static Object read(String s,SimpleGameData data) throws ClassNotFoundException, IOException {
 		
 		try (BufferedReader reader = Files.newBufferedReader(Paths.get("map.txt"), StandardCharsets.UTF_8)){
 			String line;
 			
 			while ((line = reader.readLine()) != null) {
-				SimpleGameData.setMap(line.toString());
+				data.setMap(line.toString());
 			}
 		}
 		

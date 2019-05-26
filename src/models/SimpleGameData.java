@@ -33,25 +33,25 @@ public class SimpleGameData implements Serializable{
 	private Coordinates selected;
 	private final ArrayList<Coordinates> placedPlant = new ArrayList<Coordinates>();
 	private final ArrayList<Plant> myPlants = new ArrayList<>();
-	private final static ArrayList<Soleil> mySun = new ArrayList<>();
+	private final ArrayList<Soleil> mySun = new ArrayList<>();
 	private ArrayList<Zombie> zombieInQueu = new ArrayList<>();// Dancing Zombie
 
-	private static boolean stop = false;
+	private boolean stop = false;
 
-	private static long spawnTime;
-	private static long timeLimit;
-	private static long difficultyTime;
+	private long spawnTime;
+	private long timeLimit;
+	private long difficultyTime;
 
-	private static int difficulty = 1;
-	private static int superWave = 0;
+	private int difficulty = 1;
+	private int superWave = 0;
 
-	private static int actualMoney = 2500;
+	private int actualMoney = 2500;
 	private Chrono sunSpawn = new Chrono();
 
 	static Chrono time = new Chrono();
 
 	private static String map;
-	private static String loadChoice = "start";
+	private String loadChoice = "start";
 
 	public SimpleGameData(int nbLines, int nbColumns) {
 		this.nbLines = nbLines;
@@ -351,7 +351,7 @@ public class SimpleGameData implements Serializable{
 		return false;
 	}
 
-	public static boolean win(HashMap<Zombie, Integer> superWaveZombie, ArrayList<Zombie> myZombies) {
+	public boolean win(HashMap<Zombie, Integer> superWaveZombie, ArrayList<Zombie> myZombies) {
 		for (int nbrZ : superWaveZombie.values()) {
 			if (nbrZ != 0) {
 				return false;
@@ -361,7 +361,7 @@ public class SimpleGameData implements Serializable{
 		return myZombies.isEmpty();
 	}
 
-	public static void setWL(int x) {
+	public void setWL(int x) {
 		WL = x;
 	}
 
@@ -392,12 +392,12 @@ public class SimpleGameData implements Serializable{
 
 	}
 
-	public static void spawnSun(BordView view, float x, float y, int sunny, int size) {
+	public void spawnSun(BordView view, float x, float y, int sunny, int size) {
 		if (x == -1) {
-			if (SimpleGameData.getMap() != "Night") {
+			if (this.getMap() != "Night") {
 				int xOrigin = view.getXOrigin();
 
-				float xRandom = RandomPosGenerator(xOrigin, xOrigin + view.getHeight());
+				float xRandom = RandomPosGenerator(xOrigin, xOrigin + BordView.getHeight());
 
 				mySun.add(new Soleil(xRandom, 0, 1.5, 25, 85));
 			}
@@ -452,7 +452,7 @@ public class SimpleGameData implements Serializable{
 		return debuglock = false;
 	}
 
-	public static void timeEnd(ArrayList<Zombie> myZombies, StringBuilder str, ApplicationContext context,
+	public void timeEnd(ArrayList<Zombie> myZombies, StringBuilder str, ApplicationContext context,
 			HashMap<Zombie, Integer> superWaveZombie, BordView view, ArrayList<LawnMower> myLawnMower) {
 
 		int xOrigin = view.getXOrigin();
@@ -466,7 +466,7 @@ public class SimpleGameData implements Serializable{
 			}
 		}
 
-		if (SimpleGameData.win(superWaveZombie, myZombies)) {
+		if (this.win(superWaveZombie, myZombies)) {
 			choice = "Stop";
 			finalChoice = "Win";
 		}
@@ -485,15 +485,15 @@ public class SimpleGameData implements Serializable{
 			switch (finalChoice) {
 			case "Loose":
 				str.append("-+-+-+-+-+-+-+-+-+-\nVous avez perdu...\n");
-				SimpleGameData.setWL(0);
+				this.setWL(0);
 				break;
 			case "Win":
 				str.append("-+-+-+-+-+-+-+-+-+-\nVous avez gagne!!!\n");
-				SimpleGameData.setWL(1);
+				this.setWL(1);
 				break;
 			case "Stop":
 				str.append("-+-+-+-+-+-+-+-+-+-\nVous avez quitte la partie !\n");
-				SimpleGameData.setWL(2);
+				this.setWL(2);
 				break;
 			}
 			str.append("La partie � dur�e: " + time.getDureeTxt());
@@ -588,10 +588,10 @@ public class SimpleGameData implements Serializable{
 		boolean result = false;
 
 		int target = this.RandomPosGenerator(15); // 1 chance sur x
-		int xRandomPosition = SimpleGameData.RandomPosGenerator(view.getXOrigin(), view.getHeight()); // random position
+		int xRandomPosition = SimpleGameData.RandomPosGenerator(view.getXOrigin(), BordView.getHeight()); // random position
 																										// x dans
 		// matrice
-		int yRandomPosition = SimpleGameData.RandomPosGenerator(view.getYOrigin(), view.getWidth()); // random position
+		int yRandomPosition = SimpleGameData.RandomPosGenerator(view.getYOrigin(), BordView.getWidth()); // random position
 																										// y dans
 		// matrice
 		int randomPlantType = this.RandomPosGenerator(selectedPlant.size()); // random type plant
@@ -615,7 +615,7 @@ public class SimpleGameData implements Serializable{
 		return result;
 	}
 
-	public static void updateDifficulty() {
+	public void updateDifficulty() {
 		if (System.currentTimeMillis() - difficultyTime >= 15_000) {
 			difficulty += 1;
 
@@ -646,9 +646,9 @@ public class SimpleGameData implements Serializable{
 
 	}
 
-	public static HashMap<Zombie, Integer> generateZombies(int type) {
+	public HashMap<Zombie, Integer> generateZombies(int type) {
 
-		ArrayList<Zombie> allZombies = Zombie.getZombieList(getMap());
+		ArrayList<Zombie> allZombies = Zombie.getZombieList(this.getMap());
 
 		HashMap<Zombie, Integer> zombiesMap = new HashMap<Zombie, Integer>();
 		int waveSize = 0;
@@ -664,7 +664,7 @@ public class SimpleGameData implements Serializable{
 		return zombiesMap;
 	}
 
-	public static void spawnNormalWave(SimpleGameData dataBord, int squareSize, StringBuilder str,
+	public void spawnNormalWave(int squareSize, StringBuilder str,
 			ArrayList<Zombie> myZombies, BordView view, ApplicationContext context,
 			HashMap<Zombie, Integer> zombieList) {
 
@@ -673,8 +673,8 @@ public class SimpleGameData implements Serializable{
 			int sqrS = BordView.getSquareSize();
 
 			int endWave = 0;
-			int x = view.getXOrigin() + view.getWidth();
-			int y = view.getYOrigin() + dataBord.RandomPosGenerator(dataBord.getNbLines()) * sqrS + (sqrS / 2)
+			int x = view.getXOrigin() + BordView.getWidth();
+			int y = view.getYOrigin() + this.RandomPosGenerator(this.getNbLines()) * sqrS + (sqrS / 2)
 					- (Zombie.getSizeOfZombie() / 2);
 			ArrayList<Zombie> zombieAvailable = new ArrayList<>();
 			ArrayList<Integer> probList = new ArrayList<>();
@@ -688,7 +688,7 @@ public class SimpleGameData implements Serializable{
 				}
 
 				if (z.canSpawn(difficulty) && spawn > 0) {
-					probList.add(dataBord.RandomPosGenerator(z.getProb(difficulty)));
+					probList.add(this.RandomPosGenerator(z.getProb(difficulty)));
 					zombieAvailable.add(z);
 
 				}
@@ -710,7 +710,7 @@ public class SimpleGameData implements Serializable{
 					if (z.isCommon()) {
 						while (view.indexFromReaCoord(y, view.getYOrigin()) == 2
 								|| view.indexFromReaCoord(y, view.getYOrigin()) == 3) {
-							y = view.getYOrigin() + dataBord.RandomPosGenerator(dataBord.getNbLines()) * sqrS
+							y = view.getYOrigin() + this.RandomPosGenerator(this.getNbLines()) * sqrS
 									+ (sqrS / 2);
 						}
 						myZombies.add(z.createNewZombie(x, y));
@@ -745,19 +745,19 @@ public class SimpleGameData implements Serializable{
 		}
 	}
 
-	public static void spawnSuperWave(SimpleGameData dataBord, int squareSize, StringBuilder str,
+	public void spawnSuperWave(int squareSize, StringBuilder str,
 			ArrayList<Zombie> myZombies, BordView view, ApplicationContext context,
 			HashMap<Zombie, Integer> zombieList) {
 
 		int sqrS = BordView.getSquareSize();
 		int endWave = 0;
-		int x = view.getXOrigin() + view.getWidth();
+		int x = view.getXOrigin() + BordView.getWidth();
 
 		for (Map.Entry<Zombie, Integer> entry : zombieList.entrySet()) {
 			Zombie z = entry.getKey();
 			Integer spawn = entry.getValue();
 
-			int y = view.getYOrigin() + dataBord.RandomPosGenerator(dataBord.getNbLines()) * sqrS + (sqrS / 2)
+			int y = view.getYOrigin() + this.RandomPosGenerator(this.getNbLines()) * sqrS + (sqrS / 2)
 					- (Zombie.getSizeOfZombie() / 2);
 
 			if (spawn == 0) {
@@ -769,7 +769,7 @@ public class SimpleGameData implements Serializable{
 					if (z.isCommon()) {
 						while (view.indexFromReaCoord(y, view.getYOrigin()) == 2
 								|| view.indexFromReaCoord(y, view.getYOrigin()) == 3) {
-							y = view.getYOrigin() + dataBord.RandomPosGenerator(dataBord.getNbLines()) * sqrS
+							y = view.getYOrigin() + this.RandomPosGenerator(this.getNbLines()) * sqrS
 									+ (sqrS / 2);
 						}
 						myZombies.add(z.createNewZombie(x, y));
@@ -794,21 +794,21 @@ public class SimpleGameData implements Serializable{
 
 	}
 
-	public static void spawnZombies(SimpleGameData dataBord, int squareSize, StringBuilder str,
+	public void spawnZombies(int squareSize, StringBuilder str,
 			ArrayList<Zombie> myZombies, BordView view, ApplicationContext context, HashMap<Zombie, Integer> zombieList,
 			HashMap<Zombie, Integer> superZombieList) {
 
 		if (superWave == 0) {
-			spawnNormalWave(dataBord, squareSize, str, myZombies, view, context, zombieList);
+			spawnNormalWave(squareSize, str, myZombies, view, context, zombieList);
 		} else if (superWave == 1) {
 
-			spawnSuperWave(dataBord, squareSize, str, myZombies, view, context, superZombieList);
+			spawnSuperWave(squareSize, str, myZombies, view, context, superZombieList);
 
 		}
 
 	}
 
-	public static void setMap(String mape) {
+	public void setMap(String mape) {
 		map = mape;
 	}
 
@@ -816,15 +816,15 @@ public class SimpleGameData implements Serializable{
 		return map;
 	}
 
-	public static void setLoadChoice(String choice) {
+	public void setLoadChoice(String choice) {
 		loadChoice = choice;
 	}
 
-	public static String getLoadChoice() {
+	public String getLoadChoice() {
 		return loadChoice;
 	}
 
-	public static int getActualMoney() {
+	public int getActualMoney() {
 		return actualMoney;
 	}
 

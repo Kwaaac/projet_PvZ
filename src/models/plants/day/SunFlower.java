@@ -44,7 +44,7 @@ public class SunFlower extends Plant {
 	public void action(ArrayList<Projectile> myBullet, BordView view, ArrayList<Zombie> myZombies,
 			SimpleGameData dataBord) {
 		if (this.readyToshot()) {
-			SimpleGameData.spawnSun(view, x + 20, y + 20, 25, 85);
+			dataBord.spawnSun(view, x + 20, y + 20, 25, 85);
 			this.resetAS();
 		}
 

@@ -16,6 +16,7 @@ import views.BordView;
 import views.SelectBordView;
 
 public class PrincipalMenuController {
+	@SuppressWarnings("unchecked")
 	public static ArrayList<Plant> startGame(ApplicationContext context) {
 
 		ScreenInfo screenInfo = context.getScreenInfo();
@@ -79,9 +80,9 @@ public class PrincipalMenuController {
 					view.drawRectangle(context, 0, 0, width, height, "#cbd9ef");
 					return plantSelectionView.getSelectedPlants();
 				} else if (choice == "resume") {
-					SimpleGameData.setLoadChoice("resume");
+					dataBord.setLoadChoice("resume");
 					try {
-						return (ArrayList<Plant>) SystemFile.read("view");
+						return (ArrayList<Plant>) SystemFile.read("view", dataBord);
 					} catch (ClassNotFoundException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -128,27 +129,27 @@ public class PrincipalMenuController {
 					
 					switch (Y) {
 					case 0:
-						SimpleGameData.setMap("Day");
+						dataBord.setMap("Day");
 						choice = "plantSelection";
 						break;
 	
 					case 1:
-						SimpleGameData.setMap("Night");
+						dataBord.setMap("Night");
 						choice = "plantSelection";
 						break;
 						
 					case 2:
-						SimpleGameData.setMap("Pool");
+						dataBord.setMap("Pool");
 						choice = "plantSelection";
 						break;
 						
 					case 3:
-						SimpleGameData.setMap("NightPool");
+						dataBord.setMap("NightPool");
 						choice = "plantSelection";
 						break;
 						
 					case 4:
-						SimpleGameData.setMap("Roof");
+						dataBord.setMap("Roof");
 						choice = "plantSelection";
 						break;
 					}
