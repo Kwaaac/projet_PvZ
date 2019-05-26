@@ -71,8 +71,8 @@ public class PotatoMine extends Plant {
 
 		Cell cell = dataBord.getCell(getCaseJ(), getCaseI());
 
-		if (cell != null && cell.isThereZombies()) {
-			for (Entities z : cell.getZombiesInCell()) {
+		if (cell != null && cell.isThereBadZombies()) {
+			for (Entities z : cell.getBadZombiesInCell()) {
 				Lz.add(z);
 			}
 		}

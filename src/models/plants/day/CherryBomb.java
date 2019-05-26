@@ -55,8 +55,8 @@ public class CherryBomb extends Plant {
 		for (Coordinates c : zone) {
 			Cell cell = dataBord.getCell(c.getJ(), c.getI());
 
-			if (cell != null && cell.isThereZombies()) {
-				for (Entities e : cell.getZombiesInCell()) {
+			if (cell != null && cell.isThereBadZombies()) {
+				for (Entities e : cell.getBadZombiesInCell()) {
 					Lz.add(e);
 				}
 			}

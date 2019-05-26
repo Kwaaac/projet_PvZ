@@ -23,7 +23,8 @@ public abstract class Cell implements ICell, Serializable {
 	private Plant mainPlant;
 	private Plant supportPlant;
 
-	private final ArrayList<Zombie> zombiesInCell;
+	private final ArrayList<Zombie> badZombiesInCell;
+	private final ArrayList<Zombie> goodZombiesInCell;
 	private final ArrayList<Projectile> projectileInCell;
 
 	private boolean plantedGroundPlant = false;
@@ -41,7 +42,8 @@ public abstract class Cell implements ICell, Serializable {
 		mainPlant = null;
 		supportPlant = null;
 
-		zombiesInCell = new ArrayList<>();
+		badZombiesInCell = new ArrayList<>();
+		goodZombiesInCell = new ArrayList<>();
 		projectileInCell = new ArrayList<>();
 
 		crashChrono.steady();
@@ -275,31 +277,79 @@ public abstract class Cell implements ICell, Serializable {
 	public ArrayList<Projectile> getProjectilesInCell() {
 		return new ArrayList<Projectile>(projectileInCell);
 	}
+	
+	/**
+	 * Add a good zombie to the cell list of zombie
+	 */
+	private void addGoodZombie(Zombie z) {
+		goodZombiesInCell.add(z);
+	}
+	
+	/**
+	 * Add a bad zombie to the cell list of zombie
+	 */
+	private void addBadZombie(Zombie z) {
+		badZombiesInCell.add(z);
+	}
 
 	/**
-	 * Add a zombie to the cell list of zombie
+	 * Add a zombie to the cell
 	 * 
 	 * @param z Zombie you want to add on the cell
 	 */
 	public void addZombie(Zombie z) {
-		zombiesInCell.add(z);
+		if(z.isBad()) {
+			addBadZombie(z);
+		} else {
+			addGoodZombie(z);
+		}
 	}
 
 	/**
-	 * Remove a zombie to the cell list of zombie
+	 * Remove a zombie from the cell list of zombie
 	 * 
 	 * @param dPe Zombie in the cell
 	 */
-	public void removeZombie(IEntite dPe) {
-		zombiesInCell.remove(dPe);
+	public void removeZombie(IEntite z) {
+		if(z.isBad()) {
+			removebadZombie(z);
+		} else {
+			removeGoodZombie(z);
+		}
+	}
+	
+	/**
+	 * Remove a bad zombie from the cell list of zombie
+	 * 
+	 * @param dPe Zombie in the cell
+	 */
+	private void removebadZombie(IEntite dPe) {
+		badZombiesInCell.remove(dPe);
+	}
+	
+	/**
+	 * Remove a bad zombie from the cell list of zombie
+	 * 
+	 * @param dPe Zombie in the cell
+	 */
+	private void removeGoodZombie(IEntite dPe) {
+		goodZombiesInCell.remove(dPe);
 	}
 
 	/**
 	 * 
-	 * @return The list of zombie on the cell
+	 * @return The list of bad zombie on the cell
 	 */
-	public ArrayList<Zombie> getZombiesInCell() {
-		return new ArrayList<Zombie>(zombiesInCell);
+	public ArrayList<Zombie> getBadZombiesInCell() {
+		return new ArrayList<Zombie>(badZombiesInCell);
+	}
+	
+	/**
+	 * 
+	 * @return The list of good zombie on the cell
+	 */
+	public ArrayList<Zombie> getGoodZombiesInCell() {
+		return new ArrayList<Zombie>(goodZombiesInCell);
 	}
 
 	/**
@@ -318,6 +368,17 @@ public abstract class Cell implements ICell, Serializable {
 			return groundPlant;
 		}
 
+	}
+	
+	/**
+	 * @return the list of zombie to attack
+	 */
+	public ArrayList<Zombie> getZombiesToAttack(Zombie z){
+		if(z.isBad()) {
+			return getGoodZombiesInCell();
+		}
+		
+		return getBadZombiesInCell();
 	}
 
 	/**
@@ -344,11 +405,20 @@ public abstract class Cell implements ICell, Serializable {
 
 	/**
 	 * 
-	 * @return False if the list of zombie is empty, True otherwise
+	 * @return False if the list of bad zombie is empty, True otherwise
 	 */
 
-	public boolean isThereZombies() {
-		return !zombiesInCell.isEmpty();
+	public boolean isThereBadZombies() {
+		return !badZombiesInCell.isEmpty();
+	}
+	
+	/**
+	 * 
+	 * @return False if the list of good zombie is empty, True otherwise
+	 */
+
+	public boolean isThereGoodZombies() {
+		return !goodZombiesInCell.isEmpty();
 	}
 
 	/**
@@ -365,13 +435,13 @@ public abstract class Cell implements ICell, Serializable {
 	 *         False if both of the statement are False
 	 */
 	public boolean isCellEmpty() {
-		return isPlantedPlant() || isThereZombies();
+		return isPlantedPlant() || isThereBadZombies();
 	}
 
 	@Override
 	public String toString() {
 		return (isPlantedPlant() == true ? "Il y des plantes, " : "Il n'y a pas de plante, ")
-				+ (!zombiesInCell.isEmpty() ? "Voici les zombies présents \n" + zombiesInCell + ", "
+				+ (!badZombiesInCell.isEmpty() ? "Voici les zombies présents \n" + badZombiesInCell + ", "
 						: "Il n'y a pas de zombie");
 	}
 

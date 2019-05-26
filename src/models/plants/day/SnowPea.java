@@ -57,7 +57,7 @@ public class SnowPea extends Plant {
 
 	public boolean readyToshot(ArrayList<Cell> cells) {
 		for (Cell c : cells) {
-			if (c.isThereZombies()) {
+			if (c.isThereBadZombies()) {
 				return shootBar >= shootBarMax;
 			}
 		}

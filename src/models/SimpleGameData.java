@@ -435,6 +435,7 @@ public class SimpleGameData implements Serializable{
 			if (debug == false && debuglock == true) {
 				b.SpeedBoostOFF();
 			}
+			b.action();
 			view.moveAndDrawElement(context, this, b);
 			b.setCase(this);
 		}

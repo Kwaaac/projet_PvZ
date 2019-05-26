@@ -42,7 +42,7 @@ public class ScaredyShroom extends Plant {
 
 	public boolean readyToshot(ArrayList<Cell> cells) {
 		for (Cell c : cells) {
-			if (c.isThereZombies()) {
+			if (c.isThereBadZombies()) {
 				return shootBar >= shootBarMax;
 			}
 		}
@@ -54,8 +54,8 @@ public class ScaredyShroom extends Plant {
 		for (Cell c : cells) {
 			if (c != null) {
 
-				System.out.println(c.isThereZombies() + "COOOONAARD");
-				if (c.isThereZombies()) {
+				System.out.println(c.isThereBadZombies() + "COOOONAARD");
+				if (c.isThereBadZombies()) {
 					return false;
 				}
 			}

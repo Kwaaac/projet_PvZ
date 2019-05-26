@@ -196,7 +196,6 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie,
 		if (data.getCell(view.lineFromY(this.getY()), view.columnFromX(this.getX())) != null) {
 			Le = data.getCell(view.lineFromY(this.getY()), view.columnFromX(this.getX())).getProjectilesInCell();
 			for (Projectile e : Le) {
-				e.action();
 				if (this.hit(e) && !(e.isInConflict()) && this.isBad()) {
 					this.slowed(e.isSlowing());
 					e.setConflictMode(true);
@@ -229,7 +228,7 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie,
 			if (this.hit(p)) {
 				this.stop();
 				if (this.readyToshot()) {
-					
+
 					this.mortalKombat(p);
 					this.resetAS();
 				}
@@ -244,22 +243,29 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie,
 
 	public void conflictZvZ(DeadPool deadPoolE, BordView view, SimpleGameData data, StringBuilder str) {
 		ArrayList<Zombie> zombies;
-		if (data.getCell(view.lineFromY(this.getY()), view.columnFromX(this.getX())) != null
-				&& data.getCell(view.lineFromY(this.getY()), view.columnFromX(this.getX())).isThereZombies()) {
-			zombies = data.getCell(view.lineFromY(this.getY()), view.columnFromX(this.getX())).getZombiesInCell();
-			for (Zombie z : zombies) {
-				if (z.isGood() && this.hit(z)) {
-					this.stop();
-					z.stop();
-					if (this.readyToshot()) {
-						(z).mortalKombat(this);
-						this.resetAS();
+		int thisY = view.lineFromY(y);
+		int thisX = view.columnFromX(x);
+		
+		if(this.isBad()) {
+			Cell actualCell = data.getCell(thisY, thisX);
+			
+			if (actualCell != null && actualCell.isThereGoodZombies()) {
+				
+				zombies = actualCell.getZombiesToAttack(this);
+				for (Zombie z : zombies) {
+					if(this.hit(z)) {
+						this.stop();
+						z.stop();
+						if (this.readyToshot()) {
+							(z).mortalKombat(this);
+							this.resetAS();
+						}
 					}
-				}
-				if (z.isDead()) {
-					str.append(z + "meurt\n");
-					deadPoolE.add(z);
-					data.getCell(view.lineFromY(z.getY()), view.columnFromX(z.getX())).removeZombie(z);
+					if (z.isDead()) {
+						str.append(z + "meurt\n");
+						deadPoolE.add(z);
+						data.getCell(view.lineFromY(z.getY()), view.columnFromX(z.getX())).removeZombie(z);
+					}
 				}
 			}
 		}
@@ -274,7 +280,7 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie,
 						l.go();
 					}
 					life = 0;
-					str.append(this + " meurt tué par une tondeuse\n");
+					str.append(this + " meurt tuï¿½ par une tondeuse\n");
 					l.setLife(100000);
 				}
 			}

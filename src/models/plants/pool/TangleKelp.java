@@ -64,7 +64,7 @@ public class TangleKelp extends Plant {
 		ArrayList<Zombie> zombies = new ArrayList<>();
 
 		for (Cell c : cells) {
-			ArrayList<Zombie> lstz = c.getZombiesInCell();
+			ArrayList<Zombie> lstz = c.getBadZombiesInCell();
 
 			if (!lstz.isEmpty()) {
 				zombies.add(lstz.get(0));

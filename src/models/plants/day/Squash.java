@@ -69,7 +69,7 @@ public class Squash extends Plant {
 		ArrayList<Zombie> zombies = new ArrayList<>();
 
 		for (Cell c : cells) {
-			ArrayList<Zombie> lstz = c.getZombiesInCell();
+			ArrayList<Zombie> lstz = c.getBadZombiesInCell();
 
 			if (!lstz.isEmpty()) {
 				for (Zombie z : lstz) {

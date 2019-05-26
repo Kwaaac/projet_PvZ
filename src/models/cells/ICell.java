@@ -29,11 +29,11 @@ public interface ICell {
 
 	void removeZombie(IEntite dPe);
 
-	boolean isThereZombies();
+	boolean isThereBadZombies();
 
 	boolean isCellEmpty();
 
-	ArrayList<Zombie> getZombiesInCell();
+	ArrayList<Zombie> getBadZombiesInCell();
 
 	Color getColor();
 
