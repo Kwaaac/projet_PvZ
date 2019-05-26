@@ -62,7 +62,11 @@ public abstract class Entities implements IEntite, Serializable{
 	}
 
 	public void setLife(int life) {
-		this.life = this.life - life;
+		if(life < 0) {
+			this.life = this.life - life;
+		} else {
+			this.life = 0;
+		}
 	}
 
 	public boolean isDead() {

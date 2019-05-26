@@ -71,11 +71,6 @@ public class Chomper extends Plant {
 		return super.toString() + "--" + name;
 	}
 
-	private void startDelay() {
-		if (delayAttack.isReset()) {
-			delayAttack.start();
-		}
-	}
 
 	@Override
 	public void action(ArrayList<Projectile> myBullet, BordView view, ArrayList<Zombie> myZombies,
@@ -86,7 +81,7 @@ public class Chomper extends Plant {
 			ArrayList<Zombie> zombie = this.detect(this.zone(dataBord));
 
 			if (!zombie.isEmpty()) {
-				startDelay();
+				delayAttack.startChronoIfReset();
 
 				if (delayAttack.asReachTimer(1)) {
 

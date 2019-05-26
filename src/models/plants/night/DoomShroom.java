@@ -9,6 +9,7 @@ import fr.umlv.zen5.ApplicationContext;
 import models.Coordinates;
 import models.Entities;
 import models.SimpleGameData;
+import models.cells.Cell;
 import models.plants.Plant;
 import models.projectiles.Projectile;
 import models.zombies.Zombie;
@@ -17,10 +18,11 @@ import views.SimpleGameView;
 
 public class DoomShroom extends Plant {
 	private final String name = "DoomShroom";
-	private final String color = "#90D322";
+	private final String color = "#1e1b1b";
 
 	public DoomShroom(int x, int y) {
-		super(x, y, 0, 1, 0, 125, "fast");
+		super(x, y, 0, 1, 1200, 125, "verySlow");
+		this.shootTime = System.currentTimeMillis();
 	}
 
 	public DoomShroom() {
@@ -29,54 +31,10 @@ public class DoomShroom extends Plant {
 
 	@Override
 	public String toString() {
-		return super.toString() + "--" + name;
+		return name;
 	}
 
 	int sizeOfPlant = super.getSizeOfPlant();
-
-	private ArrayList<Coordinates> zone(BordView view) {
-		int caseXDoom = view.columnFromX(x);
-		int caseYDoom = view.lineFromY(y);
-		ArrayList<Coordinates> zone = new ArrayList<>();
-		for (int i = -1; i <= 1; i++) {
-			for (int j = -1; j <= 1; j++) {
-				if (caseXDoom + i >= 0 && caseXDoom + i <= view.getHeight() && caseYDoom + j >= 0
-						&& caseYDoom + j <= view.getWidth()) {
-					zone.add(new Coordinates(caseXDoom + i, caseYDoom + j));
-				}
-			}
-		}
-
-		return zone;
-	}
-
-	private ArrayList<Entities> detect(BordView view, ArrayList<Zombie> myZombies) {
-		ArrayList<Coordinates> doomShroom = this.zone(view);
-		ArrayList<Entities> Lz = new ArrayList<>();
-		for (Entities z : myZombies) {
-			Coordinates zombie = z.getCase();
-			for (Coordinates c : doomShroom) {
-				if (zombie.equals(c)) {
-					Lz.add(z);
-				}
-			}
-		}
-		return Lz;
-	}
-
-	@Override
-	public void action(ArrayList<Projectile> myBullet, BordView view, ArrayList<Zombie> myZombies,
-			SimpleGameData dataBord) {
-
-		if (this.readyToshot()) {
-			for (Entities z : this.detect(view, myZombies)) {
-				z.takeDmg(1800);
-			}
-			this.life = 0;
-		}
-
-		this.incAS();
-	}
 
 	@Override
 	public Plant createNewPlant(int x, int y) {
@@ -85,19 +43,42 @@ public class DoomShroom extends Plant {
 	}
 
 	@Override
-	public void draw(SimpleGameView view, Graphics2D graphics) {
-		graphics.setColor(Color.decode(color));
-		graphics.fill(new Rectangle2D.Float(x, y, sizeOfPlant, sizeOfPlant));
-		
+	public void action(ArrayList<Projectile> myBullet, BordView view, ArrayList<Zombie> myZombies,
+			SimpleGameData dataBord) {
+
+			if (this.readyToshot()) {
+				for (Zombie z : myZombies) {
+					z.takeDmg(1800);
+				}
+
+				Cell cell = dataBord.getCell(getCaseJ(), getCaseI());
+
+				cell.removeAllPlant();
+				cell.crater();
+			}
+
+			this.incAS();
 	}
-	
+
+	@Override
+	public void draw(SimpleGameView view, Graphics2D graphics) {
+		graphics.setColor(Color.decode("#5b5252"));
+		graphics.fill(new Rectangle2D.Float(x + 15, y + sizeOfSPlant / 2, sizeOfPlant - 25, sizeOfPlant - 15));
+
+		graphics.setColor(Color.decode(color));
+		graphics.fill(new Rectangle2D.Float(x - 9, y, sizeOfPlant + 25, sizeOfPlant - 25));
+	}
+
 	int sizeOfSPlant = super.getSizeOfPlant() - 10;
 
 	@Override
 	public void draw(SimpleGameView view, Graphics2D graphics, int x, int y) {
+		graphics.setColor(Color.decode("#5b5252"));
+		graphics.fill(new Rectangle2D.Float(x, y + sizeOfSPlant, sizeOfSPlant - 35, sizeOfSPlant - 35));
+
 		graphics.setColor(Color.decode(color));
-		graphics.fill(new Rectangle2D.Float(x - 15, y + sizeOfSPlant / 2, sizeOfSPlant, sizeOfSPlant));
-		
+		graphics.fill(new Rectangle2D.Float(x - 18, y + sizeOfSPlant / 2, sizeOfSPlant, sizeOfSPlant - 25));
+
 		view.drawCost(graphics, x, y, cost.toString());
 	}
 

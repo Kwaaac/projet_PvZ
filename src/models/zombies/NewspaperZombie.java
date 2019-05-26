@@ -57,7 +57,7 @@ public class NewspaperZombie extends Zombie {
 	public boolean action(SimpleGameData dataBord) {
 		if (this.life <= 200) {
 			setSpeed(-1.70);
-			shootBarMax = (int) (3 * -7500);
+			shootBarMax = 4000;
 			color = "#000000";
 		}
 		return true;

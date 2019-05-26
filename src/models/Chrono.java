@@ -102,6 +102,15 @@ public class Chrono implements Serializable{
 	public String getDureeTxt() {
 		return timeToHMS(getDureeSec());
 	}
+	
+	/**
+	 * If the chrono is reset then, it start
+	 */
+	public void startChronoIfReset() {
+		if (this.isReset()) {
+			this.start();
+		}
+	}
 
 	/**
 	 * 

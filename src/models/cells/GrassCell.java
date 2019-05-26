@@ -12,6 +12,8 @@ public class GrassCell extends Cell {
 	public GrassCell() {
 		super();
 	}
+	
+	
 
 	@Override
 	public void drawBoardCell(Graphics2D graphics, float i, float j, int darker) {

@@ -1,11 +1,15 @@
 package models.cells;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import java.awt.geom.Ellipse2D;
+
+import models.Chrono;
 import models.IEntite;
 import models.plants.Plant;
 import models.projectiles.Projectile;
@@ -25,7 +29,13 @@ public abstract class Cell implements ICell, Serializable {
 	private boolean plantedGroundPlant = false;
 	private boolean plantedMainPlant = false;
 	private boolean plantedSupportPlant = false;
-	
+
+	private boolean crash = false;
+	private Chrono crashChrono = new Chrono();
+
+	private boolean ice = false;
+	private Chrono iceChrono = new Chrono();
+
 	public Cell() {
 		groundPlant = null;
 		mainPlant = null;
@@ -33,15 +43,74 @@ public abstract class Cell implements ICell, Serializable {
 
 		zombiesInCell = new ArrayList<>();
 		projectileInCell = new ArrayList<>();
+
+		crashChrono.steady();
+		iceChrono.steady();
 	}
-	
+
 	int squareSize = BordView.getSquareSize();
-	
+
 	@Override
 	public void drawBoardCell(Graphics2D graphics, float i, float j, int darker) {
 		graphics.fill(new Rectangle2D.Float(j, i, squareSize, squareSize));
+		drawCellChanges(graphics, i, j);
+	}
+
+	private void drawCellChanges(Graphics2D graphics, float i, float j) {
+		//crater drawing
+		if (crash) {
+			crashChrono.startChronoIfReset();
+
+			graphics.setColor(Color.decode("#bc6b38"));
+			int adjust1 = (int) ((int) squareSize - (squareSize * 0.40));
+			int adjust2 = (int) ((int) squareSize / 8.64);
+			graphics.fill(new Ellipse2D.Float(j + adjust2, i + adjust2, adjust1, adjust1));
+
+			graphics.setColor(Color.decode("#874d29"));
+			adjust1 = (int) ((int) squareSize - (squareSize * 0.50));
+			adjust2 = (int) ((int) squareSize / 8.64);
+			graphics.fill(new Ellipse2D.Float(j + 35, i + 35, adjust1, adjust1));
+
+			if (crashChrono.asReachTimer(90)) {
+				crater();
+			}
+		}
+		
+		//ice drawing
+		if(ice) {
+			iceChrono.startChronoIfReset();
+
+			graphics.setColor(Color.decode("#63c5ff"));
+			graphics.fill(new Rectangle2D.Float(j, i + squareSize/4, squareSize, squareSize/3));
+
+			if (iceChrono.asReachTimer(90)) {
+				ice();
+			}
+		}
+	}
+
+	/**
+	 * add or remove the crater effect
+	 */
+	public void crater() {
+		if (!crash) {
+			crash = true;
+		} else {
+			crash = false;
+		}
 	}
 	
+	/**
+	 * add or remove the ice effect
+	 */
+	public void ice() {
+		if (!ice) {
+			ice = true;
+		} else {
+			ice = false;
+		}
+	}
+
 	/**
 	 * Add a main plant on the cell, wont add it if a plant is already planted
 	 */
@@ -58,11 +127,14 @@ public abstract class Cell implements ICell, Serializable {
 	/**
 	 * Remove the main plant from the cell
 	 */
-	private void removeMainPlant(IEntite dPe) {
-		plantedMainPlant = false;
-		mainPlant = null;
+	private void removeMainPlant() {
+		if (mainPlant != null) {
+			mainPlant.setLife(0);
+			plantedMainPlant = false;
+			mainPlant = null;
+		}
 	}
-	
+
 	/**
 	 * Add a ground plant on the cell, wont add it if a plant is already planted
 	 */
@@ -72,22 +144,25 @@ public abstract class Cell implements ICell, Serializable {
 		}
 		plantedGroundPlant = true;
 		groundPlant = plant;
-		
+
 		return true;
 	}
 
 	/**
 	 * Remove the ground plant from the cell
 	 */
-	private void removeGroundPlant(IEntite dPe) {
-		plantedGroundPlant = false;
-		groundPlant = null;
+	private void removeGroundPlant() {
+		if (groundPlant != null) {
+			groundPlant.setLife(0);
+			plantedGroundPlant = false;
+			groundPlant = null;
+		}
 	}
-	
+
 	public Plant getGroundPlant() {
 		return groundPlant;
 	}
-	
+
 	/**
 	 * Add a support plant on the cell, wont add it if a plant is already planted
 	 */
@@ -104,46 +179,62 @@ public abstract class Cell implements ICell, Serializable {
 	/**
 	 * Remove the support plant from the cell
 	 */
-	private void removeSupportPlant(IEntite dPe) {
-		plantedSupportPlant = false;
-		supportPlant = null;
+	private void removeSupportPlant() {
+		if (supportPlant != null) {
+			supportPlant.setLife(0);
+			plantedSupportPlant = false;
+			supportPlant = null;
+		}
 	}
-	
+
 	/**
 	 * Return true if a plant is planted, false otherwise
 	 */
 	public boolean addPlant(Plant plant) {
-		switch(plant.getTypeOfPlant()) {
-		case 0:
-			return(addGroundPlant(plant));
-			
-		case 1:
-			return(addMainPlant(plant));
-			
-		case 2:
-			return(addSupportPlant(plant));
+		if (!crash && !ice) {
+			switch (plant.getTypeOfPlant()) {
+			case 0:
+				return (addGroundPlant(plant));
+
+			case 1:
+				return (addMainPlant(plant));
+
+			case 2:
+				return (addSupportPlant(plant));
+			}
+
+			// On veut que la plante soit l'un des 3 types
+			throw new IllegalStateException("La plante est d'un type inconnue");
 		}
-		
-		// On veut que la plante soit l'un des 3 types
-		throw new IllegalStateException("La plante est d'un type inconnue");
+		return false;
 	}
-	
+
 	public void removePlant(Plant plant) {
-		switch(plant.getTypeOfPlant()) {
+		switch (plant.getTypeOfPlant()) {
 		case 0:
-			removeGroundPlant(plant);
+			removeGroundPlant();
 			break;
-			
+
 		case 1:
-			removeMainPlant(plant);
+			removeMainPlant();
 			break;
-			
+
 		case 2:
-			removeSupportPlant(plant);
+			removeSupportPlant();
 			break;
 		}
 	}
-	
+
+	/**
+	 * Method that remove all the plant of the cell in one hit (Gargantua,
+	 * DoomShroom ...)
+	 */
+	public void removeAllPlant() {
+		removeGroundPlant();
+		removeMainPlant();
+		removeSupportPlant();
+	}
+
 	/**
 	 * Add a projectile in it's array
 	 * 
@@ -283,6 +374,5 @@ public abstract class Cell implements ICell, Serializable {
 				+ (!zombiesInCell.isEmpty() ? "Voici les zombies présents \n" + zombiesInCell + ", "
 						: "Il n'y a pas de zombie");
 	}
-	
 
 }
