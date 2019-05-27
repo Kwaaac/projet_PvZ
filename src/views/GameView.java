@@ -31,6 +31,22 @@ public interface GameView {
 	public int columnFromX(float x);
 
 	/**
+	 * Transform a i-index into the coordinate of the corresponding column.
+	 * 
+	 * @param i a int i-index
+	 * @return the float of the corresponding column
+	 */
+	public float xFromI(int i);
+	
+	/**
+	 * Transform a j-index into the coordinate of the corresponding line.
+	 * 
+	 * @param j a int j-index
+	 * @return the float of the corresponding line
+	 */
+	public float yFromJ(int j);
+	
+	/**
 	 * Draws the game board from its data, using an existing Graphics2D object.
 	 * 
 	 * @param graphics a Graphics2D object provided by the default method

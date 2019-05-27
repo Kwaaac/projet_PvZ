@@ -15,7 +15,7 @@ public interface IProjectile {
 
 	int isSlowing();
 
-	void action();
+	void action(SimpleGameData data);
 	
 	String getColor();
 }

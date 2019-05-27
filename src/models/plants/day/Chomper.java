@@ -86,7 +86,7 @@ public class Chomper extends Plant {
 
 				if (delayAttack.asReachTimer(1)) {
 
-					zombie.get(0).setLife(1800);
+					zombie.get(zombie.size()-1).takeDmg(1800);
 					eating = true;
 					resetAS();
 				}

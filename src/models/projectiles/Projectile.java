@@ -111,5 +111,6 @@ public abstract class Projectile extends Entities implements MovingElement, IPro
 		return Objects.hash(super.hashCode(), speed);
 	}
 	
-	public void action() {}
+	@Override
+	public void action(SimpleGameData data) {}
 }

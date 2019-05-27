@@ -80,7 +80,7 @@ public class SnorkelZombie extends Zombie {
 		if (data.getCell(view.lineFromY(this.getY()), view.columnFromX(this.getX())).isPlantedPlant()) {
 			Le = data.getCell(view.lineFromY(this.getY()), view.columnFromX(this.getX())).getProjectilesInCell();
 			for (Projectile e : Le) {
-				e.action();
+				e.action(data);
 				if (this.outOfWater == true && this.hit(e) && !(e.isInConflict()) && this.isBad()) {
 					this.slowed(e.isSlowing());
 					e.setConflictMode(true);

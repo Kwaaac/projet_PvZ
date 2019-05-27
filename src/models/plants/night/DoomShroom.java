@@ -45,9 +45,8 @@ public class DoomShroom extends Plant {
 	}
 
 	@Override
-	public void action(List<Projectile> myBullet, BordView view, List<Zombie> myZombies,
-			SimpleGameData dataBord) {
-
+	public void action(List<Projectile> myBullet, BordView view, List<Zombie> myZombies, SimpleGameData dataBord) {
+		if (dataBord.getMap() == "Night") {
 			if (this.readyToshot()) {
 				for (Zombie z : myZombies) {
 					z.takeDmg(1800);
@@ -60,6 +59,7 @@ public class DoomShroom extends Plant {
 			}
 
 			this.incAS();
+		}
 	}
 
 	@Override
@@ -79,7 +79,8 @@ public class DoomShroom extends Plant {
 		graphics.fill(new Rectangle2D.Float(x, y + sizeOfSPlant, sizeOfSPlant - 35, sizeOfSPlant - 35));
 
 		graphics.setColor(Color.decode(color));
-		graphics.fill(new RoundRectangle2D.Float(x - 18, y + sizeOfSPlant / 2, sizeOfSPlant, sizeOfSPlant - 25, 10, 10));
+		graphics.fill(
+				new RoundRectangle2D.Float(x - 18, y + sizeOfSPlant / 2, sizeOfSPlant, sizeOfSPlant - 25, 10, 10));
 
 		view.drawCost(graphics, x, y, cost.toString());
 	}

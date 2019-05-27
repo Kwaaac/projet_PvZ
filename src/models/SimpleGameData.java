@@ -53,7 +53,7 @@ public class SimpleGameData implements Serializable{
 
 	private int actualMoney = 2500;
 	private int actualfertilizer = 0;
-	private int fertilizerChance = 10;
+	private int fertilizerChance = 100;
 	private Chrono sunSpawn = new Chrono();
 
 	static Chrono time = new Chrono();
@@ -210,13 +210,13 @@ public class SimpleGameData implements Serializable{
 	 *         column and ending to the right side of the bord
 	 */
 
-	public ArrayList<Cell> getLineCell(int y, int x, int max) {
+	public List<Cell> getLineCell(int y, int x, int max) {
 		ArrayList<Cell> cells = new ArrayList<>();
 		for (int i = x; i < max; i++) {
 			cells.add(getCell(y, i));
 		}
 
-		return cells;
+		return Collections.unmodifiableList(cells);
 	}
 
 	public List<Plant> getMyPlants() {
@@ -454,7 +454,7 @@ public class SimpleGameData implements Serializable{
 			if (debug == false && debuglock == true) {
 				b.SpeedBoostOFF();
 			}
-			b.action();
+			b.action(this);
 			view.moveAndDrawElement(context, this, b);
 			b.setCase(this);
 		}

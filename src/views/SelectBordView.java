@@ -167,11 +167,11 @@ public class SelectBordView extends SimpleGameView {
 		return selectedPlants;
 	}
 
-	protected float xFromI(int i) {
+	public float xFromI(int i) {
 		return realCoordFromIndex(i, xOrigin);
 	}
 
-	protected float yFromJ(int j) {
+	public float yFromJ(int j) {
 		return realCoordFromIndex(j, yOrigin);
 	}
 

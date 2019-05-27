@@ -37,8 +37,6 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie,
 	protected int slowedLimit;
 	protected boolean afflicted = false;
 	
-	protected boolean fertilizer = true;
-
 	protected boolean fertilizer;
 
 	protected final HashMap<String, Double> mSpeed = new HashMap<String, Double>() {
@@ -126,7 +124,7 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie,
 			setSpeed(x / 2);
 			shootBarMax = (int) (getSpeed() * -7500);
 
-			if (slowedTime.asReachTimer(6)) { // slowing effect stop
+			if (slowedTime.asReachTimer(slowedLimit)) { // slowing effect stop
 				slowedTime.steady();
 				afflicted = false; // a upgrade avec le shockEffect
 			}
@@ -193,13 +191,13 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie,
 	@Override
 	public void draw(SimpleGameView view, Graphics2D graphics) {
 		
-		if(fertilizer) {
-			graphics.setColor(new Color(38, 198, 35, 70));
+		if(afflicted) {
+			graphics.setColor(new Color(99, 197, 255, 100));
 			graphics.fill(new Ellipse2D.Float(x, y, sizeOfZombie, sizeOfZombie));
 		}
 		
-		if(this.afflicted) {
-			graphics.setColor(new Color(99, 197, 255, 100));
+		if(fertilizer) {
+			graphics.setColor(new Color(38, 198, 35, 90));
 			graphics.fill(new Ellipse2D.Float(x, y, sizeOfZombie, sizeOfZombie));
 		}
 	

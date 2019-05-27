@@ -68,7 +68,7 @@ public class PuffShroom extends Plant {
 		view.drawCost(graphics, x, y, cost.toString());
 	}
 
-	public boolean readyToshot(ArrayList<Cell> cells) {
+	public boolean readyToshot(List<Cell> cells) {
 		for (Cell c : cells) {
 			if (c.isThereBadZombies()) {
 				return shootBar >= shootBarMax;

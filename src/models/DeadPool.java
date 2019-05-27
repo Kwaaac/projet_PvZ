@@ -110,9 +110,6 @@ public class DeadPool implements Serializable{
 
 	}
 	
-
-
-	
 	public void deletingEverything(SimpleGameData dataBord) {
 		this.clearEntityBullet(dataBord);
 		this.clearEntityPlants(dataBord);

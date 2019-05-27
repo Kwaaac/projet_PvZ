@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Ellipse2D;
 
+import models.SimpleGameData;
 import views.BordView;
 import views.SimpleGameView;
 
@@ -37,7 +38,7 @@ public class WeakSpore extends Projectile {
 	}
 
 	@Override
-	public void action() {
+	public void action(SimpleGameData data) {
 		if (distance != -1) {
 			if ((spawnX + distance) < getX()) {
 				setLife(1);

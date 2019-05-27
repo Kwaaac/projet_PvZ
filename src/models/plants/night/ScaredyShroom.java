@@ -53,7 +53,7 @@ public class ScaredyShroom extends Plant {
 		return false;
 	}
 
-	public boolean hiding(ArrayList<Cell> cells) {
+	public boolean hiding(List<Cell> cells) {
 		for (Cell c : cells) {
 			if (c != null) {
 				if (c.isThereBadZombies()) {
