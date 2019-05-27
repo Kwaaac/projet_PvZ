@@ -13,6 +13,7 @@ import views.BordView;
 import views.SimpleGameView;
 
 public class Fume extends Projectile {
+	private String name = "Fume";
 	private String color = "#7714AD";
 	private Chrono ttl = new Chrono();
 
@@ -21,6 +22,11 @@ public class Fume extends Projectile {
 		ttl.start();
 	}
 
+	@Override
+	public String toString() {
+		return name;
+	}
+	
 	@Override
 	public String getColor() {
 		return null;

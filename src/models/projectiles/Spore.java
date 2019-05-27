@@ -8,12 +8,18 @@ import views.BordView;
 import views.SimpleGameView;
 
 public class Spore extends Projectile {
+	private String name ="Spore";
 	private String color = "#7714AD";
 
 	public Spore(float x, float y) {
 		super(x, y, 75, 1, 20.0);
 	}
 
+	@Override
+	public String toString() {
+		return name; 
+	}
+	
 	@Override
 	public String getColor() {
 		return null;

@@ -24,7 +24,7 @@ public class Pea extends Projectile {
 
 	@Override
 	public String toString() {
-		return super.toString() + "--" + name; 
+		return name; 
 	}
 
 	int  sizeofP = getSizeOfProjectile();

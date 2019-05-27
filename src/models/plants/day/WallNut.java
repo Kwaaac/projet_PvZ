@@ -30,7 +30,7 @@ public class WallNut extends Plant {
 
 	@Override
 	public String toString() {
-		return super.toString() + "--" + name;
+		return name;
 	}
 
 	@Override

@@ -54,7 +54,7 @@ public class LawnMower extends Projectile {
 
 	@Override
 	public String toString() {
-		return super.toString() + "--" + id +" "+ name; 
+		return name; 
 	}
 
 

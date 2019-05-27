@@ -36,7 +36,7 @@ public class SeaShroom extends Plant {
 
 	@Override
 	public String toString() {
-		return super.toString() + "--" + name;
+		return name;
 	}
 
 	public boolean readyToshot(ArrayList<Cell> cells) {

@@ -30,7 +30,7 @@ public class SnowPea extends Plant {
 
 	@Override
 	public String toString() {
-		return super.toString() + "--" + name;
+		return name;
 	}
 
 	int sizeOfPlant = super.getSizeOfPlant();

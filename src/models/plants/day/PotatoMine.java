@@ -35,7 +35,7 @@ public class PotatoMine extends Plant {
 
 	@Override
 	public String toString() {
-		return super.toString() + "--" + name;
+		return name;
 	}
 
 	private void activation() {

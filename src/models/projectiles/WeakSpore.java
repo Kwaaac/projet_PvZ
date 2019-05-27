@@ -9,6 +9,7 @@ import views.BordView;
 import views.SimpleGameView;
 
 public class WeakSpore extends Projectile {
+	private String name = "WeakSpore";
 	private float spawnX;
 	private float distance;
 	private String color = "#7714AD";
@@ -19,6 +20,11 @@ public class WeakSpore extends Projectile {
 		this.distance = BordView.getSquareSize() * 3;
 	}
 
+	@Override
+	public String toString() {
+		return name; 
+	}
+	
 	@Override
 	public String getColor() {
 		return null;

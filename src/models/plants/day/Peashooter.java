@@ -31,7 +31,7 @@ public class Peashooter extends Plant {
 	
 	@Override
 	public String toString() {
-		return super.toString() + "--" + name + cooldown; 
+		return name; 
 	}
 	
 	int sizeOfPlant = super.getSizeOfPlant();
