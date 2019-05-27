@@ -37,28 +37,30 @@ public class SimpleGameController {
 		int width = (int) screenInfo.getWidth();
 		int height = (int) screenInfo.getHeight();
 		
-		ArrayList<Plant> selectedPlant = PrincipalMenuController.startGame(context);
-		SimpleGameData dataBord = new SimpleGameData(1,1);//no care but important
+		SimpleGameData dataBord = new SimpleGameData(1,1);//unsused but important
+		
+		ArrayList<Plant> selectedPlant = PrincipalMenuController.startGame(context, dataBord);
+		
 //		dataBord.generateZombies(1)
 		HashMap<Zombie, Integer> normalWaveZombie = new HashMap<>();
 		normalWaveZombie.put(new BucketheadZombie(), 1);
 		
 		HashMap<Zombie, Integer> superWaveZombie = dataBord.generateZombies(2);
-		
-		SelectBordView plantSelectionView = SelectBordView.initGameGraphics(0, 0, 900, dataBord, selectedPlant);//no care but important
-		SimpleGameData dataSelect = new SimpleGameData(selectedPlant.size(), 1);
 
 		int yOrigin = 100;
+		
+		SimpleGameData dataSelect = new SimpleGameData(selectedPlant.size(), 1);
+		SelectBordView plantSelectionView = SelectBordView.initGameGraphics(0, yOrigin, 900, dataSelect, selectedPlant);
 		
 		if (dataBord.getLoadChoice() == "start") {
 			BordView.setWidth(width);
 			BordView.setHeight(height);
 			dataBord = Map.dataBord();
-			plantSelectionView = SelectBordView.initGameGraphics(0, yOrigin, 900, dataSelect, selectedPlant);
 		}
 		else {
 			try {
-				dataBord = (SimpleGameData) SystemFile.read("data", dataBord);
+				dataBord = (SimpleGameData) SystemFile.read("data");
+				plantSelectionView = SelectBordView.initGameGraphics(0, yOrigin, 900, dataSelect, selectedPlant);
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
 			} catch (IOException e) {
@@ -75,7 +77,9 @@ public class SimpleGameController {
 		view.draw(context, dataBord);
 		plantSelectionView.draw(context, dataSelect);
 
-		
+		//---------------WHAT DO I HAVE IN MY GAME ?---------------//
+		System.out.println(view+"\n\n"+plantSelectionView+"\n\n"+dataBord+"\n\n"+dataSelect);
+		//---------------------------------------------------------//
 
 		Zombie.getSizeOfZombie();
 		Pea.getSizeOfProjectile();

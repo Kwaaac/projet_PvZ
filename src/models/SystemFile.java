@@ -14,6 +14,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 
+import models.cells.Cell;
 import models.plants.Plant;
 import views.SelectBordView;
 
@@ -36,12 +37,12 @@ public class SystemFile implements Serializable{
             e.printStackTrace();
             
         }
-//		try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("matrix.ser"))) {
-//            oos.writeObject(data.getMatrix());
-//        }
-//        catch (IOException e) {
-//            e.printStackTrace();
-//        }
+		try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("matrix.ser"))) {
+            oos.writeObject(data.getMatrix());
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
 		
 		
 		Charset charset = StandardCharsets.UTF_8;
@@ -50,15 +51,9 @@ public class SystemFile implements Serializable{
 		}
 	}
 	
-	public static Object read(String s,SimpleGameData data) throws ClassNotFoundException, IOException {
+	public static Object read(String s) throws ClassNotFoundException, IOException {
 		
-		try (BufferedReader reader = Files.newBufferedReader(Paths.get("map.txt"), StandardCharsets.UTF_8)){
-			String line;
-			
-			while ((line = reader.readLine()) != null) {
-				data.setMap(line.toString());
-			}
-		}
+		
 		
 		switch (s) {
 		case "data":
@@ -66,13 +61,21 @@ public class SystemFile implements Serializable{
 				
 				SimpleGameData x = (SimpleGameData) ois.readObject();
 				
-	//			try (ObjectInputStream ois2 = new ObjectInputStream(new FileInputStream("matrix.ser"))) {
-	//				 Cell[][] matrix = (Cell[][]) ois2.readObject();
-	//				 x.setMatrix(matrix);
-	//			}
-	//			catch (IOException e) {
-	//	            e.printStackTrace();
-	//	        }
+				try (BufferedReader reader = Files.newBufferedReader(Paths.get("map.txt"), StandardCharsets.UTF_8)){
+					String line;
+					
+					while ((line = reader.readLine()) != null) {
+						x.setMap(line.toString());
+					}
+				}
+				try (ObjectInputStream ois2 = new ObjectInputStream(new FileInputStream("matrix.ser"))) {
+					 Cell[][] matrix = (Cell[][]) ois2.readObject();
+					 
+					 x.setMatrix(matrix);
+				}
+				catch (IOException e) {
+		            e.printStackTrace();
+		        }
 				
 				return x;
 	        }

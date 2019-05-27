@@ -46,6 +46,17 @@ public class BordView extends SimpleGameView {
 		return new BordView(xOrigin, yOrigin, height, data.getNbColumns() * squareSize, squareSize);
 	}
 	
+	@Override
+	public String toString() {
+		StringBuilder str = new StringBuilder("---BORD_VIEW---\n");
+		str.append("xOrigin = "+xOrigin+"\n");
+		str.append("yOrigin = "+yOrigin+"\n");
+		str.append("height = "+height+"\n");
+		str.append("width = "+width+"\n");
+		str.append("squareSize = "+squareSize);
+		return str.toString();
+	}
+	
 	public int getXOrigin() {
 		return xOrigin;
 	}
@@ -149,11 +160,6 @@ public class BordView extends SimpleGameView {
 	public void draw(Graphics2D graphics, SimpleGameData data) {
 		
 		Cell[][] matrix = data.getMatrix();
-		for (int i = 0; i < matrix.length; i++) {
-			for (int j = 0; j < matrix[0].length; j++) {
-				System.out.println(matrix[i][j]);
-			}
-		}
 		
 		int m = matrix.length;
 		

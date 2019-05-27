@@ -17,7 +17,7 @@ import views.SelectBordView;
 
 public class PrincipalMenuController {
 	@SuppressWarnings("unchecked")
-	public static ArrayList<Plant> startGame(ApplicationContext context) {
+	public static ArrayList<Plant> startGame(ApplicationContext context, SimpleGameData noImportantData) {
 
 		ScreenInfo screenInfo = context.getScreenInfo();
 		int width = (int) screenInfo.getWidth();
@@ -62,7 +62,7 @@ public class PrincipalMenuController {
 					break;
 			}
 			
-			Event event = context.pollOrWaitEvent(35);
+			Event event = context.pollOrWaitEvent(45);
 
 			if (event == null) {
 				continue;
@@ -80,9 +80,9 @@ public class PrincipalMenuController {
 					view.drawRectangle(context, 0, 0, width, height, "#cbd9ef");
 					return plantSelectionView.getSelectedPlants();
 				} else if (choice == "resume") {
-					dataBord.setLoadChoice("resume");
+					noImportantData.setLoadChoice("resume");
 					try {
-						return (ArrayList<Plant>) SystemFile.read("view", dataBord);
+						return (ArrayList<Plant>) SystemFile.read("view");
 					} catch (ClassNotFoundException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();

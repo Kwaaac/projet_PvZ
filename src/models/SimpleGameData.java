@@ -81,13 +81,25 @@ public class SimpleGameData implements Serializable {
 		// Temps du jeu
 		time.start();
 	}
-
-	// Testing
+	
 	@Override
 	public String toString() {
-		return "SimpleGameData [nbLines=" + nbLines + ", nbColumns=" + nbColumns + ", selected=" + selected
-				+ ", placedPlant=" + placedPlant + ", myPlants=" + myPlants + ", zombieInQueu=" + zombieInQueu
-				+ ", sunSpawn=" + sunSpawn + ", map = " + map + "]";
+		StringBuilder str = new StringBuilder("---SIMPLE_GAME_DATA---\n");
+		str.append("nbLines = "+nbLines+"\n");
+		str.append("nbColumns = "+nbColumns+"\n");
+		str.append("selected = "+selected+"\n");
+		str.append("map = "+map+"\n");
+		str.append("difficulty = "+difficulty+"\n");
+		str.append("actualMoney = "+actualMoney+"\n");
+		str.append("actualfertilizer = "+actualfertilizer+"\n");
+		str.append("placedPlant = "+placedPlant+"\n");
+		str.append("myPlants = "+myPlants+"\n");
+		str.append("mySun = "+mySun+"\n");
+		str.append("zombieInQueu = "+zombieInQueu+"\n");
+		str.append("myZombies = "+myZombies+"\n");
+		str.append("myBullet = "+myBullet+"\n");
+		str.append("myLawnMower = "+myLawnMower);
+		return str.toString();
 	}
 
 	private void dayBord() {

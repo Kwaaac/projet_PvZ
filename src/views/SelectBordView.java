@@ -35,6 +35,18 @@ public class SelectBordView extends SimpleGameView {
 		this.selectedPlants = selectedPlants;
 	}
 	
+	@Override
+	public String toString() {
+		StringBuilder str = new StringBuilder("---SELECT_BORD_VIEW---\n");
+		str.append("xOrigin = "+xOrigin+"\n");
+		str.append("yOrigin = "+yOrigin+"\n");
+		str.append("length = "+length+"\n");
+		str.append("width = "+width+"\n");
+		str.append("squareSize = "+squareSize+"\n");
+		str.append("selectedPlants = "+selectedPlants);
+		return str.toString();
+	}
+	
 	public int getXOrigin() {
 		return xOrigin;
 	}
