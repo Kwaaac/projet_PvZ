@@ -574,20 +574,20 @@ public class SimpleGameData implements Serializable {
 			this.unselect();
 		}
 
-		if (!dataSelect.hasASelectedCell()) {
-			if (dataSelect.isCorrectSelectLocation(plantSelectionView, x, y)
-					&& plantSelectionView.isThisChronoReset(y, view.getYOrigin()) && actualMoney >= plantSelectionView
-							.getSelectedPlants().get(plantSelectionView.lineFromY(y)).getCost()) {
-				dataSelect.selectCell(plantSelectionView.lineFromY(y), plantSelectionView.columnFromX(x));
-			}
-
-		} else {
+		if (dataSelect.hasASelectedCell()) { //cell selected
 			dataSelect.unselect();
-			if (dataSelect.isCorrectSelectLocation(plantSelectionView, x, y)
-					&& plantSelectionView.isThisChronoReset(y, view.getYOrigin()) && actualMoney >= plantSelectionView
-							.getSelectedPlants().get(plantSelectionView.lineFromY(y)).getCost()) {
-				dataSelect.selectCell(plantSelectionView.lineFromY(y), plantSelectionView.columnFromX(x));
-			}
+		} 
+		
+
+		int yLine = plantSelectionView.lineFromY(y);
+		
+		// clic in the select bord and the choosen plant is not in cooldown and the
+		// player has enough money
+		if (dataSelect.isCorrectSelectLocation(plantSelectionView, x, y)
+				&& plantSelectionView.isThisChronoReset(y, view.getYOrigin())
+				&& actualMoney >= plantSelectionView.getSelectedPlants().get(yLine).getCost()) {
+
+			dataSelect.selectCell(yLine, plantSelectionView.columnFromX(x));
 		}
 	}
 

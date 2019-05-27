@@ -196,7 +196,7 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie,
 		}
 
 		if (fertilizer) {
-			graphics.setColor(new Color(38, 198, 35, 90));
+			graphics.setColor(new Color(38, 198, 35, 70));
 			graphics.fill(new Ellipse2D.Float(x, y, sizeOfZombie, sizeOfZombie));
 		}
 
