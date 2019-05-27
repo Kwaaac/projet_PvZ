@@ -574,13 +574,12 @@ public class SimpleGameData implements Serializable {
 			this.unselect();
 		}
 
-		if (dataSelect.hasASelectedCell()) { //cell selected
+		if (dataSelect.hasASelectedCell()) { // cell selected
 			dataSelect.unselect();
-		} 
-		
+		}
 
 		int yLine = plantSelectionView.lineFromY(y);
-		
+
 		// clic in the select bord and the choosen plant is not in cooldown and the
 		// player has enough money
 		if (dataSelect.isCorrectSelectLocation(plantSelectionView, x, y)
@@ -936,12 +935,14 @@ public class SimpleGameData implements Serializable {
 	}
 
 	public void feed(float x, float y) {
-		Cell cell = this.getCell(BordView.caseYFromY(y), BordView.caseXFromX(x));
-		if (cell != null) {
-			Plant plant = cell.getMainPlant();
-			if (plant != null && plant.feedPlant()) {
-				this.removeFertilizer();
-				System.out.println(plant + "is powered up");
+		if (actualfertilizer < 0) {
+			Cell cell = this.getCell(BordView.caseYFromY(y), BordView.caseXFromX(x));
+			if (cell != null) {
+				Plant plant = cell.getMainPlant();
+				if (plant != null && plant.feedPlant()) {
+					this.removeFertilizer();
+					System.out.println(plant + "is powered up");
+				}
 			}
 		}
 	}

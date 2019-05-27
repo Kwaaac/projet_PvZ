@@ -196,4 +196,9 @@ public abstract class Plant extends Entities implements IPlant, Serializable {
 	public Boolean isFertilized() {
 		return fertilized;
 	}
+	
+	public void unFeed() {
+		fertilized = false;
+	}
+	
 }
