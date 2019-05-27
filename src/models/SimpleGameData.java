@@ -40,6 +40,8 @@ public class SimpleGameData implements Serializable {
 	private final ArrayList<Zombie> myZombies = new ArrayList<>();
 	private final ArrayList<Projectile> myBullet = new ArrayList<>();
 	private final ArrayList<LawnMower> myLawnMower = new ArrayList<>();
+	private final ArrayList<Tombstone> myTombstone = new ArrayList<>();
+	
 
 	private boolean stop = false;
 
@@ -917,6 +919,30 @@ public class SimpleGameData implements Serializable {
 	public void removeLM(IEntite dPe) {
 		myLawnMower.remove(dPe);
 	}
+	
+	public void addB(Projectile ... dPe) {
+		for(Projectile i : dPe) {
+		myBullet.add(i);
+		}
+	}
+
+	public void addP(Plant ... dPe) {
+		for(Plant i : dPe) {
+		myPlants.add(i);
+		}
+	}
+
+	public void addZ(Zombie ... dPe) {
+		for(Zombie i : dPe) {
+		myZombies.add(i);
+		}
+	}
+
+	public void addLM(LawnMower ... dPe) {
+		for(LawnMower i : dPe) {
+		myLawnMower.add(i);
+		};
+	}
 
 	public Integer getFertilizer() {
 		return (Integer) actualfertilizer;
@@ -935,7 +961,7 @@ public class SimpleGameData implements Serializable {
 	}
 
 	public void feed(float x, float y) {
-		if (actualfertilizer < 0) {
+		if (actualfertilizer > 0) {
 			Cell cell = this.getCell(BordView.caseYFromY(y), BordView.caseXFromX(x));
 			if (cell != null) {
 				Plant plant = cell.getMainPlant();
@@ -945,6 +971,10 @@ public class SimpleGameData implements Serializable {
 				}
 			}
 		}
+	}
+
+	public List<Tombstone> getMyTombstone() {
+		return Collections.unmodifiableList(myTombstone);
 	}
 
 }

@@ -18,6 +18,7 @@ import fr.umlv.zen5.ScreenInfo;
 import models.DeadPool;
 import models.SimpleGameData;
 import models.SystemFile;
+import models.Tombstone;
 import models.map.Map;
 import models.plants.*;
 import models.projectiles.*;
@@ -84,15 +85,16 @@ public class SimpleGameController {
 		List<Zombie> myZombies = dataBord.getMyZombies();
 		List<Projectile> myBullet = dataBord.getMyBullet();
 		List<LawnMower> myLawnMower = dataBord.getMyLawnMower();
+		List<Tombstone> myTombstone = dataBord.getMyTombstone();
 
 		dataBord.spawnLawnMower(view, context);
-		
-		
+
 
 		while (true) {
 			myZombies = dataBord.getMyZombies();
 			myBullet = dataBord.getMyBullet();
 			myLawnMower = dataBord.getMyLawnMower();
+			myTombstone = dataBord.getMyTombstone();
 			if (pause) {
 				pause = SecondaryMenuController.menu(context, view, dataBord, plantSelectionView);
 			} else {
@@ -193,7 +195,6 @@ public class SimpleGameController {
 					dataBord.selectingCellAndPlanting(context, dataSelect, view, plantSelectionView, x, y);
 				}
 			}
-	
 		}
 	}
 
