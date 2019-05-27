@@ -76,7 +76,7 @@ public class DolphinRiderZombie extends Zombie {
 	}
 
 	@Override
-	public boolean action(SimpleGameData dataBord) {
+	public boolean action(BordView view, SimpleGameData dataBord, List<Zombie> myZombies) {
 		if (detect(dataBord) && swim) {
 			swim = false;
 			setX(x - BordView.getSquareSize() - 50);
@@ -85,11 +85,6 @@ public class DolphinRiderZombie extends Zombie {
 		}
 
 		return true;
-	}
-
-	@Override
-	public void action(BordView view, SimpleGameData dataBord, List<Zombie> myZombies) {
-
 	}
 
 	@Override

@@ -59,11 +59,4 @@ public class NormalZombie extends Zombie {
 			super.draw(view, graphics);
 		}
 	}
-
-	@Override
-	public void action(BordView view, SimpleGameData dataBord, List<Zombie> myZombies) {
-		
-	}
-
-
 }

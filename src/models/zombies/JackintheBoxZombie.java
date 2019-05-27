@@ -98,7 +98,7 @@ public class JackintheBoxZombie extends Zombie {
 	}
 
 	@Override
-	public void action(BordView view, SimpleGameData dataBord, List<Zombie> myZombies) {
+	public boolean action(BordView view, SimpleGameData dataBord, List<Zombie> myZombies) {
 
 		Cell cell = dataBord.getCell(this.getCaseJ(), this.getCaseI());
 
@@ -118,6 +118,8 @@ public class JackintheBoxZombie extends Zombie {
 		}
 
 		this.incAS();
+		
+		return true;
 	}
 
 }

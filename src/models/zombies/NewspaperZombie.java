@@ -61,7 +61,7 @@ public class NewspaperZombie extends Zombie {
 	}
 
 	@Override
-	public boolean action(SimpleGameData dataBord) {
+	public boolean action(BordView view, SimpleGameData dataBord, List<Zombie> myZombies) {
 		if (this.life <= 200) {
 			setSpeed(-1.70);
 			shootBarMax = 4000;
@@ -69,10 +69,4 @@ public class NewspaperZombie extends Zombie {
 		}
 		return true;
 	}
-
-	@Override
-	public void action(BordView view, SimpleGameData dataBord, List<Zombie> myZombies) {
-
-	}
-
 }

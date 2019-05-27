@@ -28,7 +28,7 @@ import models.zombies.Zombie;
 import views.BordView;
 import views.SelectBordView;
 
-public class SimpleGameData implements Serializable{
+public class SimpleGameData implements Serializable {
 	private static int WL = 0;
 	private Cell[][] matrix;
 	private final int nbLines;
@@ -53,14 +53,13 @@ public class SimpleGameData implements Serializable{
 
 	private int actualMoney = 2500;
 	private int actualfertilizer = 0;
-	private int fertilizerChance = 100;
+	private int fertilizerChance = 10;
 	private Chrono sunSpawn = new Chrono();
 
 	static Chrono time = new Chrono();
 
 	private static String map;
 	private String loadChoice = "start";
-	
 
 	public SimpleGameData(int nbLines, int nbColumns) {
 		this.nbLines = nbLines;
@@ -83,16 +82,15 @@ public class SimpleGameData implements Serializable{
 		// Temps du jeu
 		time.start();
 	}
-	
-	
-	//Testing
+
+	// Testing
 	@Override
 	public String toString() {
-		return "SimpleGameData [nbLines=" + nbLines + ", nbColumns=" + nbColumns
-				+ ", selected=" + selected + ", placedPlant=" + placedPlant + ", myPlants=" + myPlants
-				+ ", zombieInQueu=" + zombieInQueu + ", sunSpawn=" + sunSpawn + ", map = "+ map +"]";
+		return "SimpleGameData [nbLines=" + nbLines + ", nbColumns=" + nbColumns + ", selected=" + selected
+				+ ", placedPlant=" + placedPlant + ", myPlants=" + myPlants + ", zombieInQueu=" + zombieInQueu
+				+ ", sunSpawn=" + sunSpawn + ", map = " + map + "]";
 	}
-	
+
 	private void dayBord() {
 		for (int i = 0; i < matrix.length; i++) {
 			for (int j = 0; j < matrix[0].length; j++) {
@@ -140,8 +138,7 @@ public class SimpleGameData implements Serializable{
 			}
 		}
 	}
-	
-	
+
 	/*
 	 * @return the matrix of cell
 	 */
@@ -222,19 +219,19 @@ public class SimpleGameData implements Serializable{
 	public List<Plant> getMyPlants() {
 		return Collections.unmodifiableList(myPlants);
 	}
-	
+
 	public List<Zombie> getMyZombies() {
 		return Collections.unmodifiableList(myZombies);
 	}
-	
+
 	public List<Projectile> getMyBullet() {
 		return Collections.unmodifiableList(myBullet);
 	}
-	
+
 	public List<LawnMower> getMyLawnMower() {
 		return Collections.unmodifiableList(myLawnMower);
 	}
-	
+
 	/**
 	 * Genere un nombre al�atoire entre 0 et x
 	 * 
@@ -398,8 +395,7 @@ public class SimpleGameData implements Serializable{
 
 	}
 
-	public void actionningZombie(BordView view,
-			SimpleGameData dataBord) {
+	public void actionningZombie(BordView view, SimpleGameData dataBord) {
 		for (IZombie z : myZombies) {
 
 			z.action(view, dataBord, myZombies);
@@ -432,7 +428,8 @@ public class SimpleGameData implements Serializable{
 		}
 	}
 
-	public boolean movingZombiesAndBullets(ApplicationContext context, BordView view, boolean debug, boolean debuglock) {
+	public boolean movingZombiesAndBullets(ApplicationContext context, BordView view, boolean debug,
+			boolean debuglock) {
 
 		for (Zombie z : myZombies) {
 			if (debug == true) {
@@ -608,11 +605,13 @@ public class SimpleGameData implements Serializable{
 		boolean result = false;
 
 		int target = this.RandomPosGenerator(15); // 1 chance sur x
-		int xRandomPosition = SimpleGameData.RandomPosGenerator(view.getXOrigin(), BordView.getHeight()); // random position
-																										// x dans
+		int xRandomPosition = SimpleGameData.RandomPosGenerator(view.getXOrigin(), BordView.getHeight()); // random
+																											// position
+																											// x dans
 		// matrice
-		int yRandomPosition = SimpleGameData.RandomPosGenerator(view.getYOrigin(), BordView.getWidth()); // random position
-																										// y dans
+		int yRandomPosition = SimpleGameData.RandomPosGenerator(view.getYOrigin(), BordView.getWidth()); // random
+																											// position
+																											// y dans
 		// matrice
 		int randomPlantType = this.RandomPosGenerator(selectedPlant.size()); // random type plant
 
@@ -665,10 +664,10 @@ public class SimpleGameData implements Serializable{
 		zombiesMap.put(z, count + 1);
 
 	}
-	
+
 	private static int getMaximumThreat(ArrayList<Zombie> Zombies) {
 		int max = 0;
-		for(Zombie z : Zombies) {
+		for (Zombie z : Zombies) {
 			max = (z.getThreat() >= max ? z.getThreat() : max);
 		}
 		return max * 100;
@@ -686,13 +685,12 @@ public class SimpleGameData implements Serializable{
 		while (waveSize < maxWaveSize) {
 			Zombie choosenOne = getRandomZombie(allZombies);
 			if ((choosenOne.getThreat() * 100) <= rand.nextInt(MaximumThreat)) {
-				
 
 				addInMap(zombiesMap, choosenOne);
 				waveSize++;
 			}
 		}
-           
+
 		return zombiesMap;
 	}
 
@@ -742,28 +740,30 @@ public class SimpleGameData implements Serializable{
 					if (z.isCommon()) {
 						while (view.indexFromReaCoord(y, view.getYOrigin()) == 2
 								|| view.indexFromReaCoord(y, view.getYOrigin()) == 3) {
-							y = view.getYOrigin() + this.RandomPosGenerator(this.getNbLines()) * sqrS
-									+ (sqrS / 2);
+							y = view.getYOrigin() + this.RandomPosGenerator(this.getNbLines()) * sqrS + (sqrS / 2);
 						}
-						
-						if(rand2.nextInt(100) <= fertilizerChance) {
+
+						if (rand2.nextInt(100) <= fertilizerChance) {
 							myZombies.add(z.createNewZombie(x, y, true));
+						} else {
+							myZombies.add(z.createNewZombie(x, y, false));
 						}
-						myZombies.add(z.createNewZombie(x, y, false));
 
 					} else {
 						y = view.getYOrigin() + SimpleGameData.RandomPosGenerator(2, 4) * sqrS + (sqrS / 2);
-						if(rand2.nextInt(100) <= fertilizerChance) {
-							myZombies.add(z.createNewZombie(x, y,true));
+						if (rand2.nextInt(100) <= fertilizerChance) {
+							myZombies.add(z.createNewZombie(x, y, true));
+						} else {
+							myZombies.add(z.createNewZombie(x, y, false));
 						}
-						myZombies.add(z.createNewZombie(x, y , false));
 					}
 				} else {
 
-					if(rand2.nextInt(100) <= fertilizerChance) {
+					if (rand2.nextInt(100) <= fertilizerChance) {
 						myZombies.add(z.createNewZombie(x, y, true));
+					} else {
+						myZombies.add(z.createNewZombie(x, y, false));
 					}
-					myZombies.add(z.createNewZombie(x, y, false));
 				}
 				str.append("new " + zombieAvailable.get(selecteur) + new SimpleDateFormat("hh:mm:ss").format(new Date())
 						+ ")\n");
@@ -787,10 +787,9 @@ public class SimpleGameData implements Serializable{
 		}
 	}
 
-	public void spawnSuperWave(int squareSize, StringBuilder str,
-			BordView view, ApplicationContext context,
+	public void spawnSuperWave(int squareSize, StringBuilder str, BordView view, ApplicationContext context,
 			HashMap<Zombie, Integer> zombieList) {
-		
+
 		Random rand2 = new Random();
 		int sqrS = BordView.getSquareSize();
 		int endWave = 0;
@@ -812,27 +811,29 @@ public class SimpleGameData implements Serializable{
 					if (z.isCommon()) {
 						while (view.indexFromReaCoord(y, view.getYOrigin()) == 2
 								|| view.indexFromReaCoord(y, view.getYOrigin()) == 3) {
-							y = view.getYOrigin() + this.RandomPosGenerator(this.getNbLines()) * sqrS
-									+ (sqrS / 2);
+							y = view.getYOrigin() + this.RandomPosGenerator(this.getNbLines()) * sqrS + (sqrS / 2);
 						}
-						if(rand2.nextInt(100) <= fertilizerChance) {
+						if (rand2.nextInt(100) <= fertilizerChance) {
 							myZombies.add(z.createNewZombie(x, y, true));
+						} else {
+							myZombies.add(z.createNewZombie(x, y, false));
 						}
-						myZombies.add(z.createNewZombie(x, y, false));
 
 					} else {
 						y = view.getYOrigin() + SimpleGameData.RandomPosGenerator(2, 4) * sqrS + (sqrS / 2);
-						if(rand2.nextInt(100) <= fertilizerChance) {
+						if (rand2.nextInt(100) <= fertilizerChance) {
 							myZombies.add(z.createNewZombie(x, y, true));
+						} else {
+							myZombies.add(z.createNewZombie(x, y, false));
 						}
-						myZombies.add(z.createNewZombie(x, y, false));
 					}
 				} else {
 
-					if(rand2.nextInt(100) <= fertilizerChance) {
+					if (rand2.nextInt(100) <= fertilizerChance) {
 						myZombies.add(z.createNewZombie(x, y, true));
+					} else {
+						myZombies.add(z.createNewZombie(x, y, false));
 					}
-					myZombies.add(z.createNewZombie(x, y, false));
 				}
 				str.append("new " + z + new SimpleDateFormat("hh:mm:ss").format(new Date()) + ")\n");
 
@@ -846,9 +847,8 @@ public class SimpleGameData implements Serializable{
 
 	}
 
-	public void spawnZombies(int squareSize, StringBuilder str,
-			List<Zombie> myZombies, BordView view, ApplicationContext context, HashMap<Zombie, Integer> zombieList,
-			HashMap<Zombie, Integer> superZombieList) {
+	public void spawnZombies(int squareSize, StringBuilder str, List<Zombie> myZombies, BordView view,
+			ApplicationContext context, HashMap<Zombie, Integer> zombieList, HashMap<Zombie, Integer> superZombieList) {
 
 		if (superWave == 0) {
 			spawnNormalWave(squareSize, str, view, context, zombieList);
@@ -883,7 +883,7 @@ public class SimpleGameData implements Serializable{
 	public void setZombieInQueu(ArrayList<Zombie> zombieList) {
 		zombieInQueu = zombieList;
 	}
-	
+
 	public void setMatrix(Cell[][] x) {
 		for (int i = 0; i < matrix.length; i++) {
 			for (int j = 0; j < matrix[0].length; j++) {
@@ -892,32 +892,28 @@ public class SimpleGameData implements Serializable{
 		}
 	}
 
-
 	public void removeB(IEntite dPe) {
 		myBullet.remove(dPe);
 	}
-
 
 	public void removeP(IEntite dPe) {
 		myPlants.remove(dPe);
 	}
 
-
 	public void removeZ(IEntite dPe) {
 		myZombies.remove(dPe);
 	}
 
-
 	public void removeLM(IEntite dPe) {
 		myLawnMower.remove(dPe);
 	}
-	
+
 	public Integer getFertilizer() {
 		return (Integer) actualfertilizer;
 	}
-	
+
 	public void addFertilizer() {
-		actualfertilizer = (actualfertilizer < 3 ? actualfertilizer +=1 : actualfertilizer) ;
+		actualfertilizer = (actualfertilizer < 3 ? actualfertilizer += 1 : actualfertilizer);
 	}
-	
+
 }

@@ -36,7 +36,7 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie,
 	protected Chrono slowedTime = new Chrono();
 	protected int slowedLimit;
 	protected boolean afflicted = false;
-	
+
 	protected boolean fertilizer;
 
 	protected final HashMap<String, Double> mSpeed = new HashMap<String, Double>() {
@@ -180,8 +180,7 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie,
 		}
 		return -1;
 	}
-	
-	
+
 	/**
 	 * Used to draw if a zombie as any fertilizer or when it is slowed
 	 * 
@@ -190,17 +189,17 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie,
 	 */
 	@Override
 	public void draw(SimpleGameView view, Graphics2D graphics) {
-		
-		if(afflicted) {
+
+		if (afflicted) {
 			graphics.setColor(new Color(99, 197, 255, 100));
 			graphics.fill(new Ellipse2D.Float(x, y, sizeOfZombie, sizeOfZombie));
 		}
-		
-		if(fertilizer) {
+
+		if (fertilizer) {
 			graphics.setColor(new Color(38, 198, 35, 90));
 			graphics.fill(new Ellipse2D.Float(x, y, sizeOfZombie, sizeOfZombie));
 		}
-	
+
 	}
 
 	/**
@@ -338,7 +337,7 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie,
 			z.go();
 			z.incAS();
 			z.conflictBvZ(deadPoolE, view, data);
-			if (z.action(data)) {
+			if (z.action(view, data, myZombies)) {
 				z.conflictPvZ(deadPoolE, view, data, str);
 				z.conflictZvZ(deadPoolE, view, data, str);
 			}
@@ -372,8 +371,9 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie,
 	 * For zombies that don't have actions
 	 * 
 	 */
+
 	@Override
-	public boolean action(SimpleGameData dataBord) {
+	public boolean action(BordView view, SimpleGameData dataBord, List<Zombie> myZombies) {
 		return true;
 	}
 
@@ -406,7 +406,7 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie,
 	public boolean isCommon() {
 		return true;
 	}
-	
+
 	@Override
 	public void reverseTeam() {
 		speed *= -1;
@@ -420,6 +420,17 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie,
 
 	private Boolean isGifted() {
 		return (Boolean) fertilizer;
+	}
+
+	/**
+	 * Used to apply the effect of the MagnetShroom
+	 * 
+	 * @return true and apply the effect if the zombie is magnetizable, false
+	 *         otherwise and does nothing
+	 */
+	@Override
+	public boolean magnetizable() {
+		return false;
 	}
 
 	@Override

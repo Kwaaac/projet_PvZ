@@ -62,11 +62,7 @@ public abstract class Entities implements IEntite, Serializable{
 	}
 
 	public void setLife(int life) {
-		if(life < 0) {
-			this.life = this.life - life;
-		} else {
-			this.life = 0;
-		}
+		this.life = life;
 	}
 
 	public boolean isDead() {
@@ -78,7 +74,7 @@ public abstract class Entities implements IEntite, Serializable{
 	}
 
 	public void takeDmg(int x) {
-		this.life = life - x;
+		this.life -= x;
 	}
 
 	public boolean sameLine(Entities e) {

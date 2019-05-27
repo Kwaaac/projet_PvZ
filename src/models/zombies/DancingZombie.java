@@ -63,7 +63,7 @@ public class DancingZombie extends Zombie {
 	}
 
 	@Override
-	public void action(BordView view, SimpleGameData dataBord, List<Zombie> myZombies) {
+	public boolean action(BordView view, SimpleGameData dataBord, List<Zombie> myZombies) {
 		int scareSize = BordView.getSquareSize();
 		ArrayList<Zombie> zombieInQueu = new ArrayList<Zombie>();
 
@@ -86,8 +86,11 @@ public class DancingZombie extends Zombie {
 			lock = true;
 			dataBord.setZombieInQueu(zombieInQueu);
 			this.resetAS();
+			return false;
 		}
 
 		this.incAS();
+		
+		return true;
 	}
 }

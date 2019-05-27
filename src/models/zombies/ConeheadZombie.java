@@ -56,10 +56,5 @@ public class ConeheadZombie extends Zombie {
 		graphics.setColor(Color.decode(color));
 		graphics.fill(new Ellipse2D.Float(x, y, sizeOfZombie, sizeOfZombie));
 	}
-
-	@Override
-	public void action(BordView view, SimpleGameData dataBord, List<Zombie> myZombies) {
-		
-	}
 	
 }

@@ -39,7 +39,10 @@ public class SimpleGameController {
 		
 		ArrayList<Plant> selectedPlant = PrincipalMenuController.startGame(context);
 		SimpleGameData dataBord = new SimpleGameData(1,1);//no care but important
-		HashMap<Zombie, Integer> normalWaveZombie = dataBord.generateZombies(1);
+//		dataBord.generateZombies(1)
+		HashMap<Zombie, Integer> normalWaveZombie = new HashMap<>();
+		normalWaveZombie.put(new BucketheadZombie(), 1);
+		
 		HashMap<Zombie, Integer> superWaveZombie = dataBord.generateZombies(2);
 		
 		SelectBordView plantSelectionView = SelectBordView.initGameGraphics(0, 0, 900, dataBord, selectedPlant);//no care but important

@@ -24,13 +24,13 @@ public interface IZombie {
 	
 	Integer getProb(int difficulty); 
 	
-	boolean action(SimpleGameData dataBord);
-	
-	void action(BordView view, SimpleGameData dataBord, List<Zombie> myZombies);
+	boolean action(BordView view, SimpleGameData dataBord, List<Zombie> myZombies);
 	
 	boolean isCommon();
 	
-	public void conflictBvZ(DeadPool DPe, BordView view, SimpleGameData data);
+	void conflictBvZ(DeadPool DPe, BordView view, SimpleGameData data);
 	
-	public void giftZombie();
+	void giftZombie();
+	
+	boolean magnetizable();
 }

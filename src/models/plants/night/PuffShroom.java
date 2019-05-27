@@ -34,7 +34,7 @@ public class PuffShroom extends Plant {
 
 	@Override
 	public String toString() {
-		return super.toString() + "--" + name;
+		return name;
 	}
 
 	int sizeOfPlant = super.getSizeOfPlant();
@@ -83,7 +83,6 @@ public class PuffShroom extends Plant {
 			SimpleGameData dataBord) {
 
 		if (dataBord.getMap() == "Night") {
-			if (true) {
 				if (this.readyToshot(dataBord.getLineCell(this.getCaseJ(), this.getCaseI(), this.getCaseI() + 4))) {
 					myBullet.add(new WeakSpore(super.getX() + super.getSizeOfPlant(),
 							super.getY() + (super.getSizeOfPlant() / 2) - 10));
@@ -92,7 +91,6 @@ public class PuffShroom extends Plant {
 				}
 
 				this.incAS();
-			}
 		}
 	}
 

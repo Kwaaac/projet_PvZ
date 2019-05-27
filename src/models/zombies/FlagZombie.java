@@ -16,9 +16,8 @@ public class FlagZombie extends Zombie {
 	private final String color = "#FFFFFF";
 
 	public FlagZombie(int x, int y) {
-		super(x, y, 100, 200, 1, "slow",false);
+		super(x, y, 100, 200, 1, "slow", false);
 	}
-	
 
 	public FlagZombie(int x, int y, boolean gifted) {
 		super(x, y, 100, 200, 1, "slow", gifted);
@@ -43,7 +42,7 @@ public class FlagZombie extends Zombie {
 	}
 
 	@Override
-	public Zombie createNewZombie(int x, int y,boolean gift) {
+	public Zombie createNewZombie(int x, int y, boolean gift) {
 		return new FlagZombie(x, y, gift);
 	}
 
@@ -56,10 +55,4 @@ public class FlagZombie extends Zombie {
 
 		super.draw(view, graphics);
 	}
-
-	@Override
-	public void action(BordView view, SimpleGameData dataBord, List<Zombie> myZombies) {
-
-	}
-
 }

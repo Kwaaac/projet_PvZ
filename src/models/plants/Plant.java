@@ -30,11 +30,11 @@ public abstract class Plant extends Entities implements IPlant, Serializable {
 	private Coordinates plantSelect;
 
 	private final static ArrayList<Plant> day = new ArrayList<>(
-			Arrays.asList(new CherryBomb(), new Chomper(), new Peashooter(), new Repeater(), new PotatoMine(), new Squash(),
-					new SnowPea(), new SunFlower(), new WallNut(), new Pot()));
+			Arrays.asList(new CherryBomb(), new Chomper(), new Peashooter(), new Repeater(), new PotatoMine(),
+					new Squash(), new SnowPea(), new SunFlower(), new WallNut(), new Pot()));
 	private final static ArrayList<Plant> night = new ArrayList<>(
-			Arrays.asList(new DoomShroom(), new FumeShroom(), new GraveBuster(), new HypnoShroom(), new IceShroom(),
-					new PuffShroom(), new ScaredyShroom(), new SunShroom()));
+			Arrays.asList(new MagnetShroom(), new DoomShroom(), new FumeShroom(), new GraveBuster(), new HypnoShroom(),
+					new IceShroom(), new PuffShroom(), new ScaredyShroom(), new SunShroom()));
 	private final static ArrayList<Plant> pool = new ArrayList<>(
 			Arrays.asList(new Cattails(), new LilyPad(), new SeaShroom(), new TangleKelp()));
 
@@ -70,13 +70,13 @@ public abstract class Plant extends Entities implements IPlant, Serializable {
 		}
 		return day;
 	}
-	
+
 	public int getLife() {
 		return super.life;
 	}
 
 	public void setCase(SimpleGameData data) {
-	
+
 	}
 
 	/**
@@ -129,12 +129,12 @@ public abstract class Plant extends Entities implements IPlant, Serializable {
 	}
 
 	public static void hasToDie(DeadPool DPe, List<Plant> list, SimpleGameData data) {
-			for (Plant p : list) {
-				if (p.isDead()) {
-					data.getCell(p.getCaseJ(), p.getCaseI()).removePlant(p);
-					DPe.add(p);
-				}
+		for (Plant p : list) {
+			if (p.isDead()) {
+				data.getCell(p.getCaseJ(), p.getCaseI()).removePlant(p);
+				DPe.add(p);
 			}
+		}
 	}
 
 	@Override
@@ -143,8 +143,9 @@ public abstract class Plant extends Entities implements IPlant, Serializable {
 	}
 
 	/**
-	 * For every plants, it can not be placed on water or roof and with any ground Plant and we asumme
-	 * that they are main plants (Override the plant to change it)
+	 * For every plants, it can not be placed on water or roof and with any ground
+	 * Plant and we asumme that they are main plants (Override the plant to change
+	 * it)
 	 * 
 	 * @param the cell where the plant will be planted
 	 * @return True if the cell is a correct location for the plant, false otherwise
@@ -152,18 +153,17 @@ public abstract class Plant extends Entities implements IPlant, Serializable {
 	@Override
 	public boolean plantingCondition(Cell cell) {
 
-		
 		if (!(cell.equals(new WaterCell()) || cell.equals(new TileCell()))) {
 			return cell.addPlant(this);
-			
+
 		} else if (cell.isGroundPlantPlanted()) {
 
 			Plant gp = cell.getGroundPlant();
-			
+
 			if (gp.equals(new LilyPad()) || gp.equals(new Pot())) {
 				return cell.addPlant(this);
 			}
-				
+
 		}
 
 		return false;

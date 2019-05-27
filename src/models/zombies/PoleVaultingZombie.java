@@ -78,7 +78,7 @@ public class PoleVaultingZombie extends Zombie {
 	}
 
 	@Override
-	public boolean action(SimpleGameData dataBord) {
+	public boolean action(BordView view, SimpleGameData dataBord, List<Zombie> myZombies) {
 		if (detect(dataBord) && jump) {
 			jump = false;
 			setX(x - BordView.getSquareSize() - 50);
@@ -88,10 +88,4 @@ public class PoleVaultingZombie extends Zombie {
 
 		return true;
 	}
-
-	@Override
-	public void action(BordView view, SimpleGameData dataBord, List<Zombie> myZombies) {
-
-	}
-
 }
