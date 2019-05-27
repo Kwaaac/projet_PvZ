@@ -46,7 +46,7 @@ public class SystemFile implements Serializable{
 		
 		Charset charset = StandardCharsets.UTF_8;
 		try (BufferedWriter writer = Files.newBufferedWriter(Paths.get("map.txt"), charset)){
-			writer.write(data.getMap());
+			writer.write(SimpleGameData.getMap());
 		}
 	}
 	

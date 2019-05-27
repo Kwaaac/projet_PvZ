@@ -5,7 +5,6 @@ import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collections;
 
 import java.awt.geom.Ellipse2D;
 
@@ -14,8 +13,6 @@ import models.IEntite;
 import models.plants.Plant;
 import models.projectiles.Projectile;
 import models.zombies.Zombie;
-import views.BordView;
-import views.SimpleGameView;
 
 public abstract class Cell implements ICell, Serializable {
 
@@ -50,15 +47,13 @@ public abstract class Cell implements ICell, Serializable {
 		iceChrono.steady();
 	}
 
-	int squareSize = BordView.getSquareSize();
-
 	@Override
-	public void drawBoardCell(Graphics2D graphics, float i, float j, int darker) {
+	public void drawBoardCell(Graphics2D graphics, float i, float j, int darker, int squareSize) {
 		graphics.fill(new Rectangle2D.Float(j, i, squareSize, squareSize));
-		drawCellChanges(graphics, i, j);
+		drawCellChanges(graphics, i, j, squareSize);
 	}
 
-	private void drawCellChanges(Graphics2D graphics, float i, float j) {
+	private void drawCellChanges(Graphics2D graphics, float i, float j, int squareSize) {
 		//crater drawing
 		if (crash) {
 			crashChrono.startChronoIfReset();

@@ -62,7 +62,7 @@ public class PrincipalMenuController {
 					break;
 			}
 			
-			Event event = context.pollOrWaitEvent(45);
+			Event event = context.pollOrWaitEvent(35);
 
 			if (event == null) {
 				continue;

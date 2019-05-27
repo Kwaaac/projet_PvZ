@@ -48,12 +48,12 @@ public class SimpleGameController {
 		SelectBordView plantSelectionView = SelectBordView.initGameGraphics(0, 0, 900, dataBord, selectedPlant);//no care but important
 		SimpleGameData dataSelect = new SimpleGameData(selectedPlant.size(), 1);
 
-		int yOrigin = 150;
+		int yOrigin = 100;
 		
 		if (dataBord.getLoadChoice() == "start") {
 			BordView.setWidth(width);
 			BordView.setHeight(height);
-			dataBord = Map.dataBord(dataBord);
+			dataBord = Map.dataBord();
 			plantSelectionView = SelectBordView.initGameGraphics(0, yOrigin, 900, dataSelect, selectedPlant);
 		}
 		else {
@@ -68,7 +68,7 @@ public class SimpleGameController {
 		
 		
 		
-		BordView view = Map.view(dataBord);
+		BordView view = Map.view();
 		
 		int squareSize = BordView.getSquareSize();
 		
@@ -83,8 +83,6 @@ public class SimpleGameController {
 		StringBuilder str = new StringBuilder("Journal de bord\n-+-+-+-+-+-+-+-+-+-\n");
 
 		boolean debug = false, debuglock = false, pause = false;
-		
-		int money = 0;
 		
 		List<Zombie> myZombies = dataBord.getMyZombies();
 		List<Projectile> myBullet = dataBord.getMyBullet();
@@ -108,7 +106,7 @@ public class SimpleGameController {
 				
 				/*--------------------------------DRAWS--------------------------------*/
 				
-				view.drawAll(context, dataBord, view, myZombies, myBullet, myLawnMower, debug, debuglock, dataSelect, money, plantSelectionView);
+				view.drawAll(context, dataBord, view, myZombies, myBullet, myLawnMower, debug, debuglock, dataSelect, dataBord.getActualMoney(), dataBord.getFertilizer(), plantSelectionView);
 	
 				/*---------------------------INITIALISATION-----------------------------*/
 				
@@ -186,8 +184,6 @@ public class SimpleGameController {
 				float y = location.y;
 				
 				dataBord.selectingCellAndPlanting(context, dataSelect, view, plantSelectionView, x, y);
-				
-				money = dataBord.getActualMoney();
 			}
 		}
 

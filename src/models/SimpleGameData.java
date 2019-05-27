@@ -9,7 +9,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Random;
 
 import controlers.EndController;
@@ -51,7 +50,7 @@ public class SimpleGameData implements Serializable {
 	private int difficulty = 1;
 	private int superWave = 0;
 
-	private int actualMoney = 2500;
+	private int actualMoney = 990;
 	private int actualfertilizer = 0;
 	private int fertilizerChance = 10;
 	private Chrono sunSpawn = new Chrono();

@@ -239,7 +239,6 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie,
 					 */
 					else if (this.isDead()) {
 						if (fertilizer) {
-							System.out.println("check");
 							data.addFertilizer();
 							System.out.println("il semblerait que ce zombie était spécial\n\tvous avez "
 									+ data.getFertilizer() + " engrais");

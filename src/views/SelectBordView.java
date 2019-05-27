@@ -1,10 +1,7 @@
 package views;
 
 import java.awt.Color;
-import java.awt.Font;
-import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.RectangularShape;
 import java.util.ArrayList;
@@ -34,8 +31,7 @@ public class SelectBordView extends SimpleGameView {
 		this.yOrigin = yOrigin;
 		this.length = length;
 		this.width = width;
-		this.squareSize = squareSize;
-		
+		SelectBordView.squareSize = squareSize;
 		this.selectedPlants = selectedPlants;
 	}
 	

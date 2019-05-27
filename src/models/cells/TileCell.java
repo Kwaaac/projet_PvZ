@@ -16,14 +16,14 @@ public class TileCell extends Cell {
 	}
 
 	@Override
-	public void drawBoardCell(Graphics2D graphics, float i, float j, int darker) {
+	public void drawBoardCell(Graphics2D graphics, float i, float j, int darker, int squareSize) {
 		if (darker == 0) {
 			graphics.setColor(color);
 		} else {
 			graphics.setColor(colorDarker);
 		}
 
-		super.drawBoardCell(graphics, i, j, darker);
+		super.drawBoardCell(graphics, i, j, darker, squareSize);
 	}
 
 	public Color getColor() {

@@ -14,11 +14,10 @@ public abstract class Map implements Serializable{
 		return column;
 	}
 
-	public static SimpleGameData dataBord(SimpleGameData dataBoard) {
+	public static SimpleGameData dataBord() {
 		ArrayList<Integer> mapProperties = null;
 		
-		String x = dataBoard.getMap();
-		System.out.println("================>"+x);
+		String x = SimpleGameData.getMap();
 		switch (x) {
 		case "Day":
 			mapProperties = Day.getMapProperties();
@@ -42,9 +41,9 @@ public abstract class Map implements Serializable{
 		return new SimpleGameData(mapProperties.get(0), mapProperties.get(1));
 	}
 
-	public static BordView view(SimpleGameData dataBoard) {
+	public static BordView view() {
 		ArrayList<Integer> mapProperties = null;
-		String x = dataBoard.getMap();
+		String x = SimpleGameData.getMap();
 		switch (x) {
 		case "Day":
 			mapProperties = Day.getMapProperties();
@@ -66,7 +65,7 @@ public abstract class Map implements Serializable{
 			mapProperties = Pool.getMapProperties();
 			break;
 		}
-		return BordView.initGameGraphics(mapProperties.get(2), mapProperties.get(3), mapProperties.get(4), dataBord(dataBoard));
+		return BordView.initGameGraphics(mapProperties.get(2), mapProperties.get(3), mapProperties.get(4), dataBord());
 	}
 
 }

@@ -13,7 +13,7 @@ public interface ICell {
 	
 	boolean addPlant(Plant plant);
 	
-	void drawBoardCell(Graphics2D graphics, float i, float j, int darker);
+	void drawBoardCell(Graphics2D graphics, float i, float j, int darker, int squareSize);
 	
 	void removePlant(Plant dPe);
 	

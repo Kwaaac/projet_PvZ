@@ -42,7 +42,7 @@ public class BordView extends SimpleGameView {
 	}
 
 	public static BordView initGameGraphics(int xOrigin, int yOrigin, int height, SimpleGameData data) {
-		int squareSize = (int) (width-xOrigin)/data.getNbColumns();
+		squareSize = (int) (width-xOrigin)/data.getNbColumns();
 		return new BordView(xOrigin, yOrigin, height, data.getNbColumns() * squareSize, squareSize);
 	}
 	
@@ -149,6 +149,11 @@ public class BordView extends SimpleGameView {
 	public void draw(Graphics2D graphics, SimpleGameData data) {
 		
 		Cell[][] matrix = data.getMatrix();
+		for (int i = 0; i < matrix.length; i++) {
+			for (int j = 0; j < matrix[0].length; j++) {
+				System.out.println(matrix[i][j]);
+			}
+		}
 		
 		int m = matrix.length;
 		
@@ -163,9 +168,9 @@ public class BordView extends SimpleGameView {
 			if (i % 2 == 0) { checkerboard = 1; } else { checkerboard = 0; }
 
 			for (int j = 0; j < p; j++) {
-
-				matrix[i][j].drawBoardCell(graphics, yFromJ(i), xFromI(j), checkerboard%2);
-
+				
+				matrix[i][j].drawBoardCell(graphics, yFromJ(i), xFromI(j), checkerboard%2, squareSize);
+				
 				checkerboard += 1;
 			}
 		}
@@ -233,17 +238,24 @@ public class BordView extends SimpleGameView {
 	
 	
 	public void drawAll(ApplicationContext context, SimpleGameData dataBord, BordView view, List<Zombie> myZombies, 
-			List<Projectile> myBullet, List<LawnMower> myLawnMower, boolean debug, boolean debuglock, SimpleGameData dataSelect, int money, SelectBordView plantSelectionView) {
+			List<Projectile> myBullet, List<LawnMower> myLawnMower, boolean debug, boolean debuglock, SimpleGameData dataSelect, int money, int actualfertilizer, 
+			SelectBordView plantSelectionView) {
 		
 		view.draw(context, dataBord);
 		debuglock = dataBord.movingZombiesAndBullets(context, view, debug, debuglock);
 		
 		
 		plantSelectionView.draw(context, dataSelect);
-		view.drawRectangle(context, 250, 10, 160, 60, "#A77540");
-		view.drawRectangle(context, 255, 15, 150, 50, "#CF9456");
-		view.drawString(context, 260, 55, String.valueOf(money), "#FFFF00", 50); //SUN YOU HAVE
-		view.drawEllipse(context, 350, 15, 45, 45, "#FEFF33");
+		view.drawRectangle(context, 250, 10, 160, 60, "#A77540"); //Sun
+		view.drawRectangle(context, 255, 15, 150, 50, "#CF9456"); //Sun
+		view.drawString(context, 260, 55, String.valueOf(money), "#FFFF00", 50); //Sun
+		view.drawEllipse(context, 350, 15, 45, 45, "#FEFF33"); //Sun
+		
+		view.drawRectangle(context, 430, 10, 160, 60, "#A77540"); //fertilizer
+		view.drawRectangle(context, 435, 15, 150, 50, "#CF9456"); //fertilizer
+		view.drawString(context, 440, 55, String.valueOf(actualfertilizer), "#88DB5F", 50); //fertilizer
+		view.drawEllipse(context, 530, 15, 45, 45, "#88DB5F"); //fertilizer
+		
 		view.drawRectangle(context, 10, 10, 165, 55, "#A77540");
 		view.drawRectangle(context, 15, 15, 155, 45, "#CF9456");
 		view.drawString(context, 20, 55, "MENU", "#FFFF00", 50);//MENU BUTTON
