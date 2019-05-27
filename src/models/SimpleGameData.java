@@ -51,7 +51,7 @@ public class SimpleGameData implements Serializable {
 	private int superWave = 0;
 
 	private int actualMoney = 990;
-	private int actualfertilizer = 0;
+	private int actualfertilizer = 3;
 	private int fertilizerChance = 10;
 	private Chrono sunSpawn = new Chrono();
 
@@ -81,24 +81,24 @@ public class SimpleGameData implements Serializable {
 		// Temps du jeu
 		time.start();
 	}
-	
+
 	@Override
 	public String toString() {
 		StringBuilder str = new StringBuilder("---SIMPLE_GAME_DATA---\n");
-		str.append("nbLines = "+nbLines+"\n");
-		str.append("nbColumns = "+nbColumns+"\n");
-		str.append("selected = "+selected+"\n");
-		str.append("map = "+map+"\n");
-		str.append("difficulty = "+difficulty+"\n");
-		str.append("actualMoney = "+actualMoney+"\n");
-		str.append("actualfertilizer = "+actualfertilizer+"\n");
-		str.append("placedPlant = "+placedPlant+"\n");
-		str.append("myPlants = "+myPlants+"\n");
-		str.append("mySun = "+mySun+"\n");
-		str.append("zombieInQueu = "+zombieInQueu+"\n");
-		str.append("myZombies = "+myZombies+"\n");
-		str.append("myBullet = "+myBullet+"\n");
-		str.append("myLawnMower = "+myLawnMower);
+		str.append("nbLines = " + nbLines + "\n");
+		str.append("nbColumns = " + nbColumns + "\n");
+		str.append("selected = " + selected + "\n");
+		str.append("map = " + map + "\n");
+		str.append("difficulty = " + difficulty + "\n");
+		str.append("actualMoney = " + actualMoney + "\n");
+		str.append("actualfertilizer = " + actualfertilizer + "\n");
+		str.append("placedPlant = " + placedPlant + "\n");
+		str.append("myPlants = " + myPlants + "\n");
+		str.append("mySun = " + mySun + "\n");
+		str.append("zombieInQueu = " + zombieInQueu + "\n");
+		str.append("myZombies = " + myZombies + "\n");
+		str.append("myBullet = " + myBullet + "\n");
+		str.append("myLawnMower = " + myLawnMower);
 		return str.toString();
 	}
 
@@ -925,6 +925,25 @@ public class SimpleGameData implements Serializable {
 
 	public void addFertilizer() {
 		actualfertilizer = (actualfertilizer < 3 ? actualfertilizer += 1 : actualfertilizer);
+	}
+
+	private void removeFertilizer() {
+		if (actualfertilizer > 0) {
+			actualfertilizer--;
+		} else {
+			actualfertilizer = 0;
+		}
+	}
+
+	public void feed(float x, float y) {
+		Cell cell = this.getCell(BordView.caseYFromY(y), BordView.caseXFromX(x));
+		if (cell != null) {
+			Plant plant = cell.getMainPlant();
+			if (plant != null && plant.feedPlant()) {
+				this.removeFertilizer();
+				System.out.println(plant + "is powered up");
+			}
+		}
 	}
 
 }

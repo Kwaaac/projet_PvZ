@@ -159,6 +159,14 @@ public abstract class Cell implements ICell, Serializable {
 	public Plant getGroundPlant() {
 		return groundPlant;
 	}
+	
+	public Plant getMainPlant() {
+		return mainPlant;
+	}
+	
+	public Plant getSupportPlant() {
+		return supportPlant;
+	}
 
 	/**
 	 * Add a support plant on the cell, wont add it if a plant is already planted

@@ -307,22 +307,20 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie,
 
 	public void conflictLvZ(DeadPool deadPoolE, List<LawnMower> myLawnMower, BordView view, SimpleGameData data,
 			StringBuilder str) {
-		if (x < view.getXOrigin()) {
-			for (LawnMower l : myLawnMower) {
-				if (this.hit(l)) {
-					if (!(l.isMoving())) {
-						l.go();
-					}
-					if (fertilizer) {
-						System.out.println("check");
-						data.addFertilizer();
-						System.out.println("il semblerait que ce zombie était spécial\n\tvous avez "
-								+ data.getFertilizer() + " engrais");
-					}
-					life = 0;
-					str.append(this + " meurt tuï¿½ par une tondeuse\n");
-					l.setLife(100000);
+		for (LawnMower l : myLawnMower) {
+			if (this.hit(l)) {
+				if (!(l.isMoving())) {
+					l.go();
 				}
+				if (fertilizer) {
+					System.out.println("check");
+					data.addFertilizer();
+					System.out.println("il semblerait que ce zombie était spécial\n\tvous avez " + data.getFertilizer()
+							+ " engrais");
+				}
+				life = 0;
+				str.append(this + " meurt tuï¿½ par une tondeuse\n");
+				l.setLife(100000);
 			}
 		}
 	}

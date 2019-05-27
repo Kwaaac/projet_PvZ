@@ -28,6 +28,7 @@ public abstract class Plant extends Entities implements IPlant, Serializable {
 	protected final Integer cost;
 	protected final Long cooldown;
 	private Coordinates plantSelect;
+	private boolean fertilized; 
 
 	private final static ArrayList<Plant> day = new ArrayList<>(
 			Arrays.asList(new CherryBomb(), new Chomper(), new Peashooter(), new Repeater(), new PotatoMine(),
@@ -182,5 +183,17 @@ public abstract class Plant extends Entities implements IPlant, Serializable {
 	@Override
 	public int hashCode() {
 		return Objects.hash(super.hashCode(), shootBarMax, shootTime, cost, cooldown);
+	}
+	
+	public boolean feedPlant() {
+		if(fertilized) {
+			return false;
+		}
+		fertilized = true;
+		return true;
+	}
+	
+	public Boolean isFertilized() {
+		return fertilized;
 	}
 }
