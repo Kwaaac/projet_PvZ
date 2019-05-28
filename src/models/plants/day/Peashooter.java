@@ -6,11 +6,13 @@ import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.List;
 
+import models.Chrono;
 import models.SimpleGameData;
 import models.cells.Cell;
 import models.plants.Plant;
 import models.projectiles.Pea;
 import models.projectiles.Projectile;
+import models.projectiles.Spore;
 import models.zombies.Zombie;
 import views.BordView;
 import views.SimpleGameView;
@@ -18,11 +20,14 @@ import views.SimpleGameView;
 public class Peashooter extends Plant {
 	private final String name = "Peashooter";
 	private final String color = "#90D322";
+	private int row = 0;
+	private Chrono delayAttack = new Chrono();
 
 	public Peashooter(int x, int y) {
 		super(x, y, 0, 300, 5000, 100, "fast");
 
 		shootBar = shootBarMax; // La plante tire dès qu'elle est posée
+		delayAttack.steady();
 	}
 
 	public Peashooter() {
@@ -51,9 +56,27 @@ public class Peashooter extends Plant {
 		return new Peashooter(x, y);
 	}
 
+	private void superAction(List<Projectile> myBullet, BordView view, List<Zombie> myZombies,
+			SimpleGameData dataBord) {
+		shootBar = shootBarMax;
+		delayAttack.startChronoIfReset();
+
+		if (delayAttack.asReachTimerMs(100) || row == 0) {
+			myBullet.add(
+					new Pea(super.getX() + super.getSizeOfPlant(), super.getY() + (super.getSizeOfPlant() / 2) - 10));
+			delayAttack.start();
+			row++;
+			
+			if(row == 10) {
+				unFeed();
+			}
+		}
+	}
+
 	@Override
 	public void action(List<Projectile> myBullet, BordView view, List<Zombie> myZombies, SimpleGameData dataBord) {
 		if (super.isFertilized()) {
+			superAction(myBullet, view, myZombies, dataBord);
 			return;
 		} else {
 			if (this.readyToshot(dataBord.getLineCell(this.getCaseJ(), this.getCaseI()))) {

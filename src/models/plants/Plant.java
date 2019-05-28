@@ -17,6 +17,7 @@ import models.cells.WaterCell;
 import models.plants.day.*;
 import models.plants.night.*;
 import models.plants.pool.*;
+import models.projectiles.Projectile;
 import models.zombies.Zombie;
 import views.BordView;
 
@@ -169,21 +170,6 @@ public abstract class Plant extends Entities implements IPlant, Serializable {
 
 		return false;
 	}
-
-	@Override
-	public boolean equals(Object o) {
-		if (!(o instanceof Plant)) {
-			return false;
-		}
-		Plant p = (Plant) o;
-		return super.equals(p) && shootBarMax == p.shootBarMax && shootTime == p.shootTime && cost == p.cost
-				&& cooldown == p.cooldown;
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(super.hashCode(), shootBarMax, shootTime, cost, cooldown);
-	}
 	
 	public boolean feedPlant() {
 		if(fertilized) {
@@ -200,5 +186,19 @@ public abstract class Plant extends Entities implements IPlant, Serializable {
 	public void unFeed() {
 		fertilized = false;
 	}
-	
+
+	@Override
+	public boolean equals(Object o) {
+		if (!(o instanceof Plant)) {
+			return false;
+		}
+		Plant p = (Plant) o;
+		return super.equals(p) && shootBarMax == p.shootBarMax && shootTime == p.shootTime && cost == p.cost
+				&& cooldown == p.cooldown;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(super.hashCode(), shootBarMax, shootTime, cost, cooldown);
+	}
 }
