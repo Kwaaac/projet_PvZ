@@ -448,6 +448,13 @@ public abstract class Cell implements ICell, Serializable {
 	public boolean isCellEmpty() {
 		return isPlantedPlant() || isThereBadZombies();
 	}
+	
+	/**
+	 * Return if a cell is leanned
+	 */
+	public boolean isLeanned() {
+		return false;
+	}
 
 	@Override
 	public String toString() {

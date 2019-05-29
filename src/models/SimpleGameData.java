@@ -146,7 +146,12 @@ public class SimpleGameData implements Serializable {
 	private void RoofBord() {
 		for (int i = 0; i < matrix.length; i++) {
 			for (int j = 0; j < matrix[0].length; j++) {
-				matrix[i][j] = new TileCell(true);
+				if(j<5) {
+					matrix[i][j] = new TileCell(true, true);
+				} else {
+					matrix[i][j] = new TileCell(true, false);
+				}
+				
 			}
 		}
 	}
@@ -770,7 +775,6 @@ public class SimpleGameData implements Serializable {
 					}
 				} else {
 
-					y = BordView.getSquareSize() * 3 + 20;
 					if (rand2.nextInt(100) <= fertilizerChance) {
 						myZombies.add(z.createNewZombie(x, y, true));
 					} else {

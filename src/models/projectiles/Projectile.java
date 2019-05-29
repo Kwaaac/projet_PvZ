@@ -13,15 +13,15 @@ import models.SimpleGameData;
 import models.cells.Cell;
 import views.BordView;
 
-public abstract class Projectile extends Entities implements MovingElement, IProjectile, Serializable{
+public abstract class Projectile extends Entities implements MovingElement, IProjectile, Serializable {
 	private double speed;
 	private static final int sizeOfProjectile = 25;
-	
+
 	public Projectile(float x, float y, int damage, int life, double speed) {
 		super(x, y, damage, life, true);
 		this.setSpeed(speed);
 	}
-	
+
 	@Override
 	/**
 	 * give the zombie a case and add the zombie on the zombieList of the cell
@@ -34,41 +34,48 @@ public abstract class Projectile extends Entities implements MovingElement, IPro
 
 		Coordinates caseZ = new Coordinates(cX, cY);
 
-		if (!caseZ.equals(caseXY)) {
+		if (!caseZ.equals(caseXY)) { // Changing case
 
 			Cell actCell = data.getCell(cY, cX);
+
 			if (actCell != null) {
 
 				if (!(cX == data.getNbColumns()) || cX < 0) {
 					data.getCell(caseXY.getJ(), caseXY.getI()).removeProjectile(this);
 				}
-				
-				actCell.addProjectile(this);
 
-				caseXY = caseZ;
+				if (actCell.isLeanned()) {
+					setLife(0);
+				} else {
+					actCell.addProjectile(this);
+
+					caseXY = caseZ;
+				}
 			}
 		}
 	}
-	
+
 	@Override
 	public void move() {
 		setX((int) (super.x + getSpeed()));
 	}
-		
-	@Override
-	public void incAS() {}
 
 	@Override
-	public void resetAS() {}
-	
+	public void incAS() {
+	}
+
+	@Override
+	public void resetAS() {
+	}
+
 	public static int getSizeOfProjectile() {
 		return sizeOfProjectile;
 	}
-	
+
 	public Coordinates hitBox() {
 		return new Coordinates((int) x, (int) x + sizeOfProjectile);
 	}
-	
+
 	public boolean isOutside(int xOrigin, int sqrSize, int nbrSqr) {
 		return x > xOrigin + sqrSize * nbrSqr;
 	}
@@ -76,7 +83,7 @@ public abstract class Projectile extends Entities implements MovingElement, IPro
 	public void SpeedBoostON() {
 		setSpeed(getSpeed() + 2);
 	}
-	
+
 	public void SpeedBoostOFF() {
 		setSpeed(getSpeed() - 2);
 	}
@@ -88,15 +95,15 @@ public abstract class Projectile extends Entities implements MovingElement, IPro
 	public void setSpeed(double speed) {
 		this.speed = speed;
 	}
-	
+
 	public static void hasToDie(DeadPool DPe, List<Projectile> myBullet, SimpleGameData data) {
-		for(Projectile p : myBullet) {
+		for (Projectile p : myBullet) {
 			if (p.isDead()) {
 				DPe.add(p);
 			}
 		}
 	}
-	
+
 	@Override
 	public boolean equals(Object o) {
 		if (!(o instanceof Projectile)) {
@@ -110,7 +117,8 @@ public abstract class Projectile extends Entities implements MovingElement, IPro
 	public int hashCode() {
 		return Objects.hash(super.hashCode(), speed);
 	}
-	
+
 	@Override
-	public void action(SimpleGameData data) {}
+	public void action(SimpleGameData data) {
+	}
 }

@@ -10,6 +10,8 @@ import java.util.Objects;
 
 import fr.umlv.zen5.ApplicationContext;
 import models.SimpleGameData;
+import models.cells.Cell;
+import models.cells.TileCell;
 import models.plants.Plant;
 import models.projectiles.Projectile;
 import models.zombies.Zombie;
@@ -70,6 +72,14 @@ public class Pot extends Plant {
 		}
 		Pot p = (Pot) o;
 		return name.equals(p.name) && color.equals(p.color);
+	}
+	
+	@Override
+	public boolean plantingCondition(Cell cell) {
+		if(!cell.isGroundPlantPlanted() && cell.equals(new TileCell())) {
+			return cell.addPlant(this);
+		}
+		return false;
 	}
 
 	@Override

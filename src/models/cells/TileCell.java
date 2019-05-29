@@ -8,6 +8,8 @@ import models.plants.Plant;
 
 public class TileCell extends Cell {
 	private final String type = "Tile";
+	private boolean leanned;
+	
 	private Color dayColor = Color.decode("#BC4C29");
 	private Color dayColorDarker = Color.decode("#AB2900");
 	
@@ -16,6 +18,11 @@ public class TileCell extends Cell {
 
 	public TileCell(boolean dayTime) {
 		super(dayTime);
+	}
+	
+	public TileCell(boolean dayTime, boolean leanned) {
+		this(dayTime);
+		this.leanned = leanned;
 	}
 	
 	public TileCell() {
@@ -42,6 +49,11 @@ public class TileCell extends Cell {
 
 		super.drawBoardCell(graphics, i, j, darker, squareSize);
 	}
+	
+	@Override
+	public boolean isLeanned() {
+		return leanned;
+	}
 
 	public Color getColor() {
 		return dayColor;
@@ -53,7 +65,7 @@ public class TileCell extends Cell {
 
 	@Override
 	public boolean equals(Object o) {
-		if (!(o instanceof WaterCell)) {
+		if (!(o instanceof TileCell)) {
 			return false;
 		}
 		TileCell wc = (TileCell) o;
