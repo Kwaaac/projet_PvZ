@@ -38,4 +38,6 @@ public interface ICell {
 	Color getColor();
 
 	Color getColorDarker();
+	
+	boolean isLeanned();
 }

@@ -45,7 +45,8 @@ public class SunFlower extends Plant {
 	public void action(List<Projectile> myBullet, BordView view, List<Zombie> myZombies,
 			SimpleGameData dataBord) {
 		if (this.readyToshot()) {
-			dataBord.spawnSun(view, x + 20, y + 20, 25, 85);
+			int rdmPos =  SimpleGameData.RandomPosGenerator(-25, 25);
+			dataBord.spawnSun(view, x + rdmPos, y + 20, 25, 85);
 			this.resetAS();
 		}
 

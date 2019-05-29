@@ -3,6 +3,7 @@ package models.projectiles;
 import java.awt.Graphics2D;
 
 import models.SimpleGameData;
+import models.cells.Cell;
 import views.SimpleGameView;
 
 public interface IProjectile {
@@ -16,6 +17,7 @@ public interface IProjectile {
 	int isSlowing();
 
 	void action(SimpleGameData data);
-	
+
 	String getColor();
+
 }
