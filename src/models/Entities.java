@@ -139,7 +139,7 @@ public abstract class Entities implements IEntite, Serializable{
 	}
 	
 	@Override
-	public void reverseTeam() {
+	public void reverseTeam(SimpleGameData data) {
 		this.Team = !(Team);
 	}
 	

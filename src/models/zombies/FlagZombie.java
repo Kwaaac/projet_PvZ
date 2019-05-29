@@ -37,10 +37,6 @@ public class FlagZombie extends Zombie {
 		return name;
 	}
 
-	public void go() {
-		super.go((float) -0.95);
-	}
-
 	@Override
 	public Zombie createNewZombie(int x, int y, boolean gift) {
 		return new FlagZombie(x, y, gift);

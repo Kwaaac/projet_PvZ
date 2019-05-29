@@ -52,7 +52,7 @@ public class SimpleGameData implements Serializable {
 	private int difficulty = 1;
 	private int superWave = 0;
 
-	private int actualMoney = 990;
+	private int actualMoney = 999;
 	private int actualfertilizer = 3;
 	private int fertilizerChance = 10;
 	private Chrono sunSpawn = new Chrono();
@@ -771,6 +771,7 @@ public class SimpleGameData implements Serializable {
 					}
 				} else {
 
+					y = BordView.getSquareSize()*3 + 20;
 					if (rand2.nextInt(100) <= fertilizerChance) {
 						myZombies.add(z.createNewZombie(x, y, true));
 					} else {
@@ -786,8 +787,8 @@ public class SimpleGameData implements Serializable {
 				}
 			}
 
-			if (timeLimit >= 4000) {
-				timeLimit -= 1000;
+			if (timeLimit >= 3000) {
+				timeLimit -= 500;
 
 				spawnTime = System.currentTimeMillis();
 			} else {
@@ -967,7 +968,6 @@ public class SimpleGameData implements Serializable {
 				Plant plant = cell.getMainPlant();
 				if (plant != null && plant.feedPlant()) {
 					this.removeFertilizer();
-					System.out.println(plant + "is powered up");
 				}
 			}
 		}

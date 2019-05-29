@@ -43,14 +43,6 @@ public class DolphinRiderZombie extends Zombie {
 		return name;
 	}
 
-	public void go() {
-		if (swim) {
-			super.go((float) diffSpeed[0]);
-		} else {
-			super.go((float) diffSpeed[1]);
-		}
-	}
-
 	@Override
 	public Zombie createNewZombie(int x, int y,boolean gift) {
 		return new DolphinRiderZombie(x, y, gift);
@@ -80,6 +72,7 @@ public class DolphinRiderZombie extends Zombie {
 		if (detect(dataBord) && swim) {
 			swim = false;
 			setX(x - BordView.getSquareSize() - 50);
+			setBasicSpeed("slow");
 
 			return false;
 		}

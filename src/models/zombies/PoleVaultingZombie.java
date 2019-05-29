@@ -16,16 +16,15 @@ public class PoleVaultingZombie extends Zombie {
 
 	private final String name = "PoleVaultingZombie";
 	private final String color = "#000000";
-	private final double[] diffSpeed = { -1.23, -0.93 };
 
 	private boolean jump = true;
 
 	public PoleVaultingZombie(int x, int y) {
-		super(x, y, 100, 340, 1, "slow" , false);
+		super(x, y, 100, 340, 1, "slow", false);
 	}
-	
-	public PoleVaultingZombie(int x, int y , boolean gifted) {
-		super(x, y, 100, 340, 1, "slow" , gifted);
+
+	public PoleVaultingZombie(int x, int y, boolean gifted) {
+		super(x, y, 100, 340, 1, "slow", gifted);
 	}
 
 	public PoleVaultingZombie() {
@@ -42,16 +41,8 @@ public class PoleVaultingZombie extends Zombie {
 		return name;
 	}
 
-	public void go() {
-		if (jump) {
-			super.go((float) diffSpeed[0]);
-		} else {
-			super.go((float) diffSpeed[1]);
-		}
-	}
-
 	@Override
-	public Zombie createNewZombie(int x, int y,boolean gift) {
+	public Zombie createNewZombie(int x, int y, boolean gift) {
 		return new PoleVaultingZombie(x, y, gift);
 	}
 
@@ -64,7 +55,7 @@ public class PoleVaultingZombie extends Zombie {
 
 		graphics.setColor(Color.red);
 		graphics.fill(new Arc2D.Float(x, y, sizeOfZombie, sizeOfZombie, 0, -180, 2));
-		
+
 		super.draw(view, graphics);
 	}
 
@@ -81,6 +72,7 @@ public class PoleVaultingZombie extends Zombie {
 	public boolean action(BordView view, SimpleGameData dataBord, List<Zombie> myZombies) {
 		if (detect(dataBord) && jump) {
 			jump = false;
+			setBasicSpeed("slow");
 			setX(x - BordView.getSquareSize() - 50);
 
 			return false;

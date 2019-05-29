@@ -42,10 +42,6 @@ public class SnorkelZombie extends Zombie {
 		return name;
 	}
 
-	public void go() {
-		super.go((float) -0.93);
-	}
-
 	@Override
 	public Zombie createNewZombie(int x, int y,boolean gift) {
 		return new SnorkelZombie(x, y, gift);

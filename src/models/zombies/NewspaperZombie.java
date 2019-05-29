@@ -38,10 +38,6 @@ public class NewspaperZombie extends Zombie {
 		return name;
 	}
 
-	public void go() {
-		super.go((float) -0.93);
-	}
-
 	@Override
 	public Zombie createNewZombie(int x, int y,boolean gift) {
 		return new NewspaperZombie(x, y, gift);
@@ -63,7 +59,7 @@ public class NewspaperZombie extends Zombie {
 	@Override
 	public boolean action(BordView view, SimpleGameData dataBord, List<Zombie> myZombies) {
 		if (this.life <= 200) {
-			setSpeed(-1.70);
+			setBasicSpeed("fast");
 			shootBarMax = 4000;
 			color = "#000000";
 		}

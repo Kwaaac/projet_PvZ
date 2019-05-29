@@ -37,11 +37,6 @@ public class NormalZombie extends Zombie {
 	public String toString() {
 		return type;
 	}
-
-	
-	public void go() {
-		super.go((float) -0.93);
-	}
 	
 	@Override
 	public Zombie createNewZombie(int x, int y,boolean gift) {
@@ -55,7 +50,7 @@ public class NormalZombie extends Zombie {
 		graphics.setColor(Color.decode(color));
 		graphics.fill(new Ellipse2D.Float(x, y, sizeOfZombie, sizeOfZombie));
 		
-		if(this.afflicted) {
+		if(isSlowed()) {
 			super.draw(view, graphics);
 		}
 	}

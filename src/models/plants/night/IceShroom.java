@@ -50,7 +50,10 @@ public class IceShroom extends Plant {
 		if (dataBord.getMap() == "Night") {
 			if (this.readyToshot()) {
 				for (Zombie z : myZombies) {
-					z.slowed(16);
+					if(z.isBad()) {
+						z.stunned(3500);
+						z.slowed(19);
+					}
 				}
 
 				this.life = 0;

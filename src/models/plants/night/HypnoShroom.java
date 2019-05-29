@@ -46,7 +46,7 @@ public class HypnoShroom extends Plant {
 
 		for (Zombie z : cell.getBadZombiesInCell()) {
 			if (this.hit(z)) {
-				z.reverseTeam();
+				z.reverseTeam(dataBord);
 
 				cell.removePlant(this);
 			}

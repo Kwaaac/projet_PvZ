@@ -21,12 +21,12 @@ public class JackintheBoxZombie extends Zombie {
 	private final String name = "JackintheBoxZombie";
 	private final String color = "#000000";
 	private final Chrono explosion = new Chrono();
+	private boolean box = true;
 
 	public JackintheBoxZombie(int x, int y) {
-		super(x, y, 100, 340, 1, "fast",false);
+		super(x, y, 100, 340, 1, "fast", false);
 		explosion.start();
 	}
-		
 
 	public JackintheBoxZombie(int x, int y, boolean gifted) {
 		super(x, y, 100, 340, 1, "fast", gifted);
@@ -47,12 +47,18 @@ public class JackintheBoxZombie extends Zombie {
 		return name;
 	}
 
-	public void go() {
-		super.go((float) -0.93);
+	@Override
+	public boolean magnetizable() {
+		if(box) {
+			box = false;
+			return true;
+		}
+		
+		return false;
 	}
 
 	@Override
-	public Zombie createNewZombie(int x, int y,boolean gift) {
+	public Zombie createNewZombie(int x, int y, boolean gift) {
 		return new JackintheBoxZombie(x, y, gift);
 	}
 
@@ -99,26 +105,27 @@ public class JackintheBoxZombie extends Zombie {
 
 	@Override
 	public boolean action(BordView view, SimpleGameData dataBord, List<Zombie> myZombies) {
+		if (box) {
+			Cell cell = dataBord.getCell(this.getCaseJ(), this.getCaseI());
 
-		Cell cell = dataBord.getCell(this.getCaseJ(), this.getCaseI());
+			if (dataBord.isCorrectBordLocation(view, x, y) && cell != null) {
 
-		if (dataBord.isCorrectBordLocation(view, x, y) && cell != null) {
+				if (this.readyToDetonate()) {
+					ArrayList<Coordinates> zone = zone();
 
-			if (this.readyToDetonate()) {
-				ArrayList<Coordinates> zone = zone();
+					for (Plant p : detect(view, dataBord, zone)) {
+						Cell zCell = dataBord.getCell(p.getCaseJ(), p.getCaseI());
 
-				for (Plant p : detect(view, dataBord, zone)) {
-					Cell zCell = dataBord.getCell(p.getCaseJ(), p.getCaseI());
+					}
 
+					this.life = 0;
+					cell.removeZombie(this);
 				}
-
-				this.life = 0;
-				cell.removeZombie(this);
 			}
-		}
 
-		this.incAS();
-		
+			this.incAS();
+
+		}
 		return true;
 	}
 

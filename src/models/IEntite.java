@@ -24,7 +24,7 @@ public interface IEntite {
 
 	int getCaseI();
 	
-	void reverseTeam();
+	void reverseTeam(SimpleGameData data);
 	
 	boolean isGood();
 	

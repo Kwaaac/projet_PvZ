@@ -40,8 +40,11 @@ public class SimpleGameController {
 
 		ArrayList<Plant> selectedPlant = PrincipalMenuController.startGame(context, dataBord);
 
-		HashMap<Zombie, Integer> normalWaveZombie = dataBord.generateZombies(1);
+		HashMap<Zombie, Integer> normalWaveZombie = new HashMap<>();
+		normalWaveZombie.put(new NormalZombie(), 1);
+		normalWaveZombie.put(new ConeheadZombie(), 1);
 
+		//dataBord.generateZombies(1)
 		HashMap<Zombie, Integer> superWaveZombie = dataBord.generateZombies(2);
 
 		int yOrigin = 100;
@@ -89,7 +92,7 @@ public class SimpleGameController {
 
 		dataBord.spawnLawnMower(view, context);
 
-
+		int i = 0;
 		while (true) {
 			myZombies = dataBord.getMyZombies();
 			myBullet = dataBord.getMyBullet();
@@ -103,7 +106,6 @@ public class SimpleGameController {
 				plantSelectionView.checkCooldown();
 
 				/*--------------------------------DRAWS--------------------------------*/
-
 				view.drawAll(context, dataBord, view, myZombies, myBullet, myLawnMower, debug, debuglock, dataSelect,
 						dataBord.getActualMoney(), dataBord.getFertilizer(), plantSelectionView);
 
@@ -144,6 +146,7 @@ public class SimpleGameController {
 
 				/*------------------------------EVENTS----------------------------------*/
 
+				i++;
 				Event event = context.pollOrWaitEvent(45); // modifier pour avoir un affichage fluide
 				if (event == null) { // no event
 					continue;

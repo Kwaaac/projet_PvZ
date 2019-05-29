@@ -39,10 +39,6 @@ public class BucketheadZombie extends Zombie {
 		return name;
 	}
 
-	public void go() {
-		super.go((float) -0.7);
-	}
-
 	@Override
 	public boolean magnetizable() {
 		if (life > 300) {
@@ -74,6 +70,8 @@ public class BucketheadZombie extends Zombie {
 			graphics.setColor(Color.decode(color));
 			graphics.fill(new Ellipse2D.Float(x, y, sizeOfZombie, sizeOfZombie));
 		}
+		
+		
 		super.draw(view, graphics);
 	}
 }

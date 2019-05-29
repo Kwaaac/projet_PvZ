@@ -68,6 +68,8 @@ public class Peashooter extends Plant {
 			row++;
 			
 			if(row == 10) {
+				row = 0;
+				shootBar = 0;
 				unFeed();
 			}
 		}
