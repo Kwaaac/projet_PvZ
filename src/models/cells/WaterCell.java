@@ -11,30 +11,47 @@ import models.zombies.Zombie;
 
 public class WaterCell extends Cell {
 	private final String type = "Water";
-	private Color color = Color.decode("#0fa5c6");
-	private Color colorDarker = Color.decode("#0d9dbc");
+	private Color dayColor = Color.decode("#0fa5c6");
+	private Color dayColorDarker = Color.decode("#0d9dbc");
+	
+	private Color nightColor = Color.decode("#0e94b2");
+	private Color nightColorDarker = Color.decode("#0c7d96");
 
+	public WaterCell(boolean dayTime) {
+		super(dayTime);
+	}
+	
 	public WaterCell() {
-		super();
+		this(true);
 	}
 
 	@Override
 	public void drawBoardCell(Graphics2D graphics, float i, float j, int darker, int squareSize) {
 		if (darker == 0) {
-			graphics.setColor(color);
+			if (dayTime) {
+				graphics.setColor(dayColor);
+			} else {
+				graphics.setColor(nightColor);
+			}
+
 		} else {
-			graphics.setColor(colorDarker);
+
+			if (dayTime) {
+				graphics.setColor(dayColorDarker);
+			} else {
+				graphics.setColor(nightColorDarker);
+			}
 		}
 
 		super.drawBoardCell(graphics, i, j, darker, squareSize);
 	}
 
 	public Color getColor() {
-		return color;
+		return dayColor;
 	}
 
 	public Color getColorDarker() {
-		return colorDarker;
+		return dayColorDarker;
 	}
 
 	@Override

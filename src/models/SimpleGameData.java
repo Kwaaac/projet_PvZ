@@ -16,7 +16,6 @@ import fr.umlv.zen5.ApplicationContext;
 import models.cells.Cell;
 import models.cells.WaterCell;
 import models.cells.GrassCell;
-import models.cells.NightCell;
 import models.cells.TileCell;
 import models.plants.IPlant;
 import models.plants.Plant;
@@ -41,7 +40,6 @@ public class SimpleGameData implements Serializable {
 	private final ArrayList<Projectile> myBullet = new ArrayList<>();
 	private final ArrayList<LawnMower> myLawnMower = new ArrayList<>();
 	private final ArrayList<Tombstone> myTombstone = new ArrayList<>();
-	
 
 	private boolean stop = false;
 
@@ -60,6 +58,7 @@ public class SimpleGameData implements Serializable {
 	static Chrono time = new Chrono();
 
 	private static String map;
+	private static String dayTime = "Day";
 	private String loadChoice = "start";
 
 	public SimpleGameData(int nbLines, int nbColumns) {
@@ -107,7 +106,7 @@ public class SimpleGameData implements Serializable {
 	private void dayBord() {
 		for (int i = 0; i < matrix.length; i++) {
 			for (int j = 0; j < matrix[0].length; j++) {
-				matrix[i][j] = new GrassCell();
+				matrix[i][j] = new GrassCell(true);
 			}
 		}
 	}
@@ -116,9 +115,9 @@ public class SimpleGameData implements Serializable {
 		for (int i = 0; i < matrix.length; i++) {
 			for (int j = 0; j < matrix[0].length; j++) {
 				if (i == 2 || i == 3) {
-					matrix[i][j] = new WaterCell();
+					matrix[i][j] = new WaterCell(true);
 				} else {
-					matrix[i][j] = new GrassCell();
+					matrix[i][j] = new GrassCell(true);
 				}
 			}
 		}
@@ -127,7 +126,7 @@ public class SimpleGameData implements Serializable {
 	private void NightBord() {
 		for (int i = 0; i < matrix.length; i++) {
 			for (int j = 0; j < matrix[0].length; j++) {
-				matrix[i][j] = new NightCell();
+				matrix[i][j] = new GrassCell(false);
 			}
 		}
 	}
@@ -136,9 +135,9 @@ public class SimpleGameData implements Serializable {
 		for (int i = 0; i < matrix.length; i++) {
 			for (int j = 0; j < matrix[0].length; j++) {
 				if (i == 2 || i == 3) {
-					matrix[i][j] = new WaterCell();
+					matrix[i][j] = new WaterCell(false);
 				} else {
-					matrix[i][j] = new NightCell();
+					matrix[i][j] = new GrassCell(false);
 				}
 			}
 		}
@@ -147,7 +146,7 @@ public class SimpleGameData implements Serializable {
 	private void RoofBord() {
 		for (int i = 0; i < matrix.length; i++) {
 			for (int j = 0; j < matrix[0].length; j++) {
-				matrix[i][j] = new TileCell();
+				matrix[i][j] = new TileCell(true);
 			}
 		}
 	}
@@ -771,7 +770,7 @@ public class SimpleGameData implements Serializable {
 					}
 				} else {
 
-					y = BordView.getSquareSize()*3 + 20;
+					y = BordView.getSquareSize() * 3 + 20;
 					if (rand2.nextInt(100) <= fertilizerChance) {
 						myZombies.add(z.createNewZombie(x, y, true));
 					} else {
@@ -873,8 +872,16 @@ public class SimpleGameData implements Serializable {
 
 	}
 
-	public void setMap(String mape) {
-		map = mape;
+	public void setDayTime(String dayTime) {
+		this.dayTime = dayTime;
+	}
+	
+	public String getDayTime() {
+		return dayTime;
+	}
+
+	public void setMap(String map) {
+		this.map = map;
 	}
 
 	public static String getMap() {
@@ -920,29 +927,30 @@ public class SimpleGameData implements Serializable {
 	public void removeLM(IEntite dPe) {
 		myLawnMower.remove(dPe);
 	}
-	
-	public void addB(Projectile ... dPe) {
-		for(Projectile i : dPe) {
-		myBullet.add(i);
+
+	public void addB(Projectile... dPe) {
+		for (Projectile i : dPe) {
+			myBullet.add(i);
 		}
 	}
 
-	public void addP(Plant ... dPe) {
-		for(Plant i : dPe) {
-		myPlants.add(i);
+	public void addP(Plant... dPe) {
+		for (Plant i : dPe) {
+			myPlants.add(i);
 		}
 	}
 
-	public void addZ(Zombie ... dPe) {
-		for(Zombie i : dPe) {
-		myZombies.add(i);
+	public void addZ(Zombie... dPe) {
+		for (Zombie i : dPe) {
+			myZombies.add(i);
 		}
 	}
 
-	public void addLM(LawnMower ... dPe) {
-		for(LawnMower i : dPe) {
-		myLawnMower.add(i);
-		};
+	public void addLM(LawnMower... dPe) {
+		for (LawnMower i : dPe) {
+			myLawnMower.add(i);
+		}
+		;
 	}
 
 	public Integer getFertilizer() {

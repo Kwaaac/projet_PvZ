@@ -8,30 +8,47 @@ import models.plants.Plant;
 
 public class TileCell extends Cell {
 	private final String type = "Tile";
-	private Color color = Color.decode("#BC4C29");
-	private Color colorDarker = Color.decode("#AB2900");
+	private Color dayColor = Color.decode("#BC4C29");
+	private Color dayColorDarker = Color.decode("#AB2900");
+	
+	private Color nightColor = Color.decode("#a03f21");
+	private Color nightColorDarker = Color.decode("#7c1e01");
 
+	public TileCell(boolean dayTime) {
+		super(dayTime);
+	}
+	
 	public TileCell() {
-		super();
+		this(true);
 	}
 
 	@Override
 	public void drawBoardCell(Graphics2D graphics, float i, float j, int darker, int squareSize) {
 		if (darker == 0) {
-			graphics.setColor(color);
+			if (dayTime) {
+				graphics.setColor(dayColor);
+			} else {
+				graphics.setColor(nightColor);
+			}
+
 		} else {
-			graphics.setColor(colorDarker);
+
+			if (dayTime) {
+				graphics.setColor(dayColorDarker);
+			} else {
+				graphics.setColor(nightColorDarker);
+			}
 		}
 
 		super.drawBoardCell(graphics, i, j, darker, squareSize);
 	}
 
 	public Color getColor() {
-		return color;
+		return dayColor;
 	}
 
 	public Color getColorDarker() {
-		return colorDarker;
+		return dayColorDarker;
 	}
 
 	@Override

@@ -135,6 +135,7 @@ public class PrincipalMenuController {
 	
 					case 1:
 						dataBord.setMap("Night");
+						dataBord.setDayTime("Night");
 						choice = "plantSelection";
 						break;
 						
@@ -145,6 +146,7 @@ public class PrincipalMenuController {
 						
 					case 3:
 						dataBord.setMap("NightPool");
+						dataBord.setDayTime("Night");
 						choice = "plantSelection";
 						break;
 						

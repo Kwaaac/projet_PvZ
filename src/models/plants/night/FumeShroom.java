@@ -58,7 +58,7 @@ public class FumeShroom extends Plant {
 
 	@Override
 	public void action(List<Projectile> myBullet, BordView view, List<Zombie> myZombies, SimpleGameData dataBord) {
-		if (dataBord.getMap() == "Night") {
+		if (dataBord.getDayTime() == "Night") {
 			if (this.readyToshot() && detect(dataBord)) {
 				int sqrS = BordView.getSquareSize();
 				for(int i = 0; i < 5; i++) {

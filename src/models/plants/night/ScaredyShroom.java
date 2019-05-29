@@ -74,7 +74,7 @@ public class ScaredyShroom extends Plant {
 
 		if (hiding(dataBord.getLineCell(y, x - 1, x + 2))) {
 
-			if (dataBord.getMap() == "Night") {
+			if (dataBord.getDayTime() == "Night") {
 
 				if (this.readyToshot(dataBord.getLineCell(y, x))) {
 					myBullet.add(new Spore(super.getX() + super.getSizeOfPlant(),

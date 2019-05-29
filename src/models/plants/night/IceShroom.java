@@ -47,7 +47,7 @@ public class IceShroom extends Plant {
 	public void action(List<Projectile> myBullet, BordView view, List<Zombie> myZombies,
 			SimpleGameData dataBord) {
 
-		if (dataBord.getMap() == "Night") {
+		if (dataBord.getDayTime() == "Night") {
 			if (this.readyToshot()) {
 				for (Zombie z : myZombies) {
 					if(z.isBad()) {

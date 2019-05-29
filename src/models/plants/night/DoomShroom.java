@@ -46,7 +46,7 @@ public class DoomShroom extends Plant {
 
 	@Override
 	public void action(List<Projectile> myBullet, BordView view, List<Zombie> myZombies, SimpleGameData dataBord) {
-		if (dataBord.getMap() == "Night") {
+		if (dataBord.getDayTime() == "Night") {
 			if (this.readyToshot()) {
 				for (Zombie z : myZombies) {
 					z.takeDmg(1800);

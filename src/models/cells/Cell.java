@@ -15,6 +15,8 @@ import models.projectiles.Projectile;
 import models.zombies.Zombie;
 
 public abstract class Cell implements ICell, Serializable {
+	
+	protected final boolean dayTime;
 
 	private Plant groundPlant;
 	private Plant mainPlant;
@@ -34,7 +36,9 @@ public abstract class Cell implements ICell, Serializable {
 	private boolean ice = false;
 	private Chrono iceChrono = new Chrono();
 
-	public Cell() {
+	public Cell(boolean dayTime) {
+		this.dayTime = dayTime; //True -> day; false -> night
+		
 		groundPlant = null;
 		mainPlant = null;
 		supportPlant = null;
@@ -47,6 +51,10 @@ public abstract class Cell implements ICell, Serializable {
 		iceChrono.steady();
 	}
 
+	/**
+	 * Into the class, the color of the cell given according dayTime and like a chess Board
+	 * This method allow to draw the cell and add changes (crater from doomShroom...)
+	 */
 	@Override
 	public void drawBoardCell(Graphics2D graphics, float i, float j, int darker, int squareSize) {
 		graphics.fill(new Rectangle2D.Float(j, i, squareSize, squareSize));

@@ -41,14 +41,15 @@ public class HypnoShroom extends Plant {
 
 	@Override
 	public void action(List<Projectile> myBullet, BordView view, List<Zombie> myZombies, SimpleGameData dataBord) {
+		if (dataBord.getDayTime() == "Night") {
+			Cell cell = dataBord.getCell(getCaseJ(), getCaseI());
 
-		Cell cell = dataBord.getCell(getCaseJ(), getCaseI());
+			for (Zombie z : cell.getBadZombiesInCell()) {
+				if (this.hit(z)) {
+					z.reverseTeam(dataBord);
 
-		for (Zombie z : cell.getBadZombiesInCell()) {
-			if (this.hit(z)) {
-				z.reverseTeam(dataBord);
-
-				cell.removePlant(this);
+					cell.removePlant(this);
+				}
 			}
 		}
 	}

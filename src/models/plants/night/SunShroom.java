@@ -45,50 +45,50 @@ public class SunShroom extends Plant {
 	}
 
 	@Override
-	public void action(List<Projectile> myBullet, BordView view, List<Zombie> myZombies,
-			SimpleGameData dataBord) {
+	public void action(List<Projectile> myBullet, BordView view, List<Zombie> myZombies, SimpleGameData dataBord) {
+		if (dataBord.getDayTime() == "Night") {
+			if (this.readyToshot()) {
 
-		if (this.readyToshot()) {
+				if (grow == true) {
 
-			if (grow == true) {
+					dataBord.spawnSun(view, x + 20, y + 20, 25, 85);
+					this.resetAS();
+				} else {
 
-				dataBord.spawnSun(view, x + 20, y + 20, 25, 85);
-				this.resetAS();
-			} else {
-
-				dataBord.spawnSun(view, x + 20, y + 20, 15, 55);
-				this.resetAS();
+					dataBord.spawnSun(view, x + 20, y + 20, 15, 55);
+					this.resetAS();
+				}
 			}
+
+			if (growing.asReachTimer(120)) {
+				grow = true;
+			}
+
+			this.incAS();
 		}
-
-		if (growing.asReachTimer(120)) {
-			grow = true;
-		}
-
-		this.incAS();
-
 	}
 
 	@Override
 	public void draw(SimpleGameView view, Graphics2D graphics) {
 		graphics.setColor(Color.decode("#ffffff"));
-		graphics.fill(new Rectangle2D.Float(x + 10, y , sizeOfPlant - 25, sizeOfPlant - 15));
+		graphics.fill(new Rectangle2D.Float(x + 10, y, sizeOfPlant - 25, sizeOfPlant - 15));
 
 		graphics.setColor(Color.decode(color));
 		graphics.fill(new RoundRectangle2D.Float(x, y - 5, sizeOfPlant - 5, sizeOfPlant - 25, 10, 10));
 
 	}
-	
+
 	int sizeOfSPlant = super.getSizeOfPlant() - 10;
 
 	@Override
 	public void draw(SimpleGameView view, Graphics2D graphics, int x, int y) {
 		graphics.setColor(Color.decode("#ffffff"));
-		graphics.fill(new Rectangle2D.Float(x , y + sizeOfSPlant , sizeOfSPlant - 35, sizeOfSPlant - 35));
-		
+		graphics.fill(new Rectangle2D.Float(x, y + sizeOfSPlant, sizeOfSPlant - 35, sizeOfSPlant - 35));
+
 		graphics.setColor(Color.decode(color));
-		graphics.fill(new RoundRectangle2D.Float(x - 10, y + sizeOfSPlant / 2 + 15, sizeOfSPlant - 15, sizeOfSPlant - 25, 10, 10));
-		
+		graphics.fill(new RoundRectangle2D.Float(x - 10, y + sizeOfSPlant / 2 + 15, sizeOfSPlant - 15,
+				sizeOfSPlant - 25, 10, 10));
+
 		view.drawCost(graphics, x, y, cost.toString());
 	}
 

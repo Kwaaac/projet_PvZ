@@ -73,7 +73,8 @@ public class MagnetShroom extends Plant {
 	@Override
 	public void action(List<Projectile> myBullet, BordView view, List<Zombie> myZombies, SimpleGameData dataBord) {
 
-		if (dataBord.getMap() == "Night") {
+		if (dataBord.getDayTime() == "Night") {
+
 			if (readyToshot()) {
 				steal = false;
 				if (!myZombies.isEmpty()) {
