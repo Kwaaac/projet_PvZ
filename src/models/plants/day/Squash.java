@@ -23,12 +23,14 @@ public class Squash extends Plant {
 	private final String name = "Repeater";
 	private final String color = "#FFFFFF";
 	private Chrono delayAttack = new Chrono();
+	private int row = 0;
+	private final int maxRow = 2;
 
 	public Squash(int x, int y) {
 		super(x, y, 0, 300, 5100, 0, "free");
 
 		delayAttack.steady();
-		shootBar = shootBarMax; // La plante tire dès qu'elle est posée
+		shootBar = shootBarMax; // La plante tire dï¿½s qu'elle est posï¿½e
 	}
 
 	public Squash() {
@@ -89,29 +91,53 @@ public class Squash extends Plant {
 		}
 	}
 
+	private void superAction(List<Zombie> myZombies, SimpleGameData data) {
+		List<Cell> cells = null;
+
+		int rdmZ = data.RandomPosGenerator(myZombies.size() - 1);
+
+		Zombie z = myZombies.get(rdmZ);
+
+		Cell cell = data.getCell(z.getCaseJ(), z.getCaseI());
+
+		for (Zombie zed : cell.getBadZombiesInCell()) {
+			zed.takeDmg(1800);
+		}
+
+		row++;
+		if (row == maxRow) {
+			unFeed();
+			row = 0;
+		}
+	}
+
 	@Override
-	public void action(List<Projectile> myBullet, BordView view, List<Zombie> myZombies,
-			SimpleGameData dataBord) {
+	public void action(List<Projectile> myBullet, BordView view, List<Zombie> myZombies, SimpleGameData dataBord) {
 
-		if (readyToshot()) {
-			ArrayList<Zombie> zombie = this.detect(this.zone(dataBord));
+		if (super.isFertilized()) {
+			superAction(myZombies, dataBord);
+			return;
+		} else {
+			if (readyToshot()) {
+				ArrayList<Zombie> zombie = this.detect(this.zone(dataBord));
 
-			if (!zombie.isEmpty()) {
-				startDelay();
+				if (!zombie.isEmpty()) {
+					startDelay();
 
-				if (delayAttack.asReachTimer(2)) {
+					if (delayAttack.asReachTimer(2)) {
 
-					for (Zombie z : zombie) {
-						z.setLife(1800);
+						for (Zombie z : zombie) {
+							z.takeDmg(1800);
 
-						this.setLife(life);
+							this.setLife(0);
+						}
 					}
 				}
 			}
+
+			incAS();
+
 		}
-
-		incAS();
-
 	}
 
 	@Override
@@ -119,14 +145,14 @@ public class Squash extends Plant {
 		graphics.setColor(Color.decode(color));
 		graphics.fill(new Rectangle2D.Float(x, y, sizeOfPlant, sizeOfPlant));
 	}
-	
+
 	int sizeOfSPlant = super.getSizeOfPlant() - 10;
-	
+
 	@Override
 	public void draw(SimpleGameView view, Graphics2D graphics, int x, int y) {
 		graphics.setColor(Color.decode(color));
 		graphics.fill(new Rectangle2D.Float(x - 15, y + sizeOfSPlant / 2, sizeOfSPlant, sizeOfSPlant));
-		
+
 		view.drawCost(graphics, x, y, cost.toString());
 	}
 
