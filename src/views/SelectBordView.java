@@ -114,7 +114,7 @@ public class SelectBordView extends SimpleGameView {
 	 * @param theOtherData         Data from the player list of plants
 	 */
 
-	public void truc(float x, float y, SelectBordView plantSelectionView, SimpleGameData thisData,
+	public void selectPlant(float x, float y, SelectBordView plantSelectionView, SimpleGameData thisData,
 			SimpleGameData theOtherData) {
 
 		int X = this.indexFromReaCoord(x, xOrigin);

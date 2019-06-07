@@ -78,7 +78,7 @@ public class Squash extends Plant {
 				for (Zombie z : lstz) {
 					zombies.add(z);
 				}
-
+				return zombies;
 			}
 		}
 

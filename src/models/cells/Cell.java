@@ -74,7 +74,7 @@ public abstract class Cell implements ICell, Serializable {
 			graphics.setColor(Color.decode("#874d29"));
 			adjust1 = (int) ((int) squareSize - (squareSize * 0.50));
 			adjust2 = (int) ((int) squareSize / 8.64);
-			graphics.fill(new Ellipse2D.Float(j + 35, i + 35, adjust1, adjust1));
+			graphics.fill(new Ellipse2D.Float(j + adjust2 + 7, i + adjust2 + 7, adjust1, adjust1));
 
 			if (crashChrono.asReachTimer(90)) {
 				crater();

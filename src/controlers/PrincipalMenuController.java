@@ -159,11 +159,11 @@ public class PrincipalMenuController {
 				case "plantSelection":
 	
 					if (dataBord.isCorrectSelectLocation(viewContent, x, y)) {
-						viewContent.truc(x, y, plantSelectionView, dataBord, dataSelect);
+						viewContent.selectPlant(x, y, plantSelectionView, dataBord, dataSelect);
 	
 					} else {
 						if (dataSelect.isCorrectSelectLocation(plantSelectionView, x, y)) {
-							plantSelectionView.truc(x, y, viewContent, dataSelect, dataBord);
+							plantSelectionView.selectPlant(x, y, viewContent, dataSelect, dataBord);
 						}
 					}
 					break;

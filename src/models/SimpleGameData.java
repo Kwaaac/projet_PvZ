@@ -448,11 +448,13 @@ public class SimpleGameData implements Serializable {
 	public boolean movingZombiesAndBullets(ApplicationContext context, BordView view, boolean debug,
 			boolean debuglock) {
 
+		
 		for (Zombie z : myZombies) {
-			if (debug == true) {
+			if (debug == true ) {
 				z.SpeedBoostON();
 				debuglock = true;
 			}
+
 			if (debug == false && debuglock == true) {
 				z.SpeedBoostOFF();
 			}
@@ -483,7 +485,7 @@ public class SimpleGameData implements Serializable {
 			view.moveAndDrawElement(context, this, s);
 			s.setCase();
 		}
-		return debuglock = false;
+		return debuglock;
 	}
 
 	public void timeEnd(List<Zombie> myZombies, StringBuilder str, ApplicationContext context,

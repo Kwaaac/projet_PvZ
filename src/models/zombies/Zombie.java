@@ -153,8 +153,9 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie,
 	public void go() {
 		double speedCheck = speedRecord;
 
+		System.out.println(testMode);
 		if (testMode) {
-			speedCheck += 2;
+			speedCheck -= 2;
 		}
 
 		if (!isBad()) { // Zombie hypnotized
@@ -168,7 +169,6 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie,
 		if (stunned) {
 			speedCheck = 0;
 		}
-
 		setSpeed(speedCheck);
 	}
 
