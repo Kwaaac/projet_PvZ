@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Objects;
 
 import models.SimpleGameData;
+import models.TombStone;
 import models.cells.Cell;
 import models.cells.TileCell;
 import models.plants.Plant;
@@ -35,7 +36,7 @@ public class Pot extends Plant {
 	}
 
 	@Override
-	public void action(List<Projectile> myBullet, BordView view, List<Zombie> myZombies,
+	public void action(List<Projectile> myBullet, BordView view, List<Zombie> myZombies, List<TombStone> myTombStone,
 			SimpleGameData dataBord) {
 	}
 

@@ -7,6 +7,7 @@ import java.awt.geom.RoundRectangle2D;
 import java.util.List;
 
 import models.SimpleGameData;
+import models.TombStone;
 import models.cells.Cell;
 import models.plants.Plant;
 import models.projectiles.Fume;
@@ -39,28 +40,29 @@ public class FumeShroom extends Plant {
 	public Plant createNewPlant(int x, int y) {
 		return new FumeShroom(x, y);
 	}
-	
+
 	private boolean detect(SimpleGameData dataBord) {
 		int caseI = getCaseI();
 		List<Cell> cells = dataBord.getLineCell(getCaseJ(), caseI, caseI + 5);
-		for(Cell c: cells) {
-			if(c.isThereBadZombies()) {
+		for (Cell c : cells) {
+			if (c.isThereBadZombies()) {
 				return true;
 			}
 		}
-		
+
 		return false;
 	}
 
 	@Override
-	public void action(List<Projectile> myBullet, BordView view, List<Zombie> myZombies, SimpleGameData dataBord) {
+	public void action(List<Projectile> myBullet, BordView view, List<Zombie> myZombies, List<TombStone> myTombStone,
+			SimpleGameData dataBord) {
 		if (dataBord.getDayTime() == "Night") {
 			if (this.readyToshot() && detect(dataBord)) {
 				int sqrS = BordView.getSquareSize();
-				for(int i = 0; i < 5; i++) {
-					myBullet.add(new Fume(x + (i*sqrS), y));
+				for (int i = 0; i < 5; i++) {
+					myBullet.add(new Fume(x + (i * sqrS), y));
 				}
-				
+
 				this.resetAS();
 			}
 
@@ -85,7 +87,8 @@ public class FumeShroom extends Plant {
 		graphics.fill(new Rectangle2D.Float(x, y + sizeOfSPlant, sizeOfSPlant - 35, sizeOfSPlant - 35));
 
 		graphics.setColor(Color.decode(color));
-		graphics.fill(new RoundRectangle2D.Float(x - 18, y + sizeOfSPlant / 2, sizeOfSPlant, sizeOfSPlant - 25, 10, 10));
+		graphics.fill(
+				new RoundRectangle2D.Float(x - 18, y + sizeOfSPlant / 2, sizeOfSPlant, sizeOfSPlant - 25, 10, 10));
 
 		view.drawCost(graphics, x, y, cost.toString());
 	}

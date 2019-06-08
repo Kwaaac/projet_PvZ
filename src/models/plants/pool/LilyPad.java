@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Objects;
 
 import models.SimpleGameData;
+import models.TombStone;
 import models.cells.Cell;
 import models.cells.WaterCell;
 import models.plants.Plant;
@@ -35,7 +36,7 @@ public class LilyPad extends Plant {
 	}
 
 	@Override
-	public void action(List<Projectile> myBullet, BordView view, List<Zombie> myZombies,
+	public void action(List<Projectile> myBullet, BordView view, List<Zombie> myZombies, List<TombStone> myTombStone,
 			SimpleGameData dataBord) {
 	}
 
@@ -61,7 +62,7 @@ public class LilyPad extends Plant {
 		if (cell.isWater() && !cell.isGroundPlantPlanted() && !cell.isMainPlantPlanted()) {
 			return cell.addPlant(this);
 
-		} 
+		}
 
 		return false;
 	}
@@ -84,16 +85,16 @@ public class LilyPad extends Plant {
 	public void draw(SimpleGameView view, Graphics2D graphics) {
 		graphics.setColor(Color.decode(color));
 		graphics.fill(new Ellipse2D.Float(x - 15, y - 15, sizeOfPlant + 30, sizeOfPlant + 30));
-		
+
 	}
-	
+
 	int sizeOfSPlant = super.getSizeOfPlant() - 10;
 
 	@Override
 	public void draw(SimpleGameView view, Graphics2D graphics, int x, int y) {
 		graphics.setColor(Color.decode(color));
 		graphics.fill(new Ellipse2D.Float(x - 15, y + sizeOfSPlant / 2, sizeOfSPlant, sizeOfSPlant));
-		
+
 		view.drawCost(graphics, x, y, cost.toString());
 	}
 }

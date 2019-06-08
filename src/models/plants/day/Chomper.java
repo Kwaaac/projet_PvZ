@@ -9,6 +9,7 @@ import java.util.List;
 import models.Chrono;
 import models.DeadPool;
 import models.SimpleGameData;
+import models.TombStone;
 import models.cells.Cell;
 import models.plants.Plant;
 import models.projectiles.Projectile;
@@ -72,7 +73,7 @@ public class Chomper extends Plant {
 
 
 	@Override
-	public void action(List<Projectile> myBullet, BordView view, List<Zombie> myZombies,
+	public void action(List<Projectile> myBullet, BordView view, List<Zombie> myZombies, List<TombStone> myTombStone,
 			SimpleGameData dataBord) {
 
 		if (this.readyToshot()) {

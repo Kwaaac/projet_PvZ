@@ -7,6 +7,7 @@ import java.awt.geom.RoundRectangle2D;
 import java.util.List;
 
 import models.SimpleGameData;
+import models.TombStone;
 import models.cells.Cell;
 import models.plants.Plant;
 import models.projectiles.Projectile;
@@ -41,7 +42,8 @@ public class DoomShroom extends Plant {
 	}
 
 	@Override
-	public void action(List<Projectile> myBullet, BordView view, List<Zombie> myZombies, SimpleGameData dataBord) {
+	public void action(List<Projectile> myBullet, BordView view, List<Zombie> myZombies, List<TombStone> myTombStone,
+			SimpleGameData dataBord) {
 		if (dataBord.getDayTime() == "Night") {
 			if (this.readyToshot()) {
 				for (Zombie z : myZombies) {

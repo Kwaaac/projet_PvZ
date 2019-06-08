@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 import models.Chrono;
 import models.IEntite;
-import models.Tombstone;
+import models.TombStone;
 import models.plants.Plant;
 import models.projectiles.Projectile;
 import models.zombies.Zombie;
@@ -38,7 +38,7 @@ public abstract class Cell implements ICell, Serializable {
 	private boolean ice = false;
 	private Chrono iceChrono = new Chrono();
 	
-	private Tombstone tombstone = null;
+	private TombStone tombstone = null;
 
 	public Cell(boolean dayTime) {
 		this.dayTime = dayTime; //True -> day; false -> night
@@ -121,6 +121,7 @@ public abstract class Cell implements ICell, Serializable {
 			}
 		}
 		
+		//Tomb drawing
 		if (tombstone != null) {
 			graphics.setColor(Color.decode("#606875"));
 			graphics.fill(new Rectangle2D.Float(j + squareSize/4, i + squareSize/3, squareSize/2, squareSize/3 * 2));
@@ -257,12 +258,26 @@ public abstract class Cell implements ICell, Serializable {
 	
 	/**
 	 * if there is not already a tomb stone add it in the cell
-	 * @param Tombstone t
+	 * @param TombStone t
 	 */
-	public void addTombstone(Tombstone t) {
+	public void addTombstone(TombStone t) {
 		if(tombstone == null) {
 			tombstone = t;
 		}
+	}
+	
+	/**
+	 * Remove the tombstone
+	 * @return the removed tombStone or null if there is none
+	 */
+	public TombStone removeTombstone() {
+		if(tombstone != null) {
+			TombStone res = tombstone;
+			tombstone = null;
+			return res;
+		}
+		
+		return null;
 	}
 	
 	

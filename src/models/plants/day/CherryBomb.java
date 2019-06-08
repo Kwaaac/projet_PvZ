@@ -10,6 +10,7 @@ import models.Coordinates;
 import models.DeadPool;
 import models.Entities;
 import models.SimpleGameData;
+import models.TombStone;
 import models.cells.Cell;
 import models.plants.Plant;
 import models.projectiles.Projectile;
@@ -69,7 +70,7 @@ public class CherryBomb extends Plant {
 	}
 
 	@Override
-	public void action(List<Projectile> myBullet, BordView view, List<Zombie> myZombies,
+	public void action(List<Projectile> myBullet, BordView view, List<Zombie> myZombies, List<TombStone> myTombStone,
 			SimpleGameData dataBord) {
 
 		if (this.readyToshot()) {
@@ -77,7 +78,7 @@ public class CherryBomb extends Plant {
 				z.takeDmg(1800);
 			}
 
-			this.life = 0;
+			setLife(0);
 			dataBord.getCell(getCaseJ(), getCaseI()).removePlant(this);
 		}
 

@@ -18,7 +18,7 @@ import fr.umlv.zen5.ScreenInfo;
 import models.DeadPool;
 import models.SimpleGameData;
 import models.SystemFile;
-import models.Tombstone;
+import models.TombStone;
 import models.cells.Cell;
 import models.map.Map;
 import models.plants.Plant;
@@ -94,7 +94,7 @@ public class SimpleGameController {
 		List<Zombie> myZombies = dataBord.getMyZombies();
 		List<Projectile> myBullet = dataBord.getMyBullet();
 		List<LawnMower> myLawnMower = dataBord.getMyLawnMower();
-		List<Tombstone> myTombstone = dataBord.getMyTombstone();
+		List<TombStone> myTombstone = dataBord.getMyTombstone();
 
 		dataBord.spawnLawnMower(view, context);
 

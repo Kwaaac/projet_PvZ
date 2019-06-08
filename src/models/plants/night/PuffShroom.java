@@ -7,6 +7,7 @@ import java.awt.geom.RoundRectangle2D;
 import java.util.List;
 
 import models.SimpleGameData;
+import models.TombStone;
 import models.cells.Cell;
 import models.plants.Plant;
 import models.projectiles.Projectile;
@@ -39,28 +40,28 @@ public class PuffShroom extends Plant {
 	public Plant createNewPlant(int x, int y) {
 		return new PuffShroom(x, y);
 	}
-	
+
 	@Override
 	public void draw(SimpleGameView view, Graphics2D graphics) {
 		graphics.setColor(Color.decode("#ffffff"));
-		graphics.fill(new Rectangle2D.Float(x + 10, y , sizeOfPlant - 25, sizeOfPlant - 15));
+		graphics.fill(new Rectangle2D.Float(x + 10, y, sizeOfPlant - 25, sizeOfPlant - 15));
 
 		graphics.setColor(Color.decode(color));
 		graphics.fill(new RoundRectangle2D.Float(x, y - 5, sizeOfPlant - 5, sizeOfPlant - 25, 10, 10));
-		
+
 	}
-	
-	
+
 	int sizeOfSPlant = super.getSizeOfPlant() - 10;
 
 	@Override
 	public void draw(SimpleGameView view, Graphics2D graphics, int x, int y) {
 		graphics.setColor(Color.decode("#ffffff"));
-		graphics.fill(new Rectangle2D.Float(x , y + sizeOfSPlant , sizeOfSPlant - 35, sizeOfSPlant - 35));
-		
+		graphics.fill(new Rectangle2D.Float(x, y + sizeOfSPlant, sizeOfSPlant - 35, sizeOfSPlant - 35));
+
 		graphics.setColor(Color.decode(color));
-		graphics.fill(new RoundRectangle2D.Float(x - 10, y + sizeOfSPlant / 2 + 15, sizeOfSPlant - 15, sizeOfSPlant - 25, 10, 10));
-		
+		graphics.fill(new RoundRectangle2D.Float(x - 10, y + sizeOfSPlant / 2 + 15, sizeOfSPlant - 15,
+				sizeOfSPlant - 25, 10, 10));
+
 		view.drawCost(graphics, x, y, cost.toString());
 	}
 
@@ -75,18 +76,18 @@ public class PuffShroom extends Plant {
 	}
 
 	@Override
-	public void action(List<Projectile> myBullet, BordView view, List<Zombie> myZombies,
+	public void action(List<Projectile> myBullet, BordView view, List<Zombie> myZombies, List<TombStone> myTombStone,
 			SimpleGameData dataBord) {
 
 		if (dataBord.getDayTime() == "Night") {
-				if (this.readyToshot(dataBord.getLineCell(this.getCaseJ(), this.getCaseI(), this.getCaseI() + 4))) {
-					myBullet.add(new WeakSpore(super.getX() + super.getSizeOfPlant(),
-							super.getY() + (super.getSizeOfPlant() / 2) - 10));
+			if (this.readyToshot(dataBord.getLineCell(this.getCaseJ(), this.getCaseI(), this.getCaseI() + 4))) {
+				myBullet.add(new WeakSpore(super.getX() + super.getSizeOfPlant(),
+						super.getY() + (super.getSizeOfPlant() / 2) - 10));
 
-					this.resetAS();
-				}
+				this.resetAS();
+			}
 
-				this.incAS();
+			this.incAS();
 		}
 	}
 

@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import models.SimpleGameData;
+import models.TombStone;
 import models.cells.Cell;
 import models.cells.WaterCell;
 import models.plants.Plant;
@@ -46,7 +47,7 @@ public class SeaShroom extends Plant {
 	}
 
 	@Override
-	public void action(List<Projectile> myBullet, BordView view, List<Zombie> myZombies,
+	public void action(List<Projectile> myBullet, BordView view, List<Zombie> myZombies, List<TombStone> myTombStone,
 			SimpleGameData dataBord) {
 		if (this.readyToshot(dataBord.getLineCell(this.getCaseJ(), this.getCaseI()))) {
 			myBullet.add(new WeakSpore(super.getX() + super.getSizeOfPlant(),
@@ -76,7 +77,7 @@ public class SeaShroom extends Plant {
 	@Override
 	public void draw(SimpleGameView view, Graphics2D graphics) {
 		graphics.setColor(Color.decode("#bfbf00"));
-		graphics.fill(new Rectangle2D.Float(x + 10, y , sizeOfPlant - 25, sizeOfPlant - 15));
+		graphics.fill(new Rectangle2D.Float(x + 10, y, sizeOfPlant - 25, sizeOfPlant - 15));
 
 		graphics.setColor(Color.decode(color));
 		graphics.fill(new RoundRectangle2D.Float(x, y - 5, sizeOfPlant - 5, sizeOfPlant - 25, 10, 10));
@@ -87,11 +88,12 @@ public class SeaShroom extends Plant {
 	@Override
 	public void draw(SimpleGameView view, Graphics2D graphics, int x, int y) {
 		graphics.setColor(Color.decode("#bfbf00"));
-		graphics.fill(new Rectangle2D.Float(x , y + sizeOfSPlant , sizeOfSPlant - 35, sizeOfSPlant - 35));
-		
+		graphics.fill(new Rectangle2D.Float(x, y + sizeOfSPlant, sizeOfSPlant - 35, sizeOfSPlant - 35));
+
 		graphics.setColor(Color.decode(color));
-		graphics.fill(new RoundRectangle2D.Float(x - 10, y + sizeOfSPlant / 2 + 15, sizeOfSPlant - 15, sizeOfSPlant - 25, 10, 10));
-		
+		graphics.fill(new RoundRectangle2D.Float(x - 10, y + sizeOfSPlant / 2 + 15, sizeOfSPlant - 15,
+				sizeOfSPlant - 25, 10, 10));
+
 		view.drawCost(graphics, x, y, cost.toString());
 	}
 

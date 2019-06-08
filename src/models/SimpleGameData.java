@@ -39,7 +39,7 @@ public class SimpleGameData implements Serializable {
 	private final ArrayList<Zombie> myZombies = new ArrayList<>();
 	private final ArrayList<Projectile> myBullet = new ArrayList<>();
 	private final ArrayList<LawnMower> myLawnMower = new ArrayList<>();
-	private final ArrayList<Tombstone> myTombstone = new ArrayList<>();
+	private final ArrayList<TombStone> myTombStone = new ArrayList<>();
 
 	private boolean stop = false;
 
@@ -156,8 +156,8 @@ public class SimpleGameData implements Serializable {
 			for (int j = 0; j < matrix[0].length; j++) {
 				matrix[i][j] = new GrassCell(false);
 				if (j >= 4 && rand.nextInt(100) < chanceTombstone) {
-					Tombstone t = Tombstone.createTombstone(i, j);
-					myTombstone.add(t);
+					TombStone t = TombStone.createTombstone(i, j);
+					myTombStone.add(t);
 					matrix[i][j].addTombstone(t);
 				}
 			}
@@ -290,6 +290,10 @@ public class SimpleGameData implements Serializable {
 
 	public List<LawnMower> getMyLawnMower() {
 		return Collections.unmodifiableList(myLawnMower);
+	}
+	
+	public List<TombStone> getMyTombStone(){
+		return Collections.unmodifiableList(myTombStone);
 	}
 
 	/**
@@ -450,7 +454,7 @@ public class SimpleGameData implements Serializable {
 	public void actionning(BordView view) {
 
 		for (IPlant p : myPlants) {
-			p.action(myBullet, view, myZombies, this);
+			p.action(myBullet, view, myZombies, myTombStone, this);
 		}
 
 	}
@@ -813,10 +817,12 @@ public class SimpleGameData implements Serializable {
 
 				zombieList.put(z, zombieList.get(z) - 1);
 				if (map == "Pool" || map == "NightPool") {
+					int decalage = RandomPosGenerator(-20, 20); // used to make visual differences between Zombies
 					if (z.isCommon()) {
 						while (view.indexFromReaCoord(y, view.getYOrigin()) == 2
 								|| view.indexFromReaCoord(y, view.getYOrigin()) == 3) {
-							y = view.getYOrigin() + this.RandomPosGenerator(this.getNbLines()) * sqrS + (sqrS / 2);
+							y = view.getYOrigin() + this.RandomPosGenerator(this.getNbLines()) * sqrS + (sqrS / 2)
+									- (Zombie.getSizeOfZombie() / 2) + decalage;
 						}
 
 						if (rand2.nextInt(100) <= fertilizerChance) {
@@ -826,7 +832,8 @@ public class SimpleGameData implements Serializable {
 						}
 
 					} else {
-						y = view.getYOrigin() + SimpleGameData.RandomPosGenerator(2, 4) * sqrS + (sqrS / 2);
+						y = view.getYOrigin() + SimpleGameData.RandomPosGenerator(2, 4) * sqrS + (sqrS / 2)
+								- (Zombie.getSizeOfZombie() / 2) + decalage;
 						if (rand2.nextInt(100) <= fertilizerChance) {
 							myZombies.add(z.createNewZombie(x, y, true));
 						} else {
@@ -874,9 +881,11 @@ public class SimpleGameData implements Serializable {
 		for (Map.Entry<Zombie, Integer> entry : zombieList.entrySet()) {
 			Zombie z = entry.getKey();
 			Integer spawn = entry.getValue();
+			
+			int decalage = RandomPosGenerator(-20, 20); // used to make visual differences between Zombies
 
 			int y = view.getYOrigin() + this.RandomPosGenerator(this.getNbLines()) * sqrS + (sqrS / 2)
-					- (Zombie.getSizeOfZombie() / 2);
+					- (Zombie.getSizeOfZombie() / 2) + decalage;
 
 			if (spawn == 0) {
 				endWave += 1;
@@ -885,9 +894,10 @@ public class SimpleGameData implements Serializable {
 			if (spawn > 0) {
 				if (map == "Pool" || map == "NightPool") {
 					if (z.isCommon()) {
-						while (view.indexFromReaCoord(y, view.getYOrigin()) == 2
-								|| view.indexFromReaCoord(y, view.getYOrigin()) == 3) {
-							y = view.getYOrigin() + this.RandomPosGenerator(this.getNbLines()) * sqrS + (sqrS / 2);
+						int line = view.indexFromReaCoord(y, view.getYOrigin());
+						while (line == 2 || line == 3) {
+							y = view.getYOrigin() + this.RandomPosGenerator(this.getNbLines()) * sqrS + (sqrS / 2)
+									- (Zombie.getSizeOfZombie() / 2) + decalage;
 						}
 						if (rand2.nextInt(100) <= fertilizerChance) {
 							myZombies.add(z.createNewZombie(x, y, true));
@@ -896,7 +906,8 @@ public class SimpleGameData implements Serializable {
 						}
 
 					} else {
-						y = view.getYOrigin() + SimpleGameData.RandomPosGenerator(2, 4) * sqrS + (sqrS / 2);
+						y = view.getYOrigin() + SimpleGameData.RandomPosGenerator(2, 4) * sqrS + (sqrS / 2)
+								- (Zombie.getSizeOfZombie() / 2) + decalage;
 						if (rand2.nextInt(100) <= fertilizerChance) {
 							myZombies.add(z.createNewZombie(x, y, true));
 						} else {
@@ -923,7 +934,7 @@ public class SimpleGameData implements Serializable {
 
 		if (tombspawn) {
 			ArrayList<Zombie> allZombies = Zombie.getZombieList(SimpleGameData.getMap());
-			for (Tombstone t : myTombstone) {
+			for (TombStone t : myTombStone) {
 				t.wakeUp(this, view, allZombies);
 			}
 			tombspawn = false;
@@ -1052,8 +1063,8 @@ public class SimpleGameData implements Serializable {
 		}
 	}
 
-	public List<Tombstone> getMyTombstone() {
-		return Collections.unmodifiableList(myTombstone);
+	public List<TombStone> getMyTombstone() {
+		return Collections.unmodifiableList(myTombStone);
 	}
 
 }

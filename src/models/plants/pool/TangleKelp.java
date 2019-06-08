@@ -9,6 +9,7 @@ import java.util.List;
 
 import models.Chrono;
 import models.SimpleGameData;
+import models.TombStone;
 import models.cells.Cell;
 import models.cells.WaterCell;
 import models.plants.Plant;
@@ -22,7 +23,6 @@ public class TangleKelp extends Plant {
 	private final String color = "#517614";
 	private Chrono delayAttack = new Chrono();
 	private boolean eating = false;
-	
 
 	public TangleKelp(int x, int y) {
 		super(x, y, 0, 2400, 90, 25, "slow");
@@ -75,7 +75,7 @@ public class TangleKelp extends Plant {
 	}
 
 	@Override
-	public void action(List<Projectile> myBullet, BordView view, List<Zombie> myZombies,
+	public void action(List<Projectile> myBullet, BordView view, List<Zombie> myZombies, List<TombStone> myTombStone,
 			SimpleGameData dataBord) {
 
 		if (this.readyToshot()) {
@@ -105,13 +105,13 @@ public class TangleKelp extends Plant {
 		return new TangleKelp(x, y);
 
 	}
-	
+
 	@Override
 	public boolean plantingCondition(Cell cell) {
-		if(cell.isWater() && !cell.isGroundPlantPlanted()) {
+		if (cell.isWater() && !cell.isGroundPlantPlanted()) {
 			return cell.addPlant(this);
 		}
-		
+
 		return false;
 	}
 
@@ -123,7 +123,7 @@ public class TangleKelp extends Plant {
 		graphics.setColor(Color.decode("#16D9B6"));
 		graphics.fill(new Ellipse2D.Float(x + 8, y + 8, sizeOfPlant - 16, sizeOfPlant - 16));
 	}
-	
+
 	int sizeOfSPlant = super.getSizeOfPlant() - 10;
 
 	@Override
@@ -133,7 +133,7 @@ public class TangleKelp extends Plant {
 
 		graphics.setColor(Color.decode("#16D9B6"));
 		graphics.fill(new Ellipse2D.Float(x - 7, y + sizeOfSPlant / 2 + 8, sizeOfSPlant - 15, sizeOfSPlant - 15));
-		
+
 		view.drawCost(graphics, x, y, cost.toString());
 	}
 }

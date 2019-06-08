@@ -7,6 +7,7 @@ import java.awt.geom.RoundRectangle2D;
 import java.util.List;
 
 import models.SimpleGameData;
+import models.TombStone;
 import models.plants.Plant;
 import models.projectiles.Projectile;
 import models.zombies.Zombie;
@@ -69,7 +70,8 @@ public class MagnetShroom extends Plant {
 	}
 
 	@Override
-	public void action(List<Projectile> myBullet, BordView view, List<Zombie> myZombies, SimpleGameData dataBord) {
+	public void action(List<Projectile> myBullet, BordView view, List<Zombie> myZombies, List<TombStone> myTombStone,
+			SimpleGameData dataBord) {
 
 		if (dataBord.getDayTime() == "Night") {
 

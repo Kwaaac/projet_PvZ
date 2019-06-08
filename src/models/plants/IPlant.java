@@ -3,9 +3,8 @@ package models.plants;
 import java.awt.Graphics2D;
 import java.util.List;
 
-import fr.umlv.zen5.ApplicationContext;
-import models.DeadPool;
 import models.SimpleGameData;
+import models.TombStone;
 import models.cells.Cell;
 import models.projectiles.Projectile;
 import models.zombies.Zombie;
@@ -20,7 +19,7 @@ public interface IPlant {
 
 	void resetAS();
 
-	void action(List<Projectile> myBullet, BordView view, List<Zombie> myZombies, SimpleGameData dataBord);
+	void action(List<Projectile> myBullet, BordView view, List<Zombie> myZombies, List<TombStone> myTombStone, SimpleGameData dataBord);
 
 	boolean readyToshot();
 

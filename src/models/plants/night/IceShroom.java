@@ -7,6 +7,7 @@ import java.awt.geom.RoundRectangle2D;
 import java.util.List;
 
 import models.SimpleGameData;
+import models.TombStone;
 import models.plants.Plant;
 import models.projectiles.Projectile;
 import models.zombies.Zombie;
@@ -39,13 +40,13 @@ public class IceShroom extends Plant {
 	}
 
 	@Override
-	public void action(List<Projectile> myBullet, BordView view, List<Zombie> myZombies,
+	public void action(List<Projectile> myBullet, BordView view, List<Zombie> myZombies, List<TombStone> myTombStone,
 			SimpleGameData dataBord) {
 
 		if (dataBord.getDayTime() == "Night") {
 			if (this.readyToshot()) {
 				for (Zombie z : myZombies) {
-					if(z.isBad()) {
+					if (z.isBad()) {
 						z.stunned(3500);
 						z.slowed(19);
 					}
@@ -76,7 +77,8 @@ public class IceShroom extends Plant {
 		graphics.fill(new Rectangle2D.Float(x, y + sizeOfSPlant, sizeOfSPlant - 35, sizeOfSPlant - 35));
 
 		graphics.setColor(Color.decode(color));
-		graphics.fill(new RoundRectangle2D.Float(x - 18, y + sizeOfSPlant / 2, sizeOfSPlant, sizeOfSPlant - 25, 10, 10));
+		graphics.fill(
+				new RoundRectangle2D.Float(x - 18, y + sizeOfSPlant / 2, sizeOfSPlant, sizeOfSPlant - 25, 10, 10));
 
 		view.drawCost(graphics, x, y, cost.toString());
 	}

@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Objects;
 
 import models.SimpleGameData;
+import models.TombStone;
 import models.plants.Plant;
 import models.projectiles.Projectile;
 import models.zombies.Zombie;
@@ -38,27 +39,28 @@ public class SunFlower extends Plant {
 	public Plant createNewPlant(int x, int y) {
 		return new SunFlower(x, y);
 	}
-	
+
 	@Override
-	public void action(List<Projectile> myBullet, BordView view, List<Zombie> myZombies,
+	public void action(List<Projectile> myBullet, BordView view, List<Zombie> myZombies, List<TombStone> myTombStone,
 			SimpleGameData dataBord) {
 		if (this.readyToshot()) {
-			int rdmPos =  SimpleGameData.RandomPosGenerator(-25, 25);
+			int rdmPos = SimpleGameData.RandomPosGenerator(-25, 25);
 			dataBord.spawnSun(view, x + rdmPos, y + 20, 25, 85);
 			this.resetAS();
 		}
 
 		this.incAS();
 	}
-	
-	
+
 	@Override
 	public boolean equals(Object o) {
-		if(!(o instanceof SunFlower)) { return false; }
+		if (!(o instanceof SunFlower)) {
+			return false;
+		}
 		SunFlower s = (SunFlower) o;
 		return name.equals(s.name) && color.equals(s.color);
 	}
-	
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(name, color);
@@ -72,7 +74,7 @@ public class SunFlower extends Plant {
 		graphics.setColor(Color.decode("#AF6907"));
 		graphics.fill(new Ellipse2D.Float(x + 4, y + 4, sizeOfPlant, sizeOfPlant));
 	}
-	
+
 	@Override
 	public void draw(SimpleGameView view, Graphics2D graphics, int x, int y) {
 		graphics.setColor(Color.decode(color));
@@ -80,9 +82,8 @@ public class SunFlower extends Plant {
 
 		graphics.setColor(Color.decode("#AF6907"));
 		graphics.fill(new Ellipse2D.Float(x - 12, y + sizeOfPlant / 2 - 5, sizeOfPlant - 15, sizeOfPlant - 15));
-		
+
 		view.drawCost(graphics, x, y, cost.toString());
 	}
-
 
 }
