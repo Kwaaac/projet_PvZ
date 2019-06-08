@@ -180,7 +180,7 @@ public class BordView extends SimpleGameView {
 				Cell cell = matrix[i][j];
 
 				if (!cell.isFog()) {
-					cell.drawBoardCell(graphics, yFromJ(i), xFromI(j), checkerboard % 2, squareSize);
+					cell.drawBoardCell(graphics, yFromJ(i), xFromI(j), checkerboard % 2, squareSize, this);
 				}
 				checkerboard += 1;
 			}

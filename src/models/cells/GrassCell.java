@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.util.Objects;
 
+import views.BordView;
+
 public class GrassCell extends Cell {
 	private final String type = "Grass";
 	private Color dayColor = Color.decode("#55c920");
@@ -25,7 +27,7 @@ public class GrassCell extends Cell {
 	}
 
 	@Override
-	public void drawBoardCell(Graphics2D graphics, float i, float j, int darker, int squareSize) {
+	public void drawBoardCell(Graphics2D graphics, float i, float j, int darker, int squareSize, BordView view) {
 		if (darker == 0) {
 
 			if (dayTime) {
@@ -43,7 +45,7 @@ public class GrassCell extends Cell {
 			}
 		}
 
-		super.drawBoardCell(graphics, i, j, darker, squareSize);
+		super.drawBoardCell(graphics, i, j, darker, squareSize, view);
 	}
 	
 	@Override

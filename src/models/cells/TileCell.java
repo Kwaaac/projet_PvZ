@@ -5,6 +5,7 @@ import java.awt.Graphics2D;
 import java.util.Objects;
 
 import models.plants.Plant;
+import views.BordView;
 
 public class TileCell extends Cell {
 	private final String type = "Roof";
@@ -35,7 +36,7 @@ public class TileCell extends Cell {
 	}
 
 	@Override
-	public void drawBoardCell(Graphics2D graphics, float i, float j, int darker, int squareSize) {
+	public void drawBoardCell(Graphics2D graphics, float i, float j, int darker, int squareSize, BordView view) {
 		if (darker == 0) {
 			if (dayTime) {
 				graphics.setColor(dayColor);
@@ -52,7 +53,7 @@ public class TileCell extends Cell {
 			}
 		}
 
-		super.drawBoardCell(graphics, i, j, darker, squareSize);
+		super.drawBoardCell(graphics, i, j, darker, squareSize, view);
 	}
 	
 	@Override

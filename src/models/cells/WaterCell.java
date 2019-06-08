@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.util.Objects;
 
+import views.BordView;
+
 public class WaterCell extends Cell {
 	private final String type = "Water";
 	private Color dayColor = Color.decode("#0fa5c6");
@@ -25,7 +27,7 @@ public class WaterCell extends Cell {
 	}
 
 	@Override
-	public void drawBoardCell(Graphics2D graphics, float i, float j, int darker, int squareSize) {
+	public void drawBoardCell(Graphics2D graphics, float i, float j, int darker, int squareSize, BordView view) {
 		if (darker == 0) {
 			if (dayTime) {
 				graphics.setColor(dayColor);
@@ -42,7 +44,7 @@ public class WaterCell extends Cell {
 			}
 		}
 
-		super.drawBoardCell(graphics, i, j, darker, squareSize);
+		super.drawBoardCell(graphics, i, j, darker, squareSize, view);
 	}
 	
 	@Override

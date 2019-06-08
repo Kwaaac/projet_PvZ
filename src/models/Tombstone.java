@@ -31,11 +31,6 @@ public class Tombstone {
 		burriedDead.setY(y);
 		data.addZ(burriedDead);
 	}
-
-	public void draw(Graphics2D graphics) {
-		graphics.setColor(Color.decode(color));
-		graphics.fill(new Rectangle2D.Float(x, y + 20, TombstoneSize, TombstoneSize));
-	}
 	
 	
 	public static Tombstone createTombstone(int x, int y) {

@@ -13,6 +13,7 @@ import models.Tombstone;
 import models.plants.Plant;
 import models.projectiles.Projectile;
 import models.zombies.Zombie;
+import views.BordView;
 
 public abstract class Cell implements ICell, Serializable {
 	
@@ -76,9 +77,9 @@ public abstract class Cell implements ICell, Serializable {
 	 * This method allow to draw the cell and add changes (crater from doomShroom...)
 	 */
 	@Override
-	public void drawBoardCell(Graphics2D graphics, float i, float j, int darker, int squareSize) {
+	public void drawBoardCell(Graphics2D graphics, float i, float j, int darker, int squareSize, BordView view) {
 		graphics.fill(new Rectangle2D.Float(j, i, squareSize, squareSize));
-		drawCellChanges(graphics, i, j, squareSize);
+		drawCellChanges(graphics, i, j, squareSize, view);
 	}
 	
 	@Override
@@ -87,7 +88,7 @@ public abstract class Cell implements ICell, Serializable {
 		graphics.fill(new Rectangle2D.Float(j, i, squareSize, squareSize));
 	}
 
-	private void drawCellChanges(Graphics2D graphics, float i, float j, int squareSize) {
+	private void drawCellChanges(Graphics2D graphics, float i, float j, int squareSize, BordView view) {
 		//crater drawing
 		if (crash) {
 			crashChrono.startChronoIfReset();
@@ -105,9 +106,7 @@ public abstract class Cell implements ICell, Serializable {
 			if (crashChrono.asReachTimer(90)) {
 				crater();
 			}
-			if (tombstone != null) {
-				tombstone.draw(graphics);
-			}
+			
 		}
 		
 		//ice drawing
@@ -120,6 +119,11 @@ public abstract class Cell implements ICell, Serializable {
 			if (iceChrono.asReachTimer(90)) {
 				ice();
 			}
+		}
+		
+		if (tombstone != null) {
+			graphics.setColor(Color.decode("#000000"));
+			graphics.fill(new Rectangle2D.Float(j, i + 20, squareSize/2, squareSize/2));
 		}
 	}
 	

@@ -7,12 +7,13 @@ import java.util.ArrayList;
 import models.IEntite;
 import models.plants.Plant;
 import models.zombies.Zombie;
+import views.BordView;
 
 public interface ICell {
 	
 	boolean addPlant(Plant plant);
 	
-	void drawBoardCell(Graphics2D graphics, float i, float j, int darker, int squareSize);
+	void drawBoardCell(Graphics2D graphics, float i, float j, int darker, int squareSize, BordView view);
 	
 	void removePlant(Plant dPe);
 	

@@ -150,14 +150,13 @@ public class SimpleGameData implements Serializable {
 	}
 
 	private void NightBord() {
-		System.out.println("con" + matrix.length);
 		for (int i = 0; i < matrix.length; i++) {
 			for (int j = 0; j < matrix[0].length; j++) {
 				matrix[i][j] = new GrassCell(false);
 			}
-			System.out.println(matrix[i]);
 			Tombstone t = Tombstone.createTombstone(i,4);
 			myTombstone.add(t);
+			System.out.println(myTombstone);
 			matrix[i][4].addTombstone(t);
 			
 		}
