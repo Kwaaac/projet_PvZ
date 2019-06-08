@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 import models.Chrono;
 import models.IEntite;
+import models.Tombstone;
 import models.plants.Plant;
 import models.projectiles.Projectile;
 import models.zombies.Zombie;
@@ -34,6 +35,8 @@ public abstract class Cell implements ICell, Serializable {
 
 	private boolean ice = false;
 	private Chrono iceChrono = new Chrono();
+	
+	private Tombstone tombstone = null;
 
 	public Cell(boolean dayTime) {
 		this.dayTime = dayTime; //True -> day; false -> night
@@ -77,6 +80,9 @@ public abstract class Cell implements ICell, Serializable {
 
 			if (crashChrono.asReachTimer(90)) {
 				crater();
+			}
+			if (tombstone != null) {
+				tombstone.draw(graphics);
 			}
 		}
 		
@@ -198,7 +204,26 @@ public abstract class Cell implements ICell, Serializable {
 			supportPlant = null;
 		}
 	}
-
+	
+	/**
+	 * if there is not already a tomb stone add it in the cell
+	 * @param Tombstone t
+	 */
+	public void addTombstone(Tombstone t) {
+		if(tombstone == null) {
+			tombstone = t;
+		}
+	}
+	
+	
+	/**
+	 *  tell if there is a Tomstone in the cell
+	 * @return boolean statement
+	 */
+	public boolean isTombstone() {
+		return tombstone!=null;
+	}
+	
 	/**
 	 * Return true if a plant is planted, false otherwise
 	 */
@@ -458,7 +483,7 @@ public abstract class Cell implements ICell, Serializable {
 	@Override
 	public String toString() {
 		return (isPlantedPlant() == true ? "Il y des plantes, " : "Il n'y a pas de plante, ")
-				+ (!badZombiesInCell.isEmpty() ? "Voici les zombies présents \n" + badZombiesInCell + ", "
+				+ (!badZombiesInCell.isEmpty() ? "Voici les zombies prï¿½sents \n" + badZombiesInCell + ", "
 						: "Il n'y a pas de zombie");
 	}
 

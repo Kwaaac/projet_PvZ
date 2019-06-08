@@ -53,6 +53,7 @@ public class SimpleGameData implements Serializable {
 	private int actualMoney = 999;
 	private int actualfertilizer = 3;
 	private int fertilizerChance = 10;
+	private final int nbTombstone = 4;
 	private Chrono sunSpawn = new Chrono();
 
 	static Chrono time = new Chrono();
@@ -128,6 +129,11 @@ public class SimpleGameData implements Serializable {
 			for (int j = 0; j < matrix[0].length; j++) {
 				matrix[i][j] = new GrassCell(false);
 			}
+			System.out.println(matrix[i]);
+			Tombstone t = Tombstone.createTombstone(i,4);
+			myTombstone.add(t);
+			matrix[i][4].addTombstone(t);
+			
 		}
 	}
 
@@ -146,12 +152,12 @@ public class SimpleGameData implements Serializable {
 	private void RoofBord() {
 		for (int i = 0; i < matrix.length; i++) {
 			for (int j = 0; j < matrix[0].length; j++) {
-				if(j<5) {
+				if (j < 5) {
 					matrix[i][j] = new TileCell(true, true);
 				} else {
 					matrix[i][j] = new TileCell(true, false);
 				}
-				
+
 			}
 		}
 	}
@@ -447,7 +453,6 @@ public class SimpleGameData implements Serializable {
 
 	public void movingZombiesAndBullets(ApplicationContext context, BordView view, boolean debug) {
 
-		
 		for (Zombie z : myZombies) {
 			if (debug == true) {
 				z.SpeedBoostON();
@@ -535,6 +540,15 @@ public class SimpleGameData implements Serializable {
 			EndController.endGame(context);
 
 		}
+	}
+
+	public void generateTombstone() {
+//		Random rand = new Random();
+//		ArrayList<Zombie> allZombies = Zombie.getZombieList(SimpleGameData.getMap());		
+//		Tombstone t = Tombstone.createTombstone(x, y);
+//		Cell cell = this.getCell(t.getCaseJ(), t.getCaseI());
+//		cell.addTombstone(t);
+//		myTombstone.add(t);
 	}
 
 	public void planting(ApplicationContext context, SimpleGameData dataSelect, BordView view, SelectBordView psView,
@@ -665,7 +679,7 @@ public class SimpleGameData implements Serializable {
 		}
 	}
 
-	private static Zombie getRandomZombie(ArrayList<Zombie> Mz) {
+	static Zombie getRandomZombie(ArrayList<Zombie> Mz) {
 		Random rand = new Random();
 		return Mz.get(rand.nextInt(Mz.size()));
 	}
@@ -877,15 +891,15 @@ public class SimpleGameData implements Serializable {
 	}
 
 	public void setDayTime(String dayTime) {
-		this.dayTime = dayTime;
+		SimpleGameData.dayTime = dayTime;
 	}
-	
+
 	public String getDayTime() {
 		return dayTime;
 	}
 
 	public void setMap(String map) {
-		this.map = map;
+		SimpleGameData.map = map;
 	}
 
 	public static String getMap() {

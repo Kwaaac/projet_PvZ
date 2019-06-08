@@ -7,52 +7,40 @@ import java.util.ArrayList;
 import java.util.List;
 
 import models.zombies.Zombie;
+import views.BordView;
 import views.SimpleGameView;
 
-public class Tombstone extends Entities {
-	private final Zombie burriedDead;
+public class Tombstone {
+	private final int x;
+	private final int y;
+	private Zombie burriedDead;
 	private final int TombstoneSize = 50;
 	private final String color = "#606875";
 
-	private Tombstone(float x, float y, int damage, int life, boolean Team, Zombie burriedDead) {
-		super(x, y, damage, life, Team);
+	private Tombstone(int x, int y, Zombie burriedDead) {
+		this.x = x;
+		this.y = y;
 		this.burriedDead = burriedDead;
 
 	}
 
-	private Tombstone(float x, float y, Zombie burriedDead) {
-		this(x, y, 0, 500, false, burriedDead);
-	}
 
-	public void wakeUp(SimpleGameData data) {
+	public void wakeUp(SimpleGameData data, BordView view, ArrayList<Zombie> allZombies) {
+		burriedDead = SimpleGameData.getRandomZombie(allZombies);
+		burriedDead.setX(x);
+		burriedDead.setY(y);
 		data.addZ(burriedDead);
-		this.life = 0;
 	}
 
-	public void draw(SimpleGameView view, Graphics2D graphics) {
+	public void draw(Graphics2D graphics) {
 		graphics.setColor(Color.decode(color));
 		graphics.fill(new Rectangle2D.Float(x, y + 20, TombstoneSize, TombstoneSize));
 	}
 	
-	@Override
-	public void hasTodie(DeadPool DPe, List<IEntite> list, SimpleGameData data) {
-		if(life <= 0) {
-			
-		}
-	}
 	
-	
-	@Override
-	public Coordinates hitBox() {
-		return new Coordinates((int) x, (int) x + TombstoneSize);
-	}
-
-	@Override
-	public void incAS() {
-	}
-
-	@Override
-	public void resetAS() {
+	public static Tombstone createTombstone(int x, int y) {
+		return new Tombstone(x,y,null);
+		
 	}
 
 }
