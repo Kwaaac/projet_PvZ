@@ -20,11 +20,13 @@ import models.SimpleGameData;
 import models.SystemFile;
 import models.Tombstone;
 import models.map.Map;
-import models.plants.*;
-import models.projectiles.*;
-
-import models.zombies.*;
-
+import models.plants.Plant;
+import models.projectiles.LawnMower;
+import models.projectiles.Pea;
+import models.projectiles.Projectile;
+import models.zombies.ConeheadZombie;
+import models.zombies.NormalZombie;
+import models.zombies.Zombie;
 import views.BordView;
 import views.SelectBordView;
 
@@ -52,9 +54,10 @@ public class SimpleGameController {
 		SimpleGameData dataSelect = new SimpleGameData(selectedPlant.size(), 1);
 		SelectBordView plantSelectionView = SelectBordView.initGameGraphics(0, yOrigin, 900, dataSelect, selectedPlant);
 
+		BordView.setWidth(width);
+		BordView.setHeight(height);
+		
 		if (dataBord.getLoadChoice() == "start") {
-			BordView.setWidth(width);
-			BordView.setHeight(height);
 			dataBord = Map.dataBord();
 		} else {
 			try {
@@ -66,11 +69,12 @@ public class SimpleGameController {
 				e.printStackTrace();
 			}
 		}
-
+		
 		BordView view = Map.view();
 
 		int squareSize = BordView.getSquareSize();
 
+		view.drawRectangle(context, 0, 0, width, height, "#cbd9ef");
 		view.draw(context, dataBord);
 		plantSelectionView.draw(context, dataSelect);
 
@@ -83,7 +87,7 @@ public class SimpleGameController {
 
 		StringBuilder str = new StringBuilder("Journal de bord\n-+-+-+-+-+-+-+-+-+-\n");
 
-		boolean debug = false, debuglock = false, pause = false, shift = false;
+		boolean debug = false, pause = false, shift = false;
 
 		List<Zombie> myZombies = dataBord.getMyZombies();
 		List<Projectile> myBullet = dataBord.getMyBullet();
@@ -92,7 +96,6 @@ public class SimpleGameController {
 
 		dataBord.spawnLawnMower(view, context);
 
-		int i = 0;
 		while (true) {
 			myZombies = dataBord.getMyZombies();
 			myBullet = dataBord.getMyBullet();
@@ -106,7 +109,7 @@ public class SimpleGameController {
 				plantSelectionView.checkCooldown();
 
 				/*--------------------------------DRAWS--------------------------------*/
-				view.drawAll(context, dataBord, view, myZombies, myBullet, myLawnMower, debug, debuglock, dataSelect,
+				view.drawAll(context, dataBord, view, myZombies, myBullet, myLawnMower, debug, dataSelect,
 						dataBord.getActualMoney(), dataBord.getFertilizer(), plantSelectionView);
 
 				/*---------------------------INITIALISATION-----------------------------*/
@@ -146,7 +149,7 @@ public class SimpleGameController {
 
 				/*------------------------------EVENTS----------------------------------*/
 
-				i++;
+				
 				Event event = context.pollOrWaitEvent(45); // modifier pour avoir un affichage fluide
 				if (event == null) { // no event
 					continue;

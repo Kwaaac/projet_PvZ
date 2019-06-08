@@ -8,11 +8,9 @@ import java.awt.geom.RoundRectangle2D;
 import java.util.ArrayList;
 import java.util.List;
 
-import fr.umlv.zen5.ApplicationContext;
 import models.Coordinates;
 import models.DeadPool;
 import models.SimpleGameData;
-import models.cells.Cell;
 import views.BordView;
 import views.SimpleGameView;
 

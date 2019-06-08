@@ -1,6 +1,7 @@
 package models;
 
 import java.awt.Graphics2D;
+
 import views.SimpleGameView;
 
 public interface MovingElement {

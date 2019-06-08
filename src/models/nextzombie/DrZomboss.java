@@ -4,10 +4,10 @@ import java.awt.Graphics2D;
 import java.util.ArrayList;
 
 import fr.umlv.zen5.ApplicationContext;
-import models.SimpleGameData;
-import models.zombies.Zombie;
-import views.BordView;
-import views.SimpleGameView;
+import src.models.SimpleGameData;
+import src.models.zombies.Zombie;
+import src.views.BordView;
+import src.views.SimpleGameView;
 
 public class DrZomboss extends Zombie {
 

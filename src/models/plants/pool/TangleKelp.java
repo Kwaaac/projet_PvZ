@@ -7,9 +7,7 @@ import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.List;
 
-import fr.umlv.zen5.ApplicationContext;
 import models.Chrono;
-import models.Entities;
 import models.SimpleGameData;
 import models.cells.Cell;
 import models.cells.WaterCell;

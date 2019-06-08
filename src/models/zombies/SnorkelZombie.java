@@ -6,7 +6,6 @@ import java.awt.geom.Ellipse2D;
 import java.util.ArrayList;
 import java.util.List;
 
-import fr.umlv.zen5.ApplicationContext;
 import models.DeadPool;
 import models.SimpleGameData;
 import models.cells.Cell;

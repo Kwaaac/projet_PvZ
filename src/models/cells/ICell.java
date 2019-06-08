@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import models.IEntite;
 import models.plants.Plant;
 import models.zombies.Zombie;
-import views.SimpleGameView;
 
 public interface ICell {
 	

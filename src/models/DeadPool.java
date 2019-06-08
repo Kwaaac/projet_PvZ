@@ -2,11 +2,6 @@ package models;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
-
-import models.projectiles.LawnMower;
-import models.projectiles.Projectile;
-import models.zombies.Zombie;
 
 public class DeadPool implements Serializable{
 	private ArrayList<IEntite> deadPool;

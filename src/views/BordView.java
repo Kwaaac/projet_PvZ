@@ -1,13 +1,12 @@
 package views;
 
 import java.awt.Color;
-import java.awt.Graphics;
 import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.RectangularShape;
-import java.util.ArrayList;
 import java.util.List;
 
 import fr.umlv.zen5.ApplicationContext;
@@ -244,27 +243,23 @@ public class BordView extends SimpleGameView {
 	
 	
 	public void drawAll(ApplicationContext context, SimpleGameData dataBord, BordView view, List<Zombie> myZombies, 
-			List<Projectile> myBullet, List<LawnMower> myLawnMower, boolean debug, boolean debuglock, SimpleGameData dataSelect, int money, int actualfertilizer, 
+			List<Projectile> myBullet, List<LawnMower> myLawnMower, boolean debug, SimpleGameData dataSelect, int money, int actualfertilizer, 
 			SelectBordView plantSelectionView) {
 		
 		view.draw(context, dataBord);
-		debuglock = dataBord.movingZombiesAndBullets(context, view, debug, debuglock);
-		
+		dataBord.movingZombiesAndBullets(context, view, debug);
 		
 		plantSelectionView.draw(context, dataSelect);
-		view.drawRectangle(context, 250, 10, 160, 60, "#A77540"); //Sun
-		view.drawRectangle(context, 255, 15, 150, 50, "#CF9456"); //Sun
-		view.drawString(context, 260, 55, String.valueOf(money), "#FFFF00", 50); //Sun
-		view.drawEllipse(context, 350, 15, 45, 45, "#FEFF33"); //Sun
+		view.drawRectangle(context, 10, 10, 160, 60, "#A77540"); //Sun
+		view.drawRectangle(context, 15, 15, 150, 50, "#CF9456"); //Sun
+		view.drawString(context, 20, 55, String.valueOf(money), "#FFFF00", 50); //Sun
+		view.drawEllipse(context, 110, 15, 45, 45, "#FEFF33"); //Sun
 		
-		view.drawRectangle(context, 430, 10, 160, 60, "#A77540"); //fertilizer
-		view.drawRectangle(context, 435, 15, 150, 50, "#CF9456"); //fertilizer
-		view.drawString(context, 440, 55, String.valueOf(actualfertilizer), "#88DB5F", 50); //fertilizer
-		view.drawEllipse(context, 530, 15, 45, 45, "#88DB5F"); //fertilizer
+		view.drawRectangle(context, 190, 10, 160, 60, "#A77540"); //fertilizer
+		view.drawRectangle(context, 195, 15, 150, 50, "#CF9456"); //fertilizer
+		view.drawString(context, 200, 55, String.valueOf(actualfertilizer), "#88DB5F", 50); //fertilizer
+		view.drawEllipse(context, 290, 15, 45, 45, "#88DB5F"); //fertilizer
 		
-		view.drawRectangle(context, 10, 10, 165, 55, "#A77540");
-		view.drawRectangle(context, 15, 15, 155, 45, "#CF9456");
-		view.drawString(context, 20, 55, "MENU", "#FFFF00", 50);//MENU BUTTON
 	}
 	
 	public void drawMenu(ApplicationContext context, BordView view, int width, int height) {
@@ -278,10 +273,6 @@ public class BordView extends SimpleGameView {
 		view.drawRectangle(context, 0, 225+(height/6), width, (height/6), "#000000");
 		view.drawRectangle(context, 5, 230+(height/6), width-10, (height/6)-10, "#22D398");
 		view.drawString(context, (width / 2) - 100, 150+(height / 6)*2, "Resume", "000000", 50);
-		
-		view.drawRectangle(context, 0, 250+(height/6)*2, width, (height/6), "#000000");
-		view.drawRectangle(context, 5, 255+(height/6)*2, width-10, (height/6)-10, "#22D398");
-		view.drawString(context, (width / 2) - 100, 150+(height / 6)*3, "Editor", "000000", 50);
 	}
 	
 	public void drawMapSelection(ApplicationContext context, BordView view, int width, int height) {

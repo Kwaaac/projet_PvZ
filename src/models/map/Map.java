@@ -65,6 +65,7 @@ public abstract class Map implements Serializable{
 			mapProperties = Pool.getMapProperties();
 			break;
 		}
+		
 		return BordView.initGameGraphics(mapProperties.get(2), mapProperties.get(3), mapProperties.get(4), dataBord());
 	}
 

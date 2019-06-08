@@ -4,12 +4,8 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.RoundRectangle2D;
-import java.util.ArrayList;
 import java.util.List;
 
-import fr.umlv.zen5.ApplicationContext;
-import models.Coordinates;
-import models.Entities;
 import models.SimpleGameData;
 import models.cells.Cell;
 import models.plants.Plant;

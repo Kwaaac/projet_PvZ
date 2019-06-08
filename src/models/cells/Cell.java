@@ -2,11 +2,10 @@ package models.cells;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 import java.io.Serializable;
 import java.util.ArrayList;
-
-import java.awt.geom.Ellipse2D;
 
 import models.Chrono;
 import models.IEntite;

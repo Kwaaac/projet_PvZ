@@ -14,9 +14,9 @@ import java.util.Random;
 import controlers.EndController;
 import fr.umlv.zen5.ApplicationContext;
 import models.cells.Cell;
-import models.cells.WaterCell;
 import models.cells.GrassCell;
 import models.cells.TileCell;
+import models.cells.WaterCell;
 import models.plants.IPlant;
 import models.plants.Plant;
 import models.projectiles.LawnMower;
@@ -445,17 +445,16 @@ public class SimpleGameData implements Serializable {
 		}
 	}
 
-	public boolean movingZombiesAndBullets(ApplicationContext context, BordView view, boolean debug,
-			boolean debuglock) {
+	public void movingZombiesAndBullets(ApplicationContext context, BordView view, boolean debug) {
 
 		
 		for (Zombie z : myZombies) {
-			if (debug == true ) {
+			if (debug == true) {
 				z.SpeedBoostON();
-				debuglock = true;
 			}
 
-			if (debug == false && debuglock == true) {
+			if (debug == false) {
+				z.SpeedBoostON();
 				z.SpeedBoostOFF();
 			}
 			view.moveAndDrawElement(context, this, z);
@@ -465,9 +464,9 @@ public class SimpleGameData implements Serializable {
 		for (Projectile b : myBullet) {
 			if (debug == true) {
 				b.SpeedBoostON();
-				debuglock = true;
 			}
-			if (debug == false && debuglock == true) {
+			if (debug == false) {
+				b.SpeedBoostON();
 				b.SpeedBoostOFF();
 			}
 			b.action(this);
@@ -485,7 +484,6 @@ public class SimpleGameData implements Serializable {
 			view.moveAndDrawElement(context, this, s);
 			s.setCase();
 		}
-		return debuglock;
 	}
 
 	public void timeEnd(List<Zombie> myZombies, StringBuilder str, ApplicationContext context,

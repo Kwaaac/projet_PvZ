@@ -2,6 +2,7 @@ package views;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+
 import fr.umlv.zen5.ApplicationContext;
 import models.MovingElement;
 import models.SimpleGameData;

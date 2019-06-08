@@ -3,10 +3,8 @@ package models.zombies;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Arc2D;
-import java.util.ArrayList;
 import java.util.List;
 
-import fr.umlv.zen5.ApplicationContext;
 import models.SimpleGameData;
 import models.cells.Cell;
 import views.BordView;

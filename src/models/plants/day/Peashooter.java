@@ -12,7 +12,6 @@ import models.cells.Cell;
 import models.plants.Plant;
 import models.projectiles.Pea;
 import models.projectiles.Projectile;
-import models.projectiles.Spore;
 import models.zombies.Zombie;
 import views.BordView;
 import views.SimpleGameView;

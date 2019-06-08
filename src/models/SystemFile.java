@@ -2,6 +2,7 @@ package models;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -11,8 +12,10 @@ import java.io.Serializable;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 import models.cells.Cell;
 import models.plants.Plant;
@@ -53,8 +56,6 @@ public class SystemFile implements Serializable{
 	
 	public static Object read(String s) throws ClassNotFoundException, IOException {
 		
-		
-		
 		switch (s) {
 		case "data":
 			try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("DataBord.ser"))) {
@@ -94,7 +95,37 @@ public class SystemFile implements Serializable{
 	            e.printStackTrace();
 	        }
 			break;
-		}
+		}	
 		return null;
 	}
+	
+	
+	public static void readProperties() throws IOException {
+		try (BufferedReader reader = Files.newBufferedReader(Paths.get("Properties.txt"), StandardCharsets.UTF_8)){
+			
+			String content;
+			int line = 0;
+			
+			while ((content = reader.readLine()) != null) {
+				switch(line) {
+				case 0:
+					
+					break;
+				case 1:
+					
+					break;
+				case 2:
+					
+					break;
+				case 3:
+					
+					break;
+				}
+			}
+		}
+	}
+	
+	
+	
+	
 }

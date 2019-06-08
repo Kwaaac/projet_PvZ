@@ -7,10 +7,8 @@ import java.awt.geom.RoundRectangle2D;
 import java.util.List;
 
 import models.SimpleGameData;
-import models.cells.Cell;
 import models.plants.Plant;
 import models.projectiles.Projectile;
-import models.projectiles.WeakSpore;
 import models.zombies.Zombie;
 import views.BordView;
 import views.SimpleGameView;

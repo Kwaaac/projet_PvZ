@@ -1,13 +1,11 @@
 package models.plants.day;
 
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.List;
 
-import fr.umlv.zen5.ApplicationContext;
 import models.Chrono;
 import models.SimpleGameData;
 import models.cells.Cell;
@@ -15,7 +13,6 @@ import models.plants.Plant;
 import models.projectiles.Projectile;
 import models.zombies.Zombie;
 import views.BordView;
-import views.SelectBordView;
 import views.SimpleGameView;
 
 public class Chomper extends Plant {

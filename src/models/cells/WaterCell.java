@@ -2,12 +2,7 @@ package models.cells;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.util.ArrayList;
 import java.util.Objects;
-
-import models.IEntite;
-import models.plants.Plant;
-import models.zombies.Zombie;
 
 public class WaterCell extends Cell {
 	private final String type = "Water";

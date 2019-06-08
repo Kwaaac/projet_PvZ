@@ -4,10 +4,10 @@ import java.awt.Graphics2D;
 import java.util.ArrayList;
 
 import fr.umlv.zen5.ApplicationContext;
-import views.BordView;
-import views.SimpleGameView;
 import models.SimpleGameData;
 import models.zombies.Zombie;
+import views.BordView;
+import views.SimpleGameView;
 public class TrashCanZombie extends Zombie {
 
 	private final String name = "TrashCanZombie";

@@ -7,9 +7,9 @@ import java.io.IOException;
 import fr.umlv.zen5.ApplicationContext;
 import fr.umlv.zen5.Event;
 import fr.umlv.zen5.ScreenInfo;
+import fr.umlv.zen5.Event.Action;
 import models.SimpleGameData;
 import models.SystemFile;
-import fr.umlv.zen5.Event.Action;
 import views.BordView;
 import views.SelectBordView;
 
@@ -30,11 +30,7 @@ public class SecondaryMenuController {
 		
 		view.drawRectangle(context, 0, 225+(height/6), width, (height/6), "#000000");
 		view.drawRectangle(context, 5, 230+(height/6), width-10, (height/6)-10, "#22D398");
-		view.drawString(context, (width / 2) - 100, 150+(height / 6)*2, "Resume", "000000", 50);
-		
-		view.drawRectangle(context, 0, 250+(height/6)*2, width, (height/6), "#000000");
-		view.drawRectangle(context, 5, 255+(height/6)*2, width-10, (height/6)-10, "#22D398");
-		view.drawString(context, (width / 2) - 100, 150+(height / 6)*3, "Save", "000000", 50);
+		view.drawString(context, (width / 2) - 100, 150+(height / 6)*2, "Save", "000000", 50);
 		
 		while (true) {
 
@@ -57,7 +53,7 @@ public class SecondaryMenuController {
 				//redraw background
 				view.drawRectangle(context, 0, 0, width, height, "#cbd9ef");
 				return false;
-			}  else if (0<=x && x<=width && 250+(height/6)*2<=y && y<=250+(height/6)*3) {
+			}  else if (0<=x && x<=width && 225+(height/6)<=y && y<=(height/6)*2+225) {
 				try {
 					SystemFile.save(data, plantSelectionView);
 				} catch (IOException e) {
@@ -66,15 +62,13 @@ public class SecondaryMenuController {
 				}
 				view.drawRectangle(context, 0, 0, width, height, "#cbd9ef");
 				return false;
-			} else if (0<=x && x<=width && 225+(height/6)<=y && y<=(height/6)*2+225) {
+				
+			}	else if (0<=x && x<=width && 250+(height/6)*2<=y && y<=250+(height/6)*3) {
 				
 				view.drawRectangle(context, 0, 0, width, height, "#cbd9ef");
 				return false;
 			}
-			
-			
-			
-			
+
 		}
 		
 	}

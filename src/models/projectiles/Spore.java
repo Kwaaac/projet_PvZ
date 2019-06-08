@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Ellipse2D;
 
-import views.BordView;
 import views.SimpleGameView;
 
 public class Spore extends Projectile {
