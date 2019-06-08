@@ -45,7 +45,6 @@ public class SimpleGameController {
 		System.out.println("truc");
 		HashMap<Zombie, Integer> normalWaveZombie = new HashMap<>();
 		normalWaveZombie.put(new NormalZombie(), 1);
-		normalWaveZombie.put(new ConeheadZombie(), 1);
 
 		//dataBord.generateZombies(1)
 		HashMap<Zombie, Integer> superWaveZombie = dataBord.generateZombies(2);

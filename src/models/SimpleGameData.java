@@ -917,7 +917,11 @@ public class SimpleGameData implements Serializable {
 		if (endWave == zombieList.size()) {
 			superWave = 2;
 		}
-
+		
+		ArrayList<Zombie> allZombies = Zombie.getZombieList(SimpleGameData.getMap());
+		for(Tombstone t : myTombstone) {
+			t.wakeUp(this, view, allZombies);
+		}
 	}
 
 	public void spawnZombies(int squareSize, StringBuilder str, List<Zombie> myZombies, BordView view,

@@ -100,7 +100,10 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie,
 			if (actCell != null) {
 
 				if (!(cX == data.getNbColumns() - 1) || cX < 0) {
-					data.getCell(caseXY.getJ(), caseXY.getI()).removeZombie(this);
+					Cell cell = data.getCell(caseXY.getJ(), caseXY.getI());
+					if (cell != null) {
+						cell.removeZombie(this);
+					}
 				}
 
 				actCell.addZombie(this);
@@ -242,10 +245,9 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie,
 	}
 
 	/**
-	 * cette m�thode a pour but de r�partir les d�gats aux diff�rentes
-	 * entit�es du jeu, une fois les d�gat correctement attribuer et la vie des
-	 * entit�es mise a jour elle aide par la suite a les redistribuer dans les
-	 * diff�rente deadpools
+	 * cette m�thode a pour but de r�partir les d�gats aux diff�rentes entit�es du
+	 * jeu, une fois les d�gat correctement attribuer et la vie des entit�es mise a
+	 * jour elle aide par la suite a les redistribuer dans les diff�rente deadpools
 	 * 
 	 * @param view     vue sur la quelle ce joue le conflict (si on en met plusieur
 	 *                 je saurai la faire marcher sur plusieur vues)
@@ -254,9 +256,9 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie,
 	 *                 e).draw().getBounds2D())){ return true; }r Zombies
 	 * @param DPp      deadPool for Plant
 	 * @param DPb      deadPool for Projectile
-	 * @param entities suite d'entit�es qui subiront les d�gats de l'entit�e
-	 *                 objet utilisant la m�thode et qui attaqueront cette meme
-	 *                 entit�es tous ensemble
+	 * @param entities suite d'entit�es qui subiront les d�gats de l'entit�e objet
+	 *                 utilisant la m�thode et qui attaqueront cette meme entit�es
+	 *                 tous ensemble
 	 */
 
 	public void conflictBvZ(DeadPool DPe, BordView view, SimpleGameData data) {
@@ -538,7 +540,5 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie,
 	public int hashCode() {
 		return Objects.hash(super.hashCode(), actSpeed, shootBarMax, shootTime, threat);
 	}
-	
-
 
 }

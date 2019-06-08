@@ -1,22 +1,15 @@
 package models;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
-import java.util.List;
 
+import models.zombies.NormalZombie;
 import models.zombies.Zombie;
 import views.BordView;
-import views.SimpleGameView;
 
 public class Tombstone {
 	private final int x;
 	private final int y;
 	private Zombie burriedDead;
-	private final int TombstoneSize = 50;
-	private final String color = "#606875";
-
 	private Tombstone(int x, int y, Zombie burriedDead) {
 		this.x = x;
 		this.y = y;
@@ -26,10 +19,12 @@ public class Tombstone {
 
 
 	public void wakeUp(SimpleGameData data, BordView view, ArrayList<Zombie> allZombies) {
-		burriedDead = SimpleGameData.getRandomZombie(allZombies);
-		burriedDead.setX(x);
-		burriedDead.setY(y);
-		data.addZ(burriedDead);
+		burriedDead = new NormalZombie();
+		int sqrS = BordView.getSquareSize();
+		System.out.println((int) view.yFromJ(y)+"---"+(int) view.xFromI(x-2));
+		int x = view.getYOrigin() + this.x * sqrS + (sqrS / 2)
+				- (Zombie.getSizeOfZombie() / 2);
+		data.addZ(burriedDead.createNewZombie((int) view.yFromJ(y),x, false));
 	}
 	
 	

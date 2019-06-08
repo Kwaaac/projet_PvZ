@@ -122,7 +122,7 @@ public abstract class Cell implements ICell, Serializable {
 		}
 		
 		if (tombstone != null) {
-			graphics.setColor(Color.decode("#000000"));
+			graphics.setColor(Color.decode("#606875"));
 			graphics.fill(new Rectangle2D.Float(j, i + 20, squareSize/2, squareSize/2));
 		}
 	}
