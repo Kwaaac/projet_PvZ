@@ -61,6 +61,7 @@ public class SimpleGameData implements Serializable {
 	private static String map;
 	private static String dayTime = "Day";
 	private String loadChoice = "start";
+	private boolean tombspawn = true;
 
 	public SimpleGameData(int nbLines, int nbColumns) {
 		this.nbLines = nbLines;
@@ -83,11 +84,11 @@ public class SimpleGameData implements Serializable {
 		// Temps du jeu
 		time.start();
 	}
-	
+
 	public SimpleGameData() {
 		this.nbLines = 1;
 		this.nbColumns = 1;
-		
+
 		// Spawn des zombies et leurs limite de temps avant spawn
 		spawnTime = System.currentTimeMillis();
 		timeLimit = 5_000;
@@ -101,7 +102,7 @@ public class SimpleGameData implements Serializable {
 		// Temps du jeu
 		time.start();
 	}
-	
+
 	public SimpleGameData(int nbLines, int nbColumns, int con) {
 		this.nbLines = nbLines;
 		this.nbColumns = nbColumns;
@@ -154,13 +155,13 @@ public class SimpleGameData implements Serializable {
 		for (int i = 0; i < matrix.length; i++) {
 			for (int j = 0; j < matrix[0].length; j++) {
 				matrix[i][j] = new GrassCell(false);
-				if(j >= 4 && rand.nextInt(100) < chanceTombstone) {
-					Tombstone t = Tombstone.createTombstone(i,j);
+				if (j >= 4 && rand.nextInt(100) < chanceTombstone) {
+					Tombstone t = Tombstone.createTombstone(i, j);
 					myTombstone.add(t);
 					matrix[i][j].addTombstone(t);
 				}
 			}
-			
+
 		}
 	}
 
@@ -919,10 +920,13 @@ public class SimpleGameData implements Serializable {
 		if (endWave == zombieList.size()) {
 			superWave = 2;
 		}
-		
-		ArrayList<Zombie> allZombies = Zombie.getZombieList(SimpleGameData.getMap());
-		for(Tombstone t : myTombstone) {
-			t.wakeUp(this, view, allZombies);
+
+		if (tombspawn) {
+			ArrayList<Zombie> allZombies = Zombie.getZombieList(SimpleGameData.getMap());
+			for (Tombstone t : myTombstone) {
+				t.wakeUp(this, view, allZombies);
+			}
+			tombspawn = false;
 		}
 	}
 

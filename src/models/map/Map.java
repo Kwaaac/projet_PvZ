@@ -38,11 +38,10 @@ public abstract class Map implements Serializable{
 			break;
 		}
 
-		System.out.println("connard");
 		return new SimpleGameData(mapProperties.get(0), mapProperties.get(1));
 	}
 
-	public static BordView view() {
+	public static BordView view(SimpleGameData dataBord) {
 		ArrayList<Integer> mapProperties = null;
 		String x = SimpleGameData.getMap();
 		switch (x) {
@@ -67,7 +66,7 @@ public abstract class Map implements Serializable{
 			break;
 		}
 		
-		return BordView.initGameGraphics(mapProperties.get(2), mapProperties.get(3), mapProperties.get(4), dataBord());
+		return BordView.initGameGraphics(mapProperties.get(2), mapProperties.get(3), mapProperties.get(4), dataBord);
 	}
 
 }

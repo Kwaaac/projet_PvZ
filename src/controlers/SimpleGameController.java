@@ -42,14 +42,14 @@ public class SimpleGameController {
 		SimpleGameData dataBord = new SimpleGameData();
 
 		ArrayList<Plant> selectedPlant = PrincipalMenuController.startGame(context, dataBord);
-		System.out.println("truc");
+		
+		
 		HashMap<Zombie, Integer> normalWaveZombie = new HashMap<>();
 		normalWaveZombie.put(new NormalZombie(), 1);
 
 		//dataBord.generateZombies(1)
 		HashMap<Zombie, Integer> superWaveZombie = dataBord.generateZombies(2);
 
-		System.out.println("truc2");
 		int yOrigin = 100;
 
 		SimpleGameData dataSelect = new SimpleGameData(selectedPlant.size(), 1, 2);
@@ -72,7 +72,7 @@ public class SimpleGameController {
 			}
 		}
 		
-		BordView view = Map.view();
+		BordView view = Map.view(dataBord);
 
 		int squareSize = BordView.getSquareSize();
 

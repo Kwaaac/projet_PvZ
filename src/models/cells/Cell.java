@@ -123,7 +123,7 @@ public abstract class Cell implements ICell, Serializable {
 		
 		if (tombstone != null) {
 			graphics.setColor(Color.decode("#606875"));
-			graphics.fill(new Rectangle2D.Float(j, i + 20, squareSize/2, squareSize/2));
+			graphics.fill(new Rectangle2D.Float(j + squareSize/4, i + squareSize/3, squareSize/2, squareSize/3 * 2));
 		}
 	}
 	
@@ -278,7 +278,7 @@ public abstract class Cell implements ICell, Serializable {
 	 * Return true if a plant is planted, false otherwise
 	 */
 	public boolean addPlant(Plant plant) {
-		if (!crash && !ice) {
+		if (!crash && !ice && tombstone == null) {
 			switch (plant.getTypeOfPlant()) {
 			case 0:
 				return (addGroundPlant(plant));
