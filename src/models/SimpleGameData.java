@@ -53,7 +53,7 @@ public class SimpleGameData implements Serializable {
 	private int actualMoney = 999;
 	private int actualfertilizer = 3;
 	private int fertilizerChance = 10;
-	private final int nbTombstone = 4;
+	private final int chanceTombstone = 15;
 	private Chrono sunSpawn = new Chrono();
 
 	static Chrono time = new Chrono();
@@ -150,14 +150,16 @@ public class SimpleGameData implements Serializable {
 	}
 
 	private void NightBord() {
+		Random rand = new Random();
 		for (int i = 0; i < matrix.length; i++) {
 			for (int j = 0; j < matrix[0].length; j++) {
 				matrix[i][j] = new GrassCell(false);
+				if(j >= 4 && rand.nextInt(100) < chanceTombstone) {
+					Tombstone t = Tombstone.createTombstone(i,j);
+					myTombstone.add(t);
+					matrix[i][j].addTombstone(t);
+				}
 			}
-			Tombstone t = Tombstone.createTombstone(i,4);
-			myTombstone.add(t);
-			System.out.println(myTombstone);
-			matrix[i][4].addTombstone(t);
 			
 		}
 	}

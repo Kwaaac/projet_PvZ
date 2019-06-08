@@ -24,7 +24,7 @@ public class Tombstone {
 		System.out.println((int) view.yFromJ(y)+"---"+(int) view.xFromI(x-2));
 		int x = view.getYOrigin() + this.x * sqrS + (sqrS / 2)
 				- (Zombie.getSizeOfZombie() / 2);
-		data.addZ(burriedDead.createNewZombie((int) view.yFromJ(y),x, false));
+		data.addZ(burriedDead.createNewZombie((int) view.yFromJ(y+2),x, false));
 	}
 	
 	
