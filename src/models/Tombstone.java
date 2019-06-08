@@ -3,6 +3,8 @@ package models;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
+import java.util.ArrayList;
+import java.util.List;
 
 import models.zombies.Zombie;
 import views.SimpleGameView;
@@ -31,7 +33,15 @@ public class Tombstone extends Entities {
 		graphics.setColor(Color.decode(color));
 		graphics.fill(new Rectangle2D.Float(x, y + 20, TombstoneSize, TombstoneSize));
 	}
-
+	
+	@Override
+	public void hasTodie(DeadPool DPe, List<IEntite> list, SimpleGameData data) {
+		if(life <= 0) {
+			
+		}
+	}
+	
+	
 	@Override
 	public Coordinates hitBox() {
 		return new Coordinates((int) x, (int) x + TombstoneSize);

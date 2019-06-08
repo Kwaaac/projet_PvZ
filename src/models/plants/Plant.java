@@ -147,15 +147,6 @@ public abstract class Plant extends Entities implements IPlant, Serializable {
 		return new Coordinates((int) x, (int) x + sizeOfPlant);
 	}
 
-	public static void hasToDie(DeadPool DPe, List<Plant> list, SimpleGameData data) {
-		for (Plant p : list) {
-			if (p.isDead()) {
-				data.getCell(p.getCaseJ(), p.getCaseI()).removePlant(p);
-				DPe.add(p);
-			}
-		}
-	}
-
 	@Override
 	public int getTypeOfPlant() {
 		return 1;
@@ -203,7 +194,12 @@ public abstract class Plant extends Entities implements IPlant, Serializable {
 	public void unFeed() {
 		fertilized = false;
 	}
-
+	
+	public static void hasToDieAll (DeadPool DPe, List<Plant> list,SimpleGameData data) {
+		for(Plant p : list) {
+			p.hasToDie(DPe, data);
+		}
+	}
 	@Override
 	public boolean equals(Object o) {
 		if (!(o instanceof Plant)) {
@@ -218,4 +214,6 @@ public abstract class Plant extends Entities implements IPlant, Serializable {
 	public int hashCode() {
 		return Objects.hash(super.hashCode(), shootBarMax, shootTime, cost, cooldown);
 	}
+	
+	public void hasToDie(DeadPool DPe, SimpleGameData data) {}
 }

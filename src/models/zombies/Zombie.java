@@ -385,7 +385,7 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie,
 					data.addFertilizer();
 				}
 				life = 0;
-				str.append(this + " meurt tué par une tondeuse\n");
+				str.append(this + " meurt tuï¿½ par une tondeuse\n");
 				l.setLife(100000);
 			}
 		}
@@ -395,7 +395,7 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie,
 			List<LawnMower> myLawnMower, DeadPool deadPoolE, BordView view, SimpleGameData data, StringBuilder str) {
 
 		LawnMower.hasToDie(myLawnMower, deadPoolE, data, view);
-		Plant.hasToDie(deadPoolE, list, data); // gere les mort si il n'y a aucun zombie sur le plateau
+		Plant.hasToDieAll(deadPoolE, list, data); // gere les mort si il n'y a aucun zombie sur le plateau
 		Projectile.hasToDie(deadPoolE, myBullet, data);
 
 		for (Zombie z : myZombies) {
@@ -538,5 +538,7 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie,
 	public int hashCode() {
 		return Objects.hash(super.hashCode(), actSpeed, shootBarMax, shootTime, threat);
 	}
+	
+
 
 }

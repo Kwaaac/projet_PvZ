@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import models.Coordinates;
+import models.DeadPool;
 import models.Entities;
 import models.SimpleGameData;
 import models.cells.Cell;
@@ -46,7 +47,7 @@ public class CherryBomb extends Plant {
 		return zone;
 	}
 
-	// Detection des zombies dans les cellules données
+	// Detection des zombies dans les cellules donnï¿½es
 	private ArrayList<Entities> detect(BordView view, SimpleGameData dataBord) {
 		ArrayList<Entities> Lz = new ArrayList<>();
 		for (Coordinates c : zone) {
@@ -104,6 +105,14 @@ public class CherryBomb extends Plant {
 
 		view.drawCost(graphics, x, y, cost.toString());
 	}
+	
+	@Override
+	public void hasToDie(DeadPool DPe, SimpleGameData data) { 
+			if (this.isDead()) { 
+				data.getCell(this.getCaseJ(), this.getCaseI()).removePlant(this); 
+				DPe.add(this); 
+			} 
+	} 
 	
 
 }

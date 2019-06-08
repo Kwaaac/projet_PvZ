@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import models.Chrono;
+import models.DeadPool;
 import models.SimpleGameData;
 import models.cells.Cell;
 import models.plants.Plant;
@@ -120,4 +121,5 @@ public class Chomper extends Plant {
 
 		view.drawCost(graphics, x, y, cost.toString());
 	}
+
 }

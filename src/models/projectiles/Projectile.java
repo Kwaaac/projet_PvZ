@@ -120,4 +120,5 @@ public abstract class Projectile extends Entities implements MovingElement, IPro
 	@Override
 	public void action(SimpleGameData data) {
 	}
+	
 }

@@ -1,5 +1,9 @@
 package models;
 
+import java.util.List;
+
+import models.plants.Plant;
+
 public interface IEntite {
 
 	Coordinates hitBox();
@@ -29,4 +33,5 @@ public interface IEntite {
 	boolean isGood();
 	
 	boolean isBad();
+	
 }

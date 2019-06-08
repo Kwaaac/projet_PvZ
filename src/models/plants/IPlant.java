@@ -3,6 +3,8 @@ package models.plants;
 import java.awt.Graphics2D;
 import java.util.List;
 
+import fr.umlv.zen5.ApplicationContext;
+import models.DeadPool;
 import models.SimpleGameData;
 import models.cells.Cell;
 import models.projectiles.Projectile;
@@ -36,5 +38,6 @@ public interface IPlant {
 	int getTypeOfPlant();
 	
 	boolean plantingCondition(Cell cell);
+	
 
 }
