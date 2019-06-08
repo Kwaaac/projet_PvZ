@@ -58,12 +58,10 @@ public class LilyPad extends Plant {
 	 */
 	@Override
 	public boolean plantingCondition(Cell cell) {
-		if (cell.equals(new WaterCell())) {
+		if (cell.isWater() && !cell.isGroundPlantPlanted() && !cell.isMainPlantPlanted()) {
 			return cell.addPlant(this);
 
-		} else if (cell.isGroundPlantPlanted() && cell.isMainPlantPlanted()) {
-			return cell.addPlant(this);
-		}
+		} 
 
 		return false;
 	}

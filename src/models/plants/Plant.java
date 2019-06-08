@@ -47,6 +47,7 @@ public abstract class Plant extends Entities implements IPlant, Serializable {
 	protected final Long cooldown;
 	private Coordinates plantSelect;
 	private boolean fertilized; 
+	
 
 	private final static ArrayList<Plant> day = new ArrayList<>(
 			Arrays.asList(new CherryBomb(), new Chomper(), new Peashooter(), new Repeater(), new PotatoMine(),
@@ -153,7 +154,7 @@ public abstract class Plant extends Entities implements IPlant, Serializable {
 	}
 
 	/**
-	 * For every plants, it can not be placed on water or roof and with any ground
+	 * For every plants, it can only be placed on grassCell and with any ground
 	 * Plant and we asumme that they are main plants (Override the plant to change
 	 * it)
 	 * 
@@ -163,17 +164,11 @@ public abstract class Plant extends Entities implements IPlant, Serializable {
 	@Override
 	public boolean plantingCondition(Cell cell) {
 
-		if (!(cell.equals(new WaterCell()) || cell.equals(new TileCell()))) {
+		if (cell.isGrass()) {
 			return cell.addPlant(this);
 
 		} else if (cell.isGroundPlantPlanted()) {
-
-			Plant gp = cell.getGroundPlant();
-
-			if (gp.equals(new LilyPad()) || gp.equals(new Pot())) {
 				return cell.addPlant(this);
-			}
-
 		}
 
 		return false;

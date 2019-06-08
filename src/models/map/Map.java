@@ -38,6 +38,7 @@ public abstract class Map implements Serializable{
 			break;
 		}
 
+		System.out.println("connard");
 		return new SimpleGameData(mapProperties.get(0), mapProperties.get(1));
 	}
 

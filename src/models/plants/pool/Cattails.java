@@ -44,7 +44,7 @@ public class Cattails extends Plant {
 	@Override
 	public boolean plantingCondition(Cell cell) {
 
-		if (cell.isGroundPlantPlanted() && cell.getGroundPlant().equals(new LilyPad())) {
+		if (cell.isGroundPlantPlanted() && cell.getGroundPlant().toString() == "LilyPad") {
 			return cell.addPlant(this);
 		}
 

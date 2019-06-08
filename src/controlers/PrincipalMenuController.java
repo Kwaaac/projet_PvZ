@@ -84,10 +84,8 @@ public class PrincipalMenuController {
 					try {
 						return (ArrayList<Plant>) SystemFile.read("view");
 					} catch (ClassNotFoundException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					} catch (IOException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				} else {

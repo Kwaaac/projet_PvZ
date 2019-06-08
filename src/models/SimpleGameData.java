@@ -83,6 +83,31 @@ public class SimpleGameData implements Serializable {
 		// Temps du jeu
 		time.start();
 	}
+	
+	public SimpleGameData() {
+		this.nbLines = 1;
+		this.nbColumns = 1;
+		
+		// Spawn des zombies et leurs limite de temps avant spawn
+		spawnTime = System.currentTimeMillis();
+		timeLimit = 5_000;
+
+		// Temps pour augmenter la difficult�
+		difficultyTime = System.currentTimeMillis();
+
+		// Temps du spawn des soleil
+		sunSpawn.start();
+
+		// Temps du jeu
+		time.start();
+	}
+	
+	public SimpleGameData(int nbLines, int nbColumns, int con) {
+		this.nbLines = nbLines;
+		this.nbColumns = nbColumns;
+
+		matrix = new Cell[nbLines][nbColumns];
+	}
 
 	@Override
 	public String toString() {
@@ -125,6 +150,7 @@ public class SimpleGameData implements Serializable {
 	}
 
 	private void NightBord() {
+		System.out.println("con" + matrix.length);
 		for (int i = 0; i < matrix.length; i++) {
 			for (int j = 0; j < matrix[0].length; j++) {
 				matrix[i][j] = new GrassCell(false);
@@ -140,13 +166,22 @@ public class SimpleGameData implements Serializable {
 	private void NightPoolBord() {
 		for (int i = 0; i < matrix.length; i++) {
 			for (int j = 0; j < matrix[0].length; j++) {
-				if (i == 2 || i == 3) {
-					matrix[i][j] = new WaterCell(false);
+				if (j < 4) {
+					if (i == 2 || i == 3) {
+						matrix[i][j] = new WaterCell(false);
+					} else {
+						matrix[i][j] = new GrassCell(false);
+					}
 				} else {
-					matrix[i][j] = new GrassCell(false);
+					if (i == 2 || i == 3) {
+						matrix[i][j] = new WaterCell(false, true);
+					} else {
+						matrix[i][j] = new GrassCell(false, true);
+					}
 				}
 			}
 		}
+
 	}
 
 	private void RoofBord() {
@@ -433,7 +468,7 @@ public class SimpleGameData implements Serializable {
 
 	public void spawnSun(BordView view, float x, float y, int sunny, int size) {
 		if (x == -1) {
-			if (SimpleGameData.getMap() != "Night") {
+			if (dayTime == "Day") {
 				int xOrigin = view.getXOrigin();
 
 				float xRandom = RandomPosGenerator(xOrigin, xOrigin + BordView.getHeight());
@@ -462,7 +497,11 @@ public class SimpleGameData implements Serializable {
 				z.SpeedBoostON();
 				z.SpeedBoostOFF();
 			}
-			view.moveAndDrawElement(context, this, z);
+			z.move();
+			Cell cell = this.getCell(z.getCaseJ(), z.getCaseI());
+			if (cell != null && !cell.isFog()) {
+				view.moveAndDrawElement(context, this, z);
+			}
 			z.setCase(this);
 		}
 
@@ -475,17 +514,22 @@ public class SimpleGameData implements Serializable {
 				b.SpeedBoostOFF();
 			}
 			b.action(this);
-			view.moveAndDrawElement(context, this, b);
+			b.move();
+			Cell cell = this.getCell(b.getCaseJ(), b.getCaseI());
+			if (cell != null && !cell.isFog()) {
+				view.moveAndDrawElement(context, this, b);
+			}
 			b.setCase(this);
 		}
 
 		for (LawnMower l : myLawnMower) {
-
+			l.move();
 			view.moveAndDrawElement(context, this, l);
 			l.setCase(this);
 		}
 
 		for (Soleil s : mySun) {
+			s.move();
 			view.moveAndDrawElement(context, this, s);
 			s.setCase();
 		}
@@ -766,7 +810,7 @@ public class SimpleGameData implements Serializable {
 				Zombie z = zombieAvailable.get(selecteur);
 
 				zombieList.put(z, zombieList.get(z) - 1);
-				if (map == "Pool") {
+				if (map == "Pool" || map == "NightPool") {
 					if (z.isCommon()) {
 						while (view.indexFromReaCoord(y, view.getYOrigin()) == 2
 								|| view.indexFromReaCoord(y, view.getYOrigin()) == 3) {
@@ -837,7 +881,7 @@ public class SimpleGameData implements Serializable {
 			}
 
 			if (spawn > 0) {
-				if (map == "Pool") {
+				if (map == "Pool" || map == "NightPool") {
 					if (z.isCommon()) {
 						while (view.indexFromReaCoord(y, view.getYOrigin()) == 2
 								|| view.indexFromReaCoord(y, view.getYOrigin()) == 3) {

@@ -39,4 +39,10 @@ public interface ICell {
 	Color getColorDarker();
 	
 	boolean isLeanned();
+	
+	void fog(Graphics2D graphics, float i, float j, int squareSize);
+	
+	boolean isGrass();
+	
+	boolean isWater();
 }

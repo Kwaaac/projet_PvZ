@@ -16,6 +16,10 @@ public class WaterCell extends Cell {
 		super(dayTime);
 	}
 	
+	public WaterCell(boolean dayTime, boolean fog) {
+		super(dayTime, fog);
+	}
+	
 	public WaterCell() {
 		this(true);
 	}
@@ -40,6 +44,11 @@ public class WaterCell extends Cell {
 
 		super.drawBoardCell(graphics, i, j, darker, squareSize);
 	}
+	
+	@Override
+	public void fog(Graphics2D graphics, float i, float j, int squareSize) {
+		super.fog(graphics, i, j, squareSize);
+	}
 
 	public Color getColor() {
 		return dayColor;
@@ -61,5 +70,15 @@ public class WaterCell extends Cell {
 	@Override
 	public int hashCode() {
 		return Objects.hash(type);
+	}
+
+	@Override
+	public boolean isGrass() {
+		return false;
+	}
+
+	@Override
+	public boolean isWater() {
+		return true;
 	}
 }

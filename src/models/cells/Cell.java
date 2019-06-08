@@ -17,6 +17,7 @@ import models.zombies.Zombie;
 public abstract class Cell implements ICell, Serializable {
 	
 	protected final boolean dayTime;
+	protected boolean fog;
 
 	private Plant groundPlant;
 	private Plant mainPlant;
@@ -40,6 +41,23 @@ public abstract class Cell implements ICell, Serializable {
 
 	public Cell(boolean dayTime) {
 		this.dayTime = dayTime; //True -> day; false -> night
+		fog = false;
+		
+		groundPlant = null;
+		mainPlant = null;
+		supportPlant = null;
+
+		badZombiesInCell = new ArrayList<>();
+		goodZombiesInCell = new ArrayList<>();
+		projectileInCell = new ArrayList<>();
+
+		crashChrono.steady();
+		iceChrono.steady();
+	}
+	
+	public Cell(boolean dayTime, boolean fog) {
+		this.dayTime = dayTime; //True -> day; false -> night
+		this.fog = fog;
 		
 		groundPlant = null;
 		mainPlant = null;
@@ -61,6 +79,12 @@ public abstract class Cell implements ICell, Serializable {
 	public void drawBoardCell(Graphics2D graphics, float i, float j, int darker, int squareSize) {
 		graphics.fill(new Rectangle2D.Float(j, i, squareSize, squareSize));
 		drawCellChanges(graphics, i, j, squareSize);
+	}
+	
+	@Override
+	public void fog(Graphics2D graphics, float i, float j, int squareSize) {
+		graphics.setColor(Color.decode("#aeb5c1"));
+		graphics.fill(new Rectangle2D.Float(j, i, squareSize, squareSize));
 	}
 
 	private void drawCellChanges(Graphics2D graphics, float i, float j, int squareSize) {
@@ -97,6 +121,28 @@ public abstract class Cell implements ICell, Serializable {
 				ice();
 			}
 		}
+	}
+	
+	/**
+	 * 
+	 * @return True if there is fog on the cell, false otherwise
+	 */
+	public boolean isFog() {
+		return fog;
+	}
+	
+	/**
+	 * switch the state of the fog to true
+	 */
+	public void enableFog() {
+		fog = true;
+	}
+	
+	/**
+	 * switch the state of the fog to false
+	 */
+	public void disableFog() {
+		fog = false;
 	}
 
 	/**

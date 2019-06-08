@@ -19,6 +19,7 @@ import models.DeadPool;
 import models.SimpleGameData;
 import models.SystemFile;
 import models.Tombstone;
+import models.cells.Cell;
 import models.map.Map;
 import models.plants.Plant;
 import models.projectiles.LawnMower;
@@ -38,10 +39,10 @@ public class SimpleGameController {
 		int width = (int) screenInfo.getWidth();
 		int height = (int) screenInfo.getHeight();
 
-		SimpleGameData dataBord = new SimpleGameData(1, 1);// unsused but important
+		SimpleGameData dataBord = new SimpleGameData();
 
 		ArrayList<Plant> selectedPlant = PrincipalMenuController.startGame(context, dataBord);
-
+		System.out.println("truc");
 		HashMap<Zombie, Integer> normalWaveZombie = new HashMap<>();
 		normalWaveZombie.put(new NormalZombie(), 1);
 		normalWaveZombie.put(new ConeheadZombie(), 1);
@@ -49,9 +50,11 @@ public class SimpleGameController {
 		//dataBord.generateZombies(1)
 		HashMap<Zombie, Integer> superWaveZombie = dataBord.generateZombies(2);
 
+		System.out.println("truc2");
 		int yOrigin = 100;
 
-		SimpleGameData dataSelect = new SimpleGameData(selectedPlant.size(), 1);
+		SimpleGameData dataSelect = new SimpleGameData(selectedPlant.size(), 1, 2);
+		
 		SelectBordView plantSelectionView = SelectBordView.initGameGraphics(0, yOrigin, 900, dataSelect, selectedPlant);
 
 		BordView.setWidth(width);
@@ -101,6 +104,11 @@ public class SimpleGameController {
 			myBullet = dataBord.getMyBullet();
 			myLawnMower = dataBord.getMyLawnMower();
 			myTombstone = dataBord.getMyTombstone();
+			
+//			//test
+//			for(Cell c: dataBord.getLineCell(5, 0)) {
+//				System.out.println(c.getProjectilesInCell());
+//			}
 			if (pause) {
 				pause = SecondaryMenuController.menu(context, view, dataBord, plantSelectionView);
 			} else {

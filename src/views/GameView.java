@@ -66,6 +66,18 @@ public interface GameView {
 	public default void draw(ApplicationContext context, SimpleGameData data) {
 		context.renderFrame(graphics -> draw(graphics, data));
 	}
+	
+	public void drawFog(Graphics2D graphics, SimpleGameData data);
+	
+	
+	/**
+	 * Draws the fog on the game board
+	 * @param context the {@code ApplicationContext} of the game
+	 * @param data    the GameData containing the game data.
+	 */
+	public default void drawFog(ApplicationContext context, SimpleGameData data) {
+		context.renderFrame(graphics -> drawFog(graphics, data));
+	}
 
 	/**
 	 * Draws only the cell specified by the given coordinates in the game board from

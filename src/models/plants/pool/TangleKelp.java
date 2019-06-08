@@ -108,7 +108,7 @@ public class TangleKelp extends Plant {
 	
 	@Override
 	public boolean plantingCondition(Cell cell) {
-		if(cell.equals(new WaterCell()) && !cell.isGroundPlantPlanted()) {
+		if(cell.isWater() && !cell.isGroundPlantPlanted()) {
 			return cell.addPlant(this);
 		}
 		

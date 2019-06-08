@@ -16,6 +16,10 @@ public class GrassCell extends Cell {
 		super(dayTime);
 	}
 	
+	public GrassCell(boolean dayTime, boolean fog) {
+		super(dayTime, fog);
+	}
+	
 	public GrassCell() {
 		this(true);
 	}
@@ -40,6 +44,11 @@ public class GrassCell extends Cell {
 		}
 
 		super.drawBoardCell(graphics, i, j, darker, squareSize);
+	}
+	
+	@Override
+	public void fog(Graphics2D graphics, float i, float j, int squareSize) {
+		super.fog(graphics, i, j, squareSize);
 	}
 
 	@Override
@@ -69,5 +78,15 @@ public class GrassCell extends Cell {
 	@Override
 	public String toString() {
 		return type;
+	}
+
+	@Override
+	public boolean isGrass() {
+		return true;
+	}
+
+	@Override
+	public boolean isWater() {
+		return false;
 	}
 }

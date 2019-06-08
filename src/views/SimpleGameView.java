@@ -248,8 +248,6 @@ public abstract class SimpleGameView implements GameView {
 	 */
 	@Override
 	public void moveAndDrawElement(Graphics2D graphics, SimpleGameData data, MovingElement moving) {
-
-		moving.move();
 		moving.draw(this, graphics);
 	}
 
