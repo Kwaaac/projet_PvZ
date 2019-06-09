@@ -17,20 +17,20 @@ import models.zombies.Zombie;
 import views.BordView;
 import views.SimpleGameView;
 
-public class Treepeater extends Plant {
-	private final String name = "Treepeater";
+public class SplitPea extends Plant {
+	private final String name = "SplitPea";
 	private final String color = "#90D322";
 	private Chrono delayAttack = new Chrono();
 	private int row = 0;
 
-	public Treepeater(int x, int y) {
-		super(x, y, 0, 300, 5000, 325, "fast");
+	public SplitPea(int x, int y) {
+		super(x, y, 0, 300, 5000, 125, "fast");
 
 		delayAttack.steady();
 		shootBar = shootBarMax; // La plante tire dès qu'elle est posée
 	}
 
-	public Treepeater() {
+	public SplitPea() {
 		this(-10, -10);
 	}
 
@@ -53,7 +53,7 @@ public class Treepeater extends Plant {
 
 	@Override
 	public Plant createNewPlant(int x, int y) {
-		return new Treepeater(x, y);
+		return new SplitPea(x, y);
 	}
 
 	private void superAction(List<Projectile> myBullet, BordView view, List<Zombie> myZombies,
@@ -63,11 +63,9 @@ public class Treepeater extends Plant {
 
 		if (delayAttack.asReachTimerMs(100) || row == 0) {
 			myBullet.add(new Pea(super.getX() + super.getSizeOfPlant(),
-					super.getY() + (super.getSizeOfPlant() / 2) - 10 + BordView.getSquareSize()));
-			myBullet.add(new Pea(super.getX() + super.getSizeOfPlant(),
 					super.getY() + (super.getSizeOfPlant() / 2) - 10));
 			myBullet.add(new Pea(super.getX() + super.getSizeOfPlant(),
-					super.getY() + (super.getSizeOfPlant() / 2) - 10 - BordView.getSquareSize()));
+					super.getY() + (super.getSizeOfPlant() / 2) - 10, -20.0));
 			delayAttack.start();
 			row++;
 			
@@ -87,11 +85,9 @@ public class Treepeater extends Plant {
 		} else {
 			if (this.readyToshot(dataBord.getLineCell(this.getCaseJ(), this.getCaseI()))) {
 				myBullet.add(new Pea(super.getX() + super.getSizeOfPlant(),
-						super.getY() + (super.getSizeOfPlant() / 2) - 10 + BordView.getSquareSize()));
-				myBullet.add(new Pea(super.getX() + super.getSizeOfPlant(),
 						super.getY() + (super.getSizeOfPlant() / 2) - 10));
 				myBullet.add(new Pea(super.getX() + super.getSizeOfPlant(),
-						super.getY() + (super.getSizeOfPlant() / 2) - 10 - BordView.getSquareSize()));
+						super.getY() + (super.getSizeOfPlant() / 2) - 10, -20.0));
 				this.resetAS();
 			}
 
@@ -108,9 +104,6 @@ public class Treepeater extends Plant {
 		graphics.fill(new Rectangle2D.Float(x - 5, y, 20, 15));
 		
 		graphics.setColor(Color.decode("#6ea01b"));
-		graphics.fill(new Rectangle2D.Float(x - 12 + sizeOfPlant / 2, y, 25, 15));
-		
-		graphics.setColor(Color.decode("#6ea01b"));
 		graphics.fill(new Rectangle2D.Float(x + sizeOfPlant - 15, y, 20, 15));
 	}
 
@@ -123,9 +116,6 @@ public class Treepeater extends Plant {
 
 		graphics.setColor(Color.decode("#6ea01b"));
 		graphics.fill(new Rectangle2D.Float(x - 20, y + sizeOfSPlant / 2, 20, 15));
-		
-		graphics.setColor(Color.decode("#6ea01b"));
-		graphics.fill(new Rectangle2D.Float(x - 30 + sizeOfPlant / 2, y + sizeOfSPlant / 2, 20, 15));
 		
 		graphics.setColor(Color.decode("#6ea01b"));
 		graphics.fill(new Rectangle2D.Float(x + 35, y + sizeOfSPlant / 2, 20, 15));

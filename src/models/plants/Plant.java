@@ -12,19 +12,20 @@ import models.DeadPool;
 import models.Entities;
 import models.SimpleGameData;
 import models.cells.Cell;
-import models.cells.TileCell;
-import models.cells.WaterCell;
 import models.plants.day.CherryBomb;
 import models.plants.day.Chomper;
+import models.plants.day.GaltingPea;
 import models.plants.day.Jalapeno;
 import models.plants.day.Peashooter;
 import models.plants.day.Pot;
 import models.plants.day.PotatoMine;
 import models.plants.day.Repeater;
 import models.plants.day.SnowPea;
+import models.plants.day.SplitPea;
 import models.plants.day.Squash;
 import models.plants.day.SunFlower;
 import models.plants.day.Treepeater;
+import models.plants.day.TwinSunFlower;
 import models.plants.day.WallNut;
 import models.plants.night.DoomShroom;
 import models.plants.night.FumeShroom;
@@ -53,7 +54,8 @@ public abstract class Plant extends Entities implements IPlant, Serializable {
 
 	private final static ArrayList<Plant> day = new ArrayList<>(
 			Arrays.asList(new CherryBomb(), new Chomper(), new Peashooter(), new Repeater(), new PotatoMine(),
-					new Squash(), new SnowPea(), new SunFlower(), new WallNut(), new Pot(), new Jalapeno(), new Treepeater()));
+					new Squash(), new SnowPea(), new SunFlower(), new WallNut(), new Pot(), new Jalapeno(), 
+					new Treepeater(), new SplitPea(), new GaltingPea(), new TwinSunFlower()));
 	private final static ArrayList<Plant> night = new ArrayList<>(
 			Arrays.asList(new MagnetShroom(), new DoomShroom(), new FumeShroom(), new GraveBuster(), new HypnoShroom(),
 					new IceShroom(), new PuffShroom(), new ScaredyShroom(), new SunShroom()));
