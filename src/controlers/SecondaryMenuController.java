@@ -21,6 +21,7 @@ public class SecondaryMenuController {
 		int width = (int) screenInfo.getWidth();
 		int height = (int) screenInfo.getHeight();
 		
+		//AFFICHAGE DU MENU EN BACKGROUND
 		view.drawRectangle(context, 0, 0, width, height, "#61DB5F");
 		view.drawString(context, (width/2)-125, (height/6)-50, "PAUSE", "#000000", 85);
 		
@@ -49,23 +50,22 @@ public class SecondaryMenuController {
 			float x = location.x;
 			float y = location.y;
 			
-			if (0<=x && x<=width && 200<=y && y<=200+(height/6)) {
+			if (0<=x && x<=width && 200<=y && y<=200+(height/6)) { // on a cliqué sur continuer
 				//redraw background
 				view.drawRectangle(context, 0, 0, width, height, "#cbd9ef");
 				return false;
-			}  else if (0<=x && x<=width && 225+(height/6)<=y && y<=(height/6)*2+225) {
+			}  else if (0<=x && x<=width && 225+(height/6)<=y && y<=(height/6)*2+225) { // on a cliqué sur save
 				try {
-					SystemFile.save(data, plantSelectionView);
+					SystemFile.save(data, plantSelectionView); //on va sérialiser nos data et la vue de selection des plantes
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				view.drawRectangle(context, 0, 0, width, height, "#cbd9ef");
+				view.drawRectangle(context, 0, 0, width, height, "#cbd9ef"); //background debug
 				return false;
 				
-			}	else if (0<=x && x<=width && 250+(height/6)*2<=y && y<=250+(height/6)*3) {
+			}	else if (0<=x && x<=width && 250+(height/6)*2<=y && y<=250+(height/6)*3) { //prochainement
 				
-				view.drawRectangle(context, 0, 0, width, height, "#cbd9ef");
+				view.drawRectangle(context, 0, 0, width, height, "#cbd9ef"); //background debug
 				return false;
 			}
 
