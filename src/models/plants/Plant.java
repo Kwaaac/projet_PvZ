@@ -24,6 +24,7 @@ import models.plants.day.Repeater;
 import models.plants.day.SnowPea;
 import models.plants.day.Squash;
 import models.plants.day.SunFlower;
+import models.plants.day.Treepeater;
 import models.plants.day.WallNut;
 import models.plants.night.DoomShroom;
 import models.plants.night.FumeShroom;
@@ -52,7 +53,7 @@ public abstract class Plant extends Entities implements IPlant, Serializable {
 
 	private final static ArrayList<Plant> day = new ArrayList<>(
 			Arrays.asList(new CherryBomb(), new Chomper(), new Peashooter(), new Repeater(), new PotatoMine(),
-					new Squash(), new SnowPea(), new SunFlower(), new WallNut(), new Pot(), new Jalapeno()));
+					new Squash(), new SnowPea(), new SunFlower(), new WallNut(), new Pot(), new Jalapeno(), new Treepeater()));
 	private final static ArrayList<Plant> night = new ArrayList<>(
 			Arrays.asList(new MagnetShroom(), new DoomShroom(), new FumeShroom(), new GraveBuster(), new HypnoShroom(),
 					new IceShroom(), new PuffShroom(), new ScaredyShroom(), new SunShroom()));
