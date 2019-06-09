@@ -75,7 +75,6 @@ public class SimpleGameController {
 		int squareSize = BordView.getSquareSize();
 
 		view.drawRectangle(context, 0, 0, width, height, "#cbd9ef");
-		view.draw(context, dataBord);
 		plantSelectionView.draw(context, dataSelect);
 
 		// ---------------WHAT DO I HAVE IN MY GAME ?---------------//
@@ -101,6 +100,8 @@ public class SimpleGameController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
+		dataBord.createBord(SimpleGameData.getMap());
 
 		while (true) {
 			myZombies = dataBord.getMyZombies();

@@ -71,8 +71,6 @@ public class SimpleGameData implements Serializable {
 
 		matrix = new Cell[nbLines][nbColumns];
 
-		createBord(map);
-
 		// Spawn des zombies et leurs limite de temps avant spawn
 		spawnTime = System.currentTimeMillis();
 		timeLimit = 5_000;
@@ -208,7 +206,7 @@ public class SimpleGameData implements Serializable {
 		return matrix;
 	}
 
-	private void createBord(String map) {
+	public void createBord(String map) {
 		if (map == "Day") {
 			dayBord();
 		} else if (map == "Pool") {
