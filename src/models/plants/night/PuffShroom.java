@@ -6,10 +6,12 @@ import java.awt.geom.Rectangle2D;
 import java.awt.geom.RoundRectangle2D;
 import java.util.List;
 
+import models.Chrono;
 import models.SimpleGameData;
 import models.TombStone;
 import models.cells.Cell;
 import models.plants.Plant;
+import models.projectiles.Pea;
 import models.projectiles.Projectile;
 import models.projectiles.WeakSpore;
 import models.zombies.Zombie;
@@ -19,6 +21,8 @@ import views.SimpleGameView;
 public class PuffShroom extends Plant {
 	private final String name = "PuffShroom";
 	private final String color = "#901bd1";
+	private Chrono delayAttack = new Chrono();
+	private int row = 0;
 
 	public PuffShroom(int x, int y) {
 		super(x, y, 0, 300, 3500, 0, "fast");
@@ -75,19 +79,41 @@ public class PuffShroom extends Plant {
 		return false;
 	}
 
+	private void superAction(List<Projectile> myBullet, BordView view, List<Zombie> myZombies,
+			SimpleGameData dataBord) {
+		shootBar = shootBarMax;
+		delayAttack.startChronoIfReset();
+
+		if (delayAttack.asReachTimerMs(50) || row == 0) {
+			myBullet.add(new WeakSpore(super.getX() + super.getSizeOfPlant(),
+					super.getY() + (super.getSizeOfPlant() / 2) - 10));
+			row++;
+
+			if (row == 30) {
+				row = 0;
+				shootBar = 0;
+				unFeed();
+			}
+		}
+	}
+
 	@Override
 	public void action(List<Projectile> myBullet, BordView view, List<Zombie> myZombies, List<TombStone> myTombStone,
 			SimpleGameData dataBord) {
+		if (super.isFertilized()) {
+			superAction(myBullet, view, myZombies, dataBord);
+			return;
+		} else {
+			if (dataBord.getDayTime() == "Night") {
+				if (this.readyToshot(dataBord.getLineCell(this.getCaseJ(), this.getCaseI(), this.getCaseI() + 4))) {
+					myBullet.add(new WeakSpore(super.getX() + super.getSizeOfPlant(),
+							super.getY() + (super.getSizeOfPlant() / 2) - 10));
 
-		if (dataBord.getDayTime() == "Night") {
-			if (this.readyToshot(dataBord.getLineCell(this.getCaseJ(), this.getCaseI(), this.getCaseI() + 4))) {
-				myBullet.add(new WeakSpore(super.getX() + super.getSizeOfPlant(),
-						super.getY() + (super.getSizeOfPlant() / 2) - 10));
+					this.resetAS();
+				}
 
-				this.resetAS();
+				this.incAS();
 			}
-
-			this.incAS();
 		}
 	}
 

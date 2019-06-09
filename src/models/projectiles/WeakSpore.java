@@ -47,7 +47,7 @@ public class WeakSpore extends Projectile {
 	public void action(SimpleGameData data) {
 		if (distance != -1) {
 			if ((spawnX + distance) < getX()) {
-				setLife(1);
+				setLife(0);
 			}
 		}
 	}

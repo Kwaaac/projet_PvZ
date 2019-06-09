@@ -17,9 +17,11 @@ import views.SimpleGameView;
 
 public class SunShroom extends Plant {
 	private final String name = "SunShroom";
-	private final String color = "#ffff00";
+	private String color = "#cece02";
 	private Chrono growing = new Chrono();
 	private boolean grow = false;
+	private Chrono delaySun = new Chrono();
+	private int row = 0;
 
 	public SunShroom(int x, int y) {
 		super(x, y, 0, 300, 24_000, 0, "fast");
@@ -43,28 +45,55 @@ public class SunShroom extends Plant {
 		return new SunShroom(x, y);
 	}
 
+	private void superAction(BordView view, SimpleGameData dataBord) {
+		shootBar = shootBarMax;
+		delaySun.startChronoIfReset();
+
+		if (delaySun.asReachTimerMs(100) || row == 0) {
+
+			int rdmPos = SimpleGameData.RandomPosGenerator(-25, 25);
+			dataBord.spawnSun(view, x + rdmPos, y + 20, 25, 85);
+
+			row++;
+			if (row == 5) {
+				grow = true;
+				color = "#ffff00";
+				row = 0;
+				shootBar = 0;
+				unFeed();
+			}
+		}
+	}
+
 	@Override
 	public void action(List<Projectile> myBullet, BordView view, List<Zombie> myZombies, List<TombStone> myTombStone,
 			SimpleGameData dataBord) {
+
 		if (dataBord.getDayTime() == "Night") {
-			if (this.readyToshot()) {
+			if (super.isFertilized()) {
+				superAction(view, dataBord);
+				return;
+			} else {
+				if (this.readyToshot()) {
+					int rdmPos = SimpleGameData.RandomPosGenerator(-25, 25);
+					if (grow == true) {
+						
+						dataBord.spawnSun(view, x + rdmPos, y + rdmPos, 25, 85);
+						this.resetAS();
+					} else {
 
-				if (grow == true) {
-
-					dataBord.spawnSun(view, x + 20, y + 20, 25, 85);
-					this.resetAS();
-				} else {
-
-					dataBord.spawnSun(view, x + 20, y + 20, 15, 55);
-					this.resetAS();
+						dataBord.spawnSun(view, x + rdmPos, y + rdmPos, 15, 55);
+						this.resetAS();
+					}
 				}
-			}
 
-			if (growing.asReachTimer(120)) {
-				grow = true;
-			}
+				if (!grow && growing.asReachTimer(120)) {
+					grow = true;
+					color = "#ffff00";
+				}
 
-			this.incAS();
+				this.incAS();
+			}
 		}
 	}
 
@@ -85,7 +114,7 @@ public class SunShroom extends Plant {
 		graphics.setColor(Color.decode("#ffffff"));
 		graphics.fill(new Rectangle2D.Float(x, y + sizeOfSPlant, sizeOfSPlant - 35, sizeOfSPlant - 35));
 
-		graphics.setColor(Color.decode(color));
+		graphics.setColor(Color.decode("#ffff00"));
 		graphics.fill(new RoundRectangle2D.Float(x - 10, y + sizeOfSPlant / 2 + 15, sizeOfSPlant - 15,
 				sizeOfSPlant - 25, 10, 10));
 
