@@ -22,6 +22,7 @@ public class Repeater extends Plant {
 	private final String color = "#90D322";
 	private boolean firstShoot = false;
 	private Chrono delayAttack = new Chrono();
+	private int row = 0;
 
 	public Repeater(int x, int y) {
 		super(x, y, 0, 300, 5000, 0, "fast");
@@ -56,37 +57,63 @@ public class Repeater extends Plant {
 		return new Repeater(x, y);
 	}
 
+	private void superAction(List<Projectile> myBullet, BordView view, List<Zombie> myZombies,
+			SimpleGameData dataBord) {
+		shootBar = shootBarMax;
+		delayAttack.startChronoIfReset();
+
+		if (delayAttack.asReachTimerMs(100) || row == 0) {
+			myBullet.add(
+					new Pea(super.getX() + super.getSizeOfPlant(), super.getY() + (super.getSizeOfPlant() / 2) - 10));
+			delayAttack.start();
+			row++;
+
+			if (row == 10) {
+				myBullet.add(new Pea(super.getX() + super.getSizeOfPlant() - 25,
+						super.getY() + (super.getSizeOfPlant() / 2) - 10 - 25, 75, 425, 1));
+				row = 0;
+				shootBar = 0;
+				unFeed();
+			}
+		}
+	}
+
 	@Override
 	public void action(List<Projectile> myBullet, BordView view, List<Zombie> myZombies, List<TombStone> myTombStone,
 			SimpleGameData dataBord) {
-		if(firstShoot && delayAttack.asReachTimerMs(50)) {
-			myBullet.add(
-					new Pea(super.getX() + super.getSizeOfPlant(), super.getY() + (super.getSizeOfPlant() / 2) - 10));
-			
-			firstShoot = false;
-			delayAttack.steady();
-			this.resetAS();
-		}
-		
-		if (this.readyToshot(dataBord.getLineCell(this.getCaseJ(), this.getCaseI()))) {
-			myBullet.add(
-					new Pea(super.getX() + super.getSizeOfPlant(), super.getY() + (super.getSizeOfPlant() / 2) - 10));
+		if (super.isFertilized()) {
+			superAction(myBullet, view, myZombies, dataBord);
+			return;
+		} else {
+			if (firstShoot && delayAttack.asReachTimerMs(50)) {
+				myBullet.add(new Pea(super.getX() + super.getSizeOfPlant(),
+						super.getY() + (super.getSizeOfPlant() / 2) - 10));
 
-			firstShoot = true;
-			delayAttack.start();
-			this.resetAS();
-		}
+				firstShoot = false;
+				delayAttack.steady();
+				this.resetAS();
+			}
 
-		this.incAS();
+			if (this.readyToshot(dataBord.getLineCell(this.getCaseJ(), this.getCaseI()))) {
+				myBullet.add(new Pea(super.getX() + super.getSizeOfPlant(),
+						super.getY() + (super.getSizeOfPlant() / 2) - 10));
+
+				firstShoot = true;
+				delayAttack.start();
+				this.resetAS();
+			}
+
+			this.incAS();
+		}
 	}
 
 	@Override
 	public void draw(SimpleGameView view, Graphics2D graphics) {
 		graphics.setColor(Color.decode(color));
 		graphics.fill(new Rectangle2D.Float(x, y, sizeOfPlant, sizeOfPlant));
-		
+
 		graphics.setColor(Color.decode("#6ea01b"));
-		graphics.fill(new Rectangle2D.Float(x-5, y, 25, 15));
+		graphics.fill(new Rectangle2D.Float(x - 5, y, 25, 15));
 	}
 
 	int sizeOfSPlant = super.getSizeOfPlant() - 10;
@@ -95,11 +122,11 @@ public class Repeater extends Plant {
 	public void draw(SimpleGameView view, Graphics2D graphics, int x, int y) {
 		graphics.setColor(Color.decode(color));
 		graphics.fill(new Rectangle2D.Float(x - 15, y + sizeOfSPlant / 2, sizeOfSPlant, sizeOfSPlant));
-		
+
 		graphics.setColor(Color.decode("#6ea01b"));
-		graphics.fill(new Rectangle2D.Float(x-20, y + sizeOfSPlant / 2, 25, 15));
+		graphics.fill(new Rectangle2D.Float(x - 20, y + sizeOfSPlant / 2, 25, 15));
 
 		view.drawCost(graphics, x, y, cost.toString());
 	}
-	
+
 }

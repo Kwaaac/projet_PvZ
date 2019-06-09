@@ -15,7 +15,8 @@ import views.SimpleGameView;
 
 public class WallNut extends Plant {
 	private final String name = "WallNut";
-	private final String color = "#ECB428";
+	private String color = "#ECB428";
+	private boolean fed = false;
 
 	public WallNut(int x, int y) {
 		super(x, y, 0, 1000, 0, 50, "free");
@@ -31,10 +32,23 @@ public class WallNut extends Plant {
 	public String toString() {
 		return name;
 	}
+	
+
+	private void superAction() {
+		System.out.println(life);
+		takeDmg(-500);
+		System.out.println(life);
+		color = "#8c9aaf";
+		fed = true;
+	}
 
 	@Override
 	public void action(List<Projectile> myBullet, BordView view, List<Zombie> myZombies, List<TombStone> myTombStone,
 			SimpleGameData dataBord) {
+		if (super.isFertilized() && !fed) {
+			superAction();
+			return;
+		}
 	}
 
 	@Override

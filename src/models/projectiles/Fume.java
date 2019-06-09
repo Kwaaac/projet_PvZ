@@ -14,10 +14,18 @@ import views.SimpleGameView;
 public class Fume extends Projectile {
 	private String name = "Fume";
 	private String color = "#7714AD";
+	private final int damage;
 	private Chrono ttl = new Chrono();
 
 	public Fume(float x, float y) {
 		super(x, y, 0, 10000000, 0);
+		damage = 20;
+		ttl.start();
+	}
+	
+	public Fume(float x, float y, int damage) {
+		super(x, y, 0, 10000000, 0);
+		this.damage = damage;
 		ttl.start();
 	}
 
@@ -39,7 +47,7 @@ public class Fume extends Projectile {
 			Cell cell = data.getCell(getCaseJ(), getCaseI());
 			
 			for (Zombie z : cell.getBadZombiesInCell()) {
-				z.takeDmg(20);
+				z.takeDmg(damage);
 			}
 			setLife(0);
 			

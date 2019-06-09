@@ -12,6 +12,7 @@ import models.SimpleGameData;
 import models.TombStone;
 import models.cells.Cell;
 import models.plants.Plant;
+import models.projectiles.FrozenPea;
 import models.projectiles.Projectile;
 import models.zombies.Zombie;
 import views.BordView;
@@ -71,28 +72,38 @@ public class Chomper extends Plant {
 		return name;
 	}
 
+	private void superAction(List<Projectile> myBullet, BordView view, List<Zombie> myZombies,
+			SimpleGameData dataBord) {
+		shootBar = shootBarMax;
+		eating = false;
+		unFeed();
+	}
 
 	@Override
 	public void action(List<Projectile> myBullet, BordView view, List<Zombie> myZombies, List<TombStone> myTombStone,
 			SimpleGameData dataBord) {
+		if (super.isFertilized() && eating) {
+			superAction(myBullet, view, myZombies, dataBord);
+			return;
+		} else {
+			if (this.readyToshot()) {
+				eating = false;
+				ArrayList<Zombie> zombie = this.detect(this.zone(dataBord));
 
-		if (this.readyToshot()) {
-			eating = false;
-			ArrayList<Zombie> zombie = this.detect(this.zone(dataBord));
+				if (!zombie.isEmpty()) {
+					delayAttack.startChronoIfReset();
 
-			if (!zombie.isEmpty()) {
-				delayAttack.startChronoIfReset();
+					if (delayAttack.asReachTimer(1)) {
 
-				if (delayAttack.asReachTimer(1)) {
-
-					zombie.get(zombie.size()-1).takeDmg(1800);
-					eating = true;
-					resetAS();
+						zombie.get(zombie.size() - 1).takeDmg(1800);
+						eating = true;
+						resetAS();
+					}
 				}
 			}
-		}
 
-		incAS();
+			incAS();
+		}
 
 	}
 
@@ -110,9 +121,9 @@ public class Chomper extends Plant {
 			graphics.setColor(Color.decode(notEatingColor));
 		}
 		graphics.fill(new Rectangle2D.Float(x - 10, y - 10, sizeOfPlant + 20, sizeOfPlant + 20));
-		
+
 	}
-	
+
 	int sizeOfSPlant = super.getSizeOfPlant() - 10;
 
 	@Override

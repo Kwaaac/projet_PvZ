@@ -6,9 +6,11 @@ import java.awt.geom.Ellipse2D;
 import java.util.List;
 import java.util.Objects;
 
+import models.Chrono;
 import models.SimpleGameData;
 import models.TombStone;
 import models.plants.Plant;
+import models.projectiles.Pea;
 import models.projectiles.Projectile;
 import models.zombies.Zombie;
 import views.BordView;
@@ -17,6 +19,8 @@ import views.SimpleGameView;
 public class SunFlower extends Plant {
 	private final String name = "SunFlower";
 	private final String color = "#FEFF33";
+	private Chrono delaySun = new Chrono();
+	private int row = 0;
 
 	public SunFlower(int x, int y) {
 		// x, y, damage, life, shootBarMax, cost, cooldown
@@ -40,16 +44,39 @@ public class SunFlower extends Plant {
 		return new SunFlower(x, y);
 	}
 
+	private void superAction(BordView view, SimpleGameData dataBord) {
+		shootBar = shootBarMax;
+		delaySun.startChronoIfReset();
+
+		if (delaySun.asReachTimerMs(100) || row == 0) {
+
+			int rdmPos = SimpleGameData.RandomPosGenerator(-25, 25);
+			dataBord.spawnSun(view, x + rdmPos, y + 20, 25, 85);
+
+			row++;
+			if (row == 5) {
+				row = 0;
+				shootBar = 0;
+				unFeed();
+			}
+		}
+	}
+
 	@Override
 	public void action(List<Projectile> myBullet, BordView view, List<Zombie> myZombies, List<TombStone> myTombStone,
 			SimpleGameData dataBord) {
-		if (this.readyToshot()) {
-			int rdmPos = SimpleGameData.RandomPosGenerator(-25, 25);
-			dataBord.spawnSun(view, x + rdmPos, y + 20, 25, 85);
-			this.resetAS();
-		}
+		if (super.isFertilized()) {
+			superAction(view, dataBord);
+			return;
+		} else {
+			if (this.readyToshot()) {
+				int rdmPos = SimpleGameData.RandomPosGenerator(-25, 25);
+				dataBord.spawnSun(view, x + rdmPos, y + 20, 25, 85);
+				this.resetAS();
+			}
 
-		this.incAS();
+			this.incAS();
+		}
 	}
 
 	@Override

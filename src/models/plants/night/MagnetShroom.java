@@ -6,9 +6,11 @@ import java.awt.geom.Rectangle2D;
 import java.awt.geom.RoundRectangle2D;
 import java.util.List;
 
+import models.Chrono;
 import models.SimpleGameData;
 import models.TombStone;
 import models.plants.Plant;
+import models.projectiles.Pea;
 import models.projectiles.Projectile;
 import models.zombies.Zombie;
 import views.BordView;
@@ -19,6 +21,10 @@ public class MagnetShroom extends Plant {
 	private final String color = "#af0505";
 	private final String stealingColor = "#a04949";
 	private boolean steal = false;
+	private Chrono delayAttack = new Chrono();
+	private int row = 0;
+	private int rowLimit;
+	private final int stealLimit = 20;
 
 	public MagnetShroom(int x, int y) {
 		super(x, y, 0, 300, 15_000, 0, "fast");
@@ -69,22 +75,66 @@ public class MagnetShroom extends Plant {
 		view.drawCost(graphics, x, y, cost.toString());
 	}
 
+	private void superAction(List<Projectile> myBullet, BordView view, List<Zombie> myZombies,
+			SimpleGameData dataBord) {
+
+		shootBar = shootBarMax;
+		delayAttack.startChronoIfReset();
+
+		if (!steal) {
+			rowLimit = 0;
+			for (Zombie z : myZombies) {
+				if (z.magnetizable()) {
+					this.resetAS();
+					rowLimit++;
+					if (rowLimit == stealLimit) {
+						break;
+					}
+				}
+			}
+			steal = true;
+		} else {
+			if (delayAttack.asReachTimerMs(100) || row == 0) {
+				myBullet.add(new Pea(super.getX() + super.getSizeOfPlant() - 25,
+						super.getY() + (super.getSizeOfPlant() / 2) - 10 - 25, 75, 300, 1));
+				delayAttack.start();
+				row++;
+
+			}
+		}
+
+		if (row == rowLimit) {
+			steal = false;
+			row = 0;
+			shootBar = 0;
+			unFeed();
+		}
+
+	}
+
 	@Override
 	public void action(List<Projectile> myBullet, BordView view, List<Zombie> myZombies, List<TombStone> myTombStone,
 			SimpleGameData dataBord) {
+		if (super.isFertilized()) {
+			superAction(myBullet, view, myZombies, dataBord);
+			return;
+		} else {
+			if (dataBord.getDayTime() == "Night") {
 
-		if (dataBord.getDayTime() == "Night") {
-
-			if (readyToshot()) {
-				steal = false;
-				if (!myZombies.isEmpty()) {
-					if (myZombies.get(myZombies.size() - 1).magnetizable()) {
-						steal = true;
-						this.resetAS();
+				if (readyToshot()) {
+					steal = false;
+					if (!myZombies.isEmpty()) {
+						for (Zombie z : myZombies) {
+							if (z.magnetizable()) {
+								steal = true;
+								this.resetAS();
+								break;
+							}
+						}
 					}
-				}
 
-				this.incAS();
+					this.incAS();
+				}
 			}
 		}
 	}

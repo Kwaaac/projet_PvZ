@@ -11,9 +11,17 @@ public class Pea extends Projectile {
 
 	private final String name = "Pea";
 	private final String color = "#2DFF54";
+	int sizeofP;
 	
 	public Pea(float x, float y) {
 		super(x, y, 75, 1 , 20.0);
+		sizeofP = getSizeOfProjectile();
+	}
+	
+	public Pea(float x, float y, int sizeofP, int damage, int life) {
+		super(x, y, damage, life, 20.0);
+		
+		this.sizeofP = sizeofP;
 	}
 	
 	@Override
@@ -26,7 +34,7 @@ public class Pea extends Projectile {
 		return name; 
 	}
 
-	int  sizeofP = getSizeOfProjectile();
+	
 	
 	@Override
 	public void draw(SimpleGameView view, Graphics2D graphics) {

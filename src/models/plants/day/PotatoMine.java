@@ -6,12 +6,14 @@ import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.List;
 
+import models.Chrono;
 import models.Coordinates;
 import models.Entities;
 import models.SimpleGameData;
 import models.TombStone;
 import models.cells.Cell;
 import models.plants.Plant;
+import models.projectiles.FrozenPea;
 import models.projectiles.Projectile;
 import models.zombies.Zombie;
 import views.BordView;
@@ -45,27 +47,37 @@ public class PotatoMine extends Plant {
 		}
 	}
 
+	private void superAction(List<Projectile> myBullet, BordView view, List<Zombie> myZombies,
+			SimpleGameData dataBord) {
+		shootBar = shootBarMax;
+		unFeed();
+
+	}
+
 	@Override
 	public void action(List<Projectile> myBullet, BordView view, List<Zombie> myZombies, List<TombStone> myTombStone,
 			SimpleGameData dataBord) {
-
-		if (this.readyToshot()) {
-			activation();
-		}
-
-		if (activate) {
-			ArrayList<Entities> lz = this.detect(dataBord);
-
-			if (!lz.isEmpty()) {
-				for (Entities z : lz) {
-					z.takeDmg(1800);
-				}
-
-				this.life = 0;
+		if (super.isFertilized() && !activate) {
+			superAction(myBullet, view, myZombies, dataBord);
+		} else {
+			if (this.readyToshot()) {
+				activation();
 			}
-		}
 
-		this.incAS();
+			if (activate) {
+				ArrayList<Entities> lz = this.detect(dataBord);
+
+				if (!lz.isEmpty()) {
+					for (Entities z : lz) {
+						z.takeDmg(1800);
+					}
+
+					this.life = 0;
+				}
+			}
+
+			this.incAS();
+		}
 	}
 
 	private ArrayList<Entities> detect(SimpleGameData dataBord) {
@@ -78,14 +90,12 @@ public class PotatoMine extends Plant {
 				Lz.add(z);
 			}
 		}
-		
+
 		return Lz;
 	}
 
-	
 	int sizeOfPlant = super.getSizeOfPlant();
-	
-	
+
 	@Override
 	public Plant createNewPlant(int x, int y) {
 		return new PotatoMine(x, y);
@@ -99,17 +109,17 @@ public class PotatoMine extends Plant {
 		} else {
 			graphics.setColor(Color.decode(color1));
 		}
-		
+
 		graphics.fill(new Rectangle2D.Float(x + 10, y + 10, sizeOfPlant - 20, sizeOfPlant - 20));
 	}
-	
+
 	int sizeOfSPlant = super.getSizeOfPlant() - 10;
-	
+
 	@Override
 	public void draw(SimpleGameView view, Graphics2D graphics, int x, int y) {
 		graphics.setColor(Color.decode(color2));
 		graphics.fill(new Rectangle2D.Float(x - 10, y + sizeOfSPlant / 2 + 7, sizeOfSPlant - 15, sizeOfSPlant - 15));
-		
+
 		view.drawCost(graphics, x, y, cost.toString());
 	}
 
