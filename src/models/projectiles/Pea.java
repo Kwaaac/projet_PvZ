@@ -24,6 +24,11 @@ public class Pea extends Projectile {
 		this.sizeofP = sizeofP;
 	}
 	
+	public Pea(float x, float y, double speed) {
+		super(x, y, 75, 1 , speed);
+		sizeofP = getSizeOfProjectile();
+	}
+	
 	@Override
 	public void move() {
 		int x = (int) (super.x + getSpeed());

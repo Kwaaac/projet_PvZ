@@ -3,6 +3,7 @@ package models.plants.day;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Ellipse2D;
+import java.awt.geom.Rectangle2D;
 import java.util.List;
 import java.util.Objects;
 
@@ -95,20 +96,26 @@ public class SunFlower extends Plant {
 
 	@Override
 	public void draw(SimpleGameView view, Graphics2D graphics) {
+		graphics.setColor(Color.decode("#4D8939"));
+		graphics.fill(new Rectangle2D.Float(x + sizeOfPlant/4 - 5, y + sizeOfPlant/2, 5, sizeOfPlant));
+		
 		graphics.setColor(Color.decode(color));
-		graphics.fill(new Ellipse2D.Float(x - 4, y - 4, sizeOfPlant + 16, sizeOfPlant + 16));
+		graphics.fill(new Ellipse2D.Float(x, y + sizeOfPlant / 2 - 12, sizeOfPlant/2, sizeOfPlant/2));
 
 		graphics.setColor(Color.decode("#AF6907"));
-		graphics.fill(new Ellipse2D.Float(x + 4, y + 4, sizeOfPlant, sizeOfPlant));
+		graphics.fill(new Ellipse2D.Float(x - 12 + sizeOfPlant / 4, y + sizeOfPlant / 2 - 5, sizeOfPlant/2 - 15, sizeOfPlant/2 - 15));
 	}
 
 	@Override
 	public void draw(SimpleGameView view, Graphics2D graphics, int x, int y) {
+		graphics.setColor(Color.decode("#4D8939"));
+		graphics.fill(new Rectangle2D.Float(x + sizeOfPlant/4 - 5, y + sizeOfPlant/2, 5, sizeOfPlant));
+		
 		graphics.setColor(Color.decode(color));
-		graphics.fill(new Ellipse2D.Float(x - 20, y + sizeOfPlant / 2 - 12, sizeOfPlant, sizeOfPlant));
+		graphics.fill(new Ellipse2D.Float(x, y + sizeOfPlant / 2 - 12, sizeOfPlant/2, sizeOfPlant/2));
 
 		graphics.setColor(Color.decode("#AF6907"));
-		graphics.fill(new Ellipse2D.Float(x - 12, y + sizeOfPlant / 2 - 5, sizeOfPlant - 15, sizeOfPlant - 15));
+		graphics.fill(new Ellipse2D.Float(x - 12 + sizeOfPlant / 4, y + sizeOfPlant / 2 - 5, sizeOfPlant/2 - 15, sizeOfPlant/2 - 15));
 
 		view.drawCost(graphics, x, y, cost.toString());
 	}

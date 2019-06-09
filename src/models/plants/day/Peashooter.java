@@ -96,6 +96,9 @@ public class Peashooter extends Plant {
 	public void draw(SimpleGameView view, Graphics2D graphics) {
 		graphics.setColor(Color.decode(color));
 		graphics.fill(new Rectangle2D.Float(x, y, sizeOfPlant, sizeOfPlant));
+		
+		graphics.setColor(Color.decode("#6ea01b"));
+		graphics.fill(new Rectangle2D.Float(x - 12 + sizeOfPlant / 2, y, 25, 15));
 	}
 
 	int sizeOfSPlant = super.getSizeOfPlant() - 10;
@@ -103,7 +106,10 @@ public class Peashooter extends Plant {
 	@Override
 	public void draw(SimpleGameView view, Graphics2D graphics, int x, int y) {
 		graphics.setColor(Color.decode(color));
-		graphics.fill(new Rectangle2D.Float(x - 15, y + sizeOfSPlant / 2, sizeOfSPlant, sizeOfSPlant));
+		graphics.fill(new Rectangle2D.Float(x - 15, y + sizeOfSPlant / 2, sizeOfSPlant, sizeOfSPlant));;
+		
+		graphics.setColor(Color.decode("#6ea01b"));
+		graphics.fill(new Rectangle2D.Float(x - 30 + sizeOfPlant / 2, y + sizeOfSPlant / 2, 20, 15));
 
 		view.drawCost(graphics, x, y, cost.toString());
 	}
