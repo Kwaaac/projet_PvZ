@@ -879,6 +879,7 @@ public class SimpleGameData implements Serializable {
 		int x = view.getXOrigin() + BordView.getWidth();
 
 		for (Map.Entry<Zombie, Integer> entry : zombieList.entrySet()) {
+			
 			Zombie z = entry.getKey();
 			Integer spawn = entry.getValue();
 			
@@ -893,9 +894,10 @@ public class SimpleGameData implements Serializable {
 
 			if (spawn > 0) {
 				if (map == "Pool" || map == "NightPool") {
+					
 					if (z.isCommon()) {
-						int line = view.indexFromReaCoord(y, view.getYOrigin());
-						while (line == 2 || line == 3) {
+						
+						while (view.indexFromReaCoord(y, view.getYOrigin()) == 2 || view.indexFromReaCoord(y, view.getYOrigin()) == 3) {
 							y = view.getYOrigin() + this.RandomPosGenerator(this.getNbLines()) * sqrS + (sqrS / 2)
 									- (Zombie.getSizeOfZombie() / 2) + decalage;
 						}
@@ -931,7 +933,7 @@ public class SimpleGameData implements Serializable {
 		if (endWave == zombieList.size()) {
 			superWave = 2;
 		}
-
+		
 		if (tombspawn) {
 			ArrayList<Zombie> allZombies = Zombie.getZombieList(SimpleGameData.getMap());
 			for (TombStone t : myTombStone) {
@@ -947,9 +949,8 @@ public class SimpleGameData implements Serializable {
 		if (superWave == 0) {
 			spawnNormalWave(squareSize, str, view, context, zombieList);
 		} else if (superWave == 1) {
-
 			spawnSuperWave(squareSize, str, view, context, superZombieList);
-
+			System.out.println("superplop546");
 		}
 
 	}
