@@ -17,8 +17,10 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import controlers.PrincipalMenuController;
 import models.cells.Cell;
 import models.plants.Plant;
+import models.zombies.Zombie;
 import views.SelectBordView;
 
 
@@ -100,32 +102,78 @@ public class SystemFile implements Serializable{
 	}
 	
 	
-	public static void readProperties() throws IOException {
+	public static void readProperties(SimpleGameData dataBord) throws IOException {
+		
 		try (BufferedReader reader = Files.newBufferedReader(Paths.get("Properties.txt"), StandardCharsets.UTF_8)){
 			
 			String content;
 			int line = 0;
 			
 			while ((content = reader.readLine()) != null) {
+				String[] x = content.split("#");
 				switch(line) {
-				case 0:
-					
-					break;
-				case 1:
-					
-					break;
 				case 2:
-					
+					SimpleGameData.setSelectionCaseNumber(Integer.valueOf(x[0]));
 					break;
-				case 3:
-					
+				case 4:
+					dataBord.setTimeLimit(Long.valueOf(x[0]));
+					break;
+				case 6:
+					dataBord.setTimeLimitDifficulty(Long.valueOf(x[0]));
+					break;
+				case 8:
+					dataBord.setActualMoney(Integer.valueOf(x[0]));
+					break;
+				case 10:
+					dataBord.setActualFertilizer(Integer.valueOf(x[0]));
+					break;
+				case 12:
+					dataBord.setFertilizerChance(Integer.valueOf(x[0]));
+					break;
+				case 14:
+					dataBord.setChanceTombeStone(Integer.valueOf(x[0]));
+					break;
+				case 16:
+					Zombie.setZombieMoveSpeed_reallyFast(Double.valueOf(x[0]));
+					break;
+				case 17:
+					Zombie.setZombieMoveSpeed_fast(Double.valueOf(x[0]));
+					break;
+				case 18:
+					Zombie.setZombieMoveSpeed_medium(Double.valueOf(x[0]));
+					break;
+				case 19:
+					Zombie.setZombieMoveSpeed_slow(Double.valueOf(x[0]));
+					break;
+				case 20:
+					Zombie.setZombieMoveSpeed_verySlow(Double.valueOf(x[0]));
+					break;
+				case 21:
+					Zombie.setZombieMoveSpeed_ultraSlow(Double.valueOf(x[0]));
 					break;
 				}
+				line+=1;
 			}
 		}
 	}
 	
+	public static void readPrincipalMenuProperties() throws IOException {
+		try (BufferedReader reader = Files.newBufferedReader(Paths.get("Properties.txt"), StandardCharsets.UTF_8)){
+					
+			String content;
+			int line = 0;
+			
+			while ((content = reader.readLine()) != null) {
+				String[] x = content.split("#");
+				switch(line) {
+				case 2:
+					SimpleGameData.setSelectionCaseNumber(Integer.valueOf(x[0]));
+					break;
+				}
+				line+=1;
+			}
+		}
 	
-	
+	}
 	
 }

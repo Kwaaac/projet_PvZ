@@ -6,7 +6,7 @@ import views.BordView;
 
 public class Pool extends Map{
 	private final static ArrayList<Integer> MapProperties = new ArrayList<Integer>();
-	private static int column = 8;
+	private static int column = 9;
 	private final static int line = 6;
 	private final static int xOrigine = 650;
 	private final static int yOrigine = 150;

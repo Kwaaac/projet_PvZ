@@ -19,13 +19,11 @@ import models.DeadPool;
 import models.SimpleGameData;
 import models.SystemFile;
 import models.TombStone;
-import models.cells.Cell;
 import models.map.Map;
 import models.plants.Plant;
 import models.projectiles.LawnMower;
 import models.projectiles.Pea;
 import models.projectiles.Projectile;
-import models.zombies.ConeheadZombie;
 import models.zombies.NormalZombie;
 import models.zombies.Zombie;
 import views.BordView;
@@ -81,7 +79,7 @@ public class SimpleGameController {
 		plantSelectionView.draw(context, dataSelect);
 
 		// ---------------WHAT DO I HAVE IN MY GAME ?---------------//
-		System.out.println(view + "\n\n" + plantSelectionView + "\n\n" + dataBord + "\n\n" + dataSelect);
+//		System.out.println(view + "\n\n" + plantSelectionView + "\n\n" + dataBord + "\n\n" + dataSelect);
 		// ---------------------------------------------------------//
 
 		Zombie.getSizeOfZombie();
@@ -97,6 +95,12 @@ public class SimpleGameController {
 		List<TombStone> myTombstone = dataBord.getMyTombstone();
 
 		dataBord.spawnLawnMower(view, context);
+		
+		try {
+			SystemFile.readProperties(dataBord);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
 		while (true) {
 			myZombies = dataBord.getMyZombies();
@@ -212,7 +216,6 @@ public class SimpleGameController {
 	}
 
 	public static void main(String[] args) {
-
 		Application.run(Color.LIGHT_GRAY, SimpleGameController::simpleGame); // attention, utilisation d'une lambda.
 	}
 }

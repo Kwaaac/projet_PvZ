@@ -6,7 +6,7 @@ import views.BordView;
 
 public class Roof extends Map{
 	private final static ArrayList<Integer> MapProperties = new ArrayList<Integer>();
-	private static int column = 8;
+	private static int column = 9;
 	private final static int line = 5;
 	private final static int xOrigine = 450;
 	private final static int yOrigine = 150;

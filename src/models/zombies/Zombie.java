@@ -46,14 +46,14 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie,
 
 	protected boolean fertilizer;
 
-	protected final HashMap<String, Double> mSpeed = new HashMap<String, Double>() {
+	protected final static HashMap<String, Double> mSpeed = new HashMap<String, Double>() {
 		{
-			put("reallyFast", -1.5);
-			put("fast", -1.38);
-			put("medium", -1.05);
-			put("slow", -0.93);
-			put("verySlow", -0.5);
-			put("ultraSlow", -0.3);
+			put("reallyFast", 0.0);
+			put("fast", 0.0);
+			put("medium", 0.0);
+			put("slow", 0.0);
+			put("verySlow", 0.0);
+			put("ultraSlow", 0.0);
 		}
 
 	};
@@ -539,6 +539,30 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie,
 	@Override
 	public int hashCode() {
 		return Objects.hash(super.hashCode(), actSpeed, shootBarMax, shootTime, threat);
+	}
+
+	public static void setZombieMoveSpeed_reallyFast(Double x) {
+		mSpeed.put("reallyFast",x);
+	}
+
+	public static void setZombieMoveSpeed_fast(Double x) {
+		mSpeed.put("fast",x);
+	}
+
+	public static void setZombieMoveSpeed_medium(Double x) {
+		mSpeed.put("medium",x);
+	}
+
+	public static void setZombieMoveSpeed_slow(Double x) {
+		mSpeed.put("slow",x);
+	}
+
+	public static void setZombieMoveSpeed_verySlow(Double x) {
+		mSpeed.put("verySlow",x);
+	}
+
+	public static void setZombieMoveSpeed_ultraSlow(Double x) {
+		mSpeed.put("ultraSlow",x);
 	}
 
 }

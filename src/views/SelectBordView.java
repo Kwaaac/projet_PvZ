@@ -35,6 +35,13 @@ public class SelectBordView extends SimpleGameView {
 		this.selectedPlants = selectedPlants;
 	}
 	
+	public static SelectBordView initGameGraphics(int xOrigin, int yOrigin, int length, SimpleGameData data,
+			ArrayList<Plant> selectedPlants) {
+		int squareSize = (int) (length * 1.0 / data.getNbLines());
+		return new SelectBordView(xOrigin, yOrigin, length, data.getNbColumns() * squareSize, squareSize,
+				selectedPlants);
+	}
+	
 	@Override
 	public String toString() {
 		StringBuilder str = new StringBuilder("---SELECT_BORD_VIEW---\n");
@@ -61,13 +68,6 @@ public class SelectBordView extends SimpleGameView {
 
 	public int getLength() {
 		return length;
-	}
-
-	public static SelectBordView initGameGraphics(int xOrigin, int yOrigin, int length, SimpleGameData data,
-			ArrayList<Plant> selectedPlants) {
-		int squareSize = (int) (length * 1.0 / data.getNbLines());
-		return new SelectBordView(xOrigin, yOrigin, length, data.getNbColumns() * squareSize, squareSize,
-				selectedPlants);
 	}
 
 	public void startCooldown(int numCase) {

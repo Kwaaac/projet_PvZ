@@ -16,6 +16,7 @@ import views.BordView;
 import views.SelectBordView;
 
 public class PrincipalMenuController {
+	
 	@SuppressWarnings("unchecked")
 	public static ArrayList<Plant> startGame(ApplicationContext context, SimpleGameData noImportantData) {
 
@@ -33,10 +34,17 @@ public class PrincipalMenuController {
 		allPlants.addAll(Plant.getPlantList("day"));
 		allPlants.addAll(Plant.getPlantList("night"));
 		allPlants.addAll(Plant.getPlantList("pool"));
-
+		
+		try {
+			SystemFile.readPrincipalMenuProperties();
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		
 		SimpleGameData dataBord = new SimpleGameData(7, 7);
-		SimpleGameData dataSelect = new SimpleGameData(7, 1);
-
+		
+		SimpleGameData dataSelect = new SimpleGameData(SimpleGameData.getSelectionCaseNumber(), 1);
+		
 		SelectBordView viewContent = SelectBordView.initGameGraphics(xOrigin, yOrigin, 100, dataBord, allPlants);
 		SelectBordView plantSelectionView = SelectBordView.initGameGraphics(30, yOrigin, 900, dataSelect,
 				selectedPlant);

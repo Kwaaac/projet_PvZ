@@ -32,6 +32,7 @@ public class SimpleGameData implements Serializable {
 	private final int nbLines;
 	private final int nbColumns;
 	private Coordinates selected;
+	private static int selectionCaseNumber;
 	private final ArrayList<Coordinates> placedPlant = new ArrayList<Coordinates>();
 	private final ArrayList<Plant> myPlants = new ArrayList<>();
 	private final ArrayList<Soleil> mySun = new ArrayList<>();
@@ -46,14 +47,15 @@ public class SimpleGameData implements Serializable {
 	private long spawnTime;
 	private long timeLimit;
 	private long difficultyTime;
+	private long difficultyTimeDeadLine;
 
 	private int difficulty = 1;
 	private int superWave = 0;
 
-	private int actualMoney = 999;
-	private int actualfertilizer = 3;
-	private int fertilizerChance = 10;
-	private final int chanceTombstone = 15;
+	private int actualMoney;
+	private int actualfertilizer;
+	private int fertilizerChance;
+	private int chanceTombeStone;
 	private Chrono sunSpawn = new Chrono();
 
 	static Chrono time = new Chrono();
@@ -155,7 +157,7 @@ public class SimpleGameData implements Serializable {
 		for (int i = 0; i < matrix.length; i++) {
 			for (int j = 0; j < matrix[0].length; j++) {
 				matrix[i][j] = new GrassCell(false);
-				if (j >= 4 && rand.nextInt(100) < chanceTombstone) {
+				if (j >= 4 && rand.nextInt(100) < chanceTombeStone) {
 					TombStone t = TombStone.createTombstone(i, j);
 					myTombStone.add(t);
 					matrix[i][j].addTombstone(t);
@@ -715,7 +717,7 @@ public class SimpleGameData implements Serializable {
 	}
 
 	public void updateDifficulty() {
-		if (System.currentTimeMillis() - difficultyTime >= 15_000) {
+		if (System.currentTimeMillis() - difficultyTime >= difficultyTimeDeadLine) {
 			difficulty += 1;
 
 			difficultyTime = System.currentTimeMillis();
@@ -848,7 +850,7 @@ public class SimpleGameData implements Serializable {
 						myZombies.add(z.createNewZombie(x, y, false));
 					}
 				}
-				str.append("new " + zombieAvailable.get(selecteur) + new SimpleDateFormat("hh:mm:ss").format(new Date())
+				str.append("new " + zombieAvailable.get(selecteur) + " (" + new SimpleDateFormat("hh:mm:ss").format(new Date())
 						+ ")\n");
 
 			} else {
@@ -1066,5 +1068,44 @@ public class SimpleGameData implements Serializable {
 	public List<TombStone> getMyTombstone() {
 		return Collections.unmodifiableList(myTombStone);
 	}
+
+	public void setTimeLimit(Long x) {
+		timeLimit = x;
+	}
+
+	public void setTimeLimitDifficulty(Long x) {
+		difficultyTimeDeadLine = x;
+	}
+
+	public void setActualMoney(Integer x) {
+		actualMoney = x;
+	}
+
+	public void setActualFertilizer(Integer x) {
+		actualfertilizer = x;
+	}
+
+	public void setFertilizerChance(Integer x) {
+		fertilizerChance = x;
+	}
+
+	public static void setSelectionCaseNumber(Integer x) {
+		selectionCaseNumber = x;
+	}
+
+	public static int getSelectionCaseNumber() {
+		return selectionCaseNumber;
+	}
+
+	public int getChanceTombeStone() {
+		return chanceTombeStone;
+	}
+
+	public void setChanceTombeStone(Integer x) {
+		chanceTombeStone = x;
+	}
+
+
+
 
 }

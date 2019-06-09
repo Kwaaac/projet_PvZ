@@ -1,12 +1,13 @@
 package models;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import models.zombies.NormalZombie;
 import models.zombies.Zombie;
 import views.BordView;
 
-public class TombStone {
+public class TombStone implements Serializable {
 	private final int x;
 	private final int y;
 	private Zombie burriedDead;
