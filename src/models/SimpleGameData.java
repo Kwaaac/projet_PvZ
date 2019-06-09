@@ -36,7 +36,7 @@ public class SimpleGameData implements Serializable {
 	private final ArrayList<Coordinates> placedPlant = new ArrayList<Coordinates>();
 	private final ArrayList<Plant> myPlants = new ArrayList<>();
 	private final ArrayList<Soleil> mySun = new ArrayList<>();
-	private ArrayList<Zombie> zombieInQueu = new ArrayList<>();// Dancing Zombie
+	private ArrayList<Zombie> zombieInQueu = new ArrayList<>();
 	private final ArrayList<Zombie> myZombies = new ArrayList<>();
 	private final ArrayList<Projectile> myBullet = new ArrayList<>();
 	private final ArrayList<LawnMower> myLawnMower = new ArrayList<>();

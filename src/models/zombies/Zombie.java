@@ -280,7 +280,7 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie,
 			}
 
 			for (Projectile e : Le) {
-				if (this.hit(e) && !(e.isInConflict()) && this.isBad()) {
+				if (this.hit(e) && !(e.isInConflict()) && this.isBad() && !(fly != e.isFlying())) {
 					this.slowed(e.isSlowing());
 					e.setConflictMode(true);
 					this.mortalKombat(e);

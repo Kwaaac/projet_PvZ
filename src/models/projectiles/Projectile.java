@@ -15,10 +15,16 @@ import views.BordView;
 public abstract class Projectile extends Entities implements MovingElement, IProjectile, Serializable {
 	private double speed;
 	private static final int sizeOfProjectile = 25;
+	private boolean flying;
 
-	public Projectile(float x, float y, int damage, int life, double speed) {
+	public Projectile(float x, float y, int damage, int life, double speed, boolean flying) {
 		super(x, y, damage, life, true);
 		this.setSpeed(speed);
+		this.flying = flying;
+	}
+	
+	public Projectile(float x, float y, int damage, int life, double speed) {
+		this(x,y,damage,life,speed,false);
 	}
 
 	@Override
@@ -101,6 +107,10 @@ public abstract class Projectile extends Entities implements MovingElement, IPro
 				DPe.add(p);
 			}
 		}
+	}
+	
+	public Boolean isFlying() {
+		return (Boolean) flying;
 	}
 
 	@Override
