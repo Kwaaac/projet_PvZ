@@ -25,6 +25,13 @@ public class Pea extends Projectile {
 	}
 	
 	@Override
+	public void move() {
+		int x = (int) (super.x + getSpeed());
+		setX(x);
+		
+	}
+	
+	@Override
 	public String getColor() {
 		return color;
 	}

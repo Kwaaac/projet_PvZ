@@ -43,6 +43,8 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie,
 	private Chrono stunnedTime = new Chrono();
 	private long stunnedLimit;
 	private boolean stunned = false;
+	
+	private boolean fly = false;
 
 	protected boolean fertilizer;
 
@@ -563,6 +565,20 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie,
 
 	public static void setZombieMoveSpeed_ultraSlow(Double x) {
 		mSpeed.put("ultraSlow",x);
+	}
+	
+	/**
+	 * @return True is the zombie fly, false otherwise
+	 */
+	public boolean isFlying() {
+		return fly;
+	}
+	
+	/**
+	 * Switch the fly state of zombie
+	 */
+	public void switchFly() {
+		fly = !fly;
 	}
 
 }

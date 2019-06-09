@@ -27,4 +27,8 @@ public interface IZombie {
 	void giftZombie();
 	
 	boolean magnetizable();
+	
+	boolean isFlying();
+	
+	void switchFly();
 }
