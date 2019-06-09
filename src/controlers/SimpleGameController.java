@@ -24,6 +24,7 @@ import models.plants.Plant;
 import models.projectiles.LawnMower;
 import models.projectiles.Pea;
 import models.projectiles.Projectile;
+import models.zombies.BalloonZombie;
 import models.zombies.NormalZombie;
 import models.zombies.Zombie;
 import views.BordView;
@@ -42,7 +43,7 @@ public class SimpleGameController {
 		ArrayList<Plant> selectedPlant = PrincipalMenuController.startGame(context, dataBord);
 		
 		HashMap<Zombie, Integer> normalWaveZombie = new HashMap<>();
-		normalWaveZombie.put(new NormalZombie(), 1);
+		normalWaveZombie.put(new BalloonZombie(), 5);
 
 		//dataBord.generateZombies(1)
 		HashMap<Zombie, Integer> superWaveZombie = dataBord.generateZombies(2);
@@ -105,6 +106,7 @@ public class SimpleGameController {
 		while (true) {
 			
 			myZombies = dataBord.getMyZombies();
+			System.out.println(myZombies);
 			myBullet = dataBord.getMyBullet();
 			myLawnMower = dataBord.getMyLawnMower();
 			myTombstone = dataBord.getMyTombstone();

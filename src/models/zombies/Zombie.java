@@ -44,7 +44,7 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie,
 	private long stunnedLimit;
 	private boolean stunned = false;
 	
-	private boolean fly = false;
+	private boolean fly;
 
 	protected boolean fertilizer;
 
@@ -60,7 +60,7 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie,
 
 	};
 
-	public Zombie(int x, int y, int damage, int life, int threat, String s, boolean fertilizer) {
+	public Zombie(int x, int y, int damage, int life, int threat, String s, boolean fertilizer, boolean fly) {
 		super(x, y, damage, life, false);
 
 		speedRecord = mSpeed.get(s); // Normal Speed
@@ -70,9 +70,16 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie,
 		shootTime = System.currentTimeMillis();
 		this.threat = threat;
 		this.fertilizer = fertilizer;
+		this.fly=fly;
 		slowedTime.steady();
 		stunnedTime.steady();
+		
 	}
+	
+	public Zombie(int x, int y, int damage, int life, int threat, String s, boolean fertilizer) {
+		this(x,y,damage,life,threat,s,fertilizer,false);
+	}
+	
 
 	private final static ArrayList<Zombie> common = new ArrayList<Zombie>(
 			Arrays.asList(new NormalZombie(), new FlagZombie(), new BucketheadZombie(), new ConeheadZombie(),
