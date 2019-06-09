@@ -2,7 +2,7 @@ package models;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.File;
+
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -12,12 +12,9 @@ import java.io.Serializable;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Scanner;
 
-import controlers.PrincipalMenuController;
 import models.cells.Cell;
 import models.plants.Plant;
 import models.zombies.Zombie;
@@ -25,6 +22,7 @@ import views.SelectBordView;
 
 
 
+@SuppressWarnings("serial")
 public class SystemFile implements Serializable{
 
 	public static void save(SimpleGameData data, SelectBordView selectView) throws IOException {

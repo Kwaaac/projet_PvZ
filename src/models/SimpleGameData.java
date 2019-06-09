@@ -1033,7 +1033,6 @@ public class SimpleGameData implements Serializable {
 		for (LawnMower i : dPe) {
 			myLawnMower.add(i);
 		}
-		;
 	}
 
 	public Integer getFertilizer() {

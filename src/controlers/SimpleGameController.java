@@ -41,7 +41,6 @@ public class SimpleGameController {
 
 		ArrayList<Plant> selectedPlant = PrincipalMenuController.startGame(context, dataBord);
 		
-		
 		HashMap<Zombie, Integer> normalWaveZombie = new HashMap<>();
 		normalWaveZombie.put(new NormalZombie(), 1);
 
@@ -104,6 +103,7 @@ public class SimpleGameController {
 		dataBord.createBord(SimpleGameData.getMap());
 
 		while (true) {
+			
 			myZombies = dataBord.getMyZombies();
 			myBullet = dataBord.getMyBullet();
 			myLawnMower = dataBord.getMyLawnMower();
