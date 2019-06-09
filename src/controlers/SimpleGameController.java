@@ -201,6 +201,8 @@ public class SimpleGameController {
 					} else if (action == Action.KEY_RELEASED && mdp == "CTRL") {
 						ctrl = false;
 						mdp = null;
+					} else if (action == Action.KEY_RELEASED && mdp == "M") {
+						dataBord.switchLowSetting();
 					}
 
 				}

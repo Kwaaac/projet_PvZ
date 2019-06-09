@@ -21,13 +21,14 @@ public class GaltingPea extends Plant {
 	private final String name = "GaltingPea";
 	private final String color = "#90D322";
 	private boolean firstShoot = false;
+	private Chrono delaySuperAttack = new Chrono();
 	private Chrono delayAttack = new Chrono();
 	private int row = 0;
 
 	public GaltingPea(int x, int y) {
 		super(x, y, 0, 300, 5000, 125, "fast");
 
-		delayAttack.steady();
+		delaySuperAttack.steady();
 		shootBar = shootBarMax; // La plante tire dès qu'elle est posée
 	}
 
@@ -60,15 +61,15 @@ public class GaltingPea extends Plant {
 	private void superAction(List<Projectile> myBullet, BordView view, List<Zombie> myZombies,
 			SimpleGameData dataBord) {
 		shootBar = shootBarMax;
-		delayAttack.startChronoIfReset();
+		delaySuperAttack.startChronoIfReset();
 
-		if (delayAttack.asReachTimerMs(100) || row == 0) {
+		if (delaySuperAttack.asReachTimerMs(100) || row == 0) {
 			myBullet.add(
 					new Pea(super.getX() + super.getSizeOfPlant(), super.getY() + (super.getSizeOfPlant() / 2) - 10));
-			delayAttack.start();
+			delaySuperAttack.start();
 			row++;
 
-			if (row == 10) {
+			if (row == 50) {
 				myBullet.add(new Pea(super.getX() + super.getSizeOfPlant() - 25,
 						super.getY() + (super.getSizeOfPlant() / 2) - 10 - 25, 75, 425, 1));
 				row = 0;
@@ -85,13 +86,19 @@ public class GaltingPea extends Plant {
 			superAction(myBullet, view, myZombies, dataBord);
 			return;
 		} else {
-			if (firstShoot && delayAttack.asReachTimerMs(50)) {
+			if (firstShoot && delaySuperAttack.asReachTimerMs(100)) {
 				myBullet.add(new Pea(super.getX() + super.getSizeOfPlant(),
 						super.getY() + (super.getSizeOfPlant() / 2) - 10));
 
-				firstShoot = false;
-				delayAttack.steady();
-				this.resetAS();
+				row++;
+				if (row == 3) {
+					firstShoot = false;
+					delaySuperAttack.steady();
+					this.resetAS();
+					row = 0;
+					shootBar = 0;
+				}
+				
 			}
 
 			if (this.readyToshot(dataBord.getLineCell(this.getCaseJ(), this.getCaseI()))) {
@@ -99,7 +106,7 @@ public class GaltingPea extends Plant {
 						super.getY() + (super.getSizeOfPlant() / 2) - 10));
 
 				firstShoot = true;
-				delayAttack.start();
+				delaySuperAttack.start();
 				this.resetAS();
 			}
 
@@ -127,6 +134,18 @@ public class GaltingPea extends Plant {
 		graphics.fill(new Rectangle2D.Float(x - 30 + sizeOfPlant / 2, y + sizeOfSPlant / 2, 20, 15));
 
 		view.drawCost(graphics, x, y, cost.toString());
+	}
+	
+	@Override
+	public boolean plantingCondition(Cell cell) {
+		if (cell.isMainPlantPlanted() && cell.getMainPlant().toString() == "Repeater") {
+			Plant plant = cell.getMainPlant();
+			plant.setLife(0);
+			cell.removeMainPlant();
+			return cell.addPlant(this);
+		}
+
+		return false;
 	}
 }
 

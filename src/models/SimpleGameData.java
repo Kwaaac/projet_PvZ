@@ -57,6 +57,7 @@ public class SimpleGameData implements Serializable {
 	private int fertilizerChance;
 	private int chanceTombeStone;
 	private Chrono sunSpawn = new Chrono();
+	private boolean lowSetting = false;
 
 	static Chrono time = new Chrono();
 
@@ -521,8 +522,9 @@ public class SimpleGameData implements Serializable {
 			}
 			b.action(this);
 			b.move();
+			
 			Cell cell = this.getCell(b.getCaseJ(), b.getCaseI());
-			if (cell != null && !cell.isFog()) {
+			if (cell != null && !cell.isFog() && !lowSetting) {
 				view.moveAndDrawElement(context, this, b);
 			}
 			b.setCase(this);
@@ -1114,6 +1116,13 @@ public class SimpleGameData implements Serializable {
 
 	public void setChanceTombeStone(Integer x) {
 		chanceTombeStone = x;
+	}
+	
+	/**
+	 * enable or disable the low setting
+	 */
+	public void switchLowSetting() {
+		lowSetting = !lowSetting;
 	}
 
 }

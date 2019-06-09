@@ -135,8 +135,8 @@ public class TwinSunFlower extends Plant {
 	@Override
 	public boolean plantingCondition(Cell cell) {		
 		if (cell.isMainPlantPlanted() && cell.getMainPlant().toString() == "SunFlower") {
-			Plant sunFlower = cell.getMainPlant();
-			sunFlower.setLife(0);
+			Plant plant = cell.getMainPlant();
+			plant.setLife(0);
 			cell.removeMainPlant();
 			return cell.addPlant(this);
 		}

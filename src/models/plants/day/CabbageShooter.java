@@ -101,7 +101,7 @@ public class CabbageShooter extends Plant {
 	@Override
 	public void draw(SimpleGameView view, Graphics2D graphics) {
 		graphics.setColor(Color.decode(color));
-		graphics.fill(new Rectangle2D.Float(x, y, sizeOfPlant, sizeOfPlant));
+		graphics.fill(new Rectangle2D.Float(x, y + 20, sizeOfPlant, sizeOfPlant-20));
 	}
 
 	int sizeOfSPlant = super.getSizeOfPlant() - 10;
@@ -109,7 +109,7 @@ public class CabbageShooter extends Plant {
 	@Override
 	public void draw(SimpleGameView view, Graphics2D graphics, int x, int y) {
 		graphics.setColor(Color.decode(color));
-		graphics.fill(new Rectangle2D.Float(x - 15, y + sizeOfSPlant / 2, sizeOfSPlant, sizeOfSPlant));
+		graphics.fill(new Rectangle2D.Float(x - 15, y + sizeOfSPlant / 2 + 20, sizeOfSPlant, sizeOfSPlant-20));
 
 		view.drawCost(graphics, x, y, cost.toString());
 	}

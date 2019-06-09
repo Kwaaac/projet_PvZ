@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import models.Chrono;
+import models.DeadPool;
 import models.SimpleGameData;
 import models.TombStone;
 import models.cells.Cell;
@@ -133,6 +134,14 @@ public class Repeater extends Plant {
 		graphics.fill(new Rectangle2D.Float(x + 35, y + sizeOfSPlant / 2, 20, 15));
 
 		view.drawCost(graphics, x, y, cost.toString());
+	}
+	
+	@Override
+	public void hasToDie(DeadPool DPe, SimpleGameData data) {
+		if (this.isDead()) {
+			data.getCell(this.getCaseJ(), this.getCaseI()).removePlant(this);
+			DPe.add(this);
+		}
 	}
 
 }
