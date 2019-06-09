@@ -24,7 +24,7 @@ import models.projectiles.Projectile;
 import views.BordView;
 import views.SimpleGameView;
 
-public abstract class Zombie extends Entities implements MovingElement, IZombie, Serializable {
+public abstract class Zombie extends Entities implements MovingElement, IZombie, Serializable, Comparable<Zombie> {
 	private double actSpeed;
 	private double speedRecord;
 	private boolean testMode;
@@ -43,7 +43,7 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie,
 	private Chrono stunnedTime = new Chrono();
 	private long stunnedLimit;
 	private boolean stunned = false;
-	
+
 	private boolean fly;
 
 	protected boolean fertilizer;
@@ -70,16 +70,15 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie,
 		shootTime = System.currentTimeMillis();
 		this.threat = threat;
 		this.fertilizer = fertilizer;
-		this.fly=fly;
+		this.fly = fly;
 		slowedTime.steady();
 		stunnedTime.steady();
-		
+
 	}
-	
+
 	public Zombie(int x, int y, int damage, int life, int threat, String s, boolean fertilizer) {
-		this(x,y,damage,life,threat,s,fertilizer,false);
+		this(x, y, damage, life, threat, s, fertilizer, false);
 	}
-	
 
 	private final static ArrayList<Zombie> common = new ArrayList<Zombie>(
 			Arrays.asList(new NormalZombie(), new FlagZombie(), new BucketheadZombie(), new ConeheadZombie(),
@@ -232,6 +231,9 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie,
 		return -1;
 	}
 
+	public void chopped(boolean sharp) {
+	}
+
 	/**
 	 * Used to draw if a zombie as any fertilizer or when it is slowed
 	 * 
@@ -254,9 +256,10 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie,
 	}
 
 	/**
-	 * cette m�thode a pour but de r�partir les d�gats aux diff�rentes entit�es du
-	 * jeu, une fois les d�gat correctement attribuer et la vie des entit�es mise a
-	 * jour elle aide par la suite a les redistribuer dans les diff�rente deadpools
+	 * cette m�thode a pour but de r�partir les d�gats aux diff�rentes
+	 * entit�es du jeu, une fois les d�gat correctement attribuer et la vie des
+	 * entit�es mise a jour elle aide par la suite a les redistribuer dans les
+	 * diff�rente deadpools
 	 * 
 	 * @param view     vue sur la quelle ce joue le conflict (si on en met plusieur
 	 *                 je saurai la faire marcher sur plusieur vues)
@@ -265,9 +268,9 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie,
 	 *                 e).draw().getBounds2D())){ return true; }r Zombies
 	 * @param DPp      deadPool for Plant
 	 * @param DPb      deadPool for Projectile
-	 * @param entities suite d'entit�es qui subiront les d�gats de l'entit�e objet
-	 *                 utilisant la m�thode et qui attaqueront cette meme entit�es
-	 *                 tous ensemble
+	 * @param entities suite d'entit�es qui subiront les d�gats de l'entit�e
+	 *                 objet utilisant la m�thode et qui attaqueront cette meme
+	 *                 entit�es tous ensemble
 	 */
 
 	public void conflictBvZ(DeadPool DPe, BordView view, SimpleGameData data) {
@@ -287,10 +290,13 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie,
 			}
 
 			for (Projectile e : Le) {
-				if (this.hit(e) && !(e.isInConflict()) && this.isBad() && !(fly != e.isFlying())) {
+				if (this.hit(e) && !(e.isInConflict()) && this.isBad() && !(fly && !e.isFlying())) {
+					chopped(e.isSharp());
 					this.slowed(e.isSlowing());
 					e.setConflictMode(true);
-					this.mortalKombat(e);
+					takeDmg(e.getDamage());
+					e.takeDmg(1);
+
 					if (e.isDead()) {
 						DPe.addInDP(e);
 					}
@@ -319,7 +325,7 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie,
 				&& data.getCell(view.lineFromY(y), view.columnFromX(x)).isPlantedPlant()) {
 
 			p = data.getCell(view.lineFromY(y), view.columnFromX(x)).getPlantToAttack();
-			if (this.hit(p)) {
+			if (this.hit(p) && !fly) {
 				this.stop();
 				if (this.readyToshot()) {
 
@@ -551,41 +557,52 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie,
 	}
 
 	public static void setZombieMoveSpeed_reallyFast(Double x) {
-		mSpeed.put("reallyFast",x);
+		mSpeed.put("reallyFast", x);
 	}
 
 	public static void setZombieMoveSpeed_fast(Double x) {
-		mSpeed.put("fast",x);
+		mSpeed.put("fast", x);
 	}
 
 	public static void setZombieMoveSpeed_medium(Double x) {
-		mSpeed.put("medium",x);
+		mSpeed.put("medium", x);
 	}
 
 	public static void setZombieMoveSpeed_slow(Double x) {
-		mSpeed.put("slow",x);
+		mSpeed.put("slow", x);
 	}
 
 	public static void setZombieMoveSpeed_verySlow(Double x) {
-		mSpeed.put("verySlow",x);
+		mSpeed.put("verySlow", x);
 	}
 
 	public static void setZombieMoveSpeed_ultraSlow(Double x) {
-		mSpeed.put("ultraSlow",x);
+		mSpeed.put("ultraSlow", x);
 	}
-	
+
 	/**
 	 * @return True is the zombie fly, false otherwise
 	 */
 	public boolean isFlying() {
 		return fly;
 	}
-	
+
 	/**
 	 * Switch the fly state of zombie
 	 */
 	public void switchFly() {
 		fly = !fly;
+	}
+
+	@Override
+	public int compareTo(Zombie z) {
+		if (x < z.x) {
+			return 1;
+		} else if (x > z.x) {
+			return -1;
+		} else {
+			return 0;
+		}
 	}
 
 }

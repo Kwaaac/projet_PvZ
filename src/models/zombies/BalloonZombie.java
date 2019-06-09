@@ -17,13 +17,13 @@ public class BalloonZombie extends Zombie {
 	private final String type = "Balloon Zombie";
 	private final String color = "#ffffff";
 	private boolean balloon = true;
-	
+
 	public BalloonZombie(int x, int y) {
-		super(x, y, 100, 210, 1 , "slow" , false , true);
+		super(x, y, 100, 210, 1, "slow", false, true);
 	}
-	
+
 	public BalloonZombie(int x, int y, boolean gifted) {
-		super(x, y, 100, 210, 1 , "slow" , gifted, true);
+		super(x, y, 100, 210, 1, "slow", gifted, true);
 	}
 
 	public BalloonZombie() {
@@ -39,40 +39,41 @@ public class BalloonZombie extends Zombie {
 	public String toString() {
 		return type;
 	}
-	
+
 	@Override
-	public Zombie createNewZombie(int x, int y,boolean gift) {
+	public Zombie createNewZombie(int x, int y, boolean gift) {
 		return new BalloonZombie(x, y, gift);
 	}
-	
+
 	int sizeOfZombie = super.getSizeOfZombie();
-	
+
 	@Override
 	public void draw(SimpleGameView view, Graphics2D graphics) {
+		int decalage = balloon ? 25 : 0;
+		
+		
 		graphics.setColor(Color.decode(color));
-		graphics.fill(new Ellipse2D.Float(x, y, sizeOfZombie, sizeOfZombie));
-		if(balloon) {
-		graphics.setColor(Color.decode("#e50d38"));
-		graphics.fill(new Ellipse2D.Float(x, y+20, 25, 50));
-		graphics.setColor(Color.decode("#8e8b8c"));
-		graphics.fill(new Rectangle2D.Float(x-5,y-10,10 ,20));
+		graphics.fill(new Ellipse2D.Float(x, y - decalage, sizeOfZombie, sizeOfZombie));
+		if (balloon) {
+			graphics.setColor(Color.decode("#8e8b8c"));
+			graphics.fill(new Rectangle2D.Float(x + 40, y + 5 - decalage, 4, 30));
+			graphics.setColor(Color.decode("#e50d38"));
+			graphics.fill(new Ellipse2D.Float(x + 20, y - 40 - decalage, 40, 60));
+
 		}
-		
+
 		super.draw(view, graphics);
-		
-		if(isSlowed()) {
+
+		if (isSlowed()) {
 			super.draw(view, graphics);
 		}
 	}
-	
+
 	@Override
-	public boolean action(BordView view, SimpleGameData dataBord, List<Zombie> myZombies) {
-		if(life <= 190  && balloon) {
+	public void chopped(boolean sharp) {
+		if(sharp) {
 			balloon = false;
-			if(!balloon) {
-				this.switchFly();
-			}
+			switchFly();
 		}
-		return true;
 	}
 }

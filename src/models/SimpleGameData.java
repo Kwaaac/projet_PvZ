@@ -291,8 +291,8 @@ public class SimpleGameData implements Serializable {
 	public List<LawnMower> getMyLawnMower() {
 		return Collections.unmodifiableList(myLawnMower);
 	}
-	
-	public List<TombStone> getMyTombStone(){
+
+	public List<TombStone> getMyTombStone() {
 		return Collections.unmodifiableList(myTombStone);
 	}
 
@@ -848,8 +848,8 @@ public class SimpleGameData implements Serializable {
 						myZombies.add(z.createNewZombie(x, y, false));
 					}
 				}
-				str.append("new " + zombieAvailable.get(selecteur) + " (" + new SimpleDateFormat("hh:mm:ss").format(new Date())
-						+ ")\n");
+				str.append("new " + zombieAvailable.get(selecteur) + " ("
+						+ new SimpleDateFormat("hh:mm:ss").format(new Date()) + ")\n");
 
 			} else {
 				if (endWave == zombieList.size() && myZombies.isEmpty()) {
@@ -879,10 +879,10 @@ public class SimpleGameData implements Serializable {
 		int x = view.getXOrigin() + BordView.getWidth();
 
 		for (Map.Entry<Zombie, Integer> entry : zombieList.entrySet()) {
-			
+
 			Zombie z = entry.getKey();
 			Integer spawn = entry.getValue();
-			
+
 			int decalage = RandomPosGenerator(-20, 20); // used to make visual differences between Zombies
 
 			int y = view.getYOrigin() + this.RandomPosGenerator(this.getNbLines()) * sqrS + (sqrS / 2)
@@ -894,10 +894,11 @@ public class SimpleGameData implements Serializable {
 
 			if (spawn > 0) {
 				if (map == "Pool" || map == "NightPool") {
-					
+
 					if (z.isCommon()) {
-						
-						while (view.indexFromReaCoord(y, view.getYOrigin()) == 2 || view.indexFromReaCoord(y, view.getYOrigin()) == 3) {
+
+						while (view.indexFromReaCoord(y, view.getYOrigin()) == 2
+								|| view.indexFromReaCoord(y, view.getYOrigin()) == 3) {
 							y = view.getYOrigin() + this.RandomPosGenerator(this.getNbLines()) * sqrS + (sqrS / 2)
 									- (Zombie.getSizeOfZombie() / 2) + decalage;
 						}
@@ -933,7 +934,7 @@ public class SimpleGameData implements Serializable {
 		if (endWave == zombieList.size()) {
 			superWave = 2;
 		}
-		
+
 		if (tombspawn) {
 			ArrayList<Zombie> allZombies = Zombie.getZombieList(SimpleGameData.getMap());
 			for (TombStone t : myTombStone) {
@@ -1063,6 +1064,18 @@ public class SimpleGameData implements Serializable {
 		}
 	}
 
+	public void shovel(float x, float y) {
+		Cell cell = this.getCell(BordView.caseYFromY(y), BordView.caseXFromX(x));
+		if (cell != null) {
+			Plant plant = cell.getPlantToAttack();
+			if (plant != null) {
+				removeP(plant);
+				cell.removePlant(plant);
+			}
+		}
+
+	}
+
 	public List<TombStone> getMyTombstone() {
 		return Collections.unmodifiableList(myTombStone);
 	}
@@ -1102,8 +1115,5 @@ public class SimpleGameData implements Serializable {
 	public void setChanceTombeStone(Integer x) {
 		chanceTombeStone = x;
 	}
-
-
-
 
 }

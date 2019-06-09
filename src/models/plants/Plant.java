@@ -12,6 +12,8 @@ import models.DeadPool;
 import models.Entities;
 import models.SimpleGameData;
 import models.cells.Cell;
+import models.plants.day.CabbageShooter;
+import models.plants.day.Cactus;
 import models.plants.day.CherryBomb;
 import models.plants.day.Chomper;
 import models.plants.day.GaltingPea;
@@ -49,13 +51,12 @@ public abstract class Plant extends Entities implements IPlant, Serializable {
 	protected final Integer cost;
 	protected final Long cooldown;
 	private Coordinates plantSelect;
-	private boolean fertilized; 
-	
+	private boolean fertilized;
 
-	private final static ArrayList<Plant> day = new ArrayList<>(
-			Arrays.asList(new CherryBomb(), new Chomper(), new Peashooter(), new Repeater(), new PotatoMine(),
-					new Squash(), new SnowPea(), new SunFlower(), new WallNut(), new Pot(), new Jalapeno(), 
-					new Treepeater(), new SplitPea(), new GaltingPea(), new TwinSunFlower()));
+	private final static ArrayList<Plant> day = new ArrayList<>(Arrays.asList(new CherryBomb(), new Chomper(),
+			new Peashooter(), new Repeater(), new PotatoMine(), new Squash(), new SnowPea(), new SunFlower(),
+			new WallNut(), new Pot(), new Jalapeno(), new Treepeater(), new SplitPea(), new GaltingPea(),
+			new TwinSunFlower(), new CabbageShooter(), new Cactus()));
 	private final static ArrayList<Plant> night = new ArrayList<>(
 			Arrays.asList(new MagnetShroom(), new DoomShroom(), new FumeShroom(), new GraveBuster(), new HypnoShroom(),
 					new IceShroom(), new PuffShroom(), new ScaredyShroom(), new SunShroom()));
@@ -172,33 +173,34 @@ public abstract class Plant extends Entities implements IPlant, Serializable {
 			return cell.addPlant(this);
 
 		} else if (cell.isGroundPlantPlanted()) {
-				return cell.addPlant(this);
+			return cell.addPlant(this);
 		}
 
 		return false;
 	}
-	
+
 	public boolean feedPlant() {
-		if(fertilized) {
+		if (fertilized) {
 			return false;
 		}
 		fertilized = true;
 		return true;
 	}
-	
+
 	public Boolean isFertilized() {
 		return fertilized;
 	}
-	
+
 	public void unFeed() {
 		fertilized = false;
 	}
-	
-	public static void hasToDieAll (DeadPool DPe, List<Plant> list,SimpleGameData data) {
-		for(Plant p : list) {
+
+	public static void hasToDieAll(DeadPool DPe, List<Plant> list, SimpleGameData data) {
+		for (Plant p : list) {
 			p.hasToDie(DPe, data);
 		}
 	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (!(o instanceof Plant)) {
@@ -213,6 +215,7 @@ public abstract class Plant extends Entities implements IPlant, Serializable {
 	public int hashCode() {
 		return Objects.hash(super.hashCode(), shootBarMax, shootTime, cost, cooldown);
 	}
-	
-	public void hasToDie(DeadPool DPe, SimpleGameData data) {}
+
+	public void hasToDie(DeadPool DPe, SimpleGameData data) {
+	}
 }

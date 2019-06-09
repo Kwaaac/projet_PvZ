@@ -31,4 +31,6 @@ public interface IZombie {
 	boolean isFlying();
 	
 	void switchFly();
+	
+	void chopped(boolean sharp);
 }

@@ -33,7 +33,6 @@ public class Pea extends Projectile {
 	public void move() {
 		int x = (int) (super.x + getSpeed());
 		setX(x);
-		
 	}
 	
 	@Override

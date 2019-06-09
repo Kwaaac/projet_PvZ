@@ -43,9 +43,10 @@ public class SimpleGameController {
 		ArrayList<Plant> selectedPlant = PrincipalMenuController.startGame(context, dataBord);
 		
 		HashMap<Zombie, Integer> normalWaveZombie = new HashMap<>();
+		normalWaveZombie.put(new NormalZombie(), 1);
 		normalWaveZombie.put(new BalloonZombie(), 5);
 
-		//dataBord.generateZombies(1)
+		// dataBord.generateZombies(1)
 		HashMap<Zombie, Integer> superWaveZombie = dataBord.generateZombies(2);
 
 		int yOrigin = 100;
@@ -86,7 +87,7 @@ public class SimpleGameController {
 
 		StringBuilder str = new StringBuilder("Journal de bord\n-+-+-+-+-+-+-+-+-+-\n");
 
-		boolean debug = false, pause = false, shift = false;
+		boolean debug = false, pause = false, shift = false, ctrl = false;
 
 		List<Zombie> myZombies = dataBord.getMyZombies();
 		List<Projectile> myBullet = dataBord.getMyBullet();
@@ -94,7 +95,7 @@ public class SimpleGameController {
 		List<TombStone> myTombstone = dataBord.getMyTombstone();
 
 		dataBord.spawnLawnMower(view, context);
-		
+
 		try {
 			SystemFile.readProperties(dataBord);
 		} catch (IOException e) {
@@ -163,7 +164,6 @@ public class SimpleGameController {
 
 				/*------------------------------EVENTS----------------------------------*/
 
-				
 				Event event = context.pollOrWaitEvent(45); // modifier pour avoir un affichage fluide
 				if (event == null) { // no event
 					continue;
@@ -192,15 +192,21 @@ public class SimpleGameController {
 					} else if (action == Action.KEY_PRESSED && mdp == "SHIFT") {
 						shift = true;
 						mdp = null;
-					}else if (action == Action.KEY_RELEASED && mdp == "SHIFT") {
+					} else if (action == Action.KEY_RELEASED && mdp == "SHIFT") {
 						shift = false;
 						mdp = null;
+					} else if (action == Action.KEY_PRESSED && mdp == "CTRL") {
+						ctrl = true;
+						mdp = null;
+					} else if (action == Action.KEY_RELEASED && mdp == "CTRL") {
+						ctrl = false;
+						mdp = null;
 					}
-							
+
 				}
 
 				/*---Gestion de la selection de cellules et de la plante manuelle de plante---*/
-				
+
 				if (action != Action.POINTER_DOWN) {
 					continue;
 				}
@@ -211,14 +217,18 @@ public class SimpleGameController {
 
 				if (shift) {
 					dataBord.feed(x,y);
+				} else if(ctrl){
+					dataBord.shovel(x, y);
 				} else {
 					dataBord.selectingCellAndPlanting(context, dataSelect, view, plantSelectionView, x, y);
 				}
+
 			}
 		}
+
 	}
 
 	public static void main(String[] args) {
-		Application.run(Color.LIGHT_GRAY, SimpleGameController::simpleGame); // attention, utilisation d'une lambda.
+		Application.run(Color.LIGHT_GRAY, SimpleGameController::simpleGame);
 	}
 }

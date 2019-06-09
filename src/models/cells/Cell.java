@@ -188,7 +188,7 @@ public abstract class Cell implements ICell, Serializable {
 	/**
 	 * Remove the main plant from the cell
 	 */
-	private void removeMainPlant() {
+	public void removeMainPlant() {
 		if (mainPlant != null) {
 			mainPlant.setLife(0);
 			plantedMainPlant = false;

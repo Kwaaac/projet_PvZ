@@ -18,5 +18,9 @@ public interface IProjectile {
 	void action(SimpleGameData data);
 
 	String getColor();
+	
+	boolean isFlying();
+	
+	boolean isSharp();
 
 }

@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
+import java.util.Collections;
 import java.util.List;
 
 import models.SimpleGameData;
@@ -11,6 +12,7 @@ import models.TombStone;
 import models.cells.Cell;
 import models.plants.Plant;
 import models.projectiles.Projectile;
+import models.projectiles.Spike;
 import models.zombies.Zombie;
 import views.BordView;
 import views.SimpleGameView;
@@ -20,7 +22,7 @@ public class Cattails extends Plant {
 	private final String color = "#8FD916";
 
 	public Cattails(int x, int y) {
-		super(x, y, 0, 300, 1500, 0, "verySlow");
+		super(x, y, 0, 300, 1500, 0, "free");
 	}
 
 	public Cattails() {
@@ -37,6 +39,16 @@ public class Cattails extends Plant {
 	@Override
 	public void action(List<Projectile> myBullet, BordView view, List<Zombie> myZombies, List<TombStone> myTombStone,
 			SimpleGameData dataBord) {
+		if (this.readyToshot() && !myZombies.isEmpty()) {
+
+			Zombie target = Collections.max(myZombies);
+			myBullet.add(new Spike(x + super.getSizeOfPlant(), y + (super.getSizeOfPlant() / 2) - 10, 75, 1,
+					target, x, y));
+
+			this.resetAS();
+		}
+
+		this.incAS();
 	}
 
 	@Override

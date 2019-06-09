@@ -13,9 +13,9 @@ import models.cells.Cell;
 import views.BordView;
 
 public abstract class Projectile extends Entities implements MovingElement, IProjectile, Serializable {
-	private double speed;
+	protected double speed;
 	private static final int sizeOfProjectile = 25;
-	private boolean flying;
+	private final boolean flying;
 
 	public Projectile(float x, float y, int damage, int life, double speed, boolean flying) {
 		super(x, y, damage, life, true);
@@ -109,8 +109,18 @@ public abstract class Projectile extends Entities implements MovingElement, IPro
 		}
 	}
 	
-	public Boolean isFlying() {
-		return (Boolean) flying;
+	/**
+	 * return if the projectile is flying
+	 */
+	public boolean isFlying() {
+		return  flying;
+	}
+	
+	/**
+	 * return if the projectile is sharp
+	 */
+	public boolean isSharp() {
+		return false;
 	}
 
 	@Override

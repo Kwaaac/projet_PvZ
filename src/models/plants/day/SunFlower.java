@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Objects;
 
 import models.Chrono;
+import models.DeadPool;
 import models.SimpleGameData;
 import models.TombStone;
 import models.plants.Plant;
@@ -97,27 +98,37 @@ public class SunFlower extends Plant {
 	@Override
 	public void draw(SimpleGameView view, Graphics2D graphics) {
 		graphics.setColor(Color.decode("#4D8939"));
-		graphics.fill(new Rectangle2D.Float(x + sizeOfPlant/4 - 5, y + sizeOfPlant/2, 5, sizeOfPlant));
-		
+		graphics.fill(new Rectangle2D.Float(x + sizeOfPlant / 4 - 5, y + sizeOfPlant / 2, 5, sizeOfPlant));
+
 		graphics.setColor(Color.decode(color));
-		graphics.fill(new Ellipse2D.Float(x, y + sizeOfPlant / 2 - 12, sizeOfPlant/2, sizeOfPlant/2));
+		graphics.fill(new Ellipse2D.Float(x, y + sizeOfPlant / 2 - 12, sizeOfPlant / 2, sizeOfPlant / 2));
 
 		graphics.setColor(Color.decode("#AF6907"));
-		graphics.fill(new Ellipse2D.Float(x - 12 + sizeOfPlant / 4, y + sizeOfPlant / 2 - 5, sizeOfPlant/2 - 15, sizeOfPlant/2 - 15));
+		graphics.fill(new Ellipse2D.Float(x - 12 + sizeOfPlant / 4, y + sizeOfPlant / 2 - 5, sizeOfPlant / 2 - 15,
+				sizeOfPlant / 2 - 15));
 	}
 
 	@Override
 	public void draw(SimpleGameView view, Graphics2D graphics, int x, int y) {
 		graphics.setColor(Color.decode("#4D8939"));
-		graphics.fill(new Rectangle2D.Float(x + sizeOfPlant/4 - 5, y + sizeOfPlant/2, 5, sizeOfPlant));
-		
+		graphics.fill(new Rectangle2D.Float(x + sizeOfPlant / 4 - 5, y + sizeOfPlant / 2, 5, sizeOfPlant));
+
 		graphics.setColor(Color.decode(color));
-		graphics.fill(new Ellipse2D.Float(x, y + sizeOfPlant / 2 - 12, sizeOfPlant/2, sizeOfPlant/2));
+		graphics.fill(new Ellipse2D.Float(x, y + sizeOfPlant / 2 - 12, sizeOfPlant / 2, sizeOfPlant / 2));
 
 		graphics.setColor(Color.decode("#AF6907"));
-		graphics.fill(new Ellipse2D.Float(x - 12 + sizeOfPlant / 4, y + sizeOfPlant / 2 - 5, sizeOfPlant/2 - 15, sizeOfPlant/2 - 15));
+		graphics.fill(new Ellipse2D.Float(x - 12 + sizeOfPlant / 4, y + sizeOfPlant / 2 - 5, sizeOfPlant / 2 - 15,
+				sizeOfPlant / 2 - 15));
 
 		view.drawCost(graphics, x, y, cost.toString());
+	}
+
+	@Override
+	public void hasToDie(DeadPool DPe, SimpleGameData data) {
+		if (this.isDead()) {
+			data.getCell(this.getCaseJ(), this.getCaseI()).removePlant(this);
+			DPe.add(this);
+		}
 	}
 
 }

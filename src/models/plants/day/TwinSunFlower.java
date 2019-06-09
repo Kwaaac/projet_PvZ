@@ -10,6 +10,7 @@ import java.util.Objects;
 import models.Chrono;
 import models.SimpleGameData;
 import models.TombStone;
+import models.cells.Cell;
 import models.plants.Plant;
 import models.projectiles.Projectile;
 import models.zombies.Zombie;
@@ -129,6 +130,18 @@ public class TwinSunFlower extends Plant {
 		graphics.fill(new Ellipse2D.Float(x - 12, y + sizeOfPlant / 2 - 5, sizeOfPlant/2 - 15, sizeOfPlant/2 - 15));
 
 		view.drawCost(graphics, x, y, cost.toString());
+	}
+	
+	@Override
+	public boolean plantingCondition(Cell cell) {		
+		if (cell.isMainPlantPlanted() && cell.getMainPlant().toString() == "SunFlower") {
+			Plant sunFlower = cell.getMainPlant();
+			sunFlower.setLife(0);
+			cell.removeMainPlant();
+			return cell.addPlant(this);
+		}
+
+		return false;
 	}
 
 }
