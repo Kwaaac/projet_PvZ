@@ -31,32 +31,35 @@ import models.plants.night.*;
 import models.plants.pool.*;
 
 public abstract class Plant extends Entities implements IPlant, Serializable {
-	private final static int sizeOfPlant = 75; //definition de la taille de reference d'une plante
-	protected final int shootBarMax; // 
-	protected long shootBar; // 
-	protected long shootTime; // 
-	protected final Integer cost; //cout d'une plante en soleil
-	protected final Long cooldown; //temps de recharge de l'action d'une plante
-	private Coordinates plantSelect; //coordonnees matricielles d'une plante
-	private boolean fertilized; //activation ou non d'une super action de plante
+	private final static int sizeOfPlant = 75; 
 	
+	// system of a loading bar
+	
+	protected final int shootBarMax;
+	protected long shootBar; 
+	protected long shootTime; 
+	
+	protected final Integer cost; 
+	protected final Long cooldown;
+	private Coordinates plantSelect;
+	private boolean fertilized;
 
-	// Arrayliste de l'ensemble des plantes de jour
+	// Arraylist of all the day plants
 	private final static ArrayList<Plant> day = new ArrayList<>(Arrays.asList(new CherryBomb(), new Chomper(),
 			new Peashooter(), new Repeater(), new PotatoMine(), new Squash(), new SnowPea(), new SunFlower(),
 			new WallNut(), new Pot(), new Jalapeno(), new Threepeater(), new SplitPea(), new GaltingPea(),
 			new TwinSunFlower(), new CabbageShooter(), new Cactus()));
 	
-	// Arrayliste de l'ensemble des plantes de nuit
+	// Arraylist of all the night plants
 	private final static ArrayList<Plant> night = new ArrayList<>(Arrays.asList(new MagnetShroom(), new DoomShroom(),
 			new FumeShroom(), new GraveBuster(), new HypnoShroom(), new IceShroom(), new PuffShroom(),
 			new ScaredyShroom(), new SunShroom(), new Plantern(), new Blover()));
 	
-	// Arrayliste de l'ensemble des plantes de piscine
+	// Arraylist of all the pool plants
 	private final static ArrayList<Plant> pool = new ArrayList<>(
 			Arrays.asList(new Cattails(), new LilyPad(), new SeaShroom(), new TangleKelp()));
 
-	// Dictionnaire de definition des differents cooldown de recharge d'action d'une plante
+	// cooldown (seconds)
 	private final HashMap<String, Long> mCooldown = new HashMap<String, Long>() {
 		{
 			put("free", (long) 0);
@@ -74,13 +77,16 @@ public abstract class Plant extends Entities implements IPlant, Serializable {
 
 		this.shootBarMax = shootBarMax;
 		this.cost = cost;
+		if(mCooldown.get(cooldown) == null) {
+			throw new IllegalStateException("The selected cooldown of the " + this + " does not exist");
+		}
 		this.cooldown = mCooldown.get(cooldown);
 
 		// Prevent the plant to shoot instantly
 		shootTime = 0;
 	}
 
-	public static ArrayList<Plant> getPlantList(String s) { //getter des arraylist de plantes
+	public static ArrayList<Plant> getPlantList(String s) {
 		if (s == "night") {
 			return night;
 		}
@@ -90,12 +96,11 @@ public abstract class Plant extends Entities implements IPlant, Serializable {
 		return day;
 	}
 
-	public int getLife() { //renvoi la vie d'une plante
+	/**
+	 * @return plant's life
+	 */
+	public int getLife() { 
 		return super.life;
-	}
-
-	public void setCase(SimpleGameData data) {
-
 	}
 
 	/**
@@ -105,27 +110,42 @@ public abstract class Plant extends Entities implements IPlant, Serializable {
 		return this.plantSelect;
 	}
 
-	public int getCost() { //renvoi le cout d'une plante
+	/**
+	 * 
+	 * @return plant's cost
+	 */
+	public int getCost() { 
 		return cost;
 	}
 
-	public static int getSizeOfPlant() { //renvoi la taille d'une plante
+	/**
+	 * 
+	 * @return size of plants
+	 */
+	public static int getSizeOfPlant() { 
 		return sizeOfPlant;
 	}
 
-	public long getSpeedShooting() {
-		return shootBar;
-	}
-
-	public long getCooldown() { //renvoi le temps d'attente entre chaque action d'une plante
+	/**
+	 * 
+	 * @return plant's cd
+	 */
+	public long getCooldown() {
 		return cooldown;
 	}
 
+	
+	/**
+	 * Increase the shoorbar
+	 */
 	@Override
 	public void incAS() {
 		shootBar = System.currentTimeMillis() - shootTime;
 	}
 
+	/**
+	 * Reset the shootBar
+	 */
 	@Override
 	public void resetAS() {
 		shootTime = System.currentTimeMillis();
@@ -133,20 +153,25 @@ public abstract class Plant extends Entities implements IPlant, Serializable {
 		this.shootBar = 1;
 	}
 
-	public long getTimer() {
-		return shootBar;
-	}
-
+	/**
+	 * @return True if the plant can shoot, false otherwise
+	 */
 	@Override
-	public boolean readyToshot() { //permet de lancer l'action d'une plante si le timer est plein
+	public boolean readyToshot() { 
 		return shootBar >= shootBarMax;
 	}
 
+	/**
+	 * @return the hitbox of the plant
+	 */
 	@Override
-	public Coordinates hitBox() { //renvoi la hitbox d'une plante 
+	public Coordinates hitBox() { 
 		return new Coordinates((int) x, (int) x + sizeOfPlant);
 	}
 
+	/**
+	 * Return the type of the plant, by default, it's a main plant
+	 */
 	@Override
 	public int getTypeOfPlant() {
 		return 1;
@@ -173,6 +198,11 @@ public abstract class Plant extends Entities implements IPlant, Serializable {
 		return false;
 	}
 	
+	/**
+	 * Fertilise the plant
+	 * 
+	 * @return true if the plant has been fertilized
+	 */
 	public boolean feedPlant() {
 		if(fertilized) {
 			return false;
@@ -181,14 +211,28 @@ public abstract class Plant extends Entities implements IPlant, Serializable {
 		return true;
 	}
 	
+	/**
+	 * 
+	 * @return true is the plant is fertilized, false otherwise
+	 */
 	public Boolean isFertilized() {
 		return fertilized;
 	}
 	
+	/**
+	 * unfertilize the plant
+	 */
 	public void unFeed() {
 		fertilized = false;
 	}
 
+	/**
+	 * Kill all the plant that must die
+	 * 
+	 * @param DPe deapool of entities
+	 * @param list List of plants
+	 * @param data databoard of the game
+	 */
 	public static void hasToDieAll(DeadPool DPe, List<Plant> list, SimpleGameData data) {
 		for (Plant p : list) {
 			p.hasToDie(DPe, data);
@@ -210,6 +254,12 @@ public abstract class Plant extends Entities implements IPlant, Serializable {
 		return Objects.hash(super.hashCode(), shootBarMax, shootTime, cost, cooldown);
 	}
 
+	/**
+	 * Kill the plant
+	 * 
+	 * @param list List of plants
+	 * @param data databoard of the game
+	 */
 	public void hasToDie(DeadPool DPe, SimpleGameData data) {
 	}
 }

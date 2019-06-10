@@ -48,7 +48,7 @@ public class Cabbage extends Projectile {
 
 	@Override
 	public void move() {
-		int x = (int) (super.x + getSpeed());
+		int x = (int) (super.x + speed);
 		setX(x);
 	}
 

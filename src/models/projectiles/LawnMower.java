@@ -31,11 +31,11 @@ public class LawnMower extends Projectile {
 	}
 	
 	public void SpeedBoostON() {
-		this.setSpeed(this.getSpeed()+2);
+		this.setSpeed(speed+2);
 	}
 
 	public void SpeedBoostOFF() {
-		this.setSpeed(this.getSpeed()-2);
+		this.setSpeed(speed-2);
 	}
 	
 	public static boolean containsID(ArrayList<LawnMower> lawnMower,int ID) {
@@ -83,7 +83,7 @@ public class LawnMower extends Projectile {
 	}
 	
 	public boolean isMoving() {
-		return this.getSpeed() < 0;
+		return speed < 0;
 	}
 	
 	@Override

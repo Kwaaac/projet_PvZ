@@ -32,9 +32,9 @@ public abstract class Projectile extends Entities implements MovingElement, IPro
 		this.setSpeed(speed);
 		this.flying = flying;
 	}
-	
+
 	public Projectile(float x, float y, int damage, int life, double speed) {
-		this(x,y,damage,life,speed,false);
+		this(x, y, damage, life, speed, false);
 	}
 
 	@Override
@@ -70,47 +70,80 @@ public abstract class Projectile extends Entities implements MovingElement, IPro
 		}
 	}
 
+	/**
+	 * move the projectile
+	 */
 	@Override
-	public void move() { //permit to give new coordinate x
-		setX((int) (super.x + getSpeed()));
+	public void move() {
+		setX((int) (super.x + speed));
 	}
 
+	/**
+	 * increase the shootBar
+	 */
 	@Override
 	public void incAS() {
 	}
 
+	/**
+	 * reset the shootBar
+	 */
 	@Override
 	public void resetAS() {
 	}
 
-	public static int getSizeOfProjectile() { // give the size of a projectile
+	/**
+	 * 
+	 * @return size of projectile
+	 */
+	public static int getSizeOfProjectile() {
 		return sizeOfProjectile;
 	}
 
-	public Coordinates hitBox() { // give the hit box of a projectile
+	/**
+	 * @return the projectile's hitbox
+	 */
+	public Coordinates hitBox() {
 		return new Coordinates((int) x, (int) x + sizeOfProjectile);
 	}
 
-	public boolean isOutside(int xOrigin, int sqrSize, int nbrSqr) { // is the projectile out of the map ?
+	/**
+	 * check if the projectile is outside the board
+	 */
+	public boolean isOutside(int xOrigin, int sqrSize, int nbrSqr) {
 		return x > xOrigin + sqrSize * nbrSqr;
 	}
 
-	public void SpeedBoostON() { // boost the speed of the projectile
-		setSpeed(getSpeed() + 2);
+	/**
+	 * TestMode On
+	 */
+	public void SpeedBoostON() {
+		setSpeed(speed + 2);
 	}
 
+	/**
+	 * TestMode Off
+	 */
 	public void SpeedBoostOFF() { // slow the speed of the projectile
-		setSpeed(getSpeed() - 2);
+		setSpeed(speed - 2);
 	}
 
-	public double getSpeed() {
-		return speed;
-	}
-
+	/**
+	 * set the new speed
+	 * 
+	 * @param speed new speed
+	 */
 	public void setSpeed(double speed) {
 		this.speed = speed;
 	}
 
+	/**
+	 * when a list of projectile has to die
+	 * 
+	 * @param DPe      deadpool
+	 * @param myBullet list of projectile
+	 * @param data     data of the main board
+	 */
 	public static void hasToDie(DeadPool DPe, List<Projectile> myBullet, SimpleGameData data) {
 		for (Projectile p : myBullet) {
 			if (p.isDead()) {
@@ -118,14 +151,14 @@ public abstract class Projectile extends Entities implements MovingElement, IPro
 			}
 		}
 	}
-	
+
 	/**
 	 * return if the projectile is flying
 	 */
 	public boolean isFlying() {
-		return  flying;
+		return flying;
 	}
-	
+
 	/**
 	 * return if the projectile is sharp
 	 */
@@ -153,5 +186,5 @@ public abstract class Projectile extends Entities implements MovingElement, IPro
 	@Override
 	public void action(SimpleGameData data) {
 	}
-	
+
 }

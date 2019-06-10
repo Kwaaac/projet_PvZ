@@ -27,7 +27,7 @@ public class Cactus extends Plant {
 	private boolean fed = false;
 
 	public Cactus(int x, int y) {
-		super(x, y, 0, 300, 5000, 125, "fast");
+		super(x, y, 0, 300, 5000, 125, "plop");
 
 		shootBar = shootBarMax; // La plante tire dès qu'elle est posée
 		delayAttack.steady();
