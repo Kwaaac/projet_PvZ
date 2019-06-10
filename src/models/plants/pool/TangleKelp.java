@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import models.Chrono;
+import models.DeadPool;
 import models.SimpleGameData;
 import models.TombStone;
 import models.cells.Cell;
@@ -136,4 +137,13 @@ public class TangleKelp extends Plant {
 
 		view.drawCost(graphics, x, y, cost.toString());
 	}
+	
+	
+	@Override
+	public void hasToDie(DeadPool DPe, SimpleGameData data) { 
+			if (this.isDead()) { 
+				data.getCell(this.getCaseJ(), this.getCaseI()).removePlant(this); 
+				DPe.add(this); 
+			} 
+	} 
 }
