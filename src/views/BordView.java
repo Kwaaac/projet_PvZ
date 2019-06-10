@@ -9,6 +9,7 @@ import java.awt.geom.Rectangle2D;
 import java.awt.geom.RectangularShape;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 
 import fr.umlv.zen5.ApplicationContext;
 import models.MovingElement;
@@ -351,15 +352,21 @@ public class BordView extends SimpleGameView {
 	 */
 	public void drawPlantSelection(ApplicationContext context, BordView view, SelectBordView viewContent,
 			SelectBordView plantSelectionView, SimpleGameData dataBord, SimpleGameData dataSelect, int width,
-			int height, HashMap<Zombie, Integer> normalWaveZombie) {
+			int height) {
 		view.drawRectangle(context, 0, 0, width, height, "#9da6b5"); // background
 		viewContent.draw(context, dataBord);
 		plantSelectionView.draw(context, dataSelect);
 		view.drawRectangle(context, width - 65, 15, 50, 50, "#DE0000"); // quit
 		
 		int y = 0;
-		for(Zombie z : normalWaveZombie.keySet()) {
-			int x = 1700;
+		
+		Set<Zombie> zList = dataBord.getNormalWave().keySet();
+		for(Zombie z : zList) {
+			int x = 1600;
+			if(y > height) {
+				y = 0;
+				x += 100;
+			}
 			y += 125;
 			
 			Zombie placeHolder = z.createNewZombie(x, y, false);

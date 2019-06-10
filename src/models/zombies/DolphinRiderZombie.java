@@ -14,17 +14,16 @@ public class DolphinRiderZombie extends Zombie {
 
 	private final String name = "DolphinRiderZombie";
 	private final String color = "#000000";
-	private final double[] diffSpeed = { -2, -0.93 };
 
 	private boolean swim = true;
 
 	public DolphinRiderZombie(int x, int y) {
-		super(x, y, 100, 340, 1, "ultraSlow",false);
+		super(x, y, 100, 340, 1, "reallyFast",false);
 	}
 	
 
 	public DolphinRiderZombie(int x, int y, boolean gifted) {
-		super(x, y, 100, 340, 1, "ultraSlow", gifted);
+		super(x, y, 100, 340, 1, "reallyFast", gifted);
 	}
 
 	public DolphinRiderZombie() {
@@ -52,6 +51,10 @@ public class DolphinRiderZombie extends Zombie {
 	public void draw(SimpleGameView view, Graphics2D graphics) {
 		graphics.setColor(Color.decode(color));
 		graphics.fill(new Ellipse2D.Float(x, y, sizeOfZombie, sizeOfZombie));
+		
+		if(swim) {
+			view.drawRectangle(graphics, (int) (x-10), (int) (sizeOfZombie + y), sizeOfZombie + 20, 10, "#1051bc");
+		}
 
 		super.draw(view, graphics);
 	}

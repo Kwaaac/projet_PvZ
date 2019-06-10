@@ -40,7 +40,6 @@ public class NormalZombie extends Zombie {
 	
 	@Override
 	public Zombie createNewZombie(int x, int y,boolean gift) {
-		System.out.println(x);
 		return new NormalZombie(x, y, gift);
 	}
 	
