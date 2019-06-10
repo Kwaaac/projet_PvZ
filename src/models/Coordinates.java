@@ -9,6 +9,7 @@ import views.BordView;
 /**
  * The Coordinates class defines a couple of integers.
  */
+@SuppressWarnings("serial")
 public class Coordinates implements Serializable{
 	private final int i;
 	private final int j;
@@ -62,6 +63,9 @@ public class Coordinates implements Serializable{
 		return Objects.hash(i, j);
 	}
 	
+	/**
+	 * @return a coordinate x which has been correctly in the cell.
+	 */
 	public static int CenteredX(float x) {
 		int squareSize = BordView.getSquareSize();
 		int sizeOfPlant = Plant.getSizeOfPlant();
@@ -69,6 +73,9 @@ public class Coordinates implements Serializable{
 		return xCentered;
 	}
 	
+	/**
+	 * @return a coordinate y which has been correctly in the cell.
+	 */
 	public static int CenteredY(float y) {
 		int squareSize = BordView.getSquareSize();
 		int sizeOfPlant = Plant.getSizeOfPlant();

@@ -31,6 +31,9 @@ public class Soleil implements MovingElement, Serializable {
 		this.yTarget = (150 + SimpleGameData.RandomPosGenerator(1, 6) * BordView.getSquareSize()) - 125;
 	}
 
+	/**
+	 * @return true si we have clicked on a sun 
+	 */
 	public boolean isClicked(float clicX, float clicY) {
 		if (x <= clicX && clicX <= x + size) {
 			return y <= clicY && clicY <= y + size;

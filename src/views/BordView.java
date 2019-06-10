@@ -80,8 +80,8 @@ public class BordView extends SimpleGameView {
 		BordView.height = x;
 	}
 
-	public int indexFromReaCoord(float coord, int origin) { // attention, il manque des test de validité des
-		return (int) ((coord - origin) / squareSize); // coordonnées!
+	public int indexFromReaCoord(float coord, int origin) {
+		return (int) ((coord - origin) / squareSize);
 	}
 
 	public float realCoordFromIndex(int index, int origin) {
@@ -140,10 +140,21 @@ public class BordView extends SimpleGameView {
 		return realCoordFromIndex(j, yOrigin);
 	}
 
+	/**
+	 * Return a rectangle in the right cell
+	 * 
+	 * @param i  Column coordinate
+	 * @param j  Line coordinate
+	 * 
+	 */
 	public RectangularShape drawCell(int i, int j) {
 		return new Rectangle2D.Float(xFromI(j), yFromJ(i), squareSize, squareSize);
 	}
-
+	
+	/**
+	 * Return a tab of all the plant selected in the menu
+	 */
+	
 	public Plant[] getSelectedPlants() {
 		return getSelectedPlants();
 	}
@@ -264,6 +275,10 @@ public class BordView extends SimpleGameView {
 		}
 	}
 
+	
+	/**
+	 * Draws all the elements in game
+	 */
 	public void drawAll(ApplicationContext context, SimpleGameData dataBord, BordView view, List<Zombie> myZombies,
 			List<Projectile> myBullet, List<LawnMower> myLawnMower, boolean debug, SimpleGameData dataSelect, int money,
 			int actualfertilizer, SelectBordView plantSelectionView) {
@@ -288,6 +303,9 @@ public class BordView extends SimpleGameView {
 
 	}
 
+	/**
+	 * Draws all the elements in the main menu
+	 */
 	public void drawMenu(ApplicationContext context, BordView view, int width, int height) {
 		view.drawRectangle(context, 0, 0, width, height, "#61DB5F");
 		view.drawString(context, (width / 2) - 125, (height / 6) - 50, "MENU", "#000000", 85);
@@ -301,6 +319,9 @@ public class BordView extends SimpleGameView {
 		view.drawString(context, (width / 2) - 100, 150 + (height / 6) * 2, "Resume", "000000", 50);
 	}
 
+	/**
+	 * Draws all the elements in the map selection
+	 */
 	public void drawMapSelection(ApplicationContext context, BordView view, int width, int height) {
 		view.drawRectangle(context, 0, 0, width, (height / 5), "#000000");
 		view.drawRectangle(context, 5, 10, width - 10, (height / 5) - 15, "#61DB5F");
@@ -324,6 +345,9 @@ public class BordView extends SimpleGameView {
 		view.drawString(context, (width / 2) - 100, 9 * (height / 10), "ROOF", "000000", 50);
 	}
 
+	/**
+	 * Draws all the elements in the plant selection
+	 */
 	public void drawPlantSelection(ApplicationContext context, BordView view, SelectBordView viewContent,
 			SelectBordView plantSelectionView, SimpleGameData dataBord, SimpleGameData dataSelect, int width,
 			int height) {

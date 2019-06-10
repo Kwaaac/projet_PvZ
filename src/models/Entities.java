@@ -25,6 +25,9 @@ public abstract class Entities implements IEntite, Serializable{
 		this.Team = Team;
 	}
 	
+	/**
+	 * give the coordinate of case where is situate the entity
+	 */
 	public void setCase(SimpleGameData data) {
 		caseXY = new Coordinates(BordView.caseXFromX(x), BordView.caseYFromY(y));
 	}
@@ -81,14 +84,23 @@ public abstract class Entities implements IEntite, Serializable{
 		this.life -= x;
 	}
 
+	/**
+	 * check if there is an other entity in this line
+	 */
 	public boolean sameLine(Entities e) {
 		return this.lineY() == e.lineY();
 	}
 
+	/**
+	 * check if the other entity if hiting the hitbox of this one
+	 */
 	public boolean intersect(IEntite e) {
 		return this.lineY() == ((Entities) e).lineY() && (e.hitBox().checkHitBox(this.hitBox()));
 	}
 
+	/**
+	 * The entities are fighting, taking damages and loosing life
+	 */
 	public void mortalKombat(IEntite e) {
 		this.takeDmg(e.getDamage());
 		e.takeDmg(damage);
@@ -108,8 +120,8 @@ public abstract class Entities implements IEntite, Serializable{
 	/**
 	 * premier type conflit qui dois vite etre changer et améliorer
 	 * 
-	 * @param e entit�es qui subira les d�gats de l'entitée objet utilisant la
-	 *          méthode et qui attaquera cette meme entitées par la suite
+	 * @param e entities qui subira les degats de l'entite objet utilisant la
+	 *          methode et qui attaquera cette meme entite par la suite
 	 */
 	
 	@Override
@@ -142,16 +154,26 @@ public abstract class Entities implements IEntite, Serializable{
 		return Objects.hash(x, y, caseXY, damage, life);
 	}
 	
+	/**
+	 * There is always some traitors...
+	 * Sometimes, zombies can return there self aginst the others due to some effects
+	 */
 	@Override
 	public void reverseTeam(SimpleGameData data) {
 		this.Team = !(Team);
 	}
 	
+	/**
+	 * not a traitor
+	 */
 	@Override
 	public boolean isGood() {
 		return Team == true;
 	}
 	
+	/**
+	 * traitor
+	 */
 	@Override
 	public boolean isBad() {
 		return Team ==false;

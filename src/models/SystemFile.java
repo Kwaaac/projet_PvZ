@@ -25,6 +25,13 @@ import views.SelectBordView;
 @SuppressWarnings("serial")
 public class SystemFile implements Serializable{
 
+	/**
+	 * Serialisation of :
+	 * 		the game datas
+	 * 		the selection view which contains plant selection
+	 * 		the matrix of the game
+	 */
+	
 	public static void save(SimpleGameData data, SelectBordView selectView) throws IOException {
 		try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("DataBord.ser"))) {
             oos.writeObject(data);
@@ -53,6 +60,13 @@ public class SystemFile implements Serializable{
 			writer.write(SimpleGameData.getMap());
 		}
 	}
+	
+	/**
+	 * @return a game data or a plant selection view
+	 * 
+	 * @param s permit to chose what do we read
+	 * 
+	 */
 	
 	public static Object read(String s) throws ClassNotFoundException, IOException {
 		
@@ -88,6 +102,7 @@ public class SystemFile implements Serializable{
 		case "view":
 			try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("SelectView.ser"))) {
 				
+				@SuppressWarnings("unchecked")
 				ArrayList<Plant> x = (ArrayList<Plant>) ois.readObject();
 				return x;
 	        }
@@ -99,7 +114,17 @@ public class SystemFile implements Serializable{
 		return null;
 	}
 	
-	
+	/**
+	 * Read of "Properties.txt" file to get information of the some game data :
+	 * 		- the number of plant you can play
+	 * 		- the time you have to wait until the zombies spawn
+	 * 		- the time until the difficulty is swiching
+	 * 		- the sun money you got at the begining
+	 * 		- the number of fertilizer you got at the begining
+	 * 		- the chance of a fertilized zombie spawning
+	 * 		- the chance of a tombe spawn
+	 * 		- all the different move speed that a zombie can have
+	 */
 	public static void readProperties(SimpleGameData dataBord) throws IOException {
 		
 		try (BufferedReader reader = Files.newBufferedReader(Paths.get("Properties.txt"), StandardCharsets.UTF_8)){
@@ -155,6 +180,10 @@ public class SystemFile implements Serializable{
 		}
 	}
 	
+	/**
+	 * Read of "Properties.txt" file to get information of the number of plant you can play.
+	 * This information is aleardy use in the other methode but this one permite to get this info when ever you want.
+	 */
 	public static void readPrincipalMenuProperties() throws IOException {
 		try (BufferedReader reader = Files.newBufferedReader(Paths.get("Properties.txt"), StandardCharsets.UTF_8)){
 					

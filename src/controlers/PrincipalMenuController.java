@@ -24,26 +24,27 @@ public class PrincipalMenuController {
 		int width = (int) screenInfo.getWidth();
 		int height = (int) screenInfo.getHeight();
 
-		int yOrigin = 50;
-		int xOrigin = 500;
+		int yOrigin = 50; //marging top 50 px
+		int xOrigin = 500; //marging left 500 px
 
 		ArrayList<Plant> selectedPlant = new ArrayList<>();
 		
 		ArrayList<Plant> allPlants = new ArrayList<>();
 
+		//adding all the plant in the plant bord
 		allPlants.addAll(Plant.getPlantList("day"));
 		allPlants.addAll(Plant.getPlantList("night"));
 		allPlants.addAll(Plant.getPlantList("pool"));
 		
 		try {
-			SystemFile.readPrincipalMenuProperties();
+			SystemFile.readPrincipalMenuProperties(); // number of plant we can play
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
 		
-		SimpleGameData dataBord = new SimpleGameData(7, 7);
+		SimpleGameData dataBord = new SimpleGameData(7, 7); // plant bord 
 		
-		SimpleGameData dataSelect = new SimpleGameData(SimpleGameData.getSelectionCaseNumber(), 1);
+		SimpleGameData dataSelect = new SimpleGameData(SimpleGameData.getSelectionCaseNumber(), 1); // plant selected bord
 		
 		SelectBordView viewContent = SelectBordView.initGameGraphics(xOrigin, yOrigin, 100, dataBord, allPlants);
 		SelectBordView plantSelectionView = SelectBordView.initGameGraphics(30, yOrigin, 900, dataSelect,
@@ -53,10 +54,16 @@ public class PrincipalMenuController {
 
 		BordView view = new BordView(0, 0, width, height, height / 5);
 
-		view.drawRectangle(context, width - 65, 15, 50, 50, "#DE0000");
+		view.drawRectangle(context, width - 65, 15, 50, 50, "#DE0000"); //button quit
 
+		
+		/**
+		 * - first you choose to play a new game or reload a save
+		 * - if new game, you choose the map
+		 * - then you select the plants you want ot play
+		 */
 		while (true) {
-			switch (choice) {//draws in BordView
+			switch (choice) {
 				case "menu":
 					view.drawMenu(context, view, width, height);
 					break;
@@ -85,17 +92,21 @@ public class PrincipalMenuController {
 			Action action = event.getAction();
 			if (action == Action.KEY_PRESSED || action == Action.KEY_RELEASED) {
 				if (mdp == "A" && plantSelectionView.getSelectedPlants().size() == 7) {
+					
 					view.drawRectangle(context, 0, 0, width, height, "#cbd9ef");
-					return plantSelectionView.getSelectedPlants();
+					return plantSelectionView.getSelectedPlants(); //return the plants you have selected
+					
 				} else if (choice == "resume") {
+					
 					noImportantData.setLoadChoice("resume");
 					try {
-						return (ArrayList<Plant>) SystemFile.read("view");
+						return (ArrayList<Plant>) SystemFile.read("view"); //return the selected plants of the save
 					} catch (ClassNotFoundException e) {
 						e.printStackTrace();
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
+					
 				} else {
 					continue;
 				}
@@ -116,7 +127,7 @@ public class PrincipalMenuController {
 				}
 			}
 
-			switch (choice) {
+			switch (choice) { //choice is changing following the click you do
 				case "menu":
 					switch (Y) {
 						case 1:

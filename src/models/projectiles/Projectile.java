@@ -1,3 +1,13 @@
+
+/**
+ * EACH PROJECTILE HAS :
+ * A NAME
+ * A COLOR
+ * COORDINATES
+ * A METHODE FOR MOVING THIS ONE
+ * A DRAW FOR THE BORD
+ */
+
 package models.projectiles;
 
 import java.io.Serializable;
@@ -61,7 +71,7 @@ public abstract class Projectile extends Entities implements MovingElement, IPro
 	}
 
 	@Override
-	public void move() {
+	public void move() { //permit to give new coordinate x
 		setX((int) (super.x + getSpeed()));
 	}
 
@@ -73,23 +83,23 @@ public abstract class Projectile extends Entities implements MovingElement, IPro
 	public void resetAS() {
 	}
 
-	public static int getSizeOfProjectile() {
+	public static int getSizeOfProjectile() { // give the size of a projectile
 		return sizeOfProjectile;
 	}
 
-	public Coordinates hitBox() {
+	public Coordinates hitBox() { // give the hit box of a projectile
 		return new Coordinates((int) x, (int) x + sizeOfProjectile);
 	}
 
-	public boolean isOutside(int xOrigin, int sqrSize, int nbrSqr) {
+	public boolean isOutside(int xOrigin, int sqrSize, int nbrSqr) { // is the projectile out of the map ?
 		return x > xOrigin + sqrSize * nbrSqr;
 	}
 
-	public void SpeedBoostON() {
+	public void SpeedBoostON() { // boost the speed of the projectile
 		setSpeed(getSpeed() + 2);
 	}
 
-	public void SpeedBoostOFF() {
+	public void SpeedBoostOFF() { // slow the speed of the projectile
 		setSpeed(getSpeed() - 2);
 	}
 

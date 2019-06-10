@@ -1,3 +1,16 @@
+
+/**
+ * EACH ZOMBIE HAS :
+ * A NAME
+ * A COLOR
+ * COORDINATES
+ * A SPEED
+ * A SPAWNING CONDITION
+ * A METHODE FOR CREATE A NEW ONE
+ * A DRAW FOR THE BORD
+ * SOMETIMES AN ACTION
+ */
+
 package models.zombies;
 
 import java.awt.Color;
@@ -556,6 +569,9 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie,
 		return Objects.hash(super.hashCode(), actSpeed, shootBarMax, shootTime, threat);
 	}
 
+	/**
+	 * @set the speed properties of zombies from the file "Properties.txt"
+	 */
 	public static void setZombieMoveSpeed_reallyFast(Double x) {
 		mSpeed.put("reallyFast", x);
 	}

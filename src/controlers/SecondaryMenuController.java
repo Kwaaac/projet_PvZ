@@ -49,23 +49,22 @@ public class SecondaryMenuController {
 			float x = location.x;
 			float y = location.y;
 			
-			if (0<=x && x<=width && 200<=y && y<=200+(height/6)) {
-				//redraw background
-				view.drawRectangle(context, 0, 0, width, height, "#cbd9ef");
+			if (0<=x && x<=width && 200<=y && y<=200+(height/6)) { //continue
+				view.drawRectangle(context, 0, 0, width, height, "#cbd9ef");// background
 				return false;
-			}  else if (0<=x && x<=width && 225+(height/6)<=y && y<=(height/6)*2+225) {
+				
+			}  else if (0<=x && x<=width && 225+(height/6)<=y && y<=(height/6)*2+225) { //save
 				try {
 					SystemFile.save(data, plantSelectionView);
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				view.drawRectangle(context, 0, 0, width, height, "#cbd9ef");
+				view.drawRectangle(context, 0, 0, width, height, "#cbd9ef"); // background
 				return false;
 				
-			}	else if (0<=x && x<=width && 250+(height/6)*2<=y && y<=250+(height/6)*3) {
+			}	else if (0<=x && x<=width && 250+(height/6)*2<=y && y<=250+(height/6)*3) { //
 				
-				view.drawRectangle(context, 0, 0, width, height, "#cbd9ef");
+				view.drawRectangle(context, 0, 0, width, height, "#cbd9ef"); // background
 				return false;
 			}
 

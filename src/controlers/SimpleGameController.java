@@ -38,9 +38,9 @@ public class SimpleGameController {
 		int width = (int) screenInfo.getWidth();
 		int height = (int) screenInfo.getHeight();
 
-		SimpleGameData dataBord = new SimpleGameData();
+		SimpleGameData dataBord = new SimpleGameData(); // datas used to start menus and not the game
 
-		ArrayList<Plant> selectedPlant = PrincipalMenuController.startGame(context, dataBord);
+		ArrayList<Plant> selectedPlant = PrincipalMenuController.startGame(context, dataBord); // read of the pla,t selected in the first menu
 		
 		HashMap<Zombie, Integer> normalWaveZombie = new HashMap<>();
 		normalWaveZombie.put(new NormalZombie(), 1);
@@ -49,21 +49,21 @@ public class SimpleGameController {
 		// dataBord.generateZombies(1)
 		HashMap<Zombie, Integer> superWaveZombie = dataBord.generateZombies(2);
 
-		int yOrigin = 100;
+		int yOrigin = 100; // margin top : 100px
 
-		SimpleGameData dataSelect = new SimpleGameData(selectedPlant.size(), 1, 2);
+		SimpleGameData dataSelect = new SimpleGameData(selectedPlant.size(), 1, 2); // initialisation of the plant selection datas
 		
-		SelectBordView plantSelectionView = SelectBordView.initGameGraphics(0, yOrigin, 900, dataSelect, selectedPlant);
+		SelectBordView plantSelectionView = SelectBordView.initGameGraphics(0, yOrigin, 900, dataSelect, selectedPlant); // initialisation of the plant selection view
 
 		BordView.setWidth(width);
 		BordView.setHeight(height);
 		
-		if (dataBord.getLoadChoice() == "start") {
-			dataBord = Map.dataBord();
-		} else {
+		if (dataBord.getLoadChoice() == "start") { // if we have decided to play a new game
+			dataBord = Map.dataBord(); //initialisation of the bord datas
+		} else { // if we have decided to play from a save
 			try {
-				dataBord = (SimpleGameData) SystemFile.read("data");
-				plantSelectionView = SelectBordView.initGameGraphics(0, yOrigin, 900, dataSelect, selectedPlant);
+				dataBord = (SimpleGameData) SystemFile.read("data"); //initialisation of the bord datas
+				plantSelectionView = SelectBordView.initGameGraphics(0, yOrigin, 900, dataSelect, selectedPlant); // changements of the plant selection view from the save
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
 			} catch (IOException e) {
@@ -71,11 +71,11 @@ public class SimpleGameController {
 			}
 		}
 		
-		BordView view = Map.view(dataBord);
+		BordView view = Map.view(dataBord); //initialisation of the bord view
 
 		int squareSize = BordView.getSquareSize();
 
-		view.drawRectangle(context, 0, 0, width, height, "#cbd9ef");
+		view.drawRectangle(context, 0, 0, width, height, "#cbd9ef"); // background
 		plantSelectionView.draw(context, dataSelect);
 
 		// ---------------WHAT DO I HAVE IN MY GAME ?---------------//
@@ -97,7 +97,7 @@ public class SimpleGameController {
 		dataBord.spawnLawnMower(view, context);
 
 		try {
-			SystemFile.readProperties(dataBord);
+			SystemFile.readProperties(dataBord); // reading of some game properties modificables in file
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -116,7 +116,7 @@ public class SimpleGameController {
 //			for(Cell c: dataBord.getLineCell(5, 0)) {
 //				System.out.println(c.getProjectilesInCell());
 //			}
-			if (pause) {
+			if (pause) { //we pressed "p" to put the game in interlude
 				pause = SecondaryMenuController.menu(context, view, dataBord, plantSelectionView);
 			} else {
 				/*-----------------------------CHECK CHRONO----------------------------*/
@@ -179,23 +179,23 @@ public class SimpleGameController {
 				/*---------------------------------DEBUG 2--------------------------------------*/
 				Action action = event.getAction();
 				if (action == Action.KEY_PRESSED || action == Action.KEY_RELEASED) {
-					if (mdp == "Y" && debug == false) {
+					if (mdp == "Y" && debug == false) { //debug mod activated
 						debug = true;
 					} // debug ON
-					else if (mdp == "N" && debug == true) {
+					else if (mdp == "N" && debug == true) { //debug mod desactivated
 						debug = false;
 					} // debug OFF
-					else if (mdp == "SPACE") {
+					else if (mdp == "SPACE") { //quit
 						dataBord.gameStop();
-					} else if (mdp == "P") {
+					} else if (mdp == "P") { // break time
 						pause = true;
-					} else if (action == Action.KEY_PRESSED && mdp == "SHIFT") {
+					} else if (action == Action.KEY_PRESSED && mdp == "SHIFT") { // super action of plants
 						shift = true;
 						mdp = null;
 					} else if (action == Action.KEY_RELEASED && mdp == "SHIFT") {
 						shift = false;
 						mdp = null;
-					} else if (action == Action.KEY_PRESSED && mdp == "CTRL") {
+					} else if (action == Action.KEY_PRESSED && mdp == "CTRL") { // diging plants
 						ctrl = true;
 						mdp = null;
 					} else if (action == Action.KEY_RELEASED && mdp == "CTRL") {
@@ -218,11 +218,11 @@ public class SimpleGameController {
 				float y = location.y;
 
 				if (shift) {
-					dataBord.feed(x,y);
+					dataBord.feed(x,y); // lock the super action of a plant
 				} else if(ctrl){
-					dataBord.shovel(x, y);
+					dataBord.shovel(x, y); // dig a plant
 				} else {
-					dataBord.selectingCellAndPlanting(context, dataSelect, view, plantSelectionView, x, y);
+					dataBord.selectingCellAndPlanting(context, dataSelect, view, plantSelectionView, x, y); // select a plant
 				}
 
 			}

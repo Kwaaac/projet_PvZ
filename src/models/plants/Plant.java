@@ -1,3 +1,17 @@
+
+/**
+ * EACH PLANT HAS :
+ * A NAME
+ * A COLOR
+ * COORDINATES
+ * A PLANTING CONDITION
+ * A METHODE FOR CREATE A NEW ONE
+ * A DRAW FOR THE SELECTION BAR
+ * A DRAW FOR THE BORD
+ * AN ACTION
+ * SOMETIMES A SUPER ACTION
+ */
+
 package models.plants;
 
 import java.io.Serializable;
@@ -17,25 +31,32 @@ import models.plants.night.*;
 import models.plants.pool.*;
 
 public abstract class Plant extends Entities implements IPlant, Serializable {
-	private final static int sizeOfPlant = 75;
-	protected final int shootBarMax;
-	protected long shootBar;
-	protected long shootTime;
-	protected final Integer cost;
-	protected final Long cooldown;
-	private Coordinates plantSelect;
-	private boolean fertilized;
+	private final static int sizeOfPlant = 75; //definition de la taille de reference d'une plante
+	protected final int shootBarMax; // 
+	protected long shootBar; // 
+	protected long shootTime; // 
+	protected final Integer cost; //cout d'une plante en soleil
+	protected final Long cooldown; //temps de recharge de l'action d'une plante
+	private Coordinates plantSelect; //coordonnees matricielles d'une plante
+	private boolean fertilized; //activation ou non d'une super action de plante
+	
 
+	// Arrayliste de l'ensemble des plantes de jour
 	private final static ArrayList<Plant> day = new ArrayList<>(Arrays.asList(new CherryBomb(), new Chomper(),
 			new Peashooter(), new Repeater(), new PotatoMine(), new Squash(), new SnowPea(), new SunFlower(),
-			new WallNut(), new Pot(), new Jalapeno(), new Treepeater(), new SplitPea(), new GaltingPea(),
+			new WallNut(), new Pot(), new Jalapeno(), new Threepeater(), new SplitPea(), new GaltingPea(),
 			new TwinSunFlower(), new CabbageShooter(), new Cactus()));
+	
+	// Arrayliste de l'ensemble des plantes de nuit
 	private final static ArrayList<Plant> night = new ArrayList<>(Arrays.asList(new MagnetShroom(), new DoomShroom(),
 			new FumeShroom(), new GraveBuster(), new HypnoShroom(), new IceShroom(), new PuffShroom(),
 			new ScaredyShroom(), new SunShroom(), new Plantern(), new Blover()));
+	
+	// Arrayliste de l'ensemble des plantes de piscine
 	private final static ArrayList<Plant> pool = new ArrayList<>(
 			Arrays.asList(new Cattails(), new LilyPad(), new SeaShroom(), new TangleKelp()));
 
+	// Dictionnaire de definition des differents cooldown de recharge d'action d'une plante
 	private final HashMap<String, Long> mCooldown = new HashMap<String, Long>() {
 		{
 			put("free", (long) 0);
@@ -59,7 +80,7 @@ public abstract class Plant extends Entities implements IPlant, Serializable {
 		shootTime = 0;
 	}
 
-	public static ArrayList<Plant> getPlantList(String s) {
+	public static ArrayList<Plant> getPlantList(String s) { //getter des arraylist de plantes
 		if (s == "night") {
 			return night;
 		}
@@ -69,7 +90,7 @@ public abstract class Plant extends Entities implements IPlant, Serializable {
 		return day;
 	}
 
-	public int getLife() {
+	public int getLife() { //renvoi la vie d'une plante
 		return super.life;
 	}
 
@@ -84,11 +105,11 @@ public abstract class Plant extends Entities implements IPlant, Serializable {
 		return this.plantSelect;
 	}
 
-	public int getCost() {
+	public int getCost() { //renvoi le cout d'une plante
 		return cost;
 	}
 
-	public static int getSizeOfPlant() {
+	public static int getSizeOfPlant() { //renvoi la taille d'une plante
 		return sizeOfPlant;
 	}
 
@@ -96,7 +117,7 @@ public abstract class Plant extends Entities implements IPlant, Serializable {
 		return shootBar;
 	}
 
-	public long getCooldown() {
+	public long getCooldown() { //renvoi le temps d'attente entre chaque action d'une plante
 		return cooldown;
 	}
 
@@ -117,12 +138,12 @@ public abstract class Plant extends Entities implements IPlant, Serializable {
 	}
 
 	@Override
-	public boolean readyToshot() {
+	public boolean readyToshot() { //permet de lancer l'action d'une plante si le timer est plein
 		return shootBar >= shootBarMax;
 	}
 
 	@Override
-	public Coordinates hitBox() {
+	public Coordinates hitBox() { //renvoi la hitbox d'une plante 
 		return new Coordinates((int) x, (int) x + sizeOfPlant);
 	}
 
@@ -151,19 +172,19 @@ public abstract class Plant extends Entities implements IPlant, Serializable {
 
 		return false;
 	}
-
+	
 	public boolean feedPlant() {
-		if (fertilized) {
+		if(fertilized) {
 			return false;
 		}
 		fertilized = true;
 		return true;
 	}
-
+	
 	public Boolean isFertilized() {
 		return fertilized;
 	}
-
+	
 	public void unFeed() {
 		fertilized = false;
 	}

@@ -26,21 +26,22 @@ import models.zombies.Zombie;
 import views.BordView;
 import views.SelectBordView;
 
+@SuppressWarnings("serial")
 public class SimpleGameData implements Serializable {
-	private static int WL = 0;
-	private Cell[][] matrix;
-	private final int nbLines;
-	private final int nbColumns;
-	private Coordinates selected;
-	private static int selectionCaseNumber;
-	private final ArrayList<Coordinates> placedPlant = new ArrayList<Coordinates>();
-	private final ArrayList<Plant> myPlants = new ArrayList<>();
-	private final ArrayList<Soleil> mySun = new ArrayList<>();
-	private ArrayList<Zombie> zombieInQueu = new ArrayList<>();
-	private final ArrayList<Zombie> myZombies = new ArrayList<>();
-	private final ArrayList<Projectile> myBullet = new ArrayList<>();
-	private final ArrayList<LawnMower> myLawnMower = new ArrayList<>();
-	private final ArrayList<TombStone> myTombStone = new ArrayList<>();
+	private static int WL = 0; //say if you've win, loose, or quit
+	private Cell[][] matrix; //game matrix
+	private final int nbLines; //matrix line number
+	private final int nbColumns; // matrix column number
+	private Coordinates selected; // coordinate of the cell selected
+	private static int selectionCaseNumber; // number of plants playblable (situate on the left of the screen)
+	private final ArrayList<Coordinates> placedPlant = new ArrayList<Coordinates>(); // all plants coordinates planted
+	private final ArrayList<Plant> myPlants = new ArrayList<>(); // all plants planted
+	private final ArrayList<Soleil> mySun = new ArrayList<>(); // all suns visible in game
+	private ArrayList<Zombie> zombieInQueu = new ArrayList<>(); // zombies stocked usable with the dancing zombie
+	private final ArrayList<Zombie> myZombies = new ArrayList<>(); // all zombies alive (a zombie alive ?)
+	private final ArrayList<Projectile> myBullet = new ArrayList<>(); // all bullets fired by plants
+	private final ArrayList<LawnMower> myLawnMower = new ArrayList<>(); // all lawnmoyer unused
+	private final ArrayList<TombStone> myTombStone = new ArrayList<>(); // all tomb stone which have spawn in night
 
 	private boolean stop = false;
 
@@ -49,19 +50,19 @@ public class SimpleGameData implements Serializable {
 	private long difficultyTime;
 	private long difficultyTimeDeadLine;
 
-	private int difficulty = 1;
+	private int difficulty = 1; // difficulty of the current game
 	private int superWave = 0;
 
-	private int actualMoney;
-	private int actualfertilizer;
-	private int fertilizerChance;
-	private int chanceTombeStone;
+	private int actualMoney; // the sun money you have
+	private int actualfertilizer; // the number of fertilizer you have
+	private int fertilizerChance; // the chance for a zombie to drop a fertilizer
+	private int chanceTombeStone; // the chance to a tombe stone to spawn
 	private Chrono sunSpawn = new Chrono();
 	private boolean lowSetting = false;
 
 	static Chrono time = new Chrono();
 
-	private static String map;
+	private static String map; // indication of the selected map
 	private static String dayTime = "Day";
 	private String loadChoice = "start";
 	private boolean tombspawn = true;
@@ -131,6 +132,7 @@ public class SimpleGameData implements Serializable {
 		return str.toString();
 	}
 
+	//creation of matrix following the map chosen
 	private void dayBord() {
 		for (int i = 0; i < matrix.length; i++) {
 			for (int j = 0; j < matrix[0].length; j++) {
@@ -363,6 +365,11 @@ public class SimpleGameData implements Serializable {
 		return selected != null;
 	}
 
+	/**
+	 * Tests if coordinates are well located.
+	 * 
+	 * @return true if and only if the coordinate are located in the bord view 
+	 */
 	public boolean isCorrectBordLocation(BordView view, float x, float y) {
 
 		int xOrigin = view.getXOrigin();
@@ -376,6 +383,11 @@ public class SimpleGameData implements Serializable {
 		return false;
 	}
 
+	/**
+	 * Tests if coordinates are well located.
+	 * 
+	 * @return true if and only if the coordinate are located in the select view 
+	 */
 	public boolean isCorrectSelectLocation(SelectBordView view, float x, float y) {
 
 		int xOrigin = view.getXOrigin();
@@ -434,6 +446,11 @@ public class SimpleGameData implements Serializable {
 		return false;
 	}
 
+	/**
+	 * Tests if we win.
+	 * 
+	 * @return true if all the zombies are dead. 
+	 */
 	public boolean win(HashMap<Zombie, Integer> superWaveZombie) {
 		for (int nbrZ : superWaveZombie.values()) {
 			if (nbrZ != 0) {
@@ -452,6 +469,9 @@ public class SimpleGameData implements Serializable {
 		return WL;
 	}
 
+	/**
+	 * Using of the plants actions.
+	 */
 	public void actionning(BordView view) {
 
 		for (IPlant p : myPlants) {
@@ -460,6 +480,9 @@ public class SimpleGameData implements Serializable {
 
 	}
 
+	/**
+	 * Using of the zombies actions.
+	 */
 	public void actionningZombie(BordView view, SimpleGameData dataBord) {
 		for (IZombie z : myZombies) {
 
@@ -473,6 +496,9 @@ public class SimpleGameData implements Serializable {
 
 	}
 
+	/**
+	 * Spawn of suns in day map.
+	 */
 	public void spawnSun(BordView view, float x, float y, int sunny, int size) {
 		if (x == -1) {
 			if (dayTime == "Day") {
@@ -550,6 +576,7 @@ public class SimpleGameData implements Serializable {
 		int squareSize = BordView.getSquareSize();
 		String choice = "Continue", finalChoice = null;
 
+		//check if we've killed all the zombies
 		for (Zombie z : myZombies) {
 			if (z.isEatingBrain(xOrigin, squareSize)) {
 				choice = "Stop";
@@ -562,6 +589,7 @@ public class SimpleGameData implements Serializable {
 			finalChoice = "Win";
 		}
 
+		//check if we decided to quit
 		if (stop) {
 			choice = "Stop";
 			finalChoice = "Stop";
@@ -716,6 +744,9 @@ public class SimpleGameData implements Serializable {
 		return result;
 	}
 
+	/**
+	 * According to the difficultyTimeDeadLine, if we reach this one, we move on to the next difficulty
+	 */
 	public void updateDifficulty() {
 		if (System.currentTimeMillis() - difficultyTime >= difficultyTimeDeadLine) {
 			difficulty += 1;

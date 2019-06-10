@@ -79,9 +79,9 @@ public class SelectBordView extends SimpleGameView {
 	}
 
 	/**
-	 * Check si le chono est lanc� ou en stand-by
+	 * Check si le chono est lance ou en stand-by
 	 * 
-	 * @param coord  Coordonn� y du clic
+	 * @param coord  Coordonnee y du clic
 	 * @param origin yOrigin
 	 * 
 	 * @return True si le chrono est en stand-by, false si le chrono tourne
@@ -175,6 +175,14 @@ public class SelectBordView extends SimpleGameView {
 		return selectedPlants;
 	}
 
+	/**
+	 * Return the matricial coordinate x and y
+	 * 
+	 * @param i  Column coordinate
+	 * @param j  Line coordinate
+	 * 
+	 */
+	
 	public float xFromI(int i) {
 		return realCoordFromIndex(i, xOrigin);
 	}
