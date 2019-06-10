@@ -3,6 +3,7 @@ package controlers;
 import java.awt.geom.Point2D;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import fr.umlv.zen5.ApplicationContext;
 import fr.umlv.zen5.Event;
@@ -12,13 +13,14 @@ import fr.umlv.zen5.ScreenInfo;
 import models.SimpleGameData;
 import models.SystemFile;
 import models.plants.Plant;
+import models.zombies.Zombie;
 import views.BordView;
 import views.SelectBordView;
 
 public class PrincipalMenuController {
 	
 	@SuppressWarnings("unchecked")
-	public static ArrayList<Plant> startGame(ApplicationContext context, SimpleGameData noImportantData) {
+	public static ArrayList<Plant> startGame(ApplicationContext context, SimpleGameData noImportantData, HashMap<Zombie, Integer> normalWaveZombie) {
 
 		ScreenInfo screenInfo = context.getScreenInfo();
 		int width = (int) screenInfo.getWidth();
@@ -73,7 +75,7 @@ public class PrincipalMenuController {
 					break;
 					
 				case "plantSelection":
-					view.drawPlantSelection(context, view, viewContent, plantSelectionView, dataBord, dataSelect, width, height);
+					view.drawPlantSelection(context, view, viewContent, plantSelectionView, dataBord, dataSelect, width, height, normalWaveZombie);
 					break;
 			}
 			

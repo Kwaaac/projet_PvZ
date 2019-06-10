@@ -20,6 +20,7 @@ public class SunShroom extends Plant {
 	private String color = "#cece02";
 	private Chrono growing = new Chrono();
 	private boolean grow = false;
+	private int sunSize = 85;
 	private Chrono delaySun = new Chrono();
 	private int row = 0;
 
@@ -52,7 +53,7 @@ public class SunShroom extends Plant {
 		if (delaySun.asReachTimerMs(100) || row == 0) {
 
 			int rdmPos = SimpleGameData.RandomPosGenerator(-25, 25);
-			dataBord.spawnSun(view, x + rdmPos, y + 20, 25, 85);
+			dataBord.spawnSun(view, x + rdmPos, y + 20, 25, sunSize);
 
 			row++;
 			if (row == 5) {
@@ -77,14 +78,10 @@ public class SunShroom extends Plant {
 				if (this.readyToshot()) {
 					int rdmPos = SimpleGameData.RandomPosGenerator(-25, 25);
 					if (grow == true) {
-						
-						dataBord.spawnSun(view, x + rdmPos, y + rdmPos, 25, 85);
-						this.resetAS();
-					} else {
-
-						dataBord.spawnSun(view, x + rdmPos, y + rdmPos, 15, 55);
-						this.resetAS();
+						sunSize = 45;
 					}
+					dataBord.spawnSun(view, x + rdmPos, y + rdmPos, 15, sunSize);
+					this.resetAS();
 				}
 
 				if (!grow && growing.asReachTimer(120)) {

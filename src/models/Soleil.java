@@ -1,6 +1,8 @@
 package models;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.geom.Ellipse2D;
 import java.io.Serializable;
 
 import views.BordView;
@@ -32,7 +34,7 @@ public class Soleil implements MovingElement, Serializable {
 	}
 
 	/**
-	 * @return true si we have clicked on a sun 
+	 * @return true si we have clicked on a sun
 	 */
 	public boolean isClicked(float clicX, float clicY) {
 		if (x <= clicX && clicX <= x + size) {
@@ -44,7 +46,7 @@ public class Soleil implements MovingElement, Serializable {
 
 	@Override
 	public String toString() {
-		return "Soleil moyen: " + sunny;
+		return "Soleil: " + sunny;
 	}
 
 	public void setY(float y) {
@@ -59,9 +61,9 @@ public class Soleil implements MovingElement, Serializable {
 	public Coordinates getCase() {
 		return caseXY;
 	}
-	
+
 	public void setCase() {
-		if(y >= yTarget) {
+		if (y >= yTarget) {
 			this.speed = 0;
 		}
 		caseXY = new Coordinates(BordView.caseXFromX(x), BordView.caseYFromY(y));
@@ -88,7 +90,8 @@ public class Soleil implements MovingElement, Serializable {
 
 	@Override
 	public void draw(SimpleGameView view, Graphics2D graphics) {
-		view.drawSun(graphics, x, y, color);
+		graphics.setColor(Color.decode(color));
+		graphics.fill(new Ellipse2D.Float(x, y, size, size));
 	}
 
 }

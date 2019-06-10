@@ -40,14 +40,14 @@ public class SimpleGameController {
 
 		SimpleGameData dataBord = new SimpleGameData(); // datas used to start menus and not the game
 
-		ArrayList<Plant> selectedPlant = PrincipalMenuController.startGame(context, dataBord); // read of the pla,t selected in the first menu
-		
-		HashMap<Zombie, Integer> normalWaveZombie = new HashMap<>();
-		normalWaveZombie.put(new NormalZombie(), 1);
-		normalWaveZombie.put(new BalloonZombie(), 5);
+		HashMap<Zombie, Integer> normalWaveZombie = dataBord.generateZombies(1);
 
-		// dataBord.generateZombies(1)
 		HashMap<Zombie, Integer> superWaveZombie = dataBord.generateZombies(2);
+		
+		ArrayList<Plant> selectedPlant = PrincipalMenuController.startGame(context, dataBord, normalWaveZombie); // read of the pla,t selected in the first menu
+		
+		
+		
 
 		int yOrigin = 100; // margin top : 100px
 
