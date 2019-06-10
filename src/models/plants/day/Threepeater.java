@@ -41,8 +41,11 @@ public class Threepeater extends Plant {
 
 	int sizeOfPlant = super.getSizeOfPlant();
 
-	public boolean readyToshot(ArrayList<Cell> cells) {
+	public boolean readyToshoot(ArrayList<Cell> cells) {
 		for (Cell c : cells) {
+			if (c == null) {
+				return false;
+			}
 			if (c.isThereBadZombies()) {
 				return shootBar >= shootBarMax;
 			}
@@ -62,16 +65,38 @@ public class Threepeater extends Plant {
 		delayAttack.startChronoIfReset();
 
 		if (delayAttack.asReachTimerMs(100) || row == 0) {
-			myBullet.add(new Pea(super.getX() + super.getSizeOfPlant(),
-					super.getY() + (super.getSizeOfPlant() / 2) - 10 + BordView.getSquareSize()));
-			myBullet.add(new Pea(super.getX() + super.getSizeOfPlant(),
-					super.getY() + (super.getSizeOfPlant() / 2) - 10));
-			myBullet.add(new Pea(super.getX() + super.getSizeOfPlant(),
-					super.getY() + (super.getSizeOfPlant() / 2) - 10 - BordView.getSquareSize()));
+			int caseJ = getCaseJ();
+			int caseI = getCaseI();
+			int sizeP = super.getSizeOfPlant();
+
+			System.out.println((caseJ + 1) + "  " + (dataBord.getNbLines()));
+			if (caseJ == 0) {
+				myBullet.add(new Pea(x + sizeP - 30, y + (sizeP / 2) - 10));
+
+				myBullet.add(new Pea(x + sizeP, y + (sizeP / 2) - 10));
+
+				myBullet.add(new Pea(x + sizeP, y + (sizeP / 2) - 10 + BordView.getSquareSize()));
+
+			} else if ((caseJ + 1) == dataBord.getNbLines()) {
+
+				myBullet.add(new Pea(x + sizeP, y + (sizeP / 2) - 10 - BordView.getSquareSize()));
+
+				myBullet.add(new Pea(x + sizeP, y + (sizeP / 2) - 10));
+
+				myBullet.add(new Pea(x + sizeP - 30, y + (sizeP / 2) - 10));
+
+			} else {
+				myBullet.add(new Pea(x + sizeP, y + (sizeP / 2) - 10 - BordView.getSquareSize()));
+
+				myBullet.add(new Pea(x + sizeP, y + (sizeP / 2) - 10));
+
+				myBullet.add(new Pea(x + sizeP, y + (sizeP / 2) - 10 + BordView.getSquareSize()));
+
+			}
 			delayAttack.start();
 			row++;
-			
-			if(row == 10) {
+
+			if (row == 10) {
 				row = 0;
 				shootBar = 0;
 				unFeed();
@@ -80,20 +105,45 @@ public class Threepeater extends Plant {
 	}
 
 	@Override
-	public void action(List<Projectile> myBullet, BordView view, List<Zombie> myZombies, List<TombStone> myTombStone, SimpleGameData dataBord) {
+	public void action(List<Projectile> myBullet, BordView view, List<Zombie> myZombies, List<TombStone> myTombStone,
+			SimpleGameData dataBord) {
 		if (super.isFertilized()) {
 			superAction(myBullet, view, myZombies, dataBord);
 			return;
 		} else {
-			if (this.readyToshot(dataBord.getLineCell(this.getCaseJ(), this.getCaseI())) || 
-					this.readyToshot(dataBord.getLineCell(this.getCaseJ(), this.getCaseI() + 1)) ||
-					this.readyToshot(dataBord.getLineCell(this.getCaseJ(), this.getCaseI() - 1))) {
-				myBullet.add(new Pea(super.getX() + super.getSizeOfPlant(),
-						super.getY() + (super.getSizeOfPlant() / 2) - 10 + BordView.getSquareSize()));
-				myBullet.add(new Pea(super.getX() + super.getSizeOfPlant(),
-						super.getY() + (super.getSizeOfPlant() / 2) - 10));
-				myBullet.add(new Pea(super.getX() + super.getSizeOfPlant(),
-						super.getY() + (super.getSizeOfPlant() / 2) - 10 - BordView.getSquareSize()));
+			int caseJ = getCaseJ();
+			int caseI = getCaseI();
+			int sizeP = super.getSizeOfPlant();
+
+			if (this.readyToshoot(dataBord.getLineCell(caseJ, caseI))
+					|| this.readyToshoot(dataBord.getLineCell(caseJ + 1, caseI))
+					|| this.readyToshoot(dataBord.getLineCell(caseJ - 1, caseI))) {
+
+				
+				if (caseJ == 0) {
+					myBullet.add(new Pea(x + sizeP - 30, y + (sizeP / 2) - 10));
+
+					myBullet.add(new Pea(x + sizeP, y + (sizeP / 2) - 10));
+
+					myBullet.add(new Pea(x + sizeP, y + (sizeP / 2) - 10 - BordView.getSquareSize()));
+
+				} else if (caseJ + 1 == dataBord.getNbLines()) {
+
+					myBullet.add(new Pea(x + sizeP - 30, y + (sizeP / 2) - 10));
+
+					myBullet.add(new Pea(x + sizeP, y + (sizeP / 2) - 10));
+
+					myBullet.add(new Pea(x + sizeP, y + (sizeP / 2) - 10 + BordView.getSquareSize()));
+					
+				} else {
+					myBullet.add(new Pea(x + sizeP, y + (sizeP / 2) - 10 - BordView.getSquareSize()));
+
+					myBullet.add(new Pea(x + sizeP, y + (sizeP / 2) - 10));
+
+					myBullet.add(new Pea(x + sizeP, y + (sizeP / 2) - 10 + BordView.getSquareSize()));
+
+				}
+
 				this.resetAS();
 			}
 
@@ -108,10 +158,10 @@ public class Threepeater extends Plant {
 
 		graphics.setColor(Color.decode("#6ea01b"));
 		graphics.fill(new Rectangle2D.Float(x - 5, y, 20, 15));
-		
+
 		graphics.setColor(Color.decode("#6ea01b"));
 		graphics.fill(new Rectangle2D.Float(x - 12 + sizeOfPlant / 2, y, 25, 15));
-		
+
 		graphics.setColor(Color.decode("#6ea01b"));
 		graphics.fill(new Rectangle2D.Float(x + sizeOfPlant - 15, y, 20, 15));
 	}
@@ -125,10 +175,10 @@ public class Threepeater extends Plant {
 
 		graphics.setColor(Color.decode("#6ea01b"));
 		graphics.fill(new Rectangle2D.Float(x - 20, y + sizeOfSPlant / 2, 20, 15));
-		
+
 		graphics.setColor(Color.decode("#6ea01b"));
 		graphics.fill(new Rectangle2D.Float(x - 30 + sizeOfPlant / 2, y + sizeOfSPlant / 2, 20, 15));
-		
+
 		graphics.setColor(Color.decode("#6ea01b"));
 		graphics.fill(new Rectangle2D.Float(x + 35, y + sizeOfSPlant / 2, 20, 15));
 

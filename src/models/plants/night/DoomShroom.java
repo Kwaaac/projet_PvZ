@@ -6,6 +6,7 @@ import java.awt.geom.Rectangle2D;
 import java.awt.geom.RoundRectangle2D;
 import java.util.List;
 
+import models.DeadPool;
 import models.SimpleGameData;
 import models.TombStone;
 import models.cells.Cell;
@@ -82,5 +83,13 @@ public class DoomShroom extends Plant {
 
 		view.drawCost(graphics, x, y, cost.toString());
 	}
+	
+	@Override
+	public void hasToDie(DeadPool DPe, SimpleGameData data) { 
+			if (this.isDead()) { 
+				data.getCell(this.getCaseJ(), this.getCaseI()).removePlant(this); 
+				DPe.add(this); 
+			} 
+	} 
 
 }

@@ -28,9 +28,9 @@ import views.SelectBordView;
 
 @SuppressWarnings("serial")
 public class SimpleGameData implements Serializable {
-	private static int WL = 0; //say if you've win, loose, or quit
-	private Cell[][] matrix; //game matrix
-	private final int nbLines; //matrix line number
+	private static int WL = 0; // say if you've win, loose, or quit
+	private Cell[][] matrix; // game matrix
+	private final int nbLines; // matrix line number
 	private final int nbColumns; // matrix column number
 	private Coordinates selected; // coordinate of the cell selected
 	private static int selectionCaseNumber; // number of plants playblable (situate on the left of the screen)
@@ -42,8 +42,8 @@ public class SimpleGameData implements Serializable {
 	private final ArrayList<Projectile> myBullet = new ArrayList<>(); // all bullets fired by plants
 	private final ArrayList<LawnMower> myLawnMower = new ArrayList<>(); // all lawnmoyer unused
 	private final ArrayList<TombStone> myTombStone = new ArrayList<>(); // all tomb stone which have spawn in night
-	
-	private static HashMap<Zombie, Integer> zombieList = new HashMap<>(); 
+
+	private static HashMap<Zombie, Integer> zombieList = new HashMap<>();
 	private static HashMap<Zombie, Integer> superZombieList = new HashMap<>();
 
 	private boolean stop = false;
@@ -134,7 +134,7 @@ public class SimpleGameData implements Serializable {
 		str.append("myLawnMower = " + myLawnMower);
 		return str.toString();
 	}
-	
+
 	/**
 	 * 
 	 * @return the normal wave zombie list
@@ -142,7 +142,7 @@ public class SimpleGameData implements Serializable {
 	public static HashMap<Zombie, Integer> getNormalWave() {
 		return zombieList;
 	}
-	
+
 	/**
 	 * 
 	 * @return the super wave zombie list
@@ -150,8 +150,7 @@ public class SimpleGameData implements Serializable {
 	public static HashMap<Zombie, Integer> getSuperWave() {
 		return superZombieList;
 	}
-	
-	
+
 	/**
 	 * set the new normalWave
 	 * 
@@ -160,8 +159,7 @@ public class SimpleGameData implements Serializable {
 	public static void setNormalWave(HashMap<Zombie, Integer> zList) {
 		zombieList = zList;
 	}
-	
-	
+
 	/**
 	 * set the new superWave
 	 * 
@@ -171,7 +169,7 @@ public class SimpleGameData implements Serializable {
 		superZombieList = zList;
 	}
 
-	//creation of matrix following the map chosen
+	// creation of matrix following the map chosen
 	private void dayBord() {
 		for (int i = 0; i < matrix.length; i++) {
 			for (int j = 0; j < matrix[0].length; j++) {
@@ -203,7 +201,6 @@ public class SimpleGameData implements Serializable {
 					matrix[i][j].addTombstone(t);
 				}
 			}
-
 		}
 	}
 
@@ -292,9 +289,9 @@ public class SimpleGameData implements Serializable {
 	public ArrayList<Cell> getLineCell(int y, int x) {
 		ArrayList<Cell> cells = new ArrayList<>();
 		for (int i = x; i < nbColumns; i++) {
-			cells.add(getCell(y, i));
+			Cell cell = getCell(y, i);
+				cells.add(cell);
 		}
-
 		return cells;
 	}
 
@@ -407,7 +404,7 @@ public class SimpleGameData implements Serializable {
 	/**
 	 * Tests if coordinates are well located.
 	 * 
-	 * @return true if and only if the coordinate are located in the bord view 
+	 * @return true if and only if the coordinate are located in the bord view
 	 */
 	public boolean isCorrectBordLocation(BordView view, float x, float y) {
 
@@ -425,7 +422,7 @@ public class SimpleGameData implements Serializable {
 	/**
 	 * Tests if coordinates are well located.
 	 * 
-	 * @return true if and only if the coordinate are located in the select view 
+	 * @return true if and only if the coordinate are located in the select view
 	 */
 	public boolean isCorrectSelectLocation(SelectBordView view, float x, float y) {
 
@@ -488,7 +485,7 @@ public class SimpleGameData implements Serializable {
 	/**
 	 * Tests if we win.
 	 * 
-	 * @return true if all the zombies are dead. 
+	 * @return true if all the zombies are dead.
 	 */
 	public boolean win(HashMap<Zombie, Integer> superWaveZombie) {
 		for (int nbrZ : superWaveZombie.values()) {
@@ -587,7 +584,7 @@ public class SimpleGameData implements Serializable {
 			}
 			b.action(this);
 			b.move();
-			
+
 			Cell cell = this.getCell(b.getCaseJ(), b.getCaseI());
 			if (cell != null && !cell.isFog() && !lowSetting) {
 				view.moveAndDrawElement(context, this, b);
@@ -614,7 +611,7 @@ public class SimpleGameData implements Serializable {
 		int squareSize = BordView.getSquareSize();
 		String choice = "Continue", finalChoice = null;
 
-		//check if we've killed all the zombies
+		// check if we've killed all the zombies
 		for (Zombie z : myZombies) {
 			if (z.isEatingBrain(xOrigin, squareSize)) {
 				choice = "Stop";
@@ -627,7 +624,7 @@ public class SimpleGameData implements Serializable {
 			finalChoice = "Win";
 		}
 
-		//check if we decided to quit
+		// check if we decided to quit
 		if (stop) {
 			choice = "Stop";
 			finalChoice = "Stop";
@@ -712,7 +709,7 @@ public class SimpleGameData implements Serializable {
 		// clic in the select bord and the choosen plant is not in cooldown and the
 		// player has enough money
 		if (dataSelect.isCorrectSelectLocation(plantSelectionView, x, y)
-				&& plantSelectionView.isThisChronoReset(y, view.getYOrigin())
+				&& plantSelectionView.isThisChronoReset(y, plantSelectionView.getYOrigin())
 				&& actualMoney >= plantSelectionView.getSelectedPlants().get(yLine).getCost()) {
 
 			dataSelect.selectCell(yLine, plantSelectionView.columnFromX(x));
@@ -774,7 +771,8 @@ public class SimpleGameData implements Serializable {
 	}
 
 	/**
-	 * According to the difficultyTimeDeadLine, if we reach this one, we move on to the next difficulty
+	 * According to the difficultyTimeDeadLine, if we reach this one, we move on to
+	 * the next difficulty
 	 */
 	public void updateDifficulty() {
 		if (System.currentTimeMillis() - difficultyTime >= difficultyTimeDeadLine) {
@@ -1013,7 +1011,6 @@ public class SimpleGameData implements Serializable {
 			spawnNormalWave(squareSize, str, view, context, zombieList);
 		} else if (superWave == 1) {
 			spawnSuperWave(squareSize, str, view, context, superZombieList);
-			System.out.println("superplop546");
 		}
 
 	}
@@ -1177,7 +1174,7 @@ public class SimpleGameData implements Serializable {
 	public void setChanceTombeStone(Integer x) {
 		chanceTombeStone = x;
 	}
-	
+
 	/**
 	 * enable or disable the low setting
 	 */
