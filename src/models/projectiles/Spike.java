@@ -48,6 +48,10 @@ public class Spike extends Projectile {
 	@Override
 	public void move() {
 		if (seekerHead) {
+			
+			if(targetX < this.x && speed>0) {
+				speed *= -1;
+			}
 			int x = (int) (super.x + speed);
 			setX(x);
 			
@@ -55,6 +59,8 @@ public class Spike extends Projectile {
 			float b = plantY - a * plantX;
 			
 			setY(a*x+b);
+			
+			
 			
 		} else {
 			super.move();
