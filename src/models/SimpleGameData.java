@@ -42,6 +42,9 @@ public class SimpleGameData implements Serializable {
 	private final ArrayList<Projectile> myBullet = new ArrayList<>(); // all bullets fired by plants
 	private final ArrayList<LawnMower> myLawnMower = new ArrayList<>(); // all lawnmoyer unused
 	private final ArrayList<TombStone> myTombStone = new ArrayList<>(); // all tomb stone which have spawn in night
+	
+	private static HashMap<Zombie, Integer> zombieList = new HashMap<>(); 
+	private static HashMap<Zombie, Integer> superZombieList = new HashMap<>();
 
 	private boolean stop = false;
 
@@ -130,6 +133,42 @@ public class SimpleGameData implements Serializable {
 		str.append("myBullet = " + myBullet + "\n");
 		str.append("myLawnMower = " + myLawnMower);
 		return str.toString();
+	}
+	
+	/**
+	 * 
+	 * @return the normal wave zombie list
+	 */
+	public static HashMap<Zombie, Integer> getNormalWave() {
+		return zombieList;
+	}
+	
+	/**
+	 * 
+	 * @return the super wave zombie list
+	 */
+	public static HashMap<Zombie, Integer> getSuperWave() {
+		return superZombieList;
+	}
+	
+	
+	/**
+	 * set the new normalWave
+	 * 
+	 * @param zombieList HashMap of zombies and their numbers
+	 */
+	public static void setNormalWave(HashMap<Zombie, Integer> zList) {
+		zombieList = zList;
+	}
+	
+	
+	/**
+	 * set the new superWave
+	 * 
+	 * @param zombieList HashMap of zombies and their numbers
+	 */
+	public static void setSuperWave(HashMap<Zombie, Integer> zList) {
+		superZombieList = zList;
 	}
 
 	//creation of matrix following the map chosen
@@ -569,8 +608,7 @@ public class SimpleGameData implements Serializable {
 		}
 	}
 
-	public void timeEnd(List<Zombie> myZombies, StringBuilder str, ApplicationContext context,
-			HashMap<Zombie, Integer> superWaveZombie, BordView view) {
+	public void timeEnd(List<Zombie> myZombies, StringBuilder str, ApplicationContext context, BordView view) {
 
 		int xOrigin = view.getXOrigin();
 		int squareSize = BordView.getSquareSize();
@@ -584,7 +622,7 @@ public class SimpleGameData implements Serializable {
 			}
 		}
 
-		if (this.win(superWaveZombie)) {
+		if (this.win(superZombieList)) {
 			choice = "Stop";
 			finalChoice = "Win";
 		}
@@ -620,15 +658,6 @@ public class SimpleGameData implements Serializable {
 			EndController.endGame(context);
 
 		}
-	}
-
-	public void generateTombstone() {
-//		Random rand = new Random();
-//		ArrayList<Zombie> allZombies = Zombie.getZombieList(SimpleGameData.getMap());		
-//		Tombstone t = Tombstone.createTombstone(x, y);
-//		Cell cell = this.getCell(t.getCaseJ(), t.getCaseI());
-//		cell.addTombstone(t);
-//		myTombstone.add(t);
 	}
 
 	public void planting(ApplicationContext context, SimpleGameData dataSelect, BordView view, SelectBordView psView,
@@ -978,7 +1007,7 @@ public class SimpleGameData implements Serializable {
 	}
 
 	public void spawnZombies(int squareSize, StringBuilder str, List<Zombie> myZombies, BordView view,
-			ApplicationContext context, HashMap<Zombie, Integer> zombieList, HashMap<Zombie, Integer> superZombieList) {
+			ApplicationContext context) {
 
 		if (superWave == 0) {
 			spawnNormalWave(squareSize, str, view, context, zombieList);

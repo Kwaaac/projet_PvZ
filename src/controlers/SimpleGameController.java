@@ -40,16 +40,13 @@ public class SimpleGameController {
 
 		SimpleGameData dataBord = new SimpleGameData(); // datas used to start menus and not the game
 
-		HashMap<Zombie, Integer> normalWaveZombie = dataBord.generateZombies(1);
-
-		HashMap<Zombie, Integer> superWaveZombie = dataBord.generateZombies(2);
 		
-		ArrayList<Plant> selectedPlant = PrincipalMenuController.startGame(context, dataBord, normalWaveZombie); // read of the pla,t selected in the first menu
+		ArrayList<Plant> selectedPlant = PrincipalMenuController.startGame(context, dataBord); // read of the pla,t selected in the first menu
 		
 		
 		
 
-		int yOrigin = 100; // margin top : 100px
+		int yOrigin = 100;
 
 		SimpleGameData dataSelect = new SimpleGameData(selectedPlant.size(), 1, 2); // initialisation of the plant selection datas
 		
@@ -137,7 +134,7 @@ public class SimpleGameController {
 
 				/*-------------------------------ZOMBIE SPAWNERS-----------------------------*/
 
-				dataBord.spawnZombies(squareSize, str, myZombies, view, context, normalWaveZombie, superWaveZombie);
+				dataBord.spawnZombies(squareSize, str, myZombies, view, context);
 
 				/*------------------------------- CONFLICTS ----------------------------------*/
 
@@ -153,7 +150,7 @@ public class SimpleGameController {
 				dataBord.actionning(view);
 
 				/*------------------------------- WIN / LOOSE --------------------------------*/
-				dataBord.timeEnd(myZombies, str, context, superWaveZombie, view);
+				dataBord.timeEnd(myZombies, str, context, view);
 				/*---------------------------------DEBUG--------------------------------------*/
 
 				if (debug == true) {

@@ -30,7 +30,6 @@ import models.Entities;
 import models.MovingElement;
 import models.SimpleGameData;
 import models.cells.Cell;
-import models.nextzombie.DuckyTubeZombie;
 import models.plants.Plant;
 import models.projectiles.LawnMower;
 import models.projectiles.Projectile;
@@ -105,7 +104,7 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie,
 
 	// zombies that are allowed to swim
 	private final static ArrayList<Zombie> pool = new ArrayList<Zombie>(
-			Arrays.asList(new DolphinRiderZombie(), new DuckyTubeZombie()));
+			Arrays.asList(new DolphinRiderZombie()));
 
 	/**
 	 * give the zombie a case and add the zombie on the zombieList of the cell
@@ -453,7 +452,7 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie,
 				}
 			}
 		} else {
-			if (!isBad() && isOutside(view.getXOrigin(), view.getSquareSize(), data.getNbColumns())) {
+			if (!isBad() && isOutside(view.getXOrigin(), BordView.getSquareSize(), data.getNbColumns())) {
 				str.append(this + " meurt\n");
 				deadPoolE.add(this);
 				Cell cell = data.getCell(view.lineFromY(y), view.columnFromX(x));
@@ -586,7 +585,8 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie,
 	 * @return the available zombies
 	 */
 	public static ArrayList<Zombie> getZombieList(String map) {
-		if (map == "pool") {
+		System.out.println(map);
+		if (map == "Pool" || map == "NightPool") {
 			ArrayList<Zombie> res = new ArrayList<Zombie>();
 			res.addAll(common);
 			res.addAll(pool);
