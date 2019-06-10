@@ -17,20 +17,20 @@ import models.zombies.Zombie;
 import views.BordView;
 import views.SimpleGameView;
 
-public class Treepeater extends Plant {
+public class Threepeater extends Plant {
 	private final String name = "Treepeater";
 	private final String color = "#90D322";
 	private Chrono delayAttack = new Chrono();
 	private int row = 0;
 
-	public Treepeater(int x, int y) {
+	public Threepeater(int x, int y) {
 		super(x, y, 0, 300, 5000, 325, "fast");
 
 		delayAttack.steady();
 		shootBar = shootBarMax; // La plante tire dès qu'elle est posée
 	}
 
-	public Treepeater() {
+	public Threepeater() {
 		this(-10, -10);
 	}
 
@@ -53,7 +53,7 @@ public class Treepeater extends Plant {
 
 	@Override
 	public Plant createNewPlant(int x, int y) {
-		return new Treepeater(x, y);
+		return new Threepeater(x, y);
 	}
 
 	private void superAction(List<Projectile> myBullet, BordView view, List<Zombie> myZombies,
@@ -85,7 +85,9 @@ public class Treepeater extends Plant {
 			superAction(myBullet, view, myZombies, dataBord);
 			return;
 		} else {
-			if (this.readyToshot(dataBord.getLineCell(this.getCaseJ(), this.getCaseI()))) {
+			if (this.readyToshot(dataBord.getLineCell(this.getCaseJ(), this.getCaseI())) || 
+					this.readyToshot(dataBord.getLineCell(this.getCaseJ(), this.getCaseI() + 1)) ||
+					this.readyToshot(dataBord.getLineCell(this.getCaseJ(), this.getCaseI() - 1))) {
 				myBullet.add(new Pea(super.getX() + super.getSizeOfPlant(),
 						super.getY() + (super.getSizeOfPlant() / 2) - 10 + BordView.getSquareSize()));
 				myBullet.add(new Pea(super.getX() + super.getSizeOfPlant(),

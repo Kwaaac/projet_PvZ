@@ -201,7 +201,7 @@ public class SimpleGameController {
 					} else if (action == Action.KEY_RELEASED && mdp == "CTRL") {
 						ctrl = false;
 						mdp = null;
-					} else if (action == Action.KEY_RELEASED && mdp == "M") {
+					} else if (action == Action.KEY_RELEASED && mdp == "M") { // low settings -> no more bullet draw
 						dataBord.switchLowSetting();
 					}
 
