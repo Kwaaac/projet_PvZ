@@ -46,4 +46,12 @@ public interface ICell {
 	boolean isGrass();
 	
 	boolean isWater();
+	
+	boolean isFog();
+	
+	void actualiseFog();
+	
+	void enableFog();
+	
+	void disableFog(long fogTimer);
 }

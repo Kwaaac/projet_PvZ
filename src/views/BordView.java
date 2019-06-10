@@ -257,6 +257,8 @@ public class BordView extends SimpleGameView {
 				Cell cell = matrix[i][j];
 				if (cell.isFog()) {
 					cell.fog(graphics, yFromJ(i), xFromI(j), squareSize);
+				} else {
+					cell.actualiseFog();
 				}
 			}
 		}

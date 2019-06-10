@@ -12,36 +12,9 @@ import models.DeadPool;
 import models.Entities;
 import models.SimpleGameData;
 import models.cells.Cell;
-import models.plants.day.CabbageShooter;
-import models.plants.day.Cactus;
-import models.plants.day.CherryBomb;
-import models.plants.day.Chomper;
-import models.plants.day.GaltingPea;
-import models.plants.day.Jalapeno;
-import models.plants.day.Peashooter;
-import models.plants.day.Pot;
-import models.plants.day.PotatoMine;
-import models.plants.day.Repeater;
-import models.plants.day.SnowPea;
-import models.plants.day.SplitPea;
-import models.plants.day.Squash;
-import models.plants.day.SunFlower;
-import models.plants.day.Treepeater;
-import models.plants.day.TwinSunFlower;
-import models.plants.day.WallNut;
-import models.plants.night.DoomShroom;
-import models.plants.night.FumeShroom;
-import models.plants.night.GraveBuster;
-import models.plants.night.HypnoShroom;
-import models.plants.night.IceShroom;
-import models.plants.night.MagnetShroom;
-import models.plants.night.PuffShroom;
-import models.plants.night.ScaredyShroom;
-import models.plants.night.SunShroom;
-import models.plants.pool.Cattails;
-import models.plants.pool.LilyPad;
-import models.plants.pool.SeaShroom;
-import models.plants.pool.TangleKelp;
+import models.plants.day.*;
+import models.plants.night.*;
+import models.plants.pool.*;
 
 public abstract class Plant extends Entities implements IPlant, Serializable {
 	private final static int sizeOfPlant = 75;
@@ -57,9 +30,9 @@ public abstract class Plant extends Entities implements IPlant, Serializable {
 			new Peashooter(), new Repeater(), new PotatoMine(), new Squash(), new SnowPea(), new SunFlower(),
 			new WallNut(), new Pot(), new Jalapeno(), new Treepeater(), new SplitPea(), new GaltingPea(),
 			new TwinSunFlower(), new CabbageShooter(), new Cactus()));
-	private final static ArrayList<Plant> night = new ArrayList<>(
-			Arrays.asList(new MagnetShroom(), new DoomShroom(), new FumeShroom(), new GraveBuster(), new HypnoShroom(),
-					new IceShroom(), new PuffShroom(), new ScaredyShroom(), new SunShroom()));
+	private final static ArrayList<Plant> night = new ArrayList<>(Arrays.asList(new MagnetShroom(), new DoomShroom(),
+			new FumeShroom(), new GraveBuster(), new HypnoShroom(), new IceShroom(), new PuffShroom(),
+			new ScaredyShroom(), new SunShroom(), new Plantern(), new Blover()));
 	private final static ArrayList<Plant> pool = new ArrayList<>(
 			Arrays.asList(new Cattails(), new LilyPad(), new SeaShroom(), new TangleKelp()));
 

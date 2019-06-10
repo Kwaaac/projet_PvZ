@@ -19,6 +19,8 @@ public abstract class Cell implements ICell, Serializable {
 	
 	protected final boolean dayTime;
 	protected boolean fog;
+	protected long fogTimer;
+	protected Chrono fogChrono = new Chrono();
 
 	private Plant groundPlant;
 	private Plant mainPlant;
@@ -70,6 +72,7 @@ public abstract class Cell implements ICell, Serializable {
 
 		crashChrono.steady();
 		iceChrono.steady();
+		fogChrono.steady();
 	}
 
 	/**
@@ -146,8 +149,17 @@ public abstract class Cell implements ICell, Serializable {
 	/**
 	 * switch the state of the fog to false
 	 */
-	public void disableFog() {
+	public void disableFog(long fogTimer) {
 		fog = false;
+		this.fogTimer = fogTimer;
+		fogChrono.start();
+	}
+	
+	public void actualiseFog() {
+		if(!fog && fogChrono.asReachTimerMs(fogTimer)) {
+			enableFog();
+			fogChrono.steady();
+		}
 	}
 
 	/**

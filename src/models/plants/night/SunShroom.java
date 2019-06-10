@@ -24,7 +24,7 @@ public class SunShroom extends Plant {
 	private int row = 0;
 
 	public SunShroom(int x, int y) {
-		super(x, y, 0, 300, 24_000, 0, "fast");
+		super(x, y, 0, 300, 24_000, 25, "fast");
 		growing.start();
 		this.shootTime = System.currentTimeMillis();
 	}
