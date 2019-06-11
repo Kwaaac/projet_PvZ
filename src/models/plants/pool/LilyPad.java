@@ -21,7 +21,7 @@ public class LilyPad extends Plant {
 	private final String color = "#90D322";
 
 	public LilyPad(int x, int y) {
-		super(x, y, 0, 300, 0, 0, "free");
+		super(x, y, 0, 300, 0, 25, "fast");
 	}
 
 	public LilyPad() {

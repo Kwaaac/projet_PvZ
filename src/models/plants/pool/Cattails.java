@@ -22,7 +22,7 @@ public class Cattails extends Plant {
 	private final String color = "#8FD916";
 
 	public Cattails(int x, int y) {
-		super(x, y, 0, 300, 1500, 0, "free");
+		super(x, y, 0, 300, 1500, 225, "verySlow");
 	}
 
 	public Cattails() {

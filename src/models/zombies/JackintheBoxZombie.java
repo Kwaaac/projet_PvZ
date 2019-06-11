@@ -65,6 +65,11 @@ public class JackintheBoxZombie extends Zombie {
 	public void draw(SimpleGameView view, Graphics2D graphics) {
 		graphics.setColor(Color.decode(color));
 		graphics.fill(new Ellipse2D.Float(x, y, sizeOfZombie, sizeOfZombie));
+		
+		if(box) {
+			graphics.setColor(Color.white);
+			graphics.fill(new Ellipse2D.Float(x, y+20, 30, 30));
+		}
 
 		super.draw(view, graphics);
 	}

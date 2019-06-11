@@ -49,7 +49,7 @@ public class DuckyTubeZombie extends Zombie {
 	public void draw(SimpleGameView view, Graphics2D graphics) {
 		graphics.setColor(Color.decode(color));
 		graphics.fill(new Ellipse2D.Float(x, y, sizeOfZombie, sizeOfZombie));
-		view.drawRectangle(graphics, (int) (x-10), (int) (sizeOfZombie + y)/2, sizeOfZombie + 20, 10, "#f4dd0e");
+		view.drawRectangle(graphics, (int) (x-10), (int) y + sizeOfZombie/2, sizeOfZombie + 20, 10, "#f4dd0e");
 		if(isSlowed()) {
 			super.draw(view, graphics);
 		}

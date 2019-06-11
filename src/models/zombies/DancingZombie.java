@@ -14,17 +14,16 @@ import views.SimpleGameView;
 public class DancingZombie extends Zombie {
 
 	private final String name = "DancingZombie";
-	private final String color = "#000000";
+	private final String color = "#a80d6c";
 	private Chrono dance = new Chrono();
-	private boolean lock = false;
 
 	public DancingZombie(int x, int y) {
-		super(x, y, 100, 340, 1, "ultraSlow",false);
+		super(x, y, 100, 340, 1, "medium",false);
 		dance.start();
 	}
 
 		public DancingZombie(int x, int y, boolean gifted) {
-			super(x, y, 100, 340, 1, "ultraSlow", gifted);
+			super(x, y, 100, 340, 1, "medium", gifted);
 			dance.start();
 	}
 
@@ -62,7 +61,7 @@ public class DancingZombie extends Zombie {
 		int scareSize = BordView.getSquareSize();
 		ArrayList<Zombie> zombieInQueu = new ArrayList<Zombie>();
 
-		if (dance.asReachTimer(10) && lock == false) {
+		if (dance.asReachTimer(10)) {
 			if (dataBord.isCorrectBordLocation(view, (float) super.getX() + scareSize, (float) super.getY())) {
 				zombieInQueu.add(new BackupDancerZombie((int) super.getX() + scareSize, (int) super.getY()));// avant
 			}
@@ -78,7 +77,7 @@ public class DancingZombie extends Zombie {
 			if (dataBord.isCorrectBordLocation(view, (float) super.getX(), (float) super.getY() - scareSize)) {
 				zombieInQueu.add(new BackupDancerZombie((int) super.getX(), (int) super.getY() - scareSize));// bas
 			}
-			lock = true;
+
 			dataBord.setZombieInQueu(zombieInQueu);
 			this.resetAS();
 			return false;

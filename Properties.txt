@@ -1,6 +1,6 @@
 
 --selectionCaseNumber--
-9#
+7#
 --timeLimit--
 5000#
 --timeLimitDifficulty--
