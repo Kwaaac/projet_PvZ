@@ -321,7 +321,7 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie,
 	 */
 
 	public void conflictBvZ(DeadPool DPe, BordView view, SimpleGameData data) {
-		ArrayList<Projectile> Le;
+		List<Projectile> Le;
 		int thisY = view.lineFromY(this.getY());
 		int thisX = view.columnFromX(this.getX());
 
@@ -337,7 +337,11 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie,
 			}
 
 			for (Projectile e : Le) {
+				
+				
 				if (this.hit(e) && !(e.isInConflict()) && this.isBad() && !(fly && !e.isFlying())) {
+					System.out.println("connard");
+					e.action(data);
 					chopped(e.isSharp());
 					this.slowed(e.isSlowing());
 					e.setConflictMode(true);
@@ -585,7 +589,6 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie,
 	 * @return the available zombies
 	 */
 	public static ArrayList<Zombie> getZombieList(String map) {
-		System.out.println(map);
 		if (map == "Pool" || map == "NightPool") {
 			ArrayList<Zombie> res = new ArrayList<Zombie>();
 			res.addAll(common);

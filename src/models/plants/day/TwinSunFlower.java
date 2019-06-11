@@ -55,7 +55,7 @@ public class TwinSunFlower extends Plant {
 			dataBord.spawnSun(view, x + rdmPos, y + 20, 25, 85);
 
 			row++;
-			if (row == 5) {
+			if (row == 10) {
 				row = 0;
 				shootBar = 0;
 				unFeed();
@@ -72,6 +72,9 @@ public class TwinSunFlower extends Plant {
 		} else {
 			if (this.readyToshot()) {
 				int rdmPos = SimpleGameData.RandomPosGenerator(0, 25);
+				dataBord.spawnSun(view, x + rdmPos, y + 20, 25, 85);
+				
+				rdmPos = SimpleGameData.RandomPosGenerator(0, 25);
 				dataBord.spawnSun(view, x + rdmPos, y + 20, 25, 85);
 				this.resetAS();
 			}

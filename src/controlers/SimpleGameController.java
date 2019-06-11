@@ -104,7 +104,6 @@ public class SimpleGameController {
 		while (true) {
 			
 			myZombies = dataBord.getMyZombies();
-			System.out.println(myZombies);
 			myBullet = dataBord.getMyBullet();
 			myLawnMower = dataBord.getMyLawnMower();
 			myTombstone = dataBord.getMyTombstone();

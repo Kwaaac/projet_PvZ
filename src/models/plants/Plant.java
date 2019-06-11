@@ -14,6 +14,7 @@
 
 package models.plants;
 
+import java.awt.image.Kernel;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -48,7 +49,7 @@ public abstract class Plant extends Entities implements IPlant, Serializable {
 	private final static ArrayList<Plant> day = new ArrayList<>(Arrays.asList(new CherryBomb(), new Chomper(),
 			new Peashooter(), new Repeater(), new PotatoMine(), new Squash(), new SnowPea(), new SunFlower(),
 			new WallNut(), new Pot(), new Jalapeno(), new Threepeater(), new SplitPea(), new GaltingPea(),
-			new TwinSunFlower(), new CabbageShooter(), new Cactus()));
+			new TwinSunFlower(), new CabbageShooter(), new KernelPult(), new Cactus(), new MelonPult()));
 	
 	// Arraylist of all the night plants
 	private final static ArrayList<Plant> night = new ArrayList<>(Arrays.asList(new MagnetShroom(), new DoomShroom(),

@@ -81,6 +81,7 @@ public class Spike extends Projectile {
 				if (caseP.equals(caseTarget)) {
 					Cell actCell = data.getCell(cY, cX);
 					actCell.addProjectile(this);
+					caseXY = caseP;
 				}
 			} else {
 				setLife(0);
