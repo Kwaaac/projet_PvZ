@@ -582,7 +582,6 @@ public class SimpleGameData implements Serializable {
 				b.SpeedBoostON();
 				b.SpeedBoostOFF();
 			}
-			b.action(this);
 			b.move();
 
 			Cell cell = this.getCell(b.getCaseJ(), b.getCaseI());

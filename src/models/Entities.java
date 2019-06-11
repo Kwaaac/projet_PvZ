@@ -6,7 +6,7 @@ import java.util.Objects;
 
 import views.BordView;
 
-public abstract class Entities implements IEntite, Serializable{
+public abstract class Entities implements IEntite, Serializable {
 
 	protected float x;
 	protected float y;
@@ -16,7 +16,7 @@ public abstract class Entities implements IEntite, Serializable{
 	protected boolean inConflict;
 	protected boolean Team;
 
-	public Entities(float x, float y, int damage, int life,boolean Team) {
+	public Entities(float x, float y, int damage, int life, boolean Team) {
 		this.x = x;
 		this.y = y;
 		this.caseXY = new Coordinates(BordView.caseXFromX(x), BordView.caseYFromY(y));
@@ -24,28 +24,28 @@ public abstract class Entities implements IEntite, Serializable{
 		this.life = life;
 		this.Team = Team;
 	}
-	
+
 	/**
 	 * give the coordinate of case where is situate the entity
 	 */
 	public void setCase(SimpleGameData data) {
 		caseXY = new Coordinates(BordView.caseXFromX(x), BordView.caseYFromY(y));
 	}
-	
+
 	public Coordinates getCase() {
 		return caseXY;
 	}
-	
+
 	public int getCaseI() {
 		return caseXY.getI();
 	}
-	
+
 	public int getCaseJ() {
 		return caseXY.getJ();
 	}
 
 	public int lineY() {
-		return (int) ((y - 100) / 180);
+		return getCaseI();
 	}
 
 	public float getX() {
@@ -63,7 +63,7 @@ public abstract class Entities implements IEntite, Serializable{
 	public void setX(float x) {
 		this.x = x;
 	}
-	
+
 	public void setY(float y) {
 		this.y = y;
 	}
@@ -123,17 +123,17 @@ public abstract class Entities implements IEntite, Serializable{
 	 * @param e entities qui subira les degats de l'entite objet utilisant la
 	 *          methode et qui attaquera cette meme entite par la suite
 	 */
-	
+
 	@Override
 	public boolean isInConflict() {
 		return this.inConflict;
 	}
-	
+
 	@Override
 	public void setConflictMode(boolean b) {
 		this.inConflict = b;
 	}
-	
+
 	public void conflict(ArrayList<Entities> entities) {
 		if (!entities.isEmpty()) {
 			for (Entities e : entities) {
@@ -141,28 +141,30 @@ public abstract class Entities implements IEntite, Serializable{
 			}
 		}
 	}
-	
+
 	@Override
 	public boolean equals(Object o) {
-		if(!(o instanceof Entities)) { return false; }
+		if (!(o instanceof Entities)) {
+			return false;
+		}
 		Entities t = (Entities) o;
 		return x == t.x && y == t.y && caseXY.equals(t.caseXY) && damage == t.damage && life == t.life;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(x, y, caseXY, damage, life);
 	}
-	
+
 	/**
-	 * There is always some traitors...
-	 * Sometimes, zombies can return there self aginst the others due to some effects
+	 * There is always some traitors... Sometimes, zombies can return there self
+	 * aginst the others due to some effects
 	 */
 	@Override
 	public void reverseTeam(SimpleGameData data) {
 		this.Team = !(Team);
 	}
-	
+
 	/**
 	 * not a traitor
 	 */
@@ -170,12 +172,12 @@ public abstract class Entities implements IEntite, Serializable{
 	public boolean isGood() {
 		return Team == true;
 	}
-	
+
 	/**
 	 * traitor
 	 */
 	@Override
 	public boolean isBad() {
-		return Team ==false;
+		return Team == false;
 	}
 }
