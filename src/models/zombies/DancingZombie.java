@@ -8,23 +8,24 @@ import java.util.List;
 
 import models.Chrono;
 import models.SimpleGameData;
+import models.cells.Cell;
 import views.BordView;
 import views.SimpleGameView;
 
 public class DancingZombie extends Zombie {
 
 	private final String name = "DancingZombie";
-	private final String color = "#000000";
+	private final String color = "#a80d6c";
 	private Chrono dance = new Chrono();
-	private boolean lock = false;
+	private boolean canspawn = true;
 
 	public DancingZombie(int x, int y) {
-		super(x, y, 100, 340, 1, "ultraSlow",false);
+		super(x, y, 100, 340, 1, "medium",false);
 		dance.start();
 	}
 
 		public DancingZombie(int x, int y, boolean gifted) {
-			super(x, y, 100, 340, 1, "ultraSlow", gifted);
+			super(x, y, 100, 340, 1, "medium", gifted);
 			dance.start();
 	}
 
@@ -61,14 +62,18 @@ public class DancingZombie extends Zombie {
 	public boolean action(BordView view, SimpleGameData dataBord, List<Zombie> myZombies) {
 		int scareSize = BordView.getSquareSize();
 		ArrayList<Zombie> zombieInQueu = new ArrayList<Zombie>();
-
-		if (dance.asReachTimer(10) && lock == false) {
+		if(canspawn) {
+		if (dance.asReachTimer(10)) {
+			
 			if (dataBord.isCorrectBordLocation(view, (float) super.getX() + scareSize, (float) super.getY())) {
 				zombieInQueu.add(new BackupDancerZombie((int) super.getX() + scareSize, (int) super.getY()));// avant
 			}
 
 			if (dataBord.isCorrectBordLocation(view, (float) super.getX(), (float) super.getY() + scareSize)) {
-				zombieInQueu.add(new BackupDancerZombie((int) super.getX(), (int) super.getY() + scareSize));// haut
+				Cell cell = dataBord.getCell(getCaseJ()+1, getCaseI());
+				if (!cell.isWater()) {
+					zombieInQueu.add(new BackupDancerZombie((int) super.getX(), (int) super.getY() + scareSize));// haut
+				}
 			}
 
 			if (dataBord.isCorrectBordLocation(view, (float) super.getX() + scareSize, (float) super.getY())) {
@@ -76,14 +81,18 @@ public class DancingZombie extends Zombie {
 			}
 
 			if (dataBord.isCorrectBordLocation(view, (float) super.getX(), (float) super.getY() - scareSize)) {
-				zombieInQueu.add(new BackupDancerZombie((int) super.getX(), (int) super.getY() - scareSize));// bas
+				Cell cell = dataBord.getCell(getCaseJ()-1, getCaseI());
+				if (!cell.isWater()) {
+					zombieInQueu.add(new BackupDancerZombie((int) super.getX(), (int) super.getY() - scareSize));// bas
+				}
 			}
-			lock = true;
+
 			dataBord.setZombieInQueu(zombieInQueu);
 			this.resetAS();
+			canspawn = false;
 			return false;
 		}
-
+		}
 		this.incAS();
 		
 		return true;

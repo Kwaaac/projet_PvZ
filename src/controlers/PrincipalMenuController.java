@@ -3,8 +3,6 @@ package controlers;
 import java.awt.geom.Point2D;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
-
 import fr.umlv.zen5.ApplicationContext;
 import fr.umlv.zen5.Event;
 import fr.umlv.zen5.Event.Action;
@@ -13,9 +11,6 @@ import fr.umlv.zen5.ScreenInfo;
 import models.SimpleGameData;
 import models.SystemFile;
 import models.plants.Plant;
-import models.zombies.DiggerZombie;
-import models.zombies.Zombie;
-import models.zombies.Zomboni;
 import views.BordView;
 import views.SelectBordView;
 
@@ -179,12 +174,10 @@ public class PrincipalMenuController {
 
 			case "plantSelection":
 
-				if (dataBord.getNormalWave().isEmpty() && dataBord.getSuperWave().isEmpty()) {
-					dataBord.setNormalWave(new HashMap<>() {{ 
-						put(new DiggerZombie(), 1);
-					}});
+				if (SimpleGameData.getNormalWave().isEmpty() && SimpleGameData.getSuperWave().isEmpty()) {
+					SimpleGameData.setNormalWave(dataBord.generateZombies(1));
 					
-					dataBord.setSuperWave(dataBord.generateZombies(2));
+					SimpleGameData.setSuperWave(dataBord.generateZombies(2));
 				}
 				if (dataBord.isCorrectSelectLocation(viewContent, x, y)) {
 					viewContent.selectPlant(x, y, plantSelectionView, dataBord, dataSelect);

@@ -22,7 +22,7 @@ public class SnorkelZombie extends Zombie {
 	public SnorkelZombie(int x, int y) {
 		super(x, y, 100, 200, 1, "slow", false);
 	}
-	
+
 	public SnorkelZombie(int x, int y, boolean gifted) {
 		super(x, y, 100, 200, 1, "slow", gifted);
 	}
@@ -42,7 +42,7 @@ public class SnorkelZombie extends Zombie {
 	}
 
 	@Override
-	public Zombie createNewZombie(int x, int y,boolean gift) {
+	public Zombie createNewZombie(int x, int y, boolean gift) {
 		return new SnorkelZombie(x, y, gift);
 	}
 
@@ -73,29 +73,31 @@ public class SnorkelZombie extends Zombie {
 	@Override
 	public void conflictBvZ(DeadPool DPe, BordView view, SimpleGameData data) {
 		List<Projectile> Le;
-		if (data.getCell(view.lineFromY(this.getY()), view.columnFromX(this.getX())).isPlantedPlant()) {
-			Le = data.getCell(view.lineFromY(this.getY()), view.columnFromX(this.getX())).getProjectilesInCell();
-			for (Projectile e : Le) {
-				e.action(data);
-				if (this.outOfWater == true && this.hit(e) && !(e.isInConflict()) && this.isBad()) {
-					this.slowed(e.isSlowing());
-					e.setConflictMode(true);
-					this.mortalKombat(e);
-					if (e.isDead()) {
-						DPe.addInDP(e);
-					}
-					/*
-					 * si ils sont plusieur a le taper et que sa vie tombe a zero avant que les
-					 * attaquant ne sois mort on empeche des echange de d�gats(on en a besoin pour
-					 * pas qu'une plante morte soit capable de tu� apr�s sa mort)
-					 */
-					else if (this.isDead()) {
-						e.setConflictMode(false);
-						DPe.addInDP(this);
-						break;
+		Cell cell = data.getCell(view.lineFromY(this.getY()), view.columnFromX(this.getX()));
+		if (cell != null) {
+			if (cell.isPlantedPlant()) {
+				Le = data.getCell(view.lineFromY(this.getY()), view.columnFromX(this.getX())).getProjectilesInCell();
+				for (Projectile e : Le) {
+					e.action(data);
+					if (this.outOfWater == true && this.hit(e) && !(e.isInConflict()) && this.isBad()) {
+						this.slowed(e.isSlowing());
+						e.setConflictMode(true);
+						this.mortalKombat(e);
+						if (e.isDead()) {
+							DPe.addInDP(e);
+						}
+						/*
+						 * si ils sont plusieur a le taper et que sa vie tombe a zero avant que les
+						 * attaquant ne sois mort on empeche des echange de d�gats(on en a besoin pour
+						 * pas qu'une plante morte soit capable de tu� apr�s sa mort)
+						 */
+						else if (this.isDead()) {
+							e.setConflictMode(false);
+							DPe.addInDP(this);
+							break;
+						}
 					}
 				}
-
 			}
 		}
 	}

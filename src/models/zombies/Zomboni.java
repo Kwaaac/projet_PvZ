@@ -15,7 +15,7 @@ import views.SimpleGameView;
 public class Zomboni extends Zombie {
 
 	private final String type = "Zomboni";
-	private final String color = "#000000";
+	private final String color = "#aa9d9f";
 
 	public Zomboni(int x, int y) {
 		super(x, y, 100, 200, 1, "slow", false);

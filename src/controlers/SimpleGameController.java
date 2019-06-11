@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 
 import fr.umlv.zen5.Application;
@@ -24,8 +23,6 @@ import models.plants.Plant;
 import models.projectiles.LawnMower;
 import models.projectiles.Pea;
 import models.projectiles.Projectile;
-import models.zombies.BalloonZombie;
-import models.zombies.NormalZombie;
 import models.zombies.Zombie;
 import views.BordView;
 import views.SelectBordView;

@@ -101,11 +101,11 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie,
 
 	private final static ArrayList<Zombie> common = new ArrayList<Zombie>(
 			Arrays.asList(new NormalZombie(), new FlagZombie(), new BucketheadZombie(), new ConeheadZombie(),
-					new NewspaperZombie(), new PoleVaultingZombie(), new DiggerZombie()));
+					new NewspaperZombie(), new PoleVaultingZombie(), new BalloonZombie(), new DancingZombie(), new JackintheBoxZombie(), new Zomboni()));
 
 	// zombies that are allowed to swim
 	private final static ArrayList<Zombie> pool = new ArrayList<Zombie>(
-			Arrays.asList(new DolphinRiderZombie()));
+			Arrays.asList(new DolphinRiderZombie(), new SnorkelZombie()));
 
 	/**
 	 * give the zombie a case and add the zombie on the zombieList of the cell
@@ -341,7 +341,6 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie,
 				
 				
 				if (this.hit(e) && !(e.isInConflict()) && this.isBad() && !(fly && !e.isFlying())) {
-					System.out.println("connard");
 					e.action(data);
 					chopped(e.isSharp());
 					this.slowed(e.isSlowing());

@@ -517,22 +517,6 @@ public class SimpleGameData implements Serializable {
 	}
 
 	/**
-	 * Using of the zombies actions.
-	 */
-	public void actionningZombie(BordView view, SimpleGameData dataBord) {
-		for (IZombie z : myZombies) {
-
-			z.action(view, dataBord, myZombies);
-		}
-
-		if (zombieInQueu.size() > 0) {
-			myZombies.addAll(zombieInQueu);
-			zombieInQueu = new ArrayList<Zombie>();
-		}
-
-	}
-
-	/**
 	 * Spawn of suns in day map.
 	 */
 	public void spawnSun(BordView view, float x, float y, int sunny, int size) {
@@ -557,6 +541,11 @@ public class SimpleGameData implements Serializable {
 
 	public void movingZombiesAndBullets(ApplicationContext context, BordView view, boolean debug) {
 
+		if (zombieInQueu.size() > 0) {
+			myZombies.addAll(zombieInQueu);
+			zombieInQueu = new ArrayList<Zombie>();
+		}
+		
 		for (Zombie z : myZombies) {
 			if (debug == true) {
 				z.SpeedBoostON();
@@ -819,7 +808,7 @@ public class SimpleGameData implements Serializable {
 
 		HashMap<Zombie, Integer> zombiesMap = new HashMap<Zombie, Integer>();
 		int waveSize = 0;
-		int maxWaveSize = (type == 1 ? 15 : 35);
+		int maxWaveSize = (type == 1 ? 15 : 25);
 		int MaximumThreat = SimpleGameData.getMaximumThreat(allZombies);
 		while (waveSize < maxWaveSize) {
 			Zombie choosenOne = getRandomZombie(allZombies);
