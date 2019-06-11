@@ -92,7 +92,7 @@ public class Jalapeno extends Plant {
 	@Override
 	public void draw(SimpleGameView view, Graphics2D graphics) {
 		graphics.setColor(Color.decode(color));
-		graphics.fill(new Rectangle2D.Float(x, y, sizeOfPlant, sizeOfPlant));
+		graphics.fill(new Rectangle2D.Float(x, y, sizeOfPlant - 25, sizeOfPlant));
 	}
 
 	int sizeOfSPlant = super.getSizeOfPlant() - 10;
@@ -100,7 +100,7 @@ public class Jalapeno extends Plant {
 	@Override
 	public void draw(SimpleGameView view, Graphics2D graphics, int x, int y) {
 		graphics.setColor(Color.decode(color));
-		graphics.fill(new Rectangle2D.Float(x - 15, y + sizeOfSPlant / 2, sizeOfSPlant, sizeOfSPlant));
+		graphics.fill(new Rectangle2D.Float(x - 15, y + sizeOfSPlant / 2, sizeOfSPlant - 25, sizeOfSPlant));
 
 		view.drawCost(graphics, x, y, cost.toString());
 	}

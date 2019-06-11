@@ -16,7 +16,7 @@ import views.SimpleGameView;
 public class SnorkelZombie extends Zombie {
 
 	private final String name = "SnorkelZombie";
-	private final String color = "#000000";
+	private final String color = "#1f6ae2";
 	private boolean outOfWater = false;
 
 	public SnorkelZombie(int x, int y) {

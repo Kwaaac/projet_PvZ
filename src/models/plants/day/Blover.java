@@ -41,7 +41,6 @@ public class Blover extends Plant {
 
 		int m = dataBord.getNbLines();
 		int p = dataBord.getNbColumns();
-		System.out.println(m + " : " + p);
 
 		for (int i = 0; i <= m; i++) {
 			for (int j = 0; j <= p; j++) {
@@ -61,7 +60,6 @@ public class Blover extends Plant {
 	@Override
 	public void action(List<Projectile> myBullet, BordView view, List<Zombie> myZombies, List<TombStone> myTombStone,
 			SimpleGameData dataBord) {
-		System.out.println(shootBar + " con " + shootBarMax);
 		if (readyToshot()) {
 			couverture(dataBord);
 
@@ -86,7 +84,7 @@ public class Blover extends Plant {
 	@Override
 	public void draw(SimpleGameView view, Graphics2D graphics) {
 		graphics.setColor(Color.decode(color));
-		graphics.fill(new Ellipse2D.Float(x, y, sizeOfPlant, sizeOfPlant));
+		graphics.fill(new Ellipse2D.Float(x, y, sizeOfPlant + 15, sizeOfPlant));
 	}
 
 	int sizeOfSPlant = super.getSizeOfPlant() - 10;
@@ -94,7 +92,7 @@ public class Blover extends Plant {
 	@Override
 	public void draw(SimpleGameView view, Graphics2D graphics, int x, int y) {
 		graphics.setColor(Color.decode(color));
-		graphics.fill(new Ellipse2D.Float(x - 15, y + sizeOfSPlant / 2, sizeOfSPlant, sizeOfSPlant));
+		graphics.fill(new Ellipse2D.Float(x - 15, y + sizeOfSPlant / 2, sizeOfSPlant + 15, sizeOfSPlant));
 
 		view.drawCost(graphics, x, y, cost.toString());
 	}

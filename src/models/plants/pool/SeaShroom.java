@@ -49,7 +49,8 @@ public class SeaShroom extends Plant {
 	@Override
 	public void action(List<Projectile> myBullet, BordView view, List<Zombie> myZombies, List<TombStone> myTombStone,
 			SimpleGameData dataBord) {
-		if (this.readyToshot(dataBord.getLineCell(this.getCaseJ(), this.getCaseI()))) {
+		
+		if (dataBord.getDayTime() == "Night" && this.readyToshot(dataBord.getLineCell(this.getCaseJ(), this.getCaseI()))) {
 			myBullet.add(new WeakSpore(super.getX() + super.getSizeOfPlant(),
 					super.getY() + (super.getSizeOfPlant() / 2) - 10));
 

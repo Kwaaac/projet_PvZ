@@ -1170,4 +1170,9 @@ public class SimpleGameData implements Serializable {
 		lowSetting = !lowSetting;
 	}
 
+	public boolean isNight() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }

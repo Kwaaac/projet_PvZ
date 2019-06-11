@@ -32,32 +32,32 @@ import models.plants.night.*;
 import models.plants.pool.*;
 
 public abstract class Plant extends Entities implements IPlant, Serializable {
-	private final static int sizeOfPlant = 75; 
-	
+	private final static int sizeOfPlant = 75;
+
 	// system of a loading bar
-	
+
 	protected final int shootBarMax;
-	protected long shootBar; 
-	protected long shootTime; 
-	
-	protected final Integer cost; 
+	protected long shootBar;
+	protected long shootTime;
+
+	protected final Integer cost;
 	protected final Long cooldown;
 	private Coordinates plantSelect;
 	private boolean fertilized;
-	
-	private final boolean tall = false; 
+
+	private final boolean tall = false;
 
 	// Arraylist of all the day plants
 	private final static ArrayList<Plant> day = new ArrayList<>(Arrays.asList(new CherryBomb(), new Chomper(),
 			new Peashooter(), new Repeater(), new PotatoMine(), new Squash(), new SnowPea(), new SunFlower(),
 			new WallNut(), new Pot(), new Jalapeno(), new Threepeater(), new SplitPea(), new GaltingPea(),
-			new TwinSunFlower(), new CabbageShooter(), new KernelPult(), new Cactus(), new MelonPult(),new TallNut()));
-	
+			new TwinSunFlower(), new CabbageShooter(), new KernelPult(), new MelonPult(), new Cactus(), new TallNut()));
+
 	// Arraylist of all the night plants
 	private final static ArrayList<Plant> night = new ArrayList<>(Arrays.asList(new MagnetShroom(), new DoomShroom(),
 			new FumeShroom(), new GraveBuster(), new HypnoShroom(), new IceShroom(), new PuffShroom(),
 			new ScaredyShroom(), new SunShroom(), new Plantern(), new Blover()));
-	
+
 	// Arraylist of all the pool plants
 	private final static ArrayList<Plant> pool = new ArrayList<>(
 			Arrays.asList(new Cattails(), new LilyPad(), new SeaShroom(), new TangleKelp()));
@@ -80,7 +80,7 @@ public abstract class Plant extends Entities implements IPlant, Serializable {
 
 		this.shootBarMax = shootBarMax;
 		this.cost = cost;
-		if(mCooldown.get(cooldown) == null) {
+		if (mCooldown.get(cooldown) == null) {
 			throw new IllegalStateException("The selected cooldown of the " + this + " does not exist");
 		}
 		this.cooldown = mCooldown.get(cooldown);
@@ -88,7 +88,7 @@ public abstract class Plant extends Entities implements IPlant, Serializable {
 		// Prevent the plant to shoot instantly
 		shootTime = 0;
 	}
-	
+
 	public static ArrayList<Plant> getPlantList(String s) {
 		if (s == "night") {
 			return night;
@@ -102,7 +102,7 @@ public abstract class Plant extends Entities implements IPlant, Serializable {
 	/**
 	 * @return plant's life
 	 */
-	public int getLife() { 
+	public int getLife() {
 		return super.life;
 	}
 
@@ -117,7 +117,7 @@ public abstract class Plant extends Entities implements IPlant, Serializable {
 	 * 
 	 * @return plant's cost
 	 */
-	public int getCost() { 
+	public int getCost() {
 		return cost;
 	}
 
@@ -125,7 +125,7 @@ public abstract class Plant extends Entities implements IPlant, Serializable {
 	 * 
 	 * @return size of plants
 	 */
-	public static int getSizeOfPlant() { 
+	public static int getSizeOfPlant() {
 		return sizeOfPlant;
 	}
 
@@ -137,7 +137,6 @@ public abstract class Plant extends Entities implements IPlant, Serializable {
 		return cooldown;
 	}
 
-	
 	/**
 	 * Increase the shoorbar
 	 */
@@ -160,7 +159,7 @@ public abstract class Plant extends Entities implements IPlant, Serializable {
 	 * @return True if the plant can shoot, false otherwise
 	 */
 	@Override
-	public boolean readyToshot() { 
+	public boolean readyToshot() {
 		return shootBar >= shootBarMax;
 	}
 
@@ -168,7 +167,7 @@ public abstract class Plant extends Entities implements IPlant, Serializable {
 	 * @return the hitbox of the plant
 	 */
 	@Override
-	public Coordinates hitBox() { 
+	public Coordinates hitBox() {
 		return new Coordinates((int) x, (int) x + sizeOfPlant);
 	}
 
@@ -200,20 +199,20 @@ public abstract class Plant extends Entities implements IPlant, Serializable {
 
 		return false;
 	}
-	
+
 	/**
 	 * Fertilise the plant
 	 * 
 	 * @return true if the plant has been fertilized
 	 */
 	public boolean feedPlant() {
-		if(fertilized) {
+		if (fertilized) {
 			return false;
 		}
 		fertilized = true;
 		return true;
 	}
-	
+
 	/**
 	 * 
 	 * @return true is the plant is fertilized, false otherwise
@@ -221,7 +220,7 @@ public abstract class Plant extends Entities implements IPlant, Serializable {
 	public Boolean isFertilized() {
 		return fertilized;
 	}
-	
+
 	/**
 	 * unfertilize the plant
 	 */
@@ -232,7 +231,7 @@ public abstract class Plant extends Entities implements IPlant, Serializable {
 	/**
 	 * Kill all the plant that must die
 	 * 
-	 * @param DPe deapool of entities
+	 * @param DPe  deapool of entities
 	 * @param list List of plants
 	 * @param data databoard of the game
 	 */
@@ -265,7 +264,7 @@ public abstract class Plant extends Entities implements IPlant, Serializable {
 	 */
 	public void hasToDie(DeadPool DPe, SimpleGameData data) {
 	}
-	
+
 	@Override
 	public boolean isTall() {
 		return false;

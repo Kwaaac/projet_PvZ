@@ -101,7 +101,8 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie,
 
 	private final static ArrayList<Zombie> common = new ArrayList<Zombie>(
 			Arrays.asList(new NormalZombie(), new FlagZombie(), new BucketheadZombie(), new ConeheadZombie(),
-					new NewspaperZombie(), new PoleVaultingZombie(), new BalloonZombie(), new DancingZombie(), new JackintheBoxZombie(), new Zomboni()));
+					new NewspaperZombie(), new PoleVaultingZombie(), new BalloonZombie(), new DancingZombie(),
+					new JackintheBoxZombie(), new Zomboni()));
 
 	// zombies that are allowed to swim
 	private final static ArrayList<Zombie> pool = new ArrayList<Zombie>(
@@ -338,8 +339,7 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie,
 			}
 
 			for (Projectile e : Le) {
-				
-				
+
 				if (this.hit(e) && !(e.isInConflict()) && this.isBad() && !(fly && !e.isFlying())) {
 					e.action(data);
 					chopped(e.isSharp());
@@ -726,7 +726,6 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie,
 		fly = !fly;
 	}
 
-	
 	/**
 	 * compare the zombies according to theirs x
 	 */

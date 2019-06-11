@@ -361,7 +361,6 @@ public class BordView extends SimpleGameView {
 		int y = 0;
 		
 		Set<Zombie> zList = dataBord.getNormalWave().keySet();
-		System.out.println(zList);
 		for(Zombie z : zList) {
 			int x = 1500;
 			if(y > height - 200) {

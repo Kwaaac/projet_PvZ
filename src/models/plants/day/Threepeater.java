@@ -69,7 +69,6 @@ public class Threepeater extends Plant {
 			int caseI = getCaseI();
 			int sizeP = super.getSizeOfPlant();
 
-			System.out.println((caseJ + 1) + "  " + (dataBord.getNbLines()));
 			if (caseJ == 0) {
 				myBullet.add(new Pea(x + sizeP - 30, y + (sizeP / 2) - 10));
 
