@@ -321,7 +321,7 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie,
 	 */
 
 	public void conflictBvZ(DeadPool DPe, BordView view, SimpleGameData data) {
-		ArrayList<Projectile> Le;
+		List<Projectile> Le;
 		int thisY = view.lineFromY(this.getY());
 		int thisX = view.columnFromX(this.getX());
 

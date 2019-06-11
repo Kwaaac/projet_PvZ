@@ -72,7 +72,7 @@ public class SnorkelZombie extends Zombie {
 
 	@Override
 	public void conflictBvZ(DeadPool DPe, BordView view, SimpleGameData data) {
-		ArrayList<Projectile> Le;
+		List<Projectile> Le;
 		if (data.getCell(view.lineFromY(this.getY()), view.columnFromX(this.getX())).isPlantedPlant()) {
 			Le = data.getCell(view.lineFromY(this.getY()), view.columnFromX(this.getX())).getProjectilesInCell();
 			for (Projectile e : Le) {
