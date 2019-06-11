@@ -105,7 +105,7 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie,
 
 	// zombies that are allowed to swim
 	private final static ArrayList<Zombie> pool = new ArrayList<Zombie>(
-			Arrays.asList(new DolphinRiderZombie(), new SnorkelZombie()));
+			Arrays.asList(new DolphinRiderZombie(), new SnorkelZombie(), new DuckyTubeZombie()));
 
 	/**
 	 * give the zombie a case and add the zombie on the zombieList of the cell
