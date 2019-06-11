@@ -25,7 +25,7 @@ public class TwinSunFlower extends Plant {
 
 	public TwinSunFlower(int x, int y) {
 		// x, y, damage, life, shootBarMax, cost, cooldown
-		super(x, y, 0, 300, 10_000, 150, "fast");
+		super(x, y, 0, 300, 10_000, 150, "verySlow");
 		this.shootTime = System.currentTimeMillis();
 	}
 

@@ -24,7 +24,7 @@ public class Squash extends Plant {
 	private final int maxRow = 2;
 
 	public Squash(int x, int y) {
-		super(x, y, 0, 300, 5100, 0, "free");
+		super(x, y, 0, 300, 5100, 50, "free");
 
 		delayAttack.steady();
 		shootBar = shootBarMax; // La plante tire d�s qu'elle est pos�e

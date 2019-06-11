@@ -104,15 +104,12 @@ public class SystemFile implements Serializable {
 	}
 
 	/**
-	 * Read of "Properties.txt" file to get information of the some game data :
-	 * 		- the number of plant you can play
-	 * 		- the time you have to wait until the zombies spawn
-	 * 		- the time until the difficulty is swiching
-	 * 		- the sun money you got at the begining
-	 * 		- the number of fertilizer you got at the begining
-	 * 		- the chance of a fertilized zombie spawning
-	 * 		- the chance of a tombe spawn
-	 * 		- all the different move speed that a zombie can have
+	 * Read of "Properties.txt" file to get information of the some game data : -
+	 * the number of plant you can play - the time you have to wait until the
+	 * zombies spawn - the time until the difficulty is swiching - the sun money you
+	 * got at the begining - the number of fertilizer you got at the begining - the
+	 * chance of a fertilized zombie spawning - the chance of a tombe spawn - all
+	 * the different move speed that a zombie can have
 	 */
 	public static void readProperties(SimpleGameData dataBord) throws IOException {
 
@@ -123,14 +120,10 @@ public class SystemFile implements Serializable {
 
 			while ((content = reader.readLine()) != null) {
 				String[] x = content.split("#");
-				String result = x[0];
-
-				Integer i = Integer.valueOf(result);
-				Long l = Long.valueOf(result);
-				Double d = Double.valueOf(result);
 
 				switch (line) {
 				case 2:
+					Integer i = Integer.valueOf(x[0]);
 					if (7 <= i && i <= 9) {
 						SimpleGameData.setSelectionCaseNumber(i);
 					} else {
@@ -138,6 +131,7 @@ public class SystemFile implements Serializable {
 					}
 					break;
 				case 4:
+					Long l = Long.valueOf(x[0]);
 					if (l < 0) {
 						dataBord.setTimeLimit(l);
 					} else {
@@ -145,6 +139,7 @@ public class SystemFile implements Serializable {
 					}
 					break;
 				case 6:
+					l = Long.valueOf(x[0]);
 					if (l < 0) {
 						dataBord.setTimeLimitDifficulty(l);
 					} else {
@@ -152,12 +147,13 @@ public class SystemFile implements Serializable {
 					}
 					break;
 				case 8:
-					dataBord.setActualMoney(i);
+					dataBord.setActualMoney(Integer.valueOf(x[0]));
 					break;
 				case 10:
-					dataBord.setActualFertilizer(i);
+					dataBord.setActualFertilizer(Integer.valueOf(x[0]));
 					break;
 				case 12:
+					i = Integer.valueOf(x[0]);
 					if (i < 0) {
 						dataBord.setFertilizerChance(i);
 					} else {
@@ -165,6 +161,7 @@ public class SystemFile implements Serializable {
 					}
 					break;
 				case 14:
+					i = Integer.valueOf(x[0]);
 					if (i < 0) {
 						dataBord.setChanceTombeStone(i);
 					} else {
@@ -172,6 +169,7 @@ public class SystemFile implements Serializable {
 					}
 					break;
 				case 16:
+					Double d = Double.valueOf(x[0]);
 					if (d < 0) {
 						Zombie.setZombieMoveSpeed_reallyFast(d);
 					} else {
@@ -179,6 +177,7 @@ public class SystemFile implements Serializable {
 					}
 					break;
 				case 17:
+					d = Double.valueOf(x[0]);
 					if (d < 0) {
 						Zombie.setZombieMoveSpeed_fast(d);
 					} else {
@@ -186,6 +185,7 @@ public class SystemFile implements Serializable {
 					}
 					break;
 				case 18:
+					d = Double.valueOf(x[0]);
 					if (d < 0) {
 						Zombie.setZombieMoveSpeed_medium(d);
 					} else {
@@ -193,6 +193,7 @@ public class SystemFile implements Serializable {
 					}
 					break;
 				case 19:
+					d = Double.valueOf(x[0]);
 					if (d < 0) {
 						Zombie.setZombieMoveSpeed_slow(d);
 					} else {
@@ -200,6 +201,7 @@ public class SystemFile implements Serializable {
 					}
 					break;
 				case 20:
+					d = Double.valueOf(x[0]);
 					if (d < 0) {
 						Zombie.setZombieMoveSpeed_verySlow(d);
 					} else {
@@ -207,6 +209,7 @@ public class SystemFile implements Serializable {
 					}
 					break;
 				case 21:
+					d = Double.valueOf(x[0]);
 					if (d < 0) {
 						Zombie.setZombieMoveSpeed_ultraSlow(d);
 					} else {

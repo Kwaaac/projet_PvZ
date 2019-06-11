@@ -27,8 +27,8 @@ public class MagnetShroom extends Plant {
 	private final int stealLimit = 20;
 
 	public MagnetShroom(int x, int y) {
-		super(x, y, 0, 300, 15_000, 0, "fast");
-		shootBar = shootBarMax; // La plante tire dès qu'elle est posée
+		super(x, y, 0, 300, 15_000, 100, "fast");
+		shootBar = shootBarMax; // La plante tire dï¿½s qu'elle est posï¿½e
 	}
 
 	public MagnetShroom() {

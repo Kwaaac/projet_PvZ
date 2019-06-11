@@ -25,8 +25,8 @@ public class SnowPea extends Plant {
 	private int row = 0;
 
 	public SnowPea(int x, int y) {
-		super(x, y, 0, 300, 5000, 0, "free");
-		shootBar = shootBarMax; // La plante tire dès qu'elle est posée
+		super(x, y, 0, 300, 5000, 175, "free");
+		shootBar = shootBarMax; // La plante tire dï¿½s qu'elle est posï¿½e
 	}
 
 	public SnowPea() {

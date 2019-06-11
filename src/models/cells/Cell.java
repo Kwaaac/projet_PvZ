@@ -177,13 +177,18 @@ public abstract class Cell implements ICell, Serializable {
 	 * add or remove the ice effect
 	 */
 	public void ice() {
-		if (!ice) {
+		ice = !ice;
+	}
+	
+	/**
+	 * enable ice effect
+	 */
+	public void enableIce() {
+		if(!ice) {
 			ice = true;
-		} else {
-			ice = false;
 		}
 	}
-
+	
 	/**
 	 * Add a main plant on the cell, wont add it if a plant is already planted
 	 */

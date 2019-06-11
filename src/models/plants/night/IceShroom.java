@@ -20,7 +20,7 @@ public class IceShroom extends Plant {
 	private final String color = "#4286f4";
 
 	public IceShroom(int x, int y) {
-		super(x, y, 0, 1, 1200, 0, "free");
+		super(x, y, 0, 1, 1200, 75, "verySlow");
 		this.shootTime = System.currentTimeMillis();
 	}
 

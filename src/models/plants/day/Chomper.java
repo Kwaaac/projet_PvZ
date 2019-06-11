@@ -26,7 +26,7 @@ public class Chomper extends Plant {
 	private boolean eating = false;
 
 	public Chomper(int x, int y) {
-		super(x, y, 0, 350, 15_000, 150, "free");
+		super(x, y, 0, 350, 15_000, 150, "fast");
 
 		delayAttack.steady();
 		shootBar = shootBarMax; // Allow the plant to fire instantly

@@ -26,10 +26,10 @@ public class GaltingPea extends Plant {
 	private int row = 0;
 
 	public GaltingPea(int x, int y) {
-		super(x, y, 0, 300, 5000, 125, "fast");
+		super(x, y, 0, 300, 5000, 250, "verySlow");
 
 		delaySuperAttack.steady();
-		shootBar = shootBarMax; // La plante tire dès qu'elle est posée
+		shootBar = shootBarMax; // La plante tire dï¿½s qu'elle est posï¿½e
 	}
 
 	public GaltingPea() {

@@ -25,7 +25,7 @@ public class CherryBomb extends Plant {
 	private final ArrayList<Coordinates> zone;
 
 	public CherryBomb(int x, int y) {
-		super(x, y, 0, 1, 1200, 0, "free");
+		super(x, y, 0, 1, 1200, 150, "verySlow");
 		this.zone = zone();
 		this.shootTime = System.currentTimeMillis();
 	}

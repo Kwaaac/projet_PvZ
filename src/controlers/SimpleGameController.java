@@ -108,10 +108,6 @@ public class SimpleGameController {
 			myLawnMower = dataBord.getMyLawnMower();
 			myTombstone = dataBord.getMyTombstone();
 			
-//			//test
-//			for(Cell c: dataBord.getLineCell(5, 0)) {
-//				System.out.println(c.getProjectilesInCell());
-//			}
 			if (pause) { //we pressed "p" to put the game in interlude
 				pause = SecondaryMenuController.menu(context, view, dataBord, plantSelectionView);
 			} else {

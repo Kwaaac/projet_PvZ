@@ -14,7 +14,7 @@
 --chanceTombeStone--
 15#
 --zombieMoveSpeed--
--1.5#
+-3.0#
 -1.38#
 -1.05#
 -0.93#

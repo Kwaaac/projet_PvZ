@@ -21,7 +21,7 @@ public class Pot extends Plant {
 	private final String color = "#C98C79";
 
 	public Pot(int x, int y) {
-		super(x, y, 0, 300, 0, 25, "free");
+		super(x, y, 0, 300, 0, 25, "fast");
 	}
 
 	public Pot() {

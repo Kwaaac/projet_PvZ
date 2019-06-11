@@ -26,10 +26,10 @@ public class Repeater extends Plant {
 	private int row = 0;
 
 	public Repeater(int x, int y) {
-		super(x, y, 0, 300, 5000, 0, "fast");
+		super(x, y, 0, 300, 5000, 200, "fast");
 
 		delayAttack.steady();
-		shootBar = shootBarMax; // La plante tire dès qu'elle est posée
+		shootBar = shootBarMax; // La plante tire dï¿½s qu'elle est posï¿½e
 	}
 
 	public Repeater() {

@@ -14,6 +14,7 @@ import models.SimpleGameData;
 import models.SystemFile;
 import models.plants.Plant;
 import models.zombies.Zombie;
+import models.zombies.Zomboni;
 import views.BordView;
 import views.SelectBordView;
 
@@ -178,8 +179,10 @@ public class PrincipalMenuController {
 			case "plantSelection":
 
 				if (dataBord.getNormalWave().isEmpty() && dataBord.getSuperWave().isEmpty()) {
-					dataBord.setNormalWave(dataBord.generateZombies(1));
-
+					dataBord.setNormalWave(new HashMap<>() {{ 
+						put(new Zomboni(), 1);
+					}});
+					
 					dataBord.setSuperWave(dataBord.generateZombies(2));
 				}
 				if (dataBord.isCorrectSelectLocation(viewContent, x, y)) {

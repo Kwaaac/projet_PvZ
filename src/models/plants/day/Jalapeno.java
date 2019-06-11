@@ -25,7 +25,7 @@ public class Jalapeno extends Plant {
 	private final ArrayList<Coordinates> zone;
 
 	public Jalapeno(int x, int y) {
-		super(x, y, 0, 1, 1800, 125, "free");
+		super(x, y, 0, 1, 1800, 125, "verySlow");
 		this.zone = zone();
 		this.shootTime = System.currentTimeMillis();
 	}
