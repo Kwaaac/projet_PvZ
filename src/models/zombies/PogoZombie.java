@@ -5,27 +5,29 @@ import java.awt.Graphics2D;
 import java.awt.geom.Arc2D;
 import java.util.List;
 
+import models.Chrono;
 import models.SimpleGameData;
 import models.cells.Cell;
 import views.BordView;
 import views.SimpleGameView;
 
-public class PoleVaultingZombie extends Zombie {
+public class PogoZombie extends Zombie {
 
-	private final String name = "PoleVaultingZombie";
+	private final String name = "Pogo Zombie";
 	private final String color = "#000000";
+	private Chrono jumpexeisloading = new Chrono();
 
 	private boolean jump = true;
 
-	public PoleVaultingZombie(int x, int y) {
+	public PogoZombie(int x, int y) {
 		super(x, y, 100, 340, 1, "fast", false);
 	}
 
-	public PoleVaultingZombie(int x, int y, boolean gifted) {
+	public PogoZombie(int x, int y, boolean gifted) {
 		super(x, y, 100, 340, 1, "fast", gifted);
 	}
 
-	public PoleVaultingZombie() {
+	public PogoZombie() {
 		this(50, 50);
 	}
 
@@ -41,7 +43,7 @@ public class PoleVaultingZombie extends Zombie {
 
 	@Override
 	public Zombie createNewZombie(int x, int y, boolean gift) {
-		return new PoleVaultingZombie(x, y, gift);
+		return new PogoZombie(x, y, gift);
 	}
 
 	int sizeOfZombie = super.getSizeOfZombie();
@@ -69,13 +71,27 @@ public class PoleVaultingZombie extends Zombie {
 	@Override
 	public boolean action(BordView view, SimpleGameData dataBord, List<Zombie> myZombies) {
 		if (detect(dataBord) && jump && !(dataBord.getCell(getCaseJ(), getCaseI()).getMainPlant().isTall())) {
-			jump = false;
-			setBasicSpeed("slow");
-			setX(x - BordView.getSquareSize() - 50);
-
+			stop();
+			jumpexeisloading.startChronoIfReset();
+			if(jumpexeisloading.asReachTimerAndStop(5)) {
+				jumpexeisloading.steady();
+				setX(x - BordView.getSquareSize() - 50);
+			}
+			go();
 			return false;
+		}else if((dataBord.getCell(getCaseJ(), getCaseI()).getMainPlant().isTall())){
+			jump = false;
 		}
 
 		return true;
+	}
+	
+	@Override
+	public boolean magnetizable() {
+		if(jump) {
+		jump =false;
+		return true;
+	}
+		return false;
 	}
 }

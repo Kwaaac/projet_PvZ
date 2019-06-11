@@ -28,6 +28,8 @@ public interface IPlant {
 	void draw(SimpleGameView view, Graphics2D graphics);
 	
 	void draw(SimpleGameView view, Graphics2D graphics, int x, int y);
+	
+	boolean isTall();
 
 	/*
 	 * 0 -> GroundPlant 

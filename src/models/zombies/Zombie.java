@@ -51,6 +51,7 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie,
 	private Chrono slowedTime = new Chrono();
 	private int slowedLimit;
 	private boolean slowed = false;
+	protected boolean switchSpeed = false;
 
 	private Chrono stunnedTime = new Chrono();
 	private long stunnedLimit;
@@ -100,7 +101,7 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie,
 
 	private final static ArrayList<Zombie> common = new ArrayList<Zombie>(
 			Arrays.asList(new NormalZombie(), new FlagZombie(), new BucketheadZombie(), new ConeheadZombie(),
-					new NewspaperZombie(), new PoleVaultingZombie()));
+					new NewspaperZombie(), new PoleVaultingZombie(), new DiggerZombie()));
 
 	// zombies that are allowed to swim
 	private final static ArrayList<Zombie> pool = new ArrayList<Zombie>(
@@ -187,7 +188,7 @@ public abstract class Zombie extends Entities implements MovingElement, IZombie,
 			speedCheck -= 2;
 		}
 
-		if (!isBad()) { // Zombie hypnotized
+		if (!isBad() || switchSpeed) { // Zombie hypnotized
 			speedCheck *= -1;
 		}
 

@@ -13,6 +13,7 @@ import fr.umlv.zen5.ScreenInfo;
 import models.SimpleGameData;
 import models.SystemFile;
 import models.plants.Plant;
+import models.zombies.DiggerZombie;
 import models.zombies.Zombie;
 import models.zombies.Zomboni;
 import views.BordView;
@@ -180,7 +181,7 @@ public class PrincipalMenuController {
 
 				if (dataBord.getNormalWave().isEmpty() && dataBord.getSuperWave().isEmpty()) {
 					dataBord.setNormalWave(new HashMap<>() {{ 
-						put(new Zomboni(), 1);
+						put(new DiggerZombie(), 1);
 					}});
 					
 					dataBord.setSuperWave(dataBord.generateZombies(2));

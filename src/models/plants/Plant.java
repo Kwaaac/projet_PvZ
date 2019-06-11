@@ -44,12 +44,14 @@ public abstract class Plant extends Entities implements IPlant, Serializable {
 	protected final Long cooldown;
 	private Coordinates plantSelect;
 	private boolean fertilized;
+	
+	private final boolean tall = false; 
 
 	// Arraylist of all the day plants
 	private final static ArrayList<Plant> day = new ArrayList<>(Arrays.asList(new CherryBomb(), new Chomper(),
 			new Peashooter(), new Repeater(), new PotatoMine(), new Squash(), new SnowPea(), new SunFlower(),
 			new WallNut(), new Pot(), new Jalapeno(), new Threepeater(), new SplitPea(), new GaltingPea(),
-			new TwinSunFlower(), new CabbageShooter(), new KernelPult(), new Cactus(), new MelonPult()));
+			new TwinSunFlower(), new CabbageShooter(), new KernelPult(), new Cactus(), new MelonPult(),new TallNut()));
 	
 	// Arraylist of all the night plants
 	private final static ArrayList<Plant> night = new ArrayList<>(Arrays.asList(new MagnetShroom(), new DoomShroom(),
@@ -86,7 +88,7 @@ public abstract class Plant extends Entities implements IPlant, Serializable {
 		// Prevent the plant to shoot instantly
 		shootTime = 0;
 	}
-
+	
 	public static ArrayList<Plant> getPlantList(String s) {
 		if (s == "night") {
 			return night;
@@ -262,5 +264,10 @@ public abstract class Plant extends Entities implements IPlant, Serializable {
 	 * @param data databoard of the game
 	 */
 	public void hasToDie(DeadPool DPe, SimpleGameData data) {
+	}
+	
+	@Override
+	public boolean isTall() {
+		return false;
 	}
 }
